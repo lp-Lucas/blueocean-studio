@@ -1,0 +1,4 @@
+Blue Ocean Studio — idealizado e desenvolvido por Lucas Pessoa Cordeiro (github.com/lp-Lucas, claudemaluco@gmail.com)
+Commit assinado: 34829a1ee96bd3fd7c1058b2d8e4f7f707b0509e
+Árvore do código (tree): 6355359dfee017f2f4927fd49ae971160a242156
+Data: 2026-10-05 17:13:45 -0300
