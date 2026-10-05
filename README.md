@@ -1,8 +1,8 @@
 # Blue Ocean Studio
 
-Editor de vídeo desktop da Blue Ocean com chat do Claude: preview em tempo real de um lado, agente editor do outro.
+Editor de vídeo desktop da Blue Ocean: preview em tempo real de um lado, agente editor do outro.
 
-**Idealizado e desenvolvido por Lucas Pessoa Cordeiro ([lp-Lucas](https://github.com/lp-Lucas)).** Veja [AUTORIA.md](AUTORIA.md).
+**Idealizado e desenvolvido por Lucas Pessoa Cordeiro ([lp-Lucas](https://github.com/lp-Lucas)).**
 
 ## Instalar
 Precisa de Node, ffmpeg, yt-dlp, Claude Code e Python com faster-whisper.
