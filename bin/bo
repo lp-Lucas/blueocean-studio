@@ -1,2 +1,3 @@
 #!/bin/sh
+if [ -n "$BO_ELECTRON" ]; then ELECTRON_RUN_AS_NODE=1 exec "$BO_ELECTRON" "$(dirname "$0")/../bo.mjs" "$@"; fi
 exec node "$(dirname "$0")/../bo.mjs" "$@"

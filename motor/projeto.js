@@ -15,7 +15,7 @@ const { spawn } = require('child_process');
 const U = require('./util');
 const T = require('./tarefas');
 
-const PASTA = path.join(U.RAIZ, 'projetos');
+const PASTA = path.join(U.DADOS, 'projetos');
 fs.mkdirSync(PASTA, { recursive: true });
 
 const FORMATOS = { '9:16': [1080, 1920], '4:5': [1080, 1350], '1:1': [1080, 1080], '16:9': [1920, 1080] };

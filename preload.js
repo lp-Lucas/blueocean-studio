@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld('bo', {
     tarefa: ouvir('tarefa'), tarefaSumiu: ouvir('tarefa-sumiu'), tarefaLog: ouvir('tarefa-log'),
     projetoExterno: ouvir('projeto-externo'), transcricoes: ouvir('transcricoes'), midiaPronta: ouvir('midia-pronta'),
     chatEvento: ouvir('chat-evento'), chatEstado: ouvir('chat-estado'), aviso: ouvir('aviso'), exportado: ouvir('exportado'), bo: ouvir('bo'),
-    pedirAss: ouvir('pedir-ass'), atualizacao: ouvir('atualizacao'), comps: ouvir('comps'), compAbrir: ouvir('comp-abrir'),
+    pedirAss: ouvir('pedir-ass'), atualizacao: ouvir('atualizacao'), comps: ouvir('comps'), compAbrir: ouvir('comp-abrir'), preparar: ouvir('preparar'),
   },
   responderAss: (id, pacote) => ipcRenderer.send('ass-pronto', { id, pacote }),
 });

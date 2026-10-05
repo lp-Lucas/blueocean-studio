@@ -62,7 +62,7 @@ Os pngs de `bo folha` e `bo quadro` você abre com a ferramenta Read para enxerg
 2. **Use as receitas.** Os processos já aprovados pela Blue Ocean estão salvos como receitas. Quando o pedido bater
    com uma, leia o arquivo dela primeiro e siga — são decisões que a pessoa já validou.
 3. **Salve processo novo.** Quando a pessoa aprovar um jeito novo de fazer algo ("ficou perfeito, usa sempre assim",
-   "salva isso"), escreva uma receita nova em `{{APP}}\receitas\` no mesmo formato das outras.
+   "salva isso"), escreva uma receita nova em `{{RECEITAS_NOVAS}}\` no mesmo formato das outras.
 4. **Não exporte sem pedirem.** Monte, confira e mostre na linha do tempo; a pessoa vê o preview ao vivo e pede para
    exportar quando quiser (ou exporte se o pedido já for "me entrega o vídeo").
 5. **Tempos em segundos com 2 casas.** Cortes começam na primeira palavra da ideia e terminam quando o raciocínio termina.

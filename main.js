@@ -6,6 +6,9 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const crypto = require('crypto');
+// instalado pelo .exe: projetos, configuração e receitas novas ficam em Documentos\Blue Ocean Studio
+// (a pasta do programa é trocada a cada atualização). Rodando do código-fonte, tudo fica na pasta do programa.
+if (app.isPackaged && !process.env.BO_DADOS) process.env.BO_DADOS = path.join(app.getPath('documents'), 'Blue Ocean Studio');
 const U = require('./motor/util');
 const T = require('./motor/tarefas');
 const P = require('./motor/projeto');
@@ -14,10 +17,12 @@ const E = require('./motor/exportar');
 const C = require('./motor/claude');
 const M = require('./motor/modelo');
 const Fo = require('./motor/fontes');
+const Pr = require('./motor/preparar');
+Pr.ajustarAmbiente();   // ffmpeg, yt-dlp, Claude e Git instalados pela tela Preparar entram no PATH
 
 // BO_ISOLADO (testes): roda ao lado do programa aberto, com dados e porta do "bo" separados
 const ISOLADO = !!process.env.BO_ISOLADO;
-const ARQ_CONTROLE = path.join(__dirname, ISOLADO ? '.controle-teste.json' : '.controle.json');
+const ARQ_CONTROLE = path.join(U.DADOS, ISOLADO ? '.controle-teste.json' : '.controle.json');
 if (ISOLADO) app.setPath('userData', path.join(require('os').tmpdir(), 'blueocean-studio-teste'));
 else if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
 
@@ -166,7 +171,7 @@ let porta = 0; const TOKEN = crypto.randomBytes(16).toString('hex');
 function sistemaGerado() {
   const modelo = fs.readFileSync(path.join(__dirname, 'motor', 'sistema.md'), 'utf8');
   const receitas = listarReceitas().map(r => `- **${r.titulo}** — ${r.resumo}\n  arquivo: ${r.arquivo}`).join('\n');
-  const txt = modelo.replaceAll('{{APP}}', __dirname).replaceAll('{{RECEITAS}}', receitas).replaceAll('{{ACERVO}}', U.cfg().acervo);
+  const txt = modelo.replaceAll('{{APP}}', __dirname).replaceAll('{{RECEITAS}}', receitas).replaceAll('{{RECEITAS_NOVAS}}', DIR_RECEITAS_NOVAS).replaceAll('{{ACERVO}}', U.cfg().acervo);
   const f = path.join(__dirname, 'motor', '.sistema-gerado.md');
   fs.writeFileSync(f, txt);
   return f;
@@ -223,7 +228,7 @@ async function enviarMensagem(nome, texto, contexto = {}) {
   };
   const tentar = sessao => C.conversar({
     cwd: P.dir(nome), prompt, sessao, sistema: sistemaGerado(), controle, aoEvento,
-    env: { BO_PORTA: String(porta), BO_TOKEN: TOKEN, BO_PROJETO: nome, BO_APP: __dirname,
+    env: { BO_PORTA: String(porta), BO_TOKEN: TOKEN, BO_PROJETO: nome, BO_APP: __dirname, BO_DADOS: U.DADOS, BO_ELECTRON: process.execPath,
       PATH: path.join(__dirname, 'bin') + path.delimiter + process.env.PATH },
   });
   try {
@@ -254,7 +259,7 @@ function notificarFim(nome, chat, desde) {
   const fim = [...doTurno].reverse().find(m => m.tipo === 'fim');
   if (fim?.cancelado) return;
   const texto = [...doTurno].reverse().find(m => m.tipo === 'texto')?.texto || '';
-  const limpo = texto.replace(/[*_`#>|]/g, '').replace(/s+/g, ' ').trim();
+  const limpo = texto.replace(/[*_`#>|]/g, '').replace(/\s+/g, ' ').trim();
   const dur = fim?.duracao ? (fim.duracao >= 60000 ? ` em ${Math.round(fim.duracao / 60000)} min` : ` em ${Math.round(fim.duracao / 1000)} s`) : '';
   const n = new Notification({
     title: fim?.erro ? `O Claude parou com erro · ${nome}` : `Claude terminou${dur} · ${nome}`,
@@ -267,15 +272,21 @@ function notificarFim(nome, chat, desde) {
 
 /* ── receitas (processos salvos) ── */
 const DIR_RECEITAS = path.join(__dirname, 'receitas');
+const DIR_RECEITAS_NOVAS = path.join(U.DADOS, 'receitas');
+function arquivosReceitas() {
+  const m = new Map();
+  for (const d of [DIR_RECEITAS, DIR_RECEITAS_NOVAS]) if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) if (f.endsWith('.md')) m.set(f, path.join(d, f));
+  return m;
+}
 function listarReceitas() {
-  if (!fs.existsSync(DIR_RECEITAS)) return [];
-  return fs.readdirSync(DIR_RECEITAS).filter(f => f.endsWith('.md')).sort().map(f => {
-    const txt = fs.readFileSync(path.join(DIR_RECEITAS, f), 'utf8');
+  const arqs = arquivosReceitas();
+  return [...arqs.keys()].sort().map(f => {
+    const txt = fs.readFileSync(arqs.get(f), 'utf8');
     const titulo = (txt.match(/^#\s+(.+)$/m) || [, f])[1].trim();
     const resumo = (txt.match(/^>\s*(.+)$/m) || [, ''])[1].trim();
     const pedido = (txt.match(/^Pedido:\s*(.+)$/m) || [, ''])[1].trim();
     const icone = (txt.match(/^Ícone:\s*(\S+)/m) || [, 'estrela'])[1].trim();
-    return { id: f.replace(/\.md$/, ''), arquivo: path.join(DIR_RECEITAS, f), titulo, resumo, pedido, icone };
+    return { id: f.replace(/\.md$/, ''), arquivo: arqs.get(f), titulo, resumo, pedido, icone };
   });
 }
 
@@ -373,9 +384,12 @@ trata('tarefas:listar', () => T.todas());
 trata('tarefas:cancelar', id => T.cancelar(id));
 trata('receitas:listar', () => listarReceitas());
 trata('fontes:listar', () => Fo.listar());
-trata('receitas:ler', id => fs.readFileSync(path.join(DIR_RECEITAS, path.basename(id) + '.md'), 'utf8'));
+trata('receitas:ler', id => fs.readFileSync(arquivosReceitas().get(path.basename(id) + '.md'), 'utf8'));
 trata('config:ler', () => { let claude = ''; try { claude = C.acharClaude(); } catch {} return { ...U.cfg(), claudeAchado: claude }; });
 trata('config:gravar', c => U.gravarCfg(c));
+trata('preparar:verificar', () => Pr.verificar());
+trata('preparar:instalar', ids => Pr.instalar(ids, ev => enviar('preparar', ev)));
+trata('preparar:entrar', () => Pr.entrar());
 trata('abrir', alvo => { if (fs.existsSync(alvo) && fs.statSync(alvo).isFile()) shell.showItemInFolder(alvo); else shell.openPath(alvo); return true; });
 trata('abrirArquivo', alvo => shell.openPath(alvo));
 
@@ -638,9 +652,9 @@ trata('reiniciar', () => {
 });
 
 app.whenReady().then(async () => {
-  vigiarAtualizacao();
+  if (!app.isPackaged) vigiarAtualizacao();
   app.setAppUserModelId('com.blueocean.studio');
-  if (process.platform === 'win32' && !ISOLADO && /Blue Ocean Studio.exe$/i.test(process.execPath)) {
+  if (process.platform === 'win32' && !ISOLADO && !app.isPackaged && /Blue Ocean Studio.exe$/i.test(process.execPath)) {
     const opcoes = { target: process.execPath, args: `"${__dirname}"`, cwd: __dirname, icon: path.join(__dirname, 'assets', 'icone.ico'), iconIndex: 0,
       appUserModelId: 'com.blueocean.studio', description: 'Editor de vídeo da Blue Ocean com o Claude' };
     const atalho = path.join(app.getPath('appData'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Blue Ocean Studio.lnk');

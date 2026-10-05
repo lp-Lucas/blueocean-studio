@@ -44,6 +44,7 @@ function conversar({ cwd, prompt, sessao, sistema, env, aoEvento, controle }) {
     const args = ['-p', '--output-format', 'stream-json', '--verbose', '--include-partial-messages',
       '--permission-mode', 'acceptEdits',
       '--add-dir', U.RAIZ];
+    if (U.DADOS !== U.RAIZ) args.push('--add-dir', U.DADOS);
     if (cfg.acervo && fs.existsSync(cfg.acervo)) args.push('--add-dir', cfg.acervo);
     if (sistema) args.push('--append-system-prompt-file', sistema);
     if (sessao) args.push('--resume', sessao);

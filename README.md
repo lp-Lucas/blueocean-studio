@@ -4,12 +4,15 @@ Editor de vídeo desktop da Blue Ocean: preview em tempo real de um lado, agente
 
 **Idealizado e desenvolvido por Lucas Pessoa Cordeiro ([lp-Lucas](https://github.com/lp-Lucas)).**
 
-## Instalar
-Precisa de Node, ffmpeg, yt-dlp, Claude Code e Python com faster-whisper.
+## Instalar (Windows)
+Baixe **Instalar Blue Ocean Studio.exe** em [Releases](../../releases) e rode. Na primeira abertura, a tela
+**Preparar** instala o resto sozinha (FFmpeg, yt-dlp, Git, Claude Code e a transcrição) e pede para entrar na conta do Claude.
 
+## Desenvolver
 ```
 npm install
-INSTALAR.bat
+npm start               # roda do código-fonte
+npm run instalador      # gera dist\Instalar Blue Ocean Studio <versão>.exe
 ```
 
 Como usar: [COMO USAR.md](COMO%20USAR.md).

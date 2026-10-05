@@ -720,3 +720,28 @@ body.modo-padrao #chips, body.modo-padrao #contextoChat { display: none; }
 .comps-seta:hover { background: var(--vidro-3); color: var(--texto); }
 .comps-seta i { width: 14px; height: 14px; }
 .comps-info { flex: none; margin-bottom: 4px; }
+
+/* ── Preparar (primeira abertura: instala o que falta) ── */
+#preparar { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: radial-gradient(120% 90% at 50% 0%, rgba(45,107,255,.16), transparent 60%), rgba(6,7,10,.86); backdrop-filter: blur(10px); animation: fadeIn .25s; }
+.prep-caixa { width: 560px; max-width: calc(100vw - 40px); max-height: calc(100vh - 60px); overflow: auto; padding: 26px; border-radius: 22px; background: rgba(28, 29, 36, .94); border: 1px solid var(--borda-2); box-shadow: var(--realce), var(--sombra-flutua); display: flex; flex-direction: column; gap: 18px; animation: modalIn .4s var(--mola); }
+.prep-topo { display: flex; gap: 14px; align-items: center; }
+.prep-topo img { width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 6px 20px rgba(45,107,255,.35); }
+.prep-topo h2 { font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+.prep-lista { display: flex; flex-direction: column; gap: 6px; }
+.prep-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: var(--vidro-2); border: 1px solid transparent; transition: border-color .2s, background .2s; }
+.prep-item .ico { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--azul-fundo); color: var(--azul-2); flex: none; }
+.prep-item .ico i { width: 16px; height: 16px; }
+.prep-item .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.prep-item .txt b { font-size: 13px; font-weight: 600; }
+.prep-item .txt span { font-size: 11.5px; color: var(--texto-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prep-item .barrinha { margin-top: 4px; }
+.prep-item .estado { flex: none; display: grid; place-items: center; min-width: 22px; }
+.prep-item.ok .estado { color: var(--verde); }
+.prep-item.ok .estado i { width: 18px; height: 18px; }
+.prep-item.instalando { border-color: rgba(82,135,255,.45); background: rgba(45,107,255,.08); }
+.prep-item.erro { border-color: rgba(255,90,95,.35); }
+.prep-item.erro .estado, .prep-item.erro .txt span { color: var(--perigo); white-space: normal; }
+.prep-item .falta-pt { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.22); }
+.prep-item .girando { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.15); border-top-color: var(--azul-2); animation: girar .8s linear infinite; }
+.prep-caixa .acoes { display: flex; justify-content: flex-end; gap: 8px; }
+.prep-nota { margin-top: -6px; }

@@ -470,7 +470,8 @@ $('#btnConfig').onclick = async () => {
     <div><label class="rot">Python com faster-whisper (transcrição)</label><input class="num" id="mPython" value="${esc(c.python)}"></div>
     <div><label class="rot">Acervo de reações</label><input class="num" id="mAcervo" value="${esc(c.acervo)}"></div>
     <div><label class="rot">Codificador</label><div class="segmentos" id="mEnc">${[['h264_nvenc', 'Placa NVIDIA'], ['libx264', 'Processador']].map(([v, n]) => `<button data-v="${v}" class="${c.encoder === v ? 'on' : ''}">${n}</button>`).join('')}</div></div>
-    <div class="acoes"><button class="btn suave" id="mCancelar">Cancelar</button><button class="btn primario" id="mSalvar">Salvar</button></div>`, cx => {
+    <div class="acoes"><button class="btn suave" id="mVerificar" style="margin-right:auto"><i data-i="check"></i>Verificar instalação</button><button class="btn suave" id="mCancelar">Cancelar</button><button class="btn primario" id="mSalvar">Salvar</button></div>`, cx => {
+    cx.querySelector('#mVerificar').onclick = () => { fecharModal(); PREP.abrir(); };
     cx.querySelectorAll('.segmentos').forEach(s => s.onclick = e => { const b = e.target.closest('button'); if (b) s.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
     cx.querySelector('#mCancelar').onclick = fecharModal;
     cx.querySelector('#mSalvar').onclick = async () => {

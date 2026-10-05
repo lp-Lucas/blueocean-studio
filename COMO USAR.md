@@ -57,11 +57,21 @@ Procurar e trocar corrige um erro em tudo (ex.: “blu ocean” → “Blue Ocea
 | Ctrl+roda na linha do tempo | zoom |
 
 ## Onde fica cada coisa
+Instalado pelo .exe, os dados ficam em `Documentos\Blue Ocean Studio`; rodando do código-fonte, na pasta do programa.
 - `projetos/<nome>/` — mídias (`projeto.json`), um arquivo por vídeo em `composicoes/`, conversa, transcrições, `saidas/`.
 - `receitas/` — os processos salvos. Peça "salve isso como receita" e o Claude escreve uma nova.
 - `config.json` — modelo do Claude, Python da transcrição, placa de vídeo (também em Configurações ⚙).
 - Os vídeos originais nunca são copiados nem alterados: o projeto só aponta para eles.
 
-## Precisa ter
-Node, ffmpeg, yt-dlp, Claude Code e o Python com faster-whisper
-(hoje em `KIKO CAPUTO\editor\.venv` — ajustável em Configurações).
+## Instalar num computador novo
+1. Rode **Instalar Blue Ocean Studio.exe**. O Windows pode avisar "O Windows protegeu o computador":
+   clique em **Mais informações → Executar assim mesmo** (o instalador não é assinado digitalmente).
+2. Na primeira abertura aparece **Preparar**: clique em **Instalar o que falta**. Ele baixa FFmpeg, yt-dlp + Deno,
+   Git, Claude Code e a transcrição (Whisper; com placa NVIDIA são ~3 GB). Tudo na conta do usuário, sem administrador,
+   em `%LOCALAPPDATA%\BlueOceanStudio\ferramentas`.
+3. Clique em **Entrar** e confirme a conta do Claude no navegador (precisa de plano Pro, Max ou Team).
+
+Para conferir depois: Configurações ⚙ → **Verificar instalação**.
+
+## Gerar o instalador
+`npm install` e depois `npm run instalador` — sai em `dist\Instalar Blue Ocean Studio <versão>.exe`.

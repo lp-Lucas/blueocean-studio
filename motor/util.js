@@ -4,13 +4,20 @@ const fs = require('fs');
 const path = require('path');
 
 const RAIZ = path.join(__dirname, '..');
-const ARQ_CFG = path.join(RAIZ, 'config.json');
+// DADOS: projetos, configuração e receitas novas. Rodando do código-fonte é a própria pasta do programa;
+// instalado (.exe), o main.js aponta para Documentos\Blue Ocean Studio (BO_DADOS), que sobrevive a atualizações.
+const DADOS = process.env.BO_DADOS || RAIZ;
+// ferramentas instaladas pela tela "Preparar" (ffmpeg, yt-dlp, deno, uv, Python da transcrição)
+const FERRAMENTAS = path.join(process.env.LOCALAPPDATA || require('os').homedir(), 'BlueOceanStudio', 'ferramentas');
+const PY_FERRAMENTAS = path.join(FERRAMENTAS, 'whisper', 'Scripts', 'python.exe');
+const PY_ANTIGO = 'C:\\Users\\lpess\\OneDrive\\Documentos\\Projetos\\KIKO CAPUTO\\editor\\.venv\\Scripts\\python.exe';
+const ARQ_CFG = path.join(DADOS, 'config.json');
 const PADRAO_CFG = {
-  python: 'C:\\Users\\lpess\\OneDrive\\Documentos\\Projetos\\KIKO CAPUTO\\editor\\.venv\\Scripts\\python.exe',
+  python: fs.existsSync(PY_FERRAMENTAS) || !fs.existsSync(PY_ANTIGO) ? PY_FERRAMENTAS : PY_ANTIGO,
   claude: '',          // vazio = acha sozinho (PATH ou extensão do VS Code)
   modelo: '',          // vazio = padrão do Claude Code; "sonnet", "opus"...
   encoder: 'h264_nvenc',
-  acervo: 'C:\\Users\\lpess\\OneDrive\\Documentos\\blueocean\\acervo neri',
+  acervo: '',
 };
 function cfg() {
   let c = {};
@@ -19,6 +26,7 @@ function cfg() {
 }
 function gravarCfg(novo) {
   const c = { ...cfg(), ...novo };
+  fs.mkdirSync(DADOS, { recursive: true });
   fs.writeFileSync(ARQ_CFG, JSON.stringify(c, null, 2));
   return c;
 }
@@ -102,4 +110,4 @@ async function codificar(args, dur, aoPct, controle, cwd) {
   }
 }
 
-module.exports = { RAIZ, cfg, gravarCfg, ler, gravar, rodar, info, corNormal, paraFiltro, limparNome, tempo, IMAGEM, VIDEO, AUDIO, vcodec, codificar };
+module.exports = { RAIZ, DADOS, FERRAMENTAS, PY_FERRAMENTAS, cfg, gravarCfg, ler, gravar, rodar, info, corNormal, paraFiltro, limparNome, tempo, IMAGEM, VIDEO, AUDIO, vcodec, codificar };

@@ -1,2 +1,4 @@
 AUTORIA-commit*.txt -text
 *.ots binary
+bin/bo text eol=lf
+*.sh text eol=lf

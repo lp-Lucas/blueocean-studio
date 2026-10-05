@@ -6,13 +6,14 @@ import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 
 const APP = path.dirname(fileURLToPath(import.meta.url));
+const DADOS = process.env.BO_DADOS || APP;   // instalado: Documentos\Blue Ocean Studio
 let porta = process.env.BO_PORTA, token = process.env.BO_TOKEN;
-try { const c = JSON.parse(fs.readFileSync(path.join(APP, process.env.BO_CONTROLE || '.controle.json'), 'utf8')); if (!porta || !token) ({ porta, token } = c); else if (String(c.porta) !== String(porta)) ({ porta, token } = c); } catch {}
+try { const c = JSON.parse(fs.readFileSync(path.join(DADOS, process.env.BO_CONTROLE || '.controle.json'), 'utf8')); if (!porta || !token) ({ porta, token } = c); else if (String(c.porta) !== String(porta)) ({ porta, token } = c); } catch {}
 if (!porta) { console.error('O Blue Ocean Studio não está aberto. Abra o programa e tente de novo.'); process.exit(2); }
 
 // projeto: variável do app, ou a pasta projetos/<nome> em que o comando rodou
 let projeto = process.env.BO_PROJETO || null;
-const rel = path.relative(path.join(APP, 'projetos'), process.cwd());
+const rel = path.relative(path.join(DADOS, 'projetos'), process.cwd());
 if (!rel.startsWith('..') && !path.isAbsolute(rel) && rel) projeto = rel.split(path.sep)[0];
 
 const [cmd, ...args] = process.argv.slice(2);

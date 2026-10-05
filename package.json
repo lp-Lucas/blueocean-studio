@@ -1,16 +1,62 @@
 {
   "name": "blueocean-studio",
   "productName": "Blue Ocean Studio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Editor de vídeo da Blue Ocean com chat do Claude",
   "author": "Lucas Pessoa Cordeiro (https://github.com/lp-Lucas)",
   "main": "main.js",
   "private": true,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "instalador": "electron-builder --win nsis"
   },
   "devDependencies": {
     "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
     "rcedit": "^5.0.2"
+  },
+  "build": {
+    "appId": "com.blueocean.studio",
+    "productName": "Blue Ocean Studio",
+    "copyright": "Lucas Pessoa Cordeiro",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": false,
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!projetos/**",
+      "!cache/**",
+      "!config.json",
+      "!.controle*.json",
+      "!*.lnk",
+      "!ABRIR.bat",
+      "!INSTALAR.bat",
+      "!instalar.js",
+      "!motor/.sistema-gerado.md",
+      "!AUTORIA-commit*",
+      "!ferramentas/motion/fullmotion/**/*.{png,jpg,mp4,wav}",
+      "!ferramentas/motion/vinhetas/**/*.{png,mp4,wav}",
+      "!**/*.{onnx,pt,torchscript}",
+      "!**/__pycache__/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icone.ico",
+      "executableName": "Blue Ocean Studio"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Blue Ocean Studio",
+      "installerIcon": "assets/icone.ico",
+      "uninstallerIcon": "assets/icone.ico",
+      "artifactName": "Instalar Blue Ocean Studio ${version}.${ext}",
+      "deleteAppDataOnUninstall": false
+    }
   }
 }
