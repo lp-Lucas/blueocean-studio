@@ -1,0 +1,15 @@
+{
+  "name": "blueocean-studio",
+  "productName": "Blue Ocean Studio",
+  "version": "1.0.0",
+  "description": "Editor de vídeo da Blue Ocean com chat do Claude",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "rcedit": "^5.0.2"
+  }
+}

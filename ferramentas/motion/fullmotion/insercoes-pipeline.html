@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Inserções de motion — Pipeline cheio (Social Media MOTION)</title>
+<link rel="stylesheet" href="fm.css">
+<style>
+  /* inserções: a página é transparente e vai por cima do vídeo da pessoa (render.mjs --sobre) */
+  html, body { background: transparent !important; }
+  #azul, #leg { display: none !important; }
+  .sh { color: #fff; text-shadow: 0 4px 22px rgba(0, 0, 0, .55), 0 1px 3px rgba(0, 0, 0, .4); }
+  .sh b { color: var(--verde); }
+
+  /* meta do mês (gancho) */
+  #meta { width: 820px; padding: 34px 40px 30px; }
+  #meta .top { display: flex; align-items: center; gap: 20px; font-size: 40px; font-weight: 700; }
+  #meta .top .ic { position: static; opacity: 1; margin: 0; box-shadow: none; }
+  #meta .pct { margin-left: auto; color: var(--azul); font-variant-numeric: tabular-nums; font-size: 48px; }
+  #meta .trilho { position: relative; height: 28px; border-radius: 14px; background: #E8EBF2; margin-top: 26px; }
+  #meta .enche { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 14px; background: linear-gradient(90deg, #4C74FF, #0037FF); }
+  #meta .alvo { position: absolute; right: -4px; top: -14px; width: 8px; height: 56px; border-radius: 4px; background: var(--tinta); }
+  #meta .sub { display: flex; justify-content: space-between; margin-top: 16px; font-size: 26px; font-weight: 600; color: #8A90A2; }
+  #meta .sub .aviso { color: #E5484D; opacity: 0; }
+
+  /* cartões de negociação */
+  .deal { width: 290px; padding: 22px 22px 20px; }
+  .deal .lin { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 700; }
+  .deal .av { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 700; flex: none; }
+  .deal .val { font-size: 40px; font-weight: 700; margin-top: 12px; letter-spacing: -0.03em; }
+  .deal .tags { position: relative; height: 48px; margin-top: 12px; }
+  .deal .tag { position: absolute; left: 0; top: 0; height: 48px; padding: 0 18px; border-radius: 999px; display: flex; align-items: center; gap: 8px;
+               font-size: 24px; font-weight: 700; white-space: nowrap; }
+  .deal .tag.op { background: #EEF2FF; color: var(--azul); }
+  .deal .tag.no { background: #F1F2F5; color: #8A90A2; opacity: 0; }
+  .deal .tag svg { width: 22px; height: 22px; }
+
+  /* notificação de proposta */
+  #notif { width: 880px; padding: 26px 30px; display: flex; align-items: center; gap: 24px; border-radius: 36px; background: rgba(255, 255, 255, .97); }
+  #notif .ic { position: static; opacity: 1; margin: 0; flex: none; box-shadow: none; }
+  #notif .tx { flex: 1; min-width: 0; }
+  #notif .t1 { font-size: 36px; font-weight: 700; display: flex; }
+  #notif .t1 .qd { margin-left: auto; font-size: 26px; font-weight: 600; color: #8A90A2; font-variant-numeric: tabular-nums; }
+  #notif .t2 { position: relative; height: 40px; margin-top: 6px; font-size: 28px; font-weight: 500; color: #8A90A2; }
+  #notif .t2 > div { position: absolute; left: 0; top: 0; white-space: nowrap; display: flex; align-items: center; gap: 10px; }
+  #notif .pts i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #B4BACB; margin-right: 6px; }
+  #notif .lido { color: var(--azul); font-weight: 600; opacity: 0; }
+
+  /* chips de negociação perdida */
+  .perd { background: rgba(255, 255, 255, .96); color: var(--tinta); }
+  .perd .xis { width: 52px; height: 52px; border-radius: 50%; background: #F1F2F5; display: grid; place-items: center; }
+  .perd .xis svg { width: 28px; height: 28px; }
+
+  /* cartão azul de número */
+  #receita { width: 720px; height: 300px; border-radius: 40px; padding: 34px 40px; color: #fff; overflow: hidden;
+             background: linear-gradient(150deg, #1446FF, #0630C4); box-shadow: 0 30px 70px rgba(0, 15, 90, .45); }
+  #receita .rot { font-size: 30px; font-weight: 600; opacity: .85; }
+  #receita .num { font-size: 92px; font-weight: 700; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; margin-top: 4px; }
+  #receita .alerta { position: absolute; left: 40px; bottom: 30px; height: 50px; padding: 0 20px; border-radius: 999px; background: #fff; color: var(--tinta);
+                     display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; opacity: 0; }
+  #receita .alerta i { width: 14px; height: 14px; border-radius: 50%; background: #E5484D; }
+  #receita svg.graf { position: absolute; right: 30px; bottom: 30px; width: 300px; height: 150px; }
+
+  /* rótulo azul (estilo "Método Blue") */
+  .rotulo { padding: 14px 34px; border-radius: 16px; background: var(--azul); color: #fff; font-weight: 700; white-space: nowrap;
+            box-shadow: 0 20px 50px rgba(0, 20, 120, .45); }
+  .rotulo b { color: var(--verde); }
+
+  /* pílulas de pergunta (estilo dos reels: azul com ícone verde-água) */
+  .perg { display: flex; align-items: center; gap: 24px; width: 780px; padding: 22px 34px 22px 22px; border-radius: 30px; color: #fff;
+          background: linear-gradient(135deg, #1C46F0, #0A2CB8); box-shadow: 0 24px 60px rgba(0, 10, 60, .5); }
+  .perg .tile { width: 100px; height: 100px; border-radius: 26px; background: linear-gradient(150deg, #2BF0CF, #12D6B4); display: grid; place-items: center; flex: none; }
+  .perg .tile svg { width: 54px; height: 54px; fill: none; stroke: #0A1A5C; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .perg small { display: block; font-size: 24px; font-weight: 700; color: var(--verde); letter-spacing: .08em; margin-bottom: 4px; }
+  .perg span { display: block; font-size: 38px; font-weight: 600; line-height: 1.12; }
+
+  /* triagem do pipeline */
+  #triagem { width: 920px; height: 450px; }
+  #triagem .cab { position: absolute; top: 34px; height: 60px; display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 700; white-space: nowrap; opacity: 0; }
+  #triagem .cab .bol { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; }
+  #triagem .cab .bol svg { width: 26px; height: 26px; }
+  #triagem .div { position: absolute; left: 460px; top: 40px; bottom: 40px; width: 3px; border-radius: 2px; background: #EEF0F5; opacity: 0; }
+  .opp { position: absolute; left: 0; top: 0; width: 390px; height: 76px; border-radius: 22px; background: #F5F6FA; display: flex; align-items: center; gap: 16px;
+        padding: 0 18px; font-size: 28px; font-weight: 600; opacity: 0; white-space: nowrap; }
+  .opp .av { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 20px; font-weight: 700; flex: none; }
+  .opp .v { margin-left: auto; font-weight: 700; color: var(--tinta); }
+  .opp .ok { position: absolute; right: -14px; top: -14px; width: 42px; height: 42px; border-radius: 50%; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  .opp .ok svg { width: 24px; height: 24px; }
+
+  /* funil + foco */
+  .ic.vidro { background: linear-gradient(150deg, rgba(40, 90, 255, .92), rgba(0, 45, 220, .92)); }
+  .ic.vidro svg { stroke: #fff; }
+  #logo { width: 430px; }
+  /* véu escuro suave atrás dos textos soltos (luminárias do fundo) */
+  .veu { position: absolute; width: 1080px; height: 520px; left: 0; transform: translateY(-50%); opacity: 0; z-index: 1; pointer-events: none;
+         background: radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0, 4, 20, .62), rgba(0, 4, 20, .32) 55%, transparent 100%); }
+  .risca { position: absolute; left: -2%; right: -2%; top: 52%; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0);
+           box-shadow: 0 2px 10px rgba(0, 0, 0, .4); }
+
+  /* triagem, 1ª parte: cabeçalho, moldura que revisa e "?" em cada negociação */
+  #triagem .cab0 { position: absolute; left: 36px; right: 36px; top: 30px; height: 70px; display: flex; align-items: center; gap: 18px; font-size: 34px; font-weight: 700; white-space: nowrap; }
+  #triagem .cab0 .ic { position: static; opacity: 1; margin: 0; box-shadow: none; }
+  #triagem .cab0 .rev { margin-left: auto; height: 46px; padding: 0 18px; border-radius: 999px; background: #EEF2FF; color: var(--azul); font-size: 24px; font-weight: 700;
+                         display: flex; align-items: center; font-variant-numeric: tabular-nums; }
+  #scan { position: absolute; left: 0; top: 0; width: 414px; height: 96px; border-radius: 28px; border: 4px solid var(--azul); background: rgba(0, 55, 255, .05);
+          box-shadow: 0 10px 30px rgba(0, 55, 255, .18); opacity: 0; }
+  .opp .q { position: absolute; right: -14px; top: -14px; width: 42px; height: 42px; border-radius: 50%; background: #E3E6EE; color: #6B7184; font-size: 26px; font-weight: 700;
+            display: grid; place-items: center; opacity: 0; }
+
+  /* tela cheia (5,7 → 10,4 s): fundo claro com furo (círculo fechando / quadrado abrindo) */
+  #tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+  .fs { z-index: 6; }
+  #fsRot { font-size: 36px; font-weight: 600; color: #8A90A2; }
+  #fsNum { font-size: 132px; font-weight: 700; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  #fsNum .risca { background: var(--tinta); box-shadow: none; height: 10px; }
+  #fsReal { font-size: 42px; }
+  #quadro { width: 960px; height: 650px; padding: 30px 30px; }
+  #quadro .col { position: absolute; top: 34px; width: 280px; font-size: 28px; font-weight: 700; color: #8A90A2; display: flex; align-items: center; gap: 12px; }
+  #quadro .col i { font-style: normal; height: 36px; padding: 0 12px; border-radius: 999px; background: #F1F2F5; font-size: 22px; display: grid; place-items: center; }
+  .neg { position: absolute; left: 0; top: 0; width: 280px; height: 166px; border-radius: 26px; background: #F5F6FA; padding: 18px 20px; opacity: 0; }
+  .neg .lin { display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 700; }
+  .neg .av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 18px; font-weight: 700; flex: none; }
+  .neg .val { font-size: 34px; font-weight: 700; margin-top: 8px; letter-spacing: -0.03em; }
+  .neg .tags { position: relative; height: 40px; margin-top: 8px; }
+  .neg .tag { position: absolute; left: 0; top: 0; height: 40px; padding: 0 14px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-size: 20px; font-weight: 700; white-space: nowrap; }
+  .neg .tag.op { background: #E4EAFF; color: var(--azul); }
+  .neg .tag.no { background: #ECEDF1; color: #8A90A2; opacity: 0; }
+  .neg .tag.si { background: var(--verde); color: #0A1A5C; opacity: 0; }
+  .neg .tag svg { width: 18px; height: 18px; }
+  /* legenda padrão Blue Ocean desenhada aqui só na tela cheia: letra escura no fundo claro (o editor só tem legenda branca) */
+  @font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../fontes/Montserrat-Bold.ttf'); }
+  #legFS { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 70; pointer-events: none; }
+  #legFS text { font-family: 'MontB'; font-weight: 700; font-size: 46.1px; letter-spacing: 0; }
+</style>
+</head>
+<body>
+
+<div class="veu" id="veuTopo" style="top:390px"></div>
+<div class="veu" id="veuPeito" style="top:1330px"></div>
+
+<!-- 1 · gancho: meta do mês travada + pipeline cheio -->
+<div class="p cartao" id="meta" style="left:540px;top:390px">
+  <div class="top"><div class="ic az" id="metaIc" style="--s:84px"></div>Meta do mês<span class="pct" id="metaPct">0%</span></div>
+  <div class="trilho"><div class="enche" id="metaBar" style="width:0"></div><div class="alvo"></div></div>
+  <div class="sub"><span class="aviso" id="metaAviso">não vai bater</span><span>R$ 100 mil</span></div>
+</div>
+<div class="p chip claro" id="pipe" style="left:540px;top:600px"><div class="ic br" id="pipeIc" style="--s:64px;position:static;opacity:1;margin:0;box-shadow:none"></div>
+  Pipeline cheio · <b class="az" id="pipeN">0</b> <span style="font-weight:500">negociações</span></div>
+
+<!-- 2 · TELA CHEIA (5,7 → 10,4 s): círculo fecha sobre ele → pipeline cheio → só 2 com chance real → ele volta num quadrado -->
+<svg id="tela" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="cinza" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="#FAFAFB"/><stop offset=".55" stop-color="#EFEFF1"/><stop offset="1" stop-color="#E6E6E9"/></radialGradient>
+    <filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0A1A5C" flood-opacity=".28"/></filter>
+  </defs>
+  <path id="telaFundo" fill="url(#cinza)" fill-rule="evenodd" d=""/>
+  <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
+  <path id="telaArco" fill="none" stroke="#00FFD4" stroke-width="26" stroke-linecap="round" d=""/>
+</svg>
+<div class="p fs" id="fsRot" style="left:540px;top:285px">Pipeline do mês</div>
+<div class="p fs" id="fsNum" style="left:540px;top:390px">R$ 0</div>
+<div class="p fs chip azulc" id="fsReal" style="left:540px;top:528px"><div id="fsOk" style="width:52px;height:52px;border-radius:50%;background:var(--verde);display:grid;place-items:center"></div>Só <b>R$ 96.000</b>&nbsp;com chance real</div>
+<div class="p fs cartao" id="quadro" style="left:540px;top:990px">
+  <div class="col" style="left:30px">Proposta <i>3</i></div>
+  <div class="col" style="left:340px">Negociação <i>3</i></div>
+  <div class="col" style="left:650px">Fechamento <i>3</i></div>
+</div>
+
+<!-- 3 · proposta aberta há semanas -->
+<div class="p" id="notif" style="left:540px;top:330px;box-shadow:0 26px 60px rgba(0,10,60,.4)">
+  <div class="ic az" id="notifIc" style="--s:88px"></div>
+  <div class="tx"><div class="t1">Proposta enviada<span class="qd" id="notifQd">há 1 semana</span></div>
+    <div class="t2"><div class="pts" id="notifPts"><span><i></i><i></i><i></i></span>aguardando resposta</div>
+      <div class="lido" id="notifLido">✓✓ Visualizada · sem resposta</div></div></div>
+</div>
+
+<!-- 4 · perdidas mas contabilizadas como receita provável -->
+<div class="p chip perd" id="pd1" style="left:330px;top:1210px"><div class="xis" id="pdx1"></div>Negociação perdida</div>
+<div class="p chip perd" id="pd2" style="left:750px;top:1300px"><div class="xis" id="pdx2"></div>Negociação perdida</div>
+<div class="p" id="receita" style="left:540px;top:1430px">
+  <div class="rot">Receita provável do mês</div><div class="num" id="recN">R$ 0</div>
+  <svg class="graf" viewBox="0 0 300 150"><path id="recG" d="M10 135 C 60 128, 90 110, 130 100 S 200 70, 230 45 S 275 18, 292 10" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="alerta" id="recA"><i></i>inclui negócios perdidos</div>
+</div>
+
+<!-- 5 · ainda dá tempo -->
+<div class="p linha sh" id="tempo1" style="left:540px;top:330px;font-size:60px;font-weight:600">Mas ainda dá tempo</div>
+<div class="p linha sh" id="tempo2" style="left:540px;top:430px;font-size:96px;font-weight:700;letter-spacing:-0.04em">de <b>salvar o mês.</b></div>
+
+<!-- 6 · três perguntas -->
+<div class="p rotulo" id="tres" style="left:540px;top:400px;font-size:64px"><b>3</b> perguntas</div>
+
+<!-- 7 · as três perguntas (pílulas empilhando) -->
+<div class="p perg" id="q1" style="left:540px;top:1400px"><div class="tile" id="qt1"></div><div><small>PERGUNTA 1</small><span>Existe um próximo passo agendado?</span></div></div>
+<div class="p perg" id="q2" style="left:540px;top:1400px"><div class="tile" id="qt2"></div><div><small>PERGUNTA 2</small><span>Quem aprova a compra já está envolvido?</span></div></div>
+<div class="p perg" id="q3" style="left:540px;top:1400px"><div class="tile" id="qt3"></div><div><small>PERGUNTA 3</small><span>O que impede de fechar este mês?</span></div></div>
+
+<!-- 8 · priorizar × só inflando a previsão -->
+<div class="p cartao" id="triagem" style="left:540px;top:430px">
+  <div class="cab0" id="cab0"><div class="ic az" id="cab0Ic" style="--s:70px"></div>Pipeline do mês<span class="rev" id="rev">Revisando 1/4</span></div>
+  <div id="scan"></div>
+  <div class="cab" id="cabA" style="left:40px"><div class="bol" style="background:var(--verde)" id="cabAi"></div>Priorizar</div>
+  <div class="cab" id="cabB" style="left:500px;color:#8A90A2"><div class="bol" style="background:#F1F2F5" id="cabBi"></div>Só inflando a previsão</div>
+  <div class="div" id="triDiv"></div>
+  <div class="opp" id="o1"><div class="q">?</div><div class="av" style="background:#0037FF">AT</div>Atlas<span class="v">R$ 18k</span><div class="ok"></div></div>
+  <div class="opp" id="o2"><div class="q">?</div><div class="av" style="background:#8A90A2">BR</div>Brisa<span class="v">R$ 40k</span><div class="ok"></div></div>
+  <div class="opp" id="o3"><div class="q">?</div><div class="av" style="background:#12D6B4">NV</div>Nuvio<span class="v">R$ 32k</span><div class="ok"></div></div>
+  <div class="opp" id="o4"><div class="q">?</div><div class="av" style="background:#8A90A2">LM</div>Lume<span class="v">R$ 27k</span><div class="ok"></div></div>
+</div>
+
+<!-- 9 · não tente mover todo o pipeline -->
+<div class="p linha sh" id="mov1" style="left:540px;top:1230px;font-size:46px;font-weight:600">No fim do mês,</div>
+<div class="p linha sh" id="mov2" style="left:540px;top:1310px;font-size:62px;font-weight:600">não tente movimentar</div>
+<div class="p linha sh" id="mov3" style="left:540px;top:1410px;font-size:92px;font-weight:700;letter-spacing:-0.04em"><b>todo o pipeline</b></div>
+
+<!-- 10 · foco nas oportunidades com maior chance -->
+<div class="p ic vidro" id="funil" style="--s:190px;left:540px;top:1230px;margin:0"></div>
+<div class="p rotulo" id="foco" style="left:540px;top:1420px;font-size:50px">Maior <b>chance de fechamento</b></div>
+
+<!-- 11 · pipeline cheio não bate a meta -->
+<div class="p linha sh" id="fim1" style="left:540px;top:330px;font-size:84px;font-weight:700;letter-spacing:-0.04em">Pipeline cheio</div>
+<div class="p linha sh" id="fim2" style="left:540px;top:440px;font-size:84px;font-weight:700;letter-spacing:-0.04em"><b>não bate a meta.</b></div>
+
+<!-- 12 · prioridade comercial, sim -->
+<div class="p chip claro" id="prio" style="left:540px;top:1400px;font-size:46px"><div class="ok" id="prioOk" style="width:58px;height:58px"></div>Prioridade comercial, <b class="az">sim.</b></div>
+
+<svg id="legFS" viewBox="0 0 1080 1920"><g id="legFSg"></g></svg>
+<script src="../motion.js"></script>
+<script src="fm.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM, A = FM.anim;
+window.DURACAO = 63.28;
+
+// ícones
+const glifo = (el, g, cor) => { el.innerHTML = FM.svg(g, cor, 2.6); };
+FM.icone; // (só para lembrar: aqui os ícones são inline, já posicionados no layout)
+$('#metaIc').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.alvo}"/></svg>`;
+$('#pipeIc').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.funil}"/></svg>`;
+$('#notifIc').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.chat}"/></svg>`;
+$('#funil').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.funil}"/></svg>`;
+for (const d of document.querySelectorAll('.deal .tag.no')) d.innerHTML = FM.svg('x', '#8A90A2', 3) + 'Sem chance real';
+glifo($('#pdx1'), 'x', '#8A90A2'); glifo($('#pdx2'), 'x', '#8A90A2');
+glifo($('#qt1'), 'agenda', '#0A1A5C'); glifo($('#qt2'), 'pessoa', '#0A1A5C'); glifo($('#qt3'), 'alvo', '#0A1A5C');
+glifo($('#cabAi'), 'check', '#0A1A5C'); glifo($('#cabBi'), 'x', '#8A90A2');
+for (const o of document.querySelectorAll(".opp .ok")) o.innerHTML = FM.svg('check', '#0A1A5C', 3.2);
+$('#cab0Ic').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.funil}"/></svg>`;
+$('#fsOk').innerHTML = FM.svg('check', '#0A1A5C', 3.2); $('#fsOk').firstChild.style.width = '30px';
+// quadro do pipeline: 3 colunas × 3 negociações; só Nuvio e Kora têm chance real
+const NEG = [['Atlas', 'AT', '#0037FF', 18], ['Brisa', 'BR', '#7C8BFF', 40], ['Orion', 'OR', '#0A1A5C', 22],
+             ['Nuvio', 'NV', '#12D6B4', 32], ['Lume', 'LM', '#5B6B9A', 27], ['Vetta', 'VT', '#0037FF', 51],
+             ['Kora', 'KR', '#0A1A5C', 64], ['Pixel', 'PX', '#12D6B4', 76], ['Duna', 'DN', '#7C8BFF', 82]];
+const REAL = new Set(['Nuvio', 'Kora']);
+const ORDEM_CAI = [0, 0.08, 0.16, 0, 0.24, 0.32, 0, 0.4, 0.48];
+const negs = NEG.map(([n, ini, cor, v], k) => {
+  const d = document.createElement('div'); d.className = 'neg';
+  d.innerHTML = `<div class="lin"><div class="av" style="background:${cor}">${ini}</div>${n}</div><div class="val">R$ ${v} mil</div>
+    <div class="tags"><div class="tag op">Oportunidade</div><div class="tag no">${FM.svg('x', '#8A90A2', 3)}Sem chance real</div><div class="tag si">${FM.svg('check', '#0A1A5C', 3)}Chance real</div></div>`;
+  d.style.left = (30 + Math.floor(k / 3) * 310) + 'px'; d.style.top = (100 + (k % 3) * 180) + 'px';
+  $('#quadro').appendChild(d); return { d, real: REAL.has(n), k };
+});
+/* furo no fundo claro: círculo (raio r) ou retângulo arredondado (w×h, raio rr) centrado em (cx, cy) */
+const FORA = 'M-60 -60 H1140 V1980 H-60 Z ';
+const circulo = (cx, cy, r) => `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
+const retang = (cx, cy, w, h, rr) => { const x = cx - w / 2, y = cy - h / 2; rr = Math.min(rr, w / 2, h / 2);
+  return `M${x + rr} ${y} H${x + w - rr} A${rr} ${rr} 0 0 1 ${x + w} ${y + rr} V${y + h - rr} A${rr} ${rr} 0 0 1 ${x + w - rr} ${y + h} H${x + rr} A${rr} ${rr} 0 0 1 ${x} ${y + h - rr} V${y + rr} A${rr} ${rr} 0 0 1 ${x + rr} ${y} Z`; };
+$('#prioOk').className = 'ok'; $('#prioOk').innerHTML = FM.svg('check', '#0A1A5C', 3);
+Object.assign($('#prioOk').style, { borderRadius: '50%', background: 'var(--verde)', display: 'grid', placeItems: 'center' });
+$('#prioOk').firstChild.style.width = '34px';
+
+// risco por cima de palavras
+const riscar = id => { const r = document.createElement('div'); r.className = 'risca'; $('#' + id).appendChild(r);
+  return (t, t0) => { r.style.transform = `scaleX(${pr(t, t0, 0.45, E.cubicInOut)})`; }; };
+const riscoPipe = riscar('mov3'), riscoFim = riscar('fim1'), riscoNum = riscar('fsNum');
+const veu = (el, t, trechos) => { let v = 0; for (const [a, b] of trechos) v = Math.max(v, pr(t, a - 0.1, 0.4, E.cubicOut) * (1 - pr(t, b, 0.4, E.cubicIn))); el.style.opacity = v; };
+
+FM.iniciar({ estouros: [{ t0: 62.25, ps: FM.criaConfete(11, 85, 540, 1400, 760, 120), cor: 'branco' }] });
+
+/* tranco (gira e cresce um pouco, amortecendo) quando algo "bate" */
+const tranco = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-6 * s) * Math.sin(s * 18); return ` rotate(${-5 * k}deg) scale(${1 + 0.04 * k})`; };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  veu($('#veuTopo'), t, [[21.0, 23.25], [59.12, 61.3]]);
+  veu($('#veuPeito'), t, [[51.66, 54.75]]);
+
+  /* 1 · gancho (0–3,6): já entrando no quadro 0 */
+  A($('#meta'), t, -0.35, 3.45, { de: 0.86 });
+  const enche = pr(t, 0.15, 1.5, E.quintOut) * 64;
+  $('#metaBar').style.width = enche + '%';
+  $('#metaPct').textContent = Math.round(enche) + '%';
+  const av = pr(t, 1.1, 0.35, E.cubicOut);
+  $('#metaAviso').style.opacity = av; $('#metaAviso').style.transform = `translateY(${(1 - av) * 10}px)`;
+  $('#metaBar').style.filter = `saturate(${1 - av * 0.6})`;
+  A($('#pipe'), t, 2.3, 3.45, { de: 0.8 });
+  $('#pipeN').textContent = Math.round(pr(t, 2.4, 0.9, E.quintOut) * 47);
+
+  /* 2 · TELA CHEIA (5,7 → 10,4 s no vídeo cortado = 5,7 → 10,86 nos tempos desta página) */
+  const TI = 5.7, TO = 10.86;
+  if (t < TI || t > TO + 0.6) { $('#tela').style.opacity = 0; }
+  else {
+    $('#tela').style.opacity = 1;
+    let furo = '', borda = '';
+    if (t < TO) {   // entrada: o círculo fecha no rosto, segura um instante e some
+      const r = L(1250, 300, pr(t, TI, 0.42, E.expoOut)) * (1 - pr(t, TI + 0.36, 0.3, E.cubicIn));
+      if (r > 1) { furo = circulo(560, 880, r); if (r < 1100) borda = furo; }
+    } else {        // volta: quadrado arredondado aparece no meio e cresce até a tela toda
+      const p1 = M.prog(t, TO, 0.32, E.spring), p2 = pr(t, TO + 0.2, 0.36, E.cubicInOut);
+      const w = L(L(0, 430, p1), 1320, p2), h = L(L(0, 560, p1), 2400, p2);
+      furo = retang(560, 880, Math.max(1, w), Math.max(1, h), L(70, 0, p2)); if (p2 < 0.97) borda = furo;
+    }
+    const fim = t >= TO + 0.56;
+    $('#telaFundo').setAttribute('d', fim ? '' : FORA + furo);
+    $('#telaBorda').setAttribute('d', fim ? '' : borda);
+    const ar = $('#telaArco');   // arco verde passando em volta do quadrado na volta
+    if (t >= TO + 0.02 && t < TO + 0.55) {
+      ar.setAttribute('d', 'M 180 1300 C 360 1520, 820 1460, 930 1000 C 990 760, 900 560, 760 470');
+      const L0 = ar.getTotalLength(), q = E.cubicInOut(C((t - TO - 0.02) / 0.5)), seg = L0 * 0.45;
+      ar.setAttribute('stroke-dasharray', `${seg} ${L0 * 2}`); ar.setAttribute('stroke-dashoffset', L(seg, -L0, q)); ar.style.opacity = 1;
+    } else ar.style.opacity = 0;
+  }
+  // conteúdo da tela cheia
+  const saiFS = TO - 0.02;
+  A($('#fsRot'), t, 6.2, saiFS, { de: 0.9, dout: 0.18 });
+  A($('#fsNum'), t, 6.3, saiFS, { de: 0.85, dout: 0.18 });
+  $('#fsNum').firstChild.nodeValue = FM.PT(pr(t, 6.35, 1.4, E.quintOut) * 412000);
+  riscoNum(t, 9.4);
+  const caiu = pr(t, 9.45, 0.5, E.cubicOut);
+  $('#fsNum').style.color = `rgb(${L(16, 175, caiu)},${L(18, 180, caiu)},${L(24, 195, caiu)})`;
+  A($('#fsReal'), t, 9.55, saiFS, { de: 0.8, dout: 0.18, extra: tranco(t, 9.95) });
+  A($('#quadro'), t, 6.2, saiFS, { de: 0.9, dout: 0.18, esc: 1.08 });
+  negs.forEach(({ d, real, k }) => {
+    const a = 6.4 + k * 0.08, pe = pr(t, a, 0.6), pai = pr(t, a, 0.25, E.cubicOut);
+    const pulso = Math.sin(C((t - 7.6 - k * 0.03) / 0.35) * Math.PI);   // "parecem oportunidades": a etiqueta pulsa
+    const ps = pr(t, 9.0 + (real ? 0.65 : ORDEM_CAI[k]), 0.35, E.cubicOut);
+    d.style.opacity = pai * (real ? 1 : 1 - ps * 0.45);
+    d.style.transform = `translateY(${(1 - pe) * 40}px) scale(${L(0.9, 1, pe) * (real ? 1 + 0.04 * ps : 1 - 0.04 * ps)})`;
+    d.style.filter = pe < 0.99 ? `blur(${(1 - pe) * 12}px)` : 'none';
+    d.style.background = real && ps > 0.5 ? '#E9FFF9' : '#F5F6FA';
+    d.style.boxShadow = real && ps > 0.5 ? '0 0 0 4px #00FFD4' : 'none';
+    const op = d.querySelector('.op'); op.style.opacity = 1 - ps; op.style.transformOrigin = '0 50%'; op.style.transform = `scale(${1 + 0.08 * pulso})`;
+    d.querySelector(real ? '.si' : '.no').style.opacity = ps;
+    d.querySelector('.val').style.color = !real && ps > 0.5 ? '#B4BACB' : '';
+  });
+
+  /* 3 · proposta aberta há semanas (10,8–13,9) */
+  A($('#notif'), t, 11.3, 13.8, { de: 0.9, dy: -80 });
+  const sem = 1 + Math.round(pr(t, 11.85, 0.55, E.cubicOut) * 2);
+  $('#notifQd').textContent = sem === 1 ? 'há 1 semana' : `há ${sem} semanas`;
+  const lido = pr(t, 12.5, 0.4, E.cubicOut);
+  $('#notifPts').style.opacity = 1 - lido; $('#notifLido').style.opacity = lido;
+  [...$('#notifPts').querySelectorAll('i')].forEach((d, k) => { d.style.transform = `translateY(${-6 * Math.max(0, Math.sin((t * 6 - k * 0.8)))}px)`; });
+
+  /* 4 · perdidas mas contabilizadas (14,8–20,6) */
+  const juntam = pr(t, 17.75, 0.45, E.cubicIn);
+  A($('#pd1'), t, 15.15, null, { de: 0.85, rot: -4 });
+  A($('#pd2'), t, 16.4, null, { de: 0.85, rot: 4 });
+  for (const [id, dx, dy] of [['#pd1', 210, 220], ['#pd2', -210, 130]]) {
+    const el = $(id); if (t < 17.75) continue;
+    el.style.opacity = t > 18.2 ? 0 : 1 - juntam;
+    el.style.transform = `translate(-50%,-50%) translate(${dx * juntam}px,${dy * juntam}px) scale(${1 - juntam * 0.5})`;
+    el.style.filter = `blur(${juntam * 8}px)`;
+  }
+  A($('#receita'), t, 17.85, 20.55, { de: 0.82, extra: tranco(t, 20.1) });
+  $('#recN').textContent = FM.PT(pr(t, 18.1, 2.0, E.cubicInOut) * 184000);
+  const g = $('#recG'), gl = g.getTotalLength(), pg = pr(t, 18.1, 2.0, E.cubicInOut);
+  g.style.strokeDasharray = `${gl}`; g.style.strokeDashoffset = gl * (1 - pg);
+  const pa = pr(t, 19.6, 0.4, E.cubicOut);
+  $('#recA').style.opacity = pa; $('#recA').style.transform = `translateY(${(1 - pa) * 14}px)`;
+  $('#recA').style.left = '40px'; $('#recA').style.bottom = '30px';
+  $('#recN').style.marginBottom = '0';
+
+  /* 5 · ainda dá tempo (21–23,3), no punch-in */
+  FM.linha('tempo1', t, [21.0, 21.56, 21.8, 21.96], 23.25);
+  FM.linha('tempo2', t, [22.28, 22.4, 22.66, 22.8], 23.25);
+
+  /* 6 · três perguntas (27,9–29,4) */
+  A($('#tres'), t, 27.95, 29.3, { de: 0.7, extra: tranco(t, 28.32) });
+
+  /* 7 · perguntas empilhando (29,4–41,3) */
+  const QS = [[$('#q1'), 29.4], [$('#q2'), 33.38], [$('#q3'), 37.15]];
+  QS.forEach(([el, a], k) => {
+    const prox = QS[k + 1]?.[1];
+    const vis = A(el, t, a, prox != null ? prox + 2.6 : 41.2, { de: 0.84, dy: 70 });
+    if (!vis || prox == null || t < prox) return;
+    const s = pr(t, prox, 0.6, E.expoOut);   // a nova entra embaixo, esta sobe e apaga
+    el.style.transform += ` translateY(${-170 * s}px) scale(${1 - 0.08 * s})`;
+    el.style.opacity = parseFloat(el.style.opacity) * (1 - 0.6 * s);
+  });
+
+  /* 8 · priorizar × inflando (43,9–50,8) */
+  const SC = 44.95, PASSO = 0.24;
+  A($('#triagem'), t, 43.9, 50.75, { de: 0.88 });
+  const pA = pr(t, 45.85, 0.7, E.expoOut), pB = pr(t, 48.1, 0.7, E.expoOut);
+  const cab = (el, p) => { el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 16}px)`; };
+  cab($('#cabA'), pr(t, 45.85, 0.5, E.cubicOut)); cab($('#cabB'), pr(t, 48.1, 0.5, E.cubicOut));
+  $('#triDiv').style.opacity = Math.max(pA, pB);
+  const OPS = [['#o1', 0, 'A', 0], ['#o2', 1, 'B', 0], ['#o3', 2, 'A', 1], ['#o4', 3, 'B', 1]];
+  for (const [id, i, lado, j] of OPS) {
+    const el = $(id), a = 44.45 + i * 0.12, pe = pr(t, a, 0.6), pai = pr(t, a, 0.3, E.cubicOut);
+    const p = pA, pd = lado === 'B' ? pB : 0;   // todas vão para a coluna junto; as da direita apagam quando ele fala "inflando"
+    const x0 = L(620, 920, pA) / 2 - 195, y0 = 128 + i * 88, x1 = lado === 'A' ? 35 : 495, y1 = 130 + j * 110;
+    el.style.left = L(x0, x1, p) + 'px'; el.style.top = L(y0, y1, p) + 'px';
+    el.style.opacity = pai * (1 - pd * 0.5);
+    el.style.transform = `translateY(${(1 - pe) * 30}px) scale(${lado === 'A' ? 1 + p * 0.02 : 1 - pd * 0.04})`;
+    el.style.filter = pe < 0.99 ? `blur(${(1 - pe) * 10}px)` : 'none';
+    el.querySelector('.ok').style.opacity = lado === 'A' ? pr(t, 46.1 + j * 0.12, 0.3, E.cubicOut) : 0;
+    el.style.background = lado === 'A' && p > 0.5 ? '#EEF2FF' : '#F5F6FA';
+    // "?" aparece quando a moldura passa; some quando ele separa (as boas ganham o check)
+    const tq = SC + i * PASSO + 0.12, q = el.querySelector('.q');
+    q.style.opacity = pr(t, tq, 0.3, E.cubicOut) * (1 - pA); q.style.transform = `scale(${L(0.5, 1, M.prog(t, tq, 0.5, E.spring))})`;
+  }
+  // moldura azul revisando uma por uma + cabeçalho "Pipeline do mês"
+  const pos = C((t - SC) / PASSO, 0, 3), k0 = Math.floor(pos), fr = E.cubicInOut(C((pos - k0) * 1.6));
+  const sc = $('#scan'), Wl = L(620, 920, pA);
+  sc.style.left = (Wl / 2 - 207) + 'px'; sc.style.top = (128 + L(k0, Math.min(3, k0 + 1), fr) * 88 - 10) + 'px';
+  sc.style.opacity = pr(t, SC - 0.15, 0.25, E.cubicOut) * (1 - pr(t, 45.6, 0.25, E.cubicIn));
+  $('#rev').textContent = `Revisando ${Math.min(4, Math.round(pos) + 1)}/4`;
+  $('#cab0').style.opacity = C(1 - pA * 2.5); $('#cab0').style.transform = `translateY(${-pA * 14}px)`;
+  // a altura do cartão "dá espaço" para as colunas
+  $('#triagem').style.height = L(500, 360, pA) + 'px'; $('#triagem').style.width = L(620, 920, pA) + 'px';
+
+  /* 9 · não tente mover todo o pipeline (51,3–54,8) */
+  FM.linha('mov1', t, [51.66, 51.76, 51.9, 52.0], 54.75);
+  FM.linha('mov2', t, [52.42, 52.7, 53.0], 54.75);
+  FM.linha('mov3', t, [53.66, 54.16, 54.28], 54.75);
+  riscoPipe(t, 54.3);
+
+  /* 10 · foco nas oportunidades com maior chance (55,1–58,6) */
+  A($('#funil'), t, 55.05, 58.55, { de: 0.6, rot: -8 });
+  A($('#foco'), t, 56.75, 58.55, { de: 0.8, extra: tranco(t, 57.7) });
+
+  /* 11 · pipeline cheio não bate a meta (59,1–61,3), no punch-in */
+  FM.linha('fim1', t, [59.12, 59.68], 61.3);
+  riscoFim(t, 60.15);
+  FM.linha('fim2', t, [60.14, 60.32, 60.6, 60.76], 61.3);
+
+  /* 12 · prioridade comercial, sim (61,5–fim) */
+  A($('#prio'), t, 61.45, null, { de: 0.8, extra: tranco(t, 62.25) });
+
+  FM.depois(t);
+};
+
+/* silêncios cortados da montagem (tempos da versão sem cortes, onde as cenas acima foram marcadas):
+   o vídeo novo pula esses trechos, então o quadro t da versão cortada desenha o instante correspondente da antiga */
+const CORTES = [[8.5, 8.68], [10.58, 10.86], [12.68, 12.82], [14.06, 15.06], [19.18, 19.3], [20.72, 21.54], [23.48, 23.56], [26.24, 26.32], [29.54, 29.7], [30.3, 30.38], [33.42, 33.76], [37.4, 37.54], [41.68, 41.86], [44.36, 44.48], [51.12, 51.34], [54.06, 54.18], [58.86, 59.34], [61.46, 61.66]];
+{ const q0 = window.quadro;
+  const velho = t => { for (const [a, b] of CORTES) { if (t >= a - 1e-6) t += b - a; else break; } return t; };
+  window.quadro = t => q0(velho(t));
+  window.DURACAO = +(window.DURACAO - CORTES.reduce((s, [a, b]) => s + b - a, 0)).toFixed(2); }
+
+/* legenda da tela cheia — TEMPOS DO VÍDEO CORTADO (os mesmos da transcrição m2), blocos iguais aos do editor.
+   Mesmas medidas do editor (tam 72 → corpo 46,1 px; pos 80% → y 1536; caixa #0137FF 74 px, raio 15, 7 px abaixo).
+   Escura no fundo claro; fica branca quando ele volta no quadrado. */
+const LEG_FS = [[['estar', 5.54], ['cheio', 5.78], ['de', 6.16]], [['negociações', 6.28], ['que', 6.96], ['parecem', 7.14]],
+  [['oportunidades,', 7.72], ['mas', 8.54], ['não', 8.78]], [['tem', 8.92], ['chance', 9.06], ['real', 9.38]],
+  [['de', 9.7], ['fechar,', 9.88], ['propostas', 10.4]]], LEG_FIM = 10.94;
+{ const NS = 'http://www.w3.org/2000/svg', g = $('#legFSg'), Y = 1536;
+  const blocos = LEG_FS.map(bl => {
+    const grupo = document.createElementNS(NS, 'g'), caixa = document.createElementNS(NS, 'rect'), tx = document.createElementNS(NS, 'text');
+    caixa.setAttribute('height', 74); caixa.setAttribute('rx', 15); caixa.setAttribute('fill', '#0137FF'); caixa.setAttribute('y', Y + 7 - 37);
+    tx.setAttribute('x', 540); tx.setAttribute('y', Y + 15.1); tx.setAttribute('text-anchor', 'middle');
+    const spans = bl.map(([w], i) => { const sp = document.createElementNS(NS, 'tspan'); sp.textContent = (i ? ' ' : '') + w; tx.appendChild(sp); return sp; });
+    grupo.append(caixa, tx); g.appendChild(grupo); grupo.style.opacity = 0;
+    return { bl, grupo, caixa, tx, spans };
+  });
+  const q1 = window.quadro;
+  window.quadro = t => {
+    q1(t);
+    const branco = pr(t, 10.45, 0.3, E.cubicInOut), cor = `rgb(${L(16, 255, branco)},${L(18, 255, branco)},${L(24, 255, branco)})`;
+    blocos.forEach(({ bl, grupo, caixa, tx, spans }, b) => {
+      const ini = bl[0][1], fim = b + 1 < blocos.length ? blocos[b + 1].bl[0][1] : LEG_FIM;
+      if (t < ini || t >= fim) { grupo.style.opacity = 0; return; }
+      grupo.style.opacity = 1;
+      let k = 0; bl.forEach(([, ti], i) => { if (t >= ti) k = i; });
+      spans.forEach((sp, i) => sp.setAttribute('fill', i === k ? '#fff' : cor));
+      const pos = tx.getStartPositionOfChar(spans.slice(0, k).reduce((n, sp) => n + sp.textContent.length, 0) + (k ? 1 : 0));
+      const wLarg = tx.getSubStringLength(spans.slice(0, k).reduce((n, sp) => n + sp.textContent.length, 0) + (k ? 1 : 0), bl[k][0].length);
+      caixa.setAttribute('x', pos.x - 8); caixa.setAttribute('width', wLarg + 16);
+    });
+  };
+}
+
+if (!window.RENDER) { const t0 = performance.now(); const loop = () => { window.quadro(((performance.now() - t0) / 1000) % window.DURACAO); requestAnimationFrame(loop); }; loop(); }
+</script>
+</body>
+</html>

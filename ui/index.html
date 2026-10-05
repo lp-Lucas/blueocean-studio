@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' file: data: blob:; img-src 'self' file: data: blob:; media-src 'self' file: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' file: data:; script-src 'self'">
+<title>Blue Ocean Studio</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<!-- barra de título (arrastável; os botões da janela ficam à direita) -->
+<header id="topo">
+  <div class="topo-esq">
+    <button id="btnHome" class="marca-btn" title="Página inicial"><img src="../assets/logo.png" alt=""><span>Blue Ocean <em>Studio</em></span></button>
+    <span class="barra-sep"></span>
+    <button id="btnProjeto" class="seletor-projeto" title="Trocar de projeto"><span id="nomeProjeto">Sem projeto</span><i data-i="chevron"></i></button>
+    <span id="salvo" class="salvo"><span>Salvo</span></span>
+  </div>
+  <div class="topo-meio">
+    <button id="btnTarefas" class="tarefa-topo oculto"><span id="txtTarefas"></span><span class="barrinha"><b id="barraTarefas"></b></span></button>
+  </div>
+  <div class="topo-dir">
+    <div class="segmentos modo-ui" id="modoUI" title="Escolher a interface"><button data-m="padrao">Padrão</button><button data-m="avancada">Avançada</button></div>
+    <span class="sep"></span>
+    <button id="btnDesfazer" class="icone-btn" title="Desfazer (Ctrl+Z)"><i data-i="undo"></i></button>
+    <button id="btnRefazer" class="icone-btn" title="Refazer (Ctrl+Shift+Z)"><i data-i="redo"></i></button>
+    <span class="sep"></span>
+    <button id="btnPasta" class="icone-btn" title="Abrir a pasta do projeto"><i data-i="folder"></i></button>
+    <button id="btnConfig" class="icone-btn" title="Configurações"><i data-i="settings"></i></button>
+    <button id="btnExportar" class="btn primario"><span>Exportar</span></button>
+  </div>
+</header>
+
+<main id="app">
+  <!-- interface padrão: coluna simples com arquivos e processos (só aparece no modo padrão) -->
+  <aside id="simples" class="painel"></aside>
+  <!-- esquerda: mídia, processos, ajustes -->
+  <aside id="esquerda" class="painel">
+    <nav class="abas" id="abasEsq">
+      <button data-aba="midia" class="ativa">Mídia</button>
+      <button data-aba="receitas">Processos</button>
+      <button data-aba="ajustes">Ajustes</button>
+      <span class="aba-indicador"></span>
+    </nav>
+    <section class="aba-corpo ativa" data-corpo="midia">
+      <div class="midia-acoes">
+        <button class="btn suave" id="btnImportar"><i data-i="plus"></i>Importar</button>
+        <button class="btn suave" id="btnImportarPasta" title="Importar uma pasta inteira"><i data-i="folder"></i>Pasta</button>
+      </div>
+      <form class="campo-link" id="formLink">
+        <input id="inputLink" placeholder="Link do YouTube, Instagram, Drive…" spellcheck="false">
+        <button class="icone-btn" title="Baixar"><i data-i="download"></i></button>
+      </form>
+      <div class="segmentos" id="modoLink" title="O que baixar do link"><button type="button" data-v="video" class="on">Vídeo e áudio</button><button type="button" data-v="audio">Só áudio</button></div>
+      <div id="listaMidia" class="lista-midia"></div>
+      <div class="dica-soltar">Solte arquivos ou pastas aqui</div>
+    </section>
+    <section class="aba-corpo" data-corpo="receitas">
+      <p class="sub">Processos aprovados. Quando o pedido no chat bate com um deles, o Claude segue o processo.</p>
+      <div id="listaReceitas" class="lista-receitas"></div>
+    </section>
+    <section class="aba-corpo" data-corpo="ajustes">
+      <div id="inspetor"></div>
+    </section>
+  </aside>
+
+  <!-- centro: preview e linha do tempo -->
+  <section id="centro">
+    <div id="barraComps" class="barra-comps"></div>
+    <div id="palco">
+      <div id="moldura">
+        <canvas id="tela"></canvas>
+        <canvas id="sobre"></canvas>
+        <div id="vazio" class="vazio-palco oculto">Linha do tempo vazia. Arraste um vídeo para cá ou peça no chat.</div>
+      </div>
+      <div id="avisoExterno" class="aviso-externo">Linha do tempo alterada pelo Claude</div>
+      <!-- interface padrão: play + barra para mover o vídeo -->
+      <div id="barraSimples" class="barra-simples"></div>
+      <div class="palco-barra">
+        <div class="tempo-grupo">
+          <span id="tempoAtual" class="tempo">0:00.00</span><span class="tempo fraco">/</span><span id="tempoTotal" class="tempo fraco">0:00.00</span>
+        </div>
+        <div class="transporte">
+          <button class="icone-btn" id="btnInicio" title="Início (Home)"><i data-i="skipback"></i></button>
+          <button class="icone-btn" id="btnVoltaQuadro" title="Quadro anterior (←)"><i data-i="stepback"></i></button>
+          <button class="play" id="btnPlay" title="Tocar / pausar (Espaço)"><i data-i="play"></i></button>
+          <button class="icone-btn" id="btnAvancaQuadro" title="Próximo quadro (→)"><i data-i="stepfwd"></i></button>
+          <button class="icone-btn" id="btnMudo" title="Som do preview"><i data-i="volume"></i></button>
+        </div>
+        <div class="palco-dir">
+          <span id="infoFormato" class="etiqueta">9:16 · 1080×1920</span>
+          <button class="icone-btn btn-print" id="btnPrint" title="Print deste momento para o chat (Ctrl+P)"><i data-i="camera"></i></button>
+          <button class="icone-btn" id="btnGuias" title="Área segura do Reels"><i data-i="grid"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="divisor" title="Arraste para mudar o tamanho"></div>
+
+    <div id="linha">
+      <div class="linha-ferramentas">
+        <div class="grupo">
+          <button class="ferr" id="btnDividir" title="Dividir na agulha (S)"><i data-i="scissors"></i><span>Dividir</span></button>
+          <button class="ferr" id="btnApagar" title="Apagar (Delete) · Shift+Delete fecha o buraco"><i data-i="trash"></i><span>Apagar</span></button>
+          <span class="sep"></span>
+          <button class="ferr" id="btnTexto" title="Headline na agulha (T)"><i data-i="type"></i><span>Headline</span></button>
+          <button class="ferr" id="btnQualif" title="Faixa de qualificação (Q)"><i data-i="faixa"></i><span>Qualificação</span></button>
+          <button class="ferr" id="btnLeak" title="Light leak azul na agulha (L)"><i data-i="sun"></i><span>Light leak</span></button>
+          <button class="ferr" id="btnFaixa" title="Nova camada de vídeo"><i data-i="layers"></i><span>Camada</span></button>
+          <span class="sep"></span>
+          <button class="ferr" id="btnTrans" title="Corrigir a transcrição que vira legenda (Ctrl+T)"><i data-i="captions"></i><span>Transcrição</span></button>
+        </div>
+        <div class="grupo">
+          <button class="ferr alterna ativa" id="btnIma" title="Grudar nas bordas"><i data-i="magnet"></i></button>
+          <span class="sep"></span>
+          <button class="icone-btn" id="btnZoomMenos" title="Afastar (-)"><i data-i="minus"></i></button>
+          <input type="range" id="zoomLinha" min="4" max="400" value="60">
+          <button class="icone-btn" id="btnZoomMais" title="Aproximar (+)"><i data-i="plus"></i></button>
+          <button class="icone-btn" id="btnEncaixar" title="Ver tudo"><i data-i="expand"></i></button>
+        </div>
+      </div>
+      <div id="linhaCorpo">
+        <div id="rotulos"></div>
+        <div id="rolagem">
+          <div id="conteudoLinha">
+            <canvas id="regua"></canvas>
+            <div id="pistas"></div>
+            <div id="agulha"><span></span></div>
+            <div id="selecaoRet"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- direita: chat com o Claude -->
+  <aside id="direita" class="painel">
+    <div class="chat-topo">
+      <div class="chat-id">
+        <b>Agente Editor</b>
+        <span id="chatStatus" class="status"><span id="chatStatusTxt"></span></span>
+      </div>
+      <div class="chat-topo-acoes">
+        <span id="chatModelo" class="etiqueta"></span>
+        <button class="icone-btn" id="btnNovaConversa" title="Nova conversa"><i data-i="newchat"></i></button>
+      </div>
+    </div>
+    <div id="mensagens"></div>
+    <div class="chat-rodape">
+      <div id="chips" class="chips"></div>
+      <div id="anexos" class="anexos"></div>
+      <div class="caixa-entrada" id="caixaEntrada">
+        <textarea id="entrada" rows="1" placeholder="Descreva a edição" spellcheck="true"></textarea>
+        <div class="entrada-acoes">
+          <button class="icone-btn" id="btnAnexar" title="Anexar arquivos"><i data-i="paperclip"></i></button>
+          <button class="enviar" id="btnEnviar" title="Enviar (Enter)"><i data-i="send"></i></button>
+          <button class="parar oculto" id="btnParar" title="Parar"><i data-i="stop"></i></button>
+        </div>
+      </div>
+      <div id="contextoChat" class="contexto-chat"></div>
+    </div>
+  </aside>
+</main>
+
+<div id="popTarefas" class="pop oculto"></div>
+<div id="popProjetos" class="pop oculto"></div>
+<div id="modal" class="modal oculto"><div class="modal-caixa" id="modalCaixa"></div></div>
+<div id="boasVindas" class="boas-vindas oculto"></div>
+<div id="toasts"></div>
+<div id="soltar" class="soltar oculto"><div>Solte para importar</div></div>
+<div id="menuCtx" class="menu-ctx oculto"></div>
+
+<script src="../motor/modelo.js"></script>
+<script src="icones.js"></script>
+<script src="base.js"></script>
+<script src="preview.js"></script>
+<script src="linha.js"></script>
+<script src="inspetor.js"></script>
+<script src="pensando.js"></script>
+<script src="chat.js"></script>
+<script src="comps.js"></script>
+<script src="transcricao.js"></script>
+<script src="app.js"></script>
+<script src="simples.js"></script>
+</body>
+</html>

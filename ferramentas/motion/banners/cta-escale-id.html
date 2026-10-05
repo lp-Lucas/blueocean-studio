@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>CTA (identidade) — Escale seu SaaS com a Blue Ocean</title>
+<link rel="stylesheet" href="../identidade.css">
+<style>
+  #titulo { top: 286px; font-size: 138px; }
+  #texto { top: 538px; font-size: 42px; }
+  #texto > div { width: 900px; }
+  #logos { top: 680px; flex-direction: row; justify-content: center; gap: 64px; align-items: center; }
+  #logos img { opacity: 0; display: block; }
+  #cases { top: 790px; left: 80px; right: 80px; gap: 0; align-items: stretch; }
+  .linha { display: flex; align-items: center; height: 104px; border-top: 1.5px solid rgba(255,255,255,.14); opacity: 0; }
+  .linha:last-child { border-bottom: 1.5px solid rgba(255,255,255,.14); }
+  .linha .marca { width: 250px; flex: none; display: flex; align-items: center; justify-content: flex-start; }
+  .linha .res { flex: 1; text-align: left; display: flex; flex-direction: column; justify-content: center; }
+  .linha .grande { font-family: 'Titulo'; font-size: 66px; line-height: 0.95; text-transform: uppercase; letter-spacing: 0.003em; }
+  .linha .peq { font-weight: 300; font-size: 30px; color: rgba(255,255,255,.82); margin-top: 2px; }
+  .linha .num { font-variant-numeric: tabular-nums; }
+  #rodape { top: 1130px; }
+  #assin { top: 1338px; }
+</style>
+</head>
+<body>
+<canvas id="fundo" width="1080" height="1920"></canvas>
+
+<div class="camada titulo" id="titulo"><div id="tit">Escale seu SaaS<br>com a <span class="verde">Blue Ocean</span></div></div>
+<div class="camada texto" id="texto"><div id="txt">Descubra a melhor solução de<br><b>marketing e vendas</b> pro seu software</div></div>
+
+<div class="camada" id="logos">
+  <img class="branco" src="../img/devzapp.svg" style="height:52px">
+  <img class="branco" src="../img/greatpages.svg" style="height:34px">
+  <img class="branco" src="../img/smarthint.png" style="height:66px">
+</div>
+
+<div class="camada" id="cases">
+  <div class="linha">
+    <div class="marca"><img src="../img/envioecom.png" style="height:40px"></div>
+    <div class="res"><div class="grande">de R$40mil para <span class="verde">R$<span class="num" id="n1">40</span>mil</span></div></div>
+  </div>
+  <div class="linha">
+    <div class="marca"><img class="branco" src="../img/tripmee.png" style="height:50px"></div>
+    <div class="res"><div class="grande">de 13% para <span class="verde"><span class="num" id="n2">13</span>%</span></div><div class="peq">de qualificação do lead</div></div>
+  </div>
+  <div class="linha">
+    <div class="marca"><img class="branco" src="../img/acrux.png" style="height:60px"></div>
+    <div class="res"><div class="grande">Time de vendas <span class="verde">estruturado</span></div></div>
+  </div>
+</div>
+
+<div class="camada" id="rodape">
+  <div class="cta" id="cta"><span class="brilho"></span><span class="seta">→</span><span>Saiba mais</span></div>
+  <div class="chevrons" id="chev">
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#00DEB9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#00DEB9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+
+<div class="camada" id="assin">
+  <div class="assinatura" id="assinatura"><img class="simb" src="../img/simbolo-blueocean.png"><div class="div"></div><img src="../img/LOGO-BLUE.svg" style="height:54px;filter:invert(1)"></div>
+</div>
+
+<script src="../motion.js"></script>
+<script>
+  const M = Motion, E = M.ease, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  window.DURACAO = 10;
+  const desenhaFundo = M.fundoLinhas($('#fundo'));
+  const palTit = M.palavras($('#tit')), palTxt = M.palavras($('#txt'));
+  const logos = $$('#logos img'), linhas = $$('.linha'), cta = $('#cta'), brilho = $('.brilho'), seta = $('.seta');
+  window.pronto = Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+
+  // entrada padrão de um bloco (mesma linguagem das palavras: sobe, sai do desfoque, aparece)
+  function bloco(el, t, t0, { sobe = 40, desf = 18, dur = 1.1, esc = 0.96, filtro = '' } = {}) {
+    const p = M.prog(t, t0, dur), pa = M.prog(t, t0, dur * 0.6, E.cubicOut);
+    el.style.opacity = pa;
+    el.style.filter = (p > 0.999 ? '' : `blur(${(1 - p) * desf}px) `) + filtro || 'none';
+    el.style.transform = `translateY(${(1 - p) * sobe}px) scale(${M.lerp(esc, 1, p)})`;
+  }
+
+  window.quadro = function (t) {
+    desenhaFundo(t);
+    M.entrar(palTit, t, 0.3, { atraso: 0.08, dur: 1.2, sobe: 0.32 });
+    M.entrar(palTxt, t, 1.25, { atraso: 0.04, dur: 1.0, sobe: 0.5, desfoque: 14 });
+    logos.forEach((img, i) => bloco(img, t, 2.0 + i * 0.14, { filtro: 'brightness(0) invert(1)' }));
+    linhas.forEach((l, i) => bloco(l, t, 2.75 + i * 0.22, { sobe: 50, desf: 16, esc: 0.98 }));
+    M.contar($('#n1'), t, 3.2, 1.5, 40, 200);
+    M.contar($('#n2'), t, 3.42, 1.5, 13, 70);
+
+    // CTA com mola, brilho passando e a seta chamando
+    const pc = M.prog(t, 4.7, 1.1, E.spring), pca = M.prog(t, 4.7, 0.5, E.cubicOut);
+    cta.style.opacity = pca;
+    cta.style.transform = `translateY(${(1 - Math.min(pc, 1)) * 60}px) scale(${M.lerp(0.85, 1, pc)})`;
+    cta.style.filter = pca > 0.999 ? 'none' : `blur(${(1 - pca) * 12}px)`;
+    const T0 = 5.6, ciclo = ((t - T0) % 1.6 + 1.6) % 1.6;
+    brilho.style.transform = `translateX(${t < T0 ? -200 : M.lerp(-200, 560, E.cubicInOut(M.clamp(ciclo / 0.9)))}px) skewX(-20deg)`;
+    seta.style.transform = `translateX(${t < T0 ? 0 : Math.sin(M.clamp(ciclo / 0.6) * Math.PI) * 10}px)`;
+    $$('#chev svg').forEach((s, i) => {
+      const pe = M.prog(t, 5.3 + i * 0.12, 0.6, E.cubicOut);
+      const onda = t < T0 ? 1 : 0.35 + 0.65 * Math.max(0, Math.sin(((t - T0) * 2.4 - i * 0.35) * Math.PI));
+      s.style.opacity = pe * onda;
+      s.style.transform = `translateY(${(1 - pe) * -14 + (t < T0 ? 0 : Math.sin((t - T0) * 2.4 * Math.PI - i * 0.6) * 4)}px)`;
+    });
+    // assinatura
+    bloco($('#assinatura'), t, 5.2, { sobe: 24, desf: 12 });
+  };
+  M.tocar();
+</script>
+</body>
+</html>

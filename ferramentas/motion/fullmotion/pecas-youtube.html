@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-br"><head><meta charset="utf-8">
+<title>Peças do vídeo de YouTube (podcast) — apresentação, empresa, termo técnico e CTA</title>
+<!-- Peças por cima do episódio, no estilo do vídeo da Financerize (youtube IRQbm0XVce0). Fundo transparente:
+     node render.mjs fullmotion/pecas-youtube.html <saida.webm> --alfa --w <W> --h <H> --params '{"tipo": ...}'
+     tipos (tamanho da tela):
+       nome    (900×240)  {"nome":"Lucas Junqueira","sub":"CMO · Blue Ocean","lado":"dir"}   lado = onde fica o texto ancorado
+       empresa (760×210)  {"nome":"BULL RH","sub":"SaaS de RH · case Blue Ocean","letra":"B"}
+       termo   (1040×300) {"termo":"CPM","texto":"Custo por mil impressões…"}
+       cta     (480×300)  {}  — "Dê o próximo passo no seu SaaS" + QR (ytb.blueoceansem.com.br)
+     "dur" muda a duração (padrões: nome 5, empresa 4.5, termo 6.5, cta 12). -->
+<style>
+@font-face { font-family: 'Inst'; font-weight: 400; src: url('../fontes/InstrumentSans-Regular.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 500; src: url('../fontes/InstrumentSans-Medium.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 600; src: url('../fontes/InstrumentSans-SemiBold.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 700; src: url('../fontes/InstrumentSans-Bold.ttf'); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent !important; overflow: hidden; }
+body { font-family: 'Inst', sans-serif; -webkit-font-smoothing: antialiased; letter-spacing: -0.015em; color: #fff; }
+.p { position: absolute; will-change: transform, filter, opacity; }
+.w { display: inline-block; }
+.onda { background: url(../img/simbolo-blueocean-branco.png) center / contain no-repeat; }
+.sombra { filter: drop-shadow(0 10px 24px rgba(0, 6, 30, .45)); }
+</style></head>
+<body>
+<div id="raiz"></div>
+<script src="../motion.js"></script>
+<script>
+const M = Motion, E = M.ease, C = M.clamp, L = M.lerp;
+const P = Object.assign({ tipo: 'termo', termo: 'CPM', texto: 'Custo por mil impressões: quanto você paga para o anúncio aparecer mil vezes.' }, window.PARAMS || {});
+const DUR = P.dur || { nome: 5, empresa: 4.5, termo: 7, cta: 12, ctacentro: 6 }[P.tipo];
+window.DURACAO = DUR;
+const R = document.getElementById('raiz');
+const pr = (t, a, d, e = E.expoOut) => M.prog(t, a, d, e);
+const sai = t => pr(t, DUR - 0.55, 0.45, E.cubicIn);   // saída comum (0 → 1)
+/* palavras sobem saindo do desfoque, uma a uma */
+function palavras(el, t, t0, atraso, o = {}) {
+  const ws = el._ws || (el._ws = M.palavras(el));
+  ws.forEach((s, i) => {
+    const a = t0 + i * atraso, p = pr(t, a, 0.7), pa = pr(t, a, 0.3, E.cubicOut);
+    s.style.opacity = pa; s.style.filter = p > 0.99 ? 'none' : `blur(${(1 - p) * (o.desf || 14)}px)`;
+    s.style.transform = `translateY(${(1 - p) * (o.sobe || 0.55)}em)`;
+  });
+}
+let quadro;
+
+if (P.tipo === 'nome') {
+  /* nome em branco + função embaixo, sem caixa, ao lado da cabeça (ref.: "Gabriel Tarhun / @gabrieltarhun") */
+  const dir = P.lado === 'dir';   // dir = texto alinhado à direita (fica à esquerda da cabeça de quem está à direita)
+  R.innerHTML = `<div class="p" id="bloco" style="${dir ? 'right' : 'left'}:20px; top:40px; text-align:${dir ? 'right' : 'left'}; text-shadow:0 4px 22px rgba(0,0,0,.55)">
+    <div id="n" style="font-size:68px; font-weight:700; letter-spacing:-.03em; line-height:1.05; white-space:nowrap">${P.nome}</div>
+    <div id="s" style="font-size:38px; font-weight:500; line-height:1.2; white-space:nowrap; opacity:.92">${P.sub}</div></div>`;
+  quadro = t => {
+    palavras(document.getElementById('n'), t, 0.05, 0.16);
+    palavras(document.getElementById('s'), t, 0.45, 0.07, { desf: 10 });
+    const s = sai(t), b = document.getElementById('bloco');
+    b.style.opacity = 1 - s; b.style.filter = s > 0.01 ? `blur(${s * 16}px)` : 'none'; b.style.transform = `translateY(${s * 26}px)`;
+  };
+}
+
+if (P.tipo === 'empresa') {
+  /* cartão preto que abre de uma linha, círculo branco com a marca, selo azul com a onda da Blue (ref.: FINANCERIZE) */
+  R.innerHTML = `<div class="p sombra" id="card" style="left:20px; top:40px; width:640px; height:130px; border-radius:26px; background:#050608; overflow:hidden; transform-origin:0 50%">
+      <div id="circ" class="p" style="left:34px; top:25px; width:80px; height:80px; border-radius:50%; background:${P.fundo || '#fff'}; display:grid; place-items:center; overflow:hidden">
+        <div id="letra" style="font-size:44px; font-weight:700; color:#0137FF; letter-spacing:-.04em; display:grid; place-items:center; width:100%; height:100%">${
+          P.logo ? `<img src="${P.logo}" style="${P.cobre ? 'width:100%; height:100%; object-fit:cover' : 'width:72%'}">` : (P.letra || '')}</div></div>
+      <div class="p" style="left:140px; top:28px; white-space:nowrap">
+        <div id="en" style="font-size:42px; font-weight:600; line-height:1.05; letter-spacing:-.01em">${P.nome}</div>
+        <div id="es" style="font-size:24px; font-weight:500; opacity:.8; margin-top:4px">${P.sub}</div></div></div>
+    <div class="p" id="selo" style="left:612px; top:20px; width:76px; height:76px">
+      <svg id="estrela" viewBox="0 0 100 100" width="76" height="76" style="position:absolute; inset:0"><path fill="#0137FF" d="${(() => { let d = ''; for (let i = 0; i <= 24; i++) { const a = i / 24 * Math.PI * 2, r = i % 2 ? 44 : 50; d += (i ? 'L' : 'M') + (50 + r * Math.cos(a)).toFixed(1) + ' ' + (50 + r * Math.sin(a)).toFixed(1); } return d + 'Z'; })()}"/></svg>
+      <div class="onda" style="position:absolute; left:18px; top:24px; width:40px; height:28px"></div></div>`;
+  quadro = t => {
+    const card = document.getElementById('card'), s = sai(t);
+    const pw = pr(t, 0.0, 0.5), ph = pr(t, 0.22, 0.45);
+    card.style.width = L(40, 640, pw) * (1 - s * 0.9) + 'px';
+    card.style.height = L(6, 130, ph) + 'px'; card.style.top = (40 + (130 - L(6, 130, ph)) / 2) + 'px';
+    card.style.opacity = Math.min(pr(t, 0, 0.12, E.linear), 1 - s);
+    const pc = M.prog(t, 0.42, 0.6, E.spring);
+    document.getElementById('circ').style.transform = `scale(${C(pc, 0, 1.2)})`;
+    const pl = pr(t, 0.75, 0.5);
+    document.getElementById('letra').style.opacity = pl; document.getElementById('letra').style.transform = `scale(${L(0.4, 1, pl)}) rotate(${(1 - pl) * -40}deg)`;
+    palavras(document.getElementById('en'), t, 0.5, 0.1);
+    palavras(document.getElementById('es'), t, 0.7, 0.04, { desf: 8 });
+    const selo = document.getElementById('selo'), ps = M.prog(t, 0.9, 0.7, E.spring);
+    selo.style.opacity = Math.min(pr(t, 0.9, 0.12, E.linear), 1 - s);
+    // o selo cresce reto; só a estrela gira devagar — a onda da Blue fica sempre na horizontal
+    selo.style.transform = `scale(${t < 0.9 ? 0 : ps * (1 - s * 0.6)})`;
+    document.getElementById('estrela').style.transform = `rotate(${(1 - C(ps)) * -60 + t * 12}deg)`;
+  };
+}
+
+if (P.tipo === 'termo') {
+  /* quadrado azul com a onda surge, a caixa azul abre a partir dele, etiqueta preta com o termo (ref.: VESTING / CAP TABLE) */
+  R.innerHTML = `<div class="p sombra" id="caixa" style="left:150px; top:104px; width:860px; border-radius:26px; background:#0137FF; overflow:hidden; transform-origin:0 50%">
+      <div id="tx" style="padding:22px 34px 24px 46px; font-size:32px; font-weight:500; line-height:1.3; letter-spacing:-.01em">${P.texto}</div></div>
+    <div class="p sombra" id="tag" style="left:150px; top:46px; height:70px; padding:0 40px; border-radius:20px 20px 20px 6px; background:#050608; display:flex; align-items:center;
+      font-size:30px; font-weight:700; letter-spacing:.01em; white-space:nowrap; transform-origin:0 100%">${P.termo.toUpperCase()}</div>
+    <div class="p sombra" id="tile" style="left:24px; top:118px; width:124px; height:124px; border-radius:34px; background:linear-gradient(150deg,#1E50FF,#0033F0)">
+      <div class="onda" style="position:absolute; left:24px; top:36px; width:76px; height:52px"></div></div>`;
+  /* como na referência: 1) o pop da Blue pinga no meio  2) desliza para o lado  3) abre a etiqueta com o termo e a
+     caixa com o que é  — na saída o texto some, a caixa recolhe para dentro do pop e ele sai */
+  const X0 = 455, X1 = 24;   // onde o pop pinga (meio do conjunto) → onde ele fica (esquerda)
+  quadro = t => {
+    const tile = document.getElementById('tile'), cx = document.getElementById('caixa'), tag = document.getElementById('tag');
+    const pt = M.prog(t, 0, 0.55, E.spring), pm = pr(t, 0.5, 0.5, E.cubicInOut);
+    const fimT = pr(t, DUR - 0.35, 0.3, E.cubicIn);
+    tile.style.left = L(X0, X1, pm) + 'px';
+    tile.style.opacity = Math.min(pr(t, 0, 0.08, E.linear), 1 - fimT);
+    tile.style.transform = `scale(${C(pt, 0, 1.18) * (1 - fimT)}) rotate(${(1 - C(pt)) * -14}deg)`;
+    const pa = pr(t, 0.92, 0.6) * (1 - pr(t, DUR - 0.8, 0.42, E.cubicIn));
+    cx.style.clipPath = `inset(0 ${(1 - pa) * 100}% 0 0 round 26px)`; cx.style.opacity = pa > 0.01 ? 1 : 0;
+    const pg = pr(t, 1.05, 0.5) * (1 - pr(t, DUR - 0.85, 0.35, E.cubicIn));
+    tag.style.clipPath = `inset(0 ${(1 - pg) * 100}% 0 0 round 20px 20px 20px 6px)`; tag.style.opacity = pg > 0.01 ? 1 : 0;
+    palavras(document.getElementById('tx'), t, 1.2, 0.035, { desf: 10, sobe: 0.4 });
+    document.getElementById('tx').style.opacity = 1 - pr(t, DUR - 0.95, 0.25, E.linear);
+  };
+}
+
+if (P.tipo === 'cta') {
+  /* pílula azul "Dê o próximo passo no seu SaaS" + caixa escura com QR e "Para quem já tem cliente pagando e quer mais!" */
+  R.innerHTML = `<div class="p sombra" id="pil" style="left:24px; top:22px; width:408px; height:88px; border-radius:24px; background:linear-gradient(100deg,#0137FF,#2a52ff 60%,#1b3ee8);
+      text-align:center; padding-top:10px">
+      <div id="p1" style="font-size:34px; font-weight:700; line-height:1.05; letter-spacing:-.02em">Dê o próximo passo</div>
+      <div id="p2" style="font-size:24px; font-weight:500; line-height:1.2">no seu SaaS</div></div>
+    <div class="p" id="box" style="left:24px; top:124px; width:408px; height:132px; border-radius:24px; background:rgba(4,8,22,.62); backdrop-filter:blur(10px);
+      box-shadow:0 10px 30px rgba(0,0,0,.3)">
+      <div id="qr" class="p" style="left:14px; top:12px; width:108px; height:108px; border-radius:16px; background:#fff; padding:8px">
+        <img id="qri" src="../img/qr-ytb-blueocean.png" style="width:100%; height:100%; display:block; image-rendering:pixelated"></div>
+      <div id="bt" class="p" style="left:146px; top:38px; font-size:22px; font-weight:500; line-height:1.2; white-space:nowrap">Para quem já tem cliente<br>pagando <b>e quer mais!</b></div></div>`;
+  quadro = t => {
+    const s = pr(t, DUR - 0.6, 0.5, E.cubicIn);
+    const pil = document.getElementById('pil'), box = document.getElementById('box');
+    const pp = pr(t, 0, 0.7), pps = M.prog(t, 0, 0.9, E.spring);
+    pil.style.opacity = Math.min(pr(t, 0, 0.25, E.cubicOut), 1 - s);
+    pil.style.filter = `drop-shadow(0 10px 24px rgba(0,6,30,.45))${(1 - pp) + s > 0.01 ? ` blur(${((1 - pp) + s) * 14}px)` : ''}`;
+    pil.style.transform = `translateY(${(1 - pp) * -30 - s * 30}px) scale(${L(0.9, 1, C(pps, 0, 1.05))})`;
+    palavras(document.getElementById('p1'), t, 0.15, 0.06, { desf: 10, sobe: 0.4 });
+    palavras(document.getElementById('p2'), t, 0.35, 0.06, { desf: 8, sobe: 0.4 });
+    const pb = pr(t, 0.25, 0.7), s2 = pr(t, DUR - 0.7, 0.5, E.cubicIn);
+    box.style.opacity = Math.min(pr(t, 0.25, 0.25, E.cubicOut), 1 - s2);
+    box.style.transform = `translateY(${(1 - pb) * -24 - s2 * 30}px)`;
+    // QR: quadrado branco primeiro, o código aparece depois (ref.)
+    const pq = M.prog(t, 0.35, 0.7, E.spring);
+    document.getElementById('qr').style.transform = `scale(${C(pq, 0, 1.08)})`;
+    document.getElementById('qri').style.opacity = pr(t, 0.75, 0.35, E.cubicOut);
+    palavras(document.getElementById('bt'), t, 0.55, 0.05, { desf: 8, sobe: 0.35 });
+  };
+}
+
+if (P.tipo === 'ctacentro') {
+  /* CTA grande no meio da tela (1000×440): cartão azul com o QR grande, logo da Blue e a chamada */
+  R.innerHTML = `<div class="p" id="cc" style="left:50px; top:50px; width:900px; height:340px; border-radius:40px;
+      background:linear-gradient(120deg,#0137FF 0%,#2a52ff 55%,#1534d6 100%); box-shadow:0 30px 70px rgba(0,8,40,.55); transform-origin:50% 50%">
+      <div id="ccq" class="p" style="left:104px; top:65px; width:210px; height:210px; border-radius:26px; background:#fff; padding:15px">
+        <img id="ccqi" src="../img/qr-ytb-blueocean.png" style="width:100%; height:100%; display:block; image-rendering:pixelated"></div>
+      <div class="p" style="left:354px; top:66px; white-space:nowrap">
+        <img id="cclogo" src="../img/logo-blueocean-branco.png" style="height:30px; display:block">
+        <div id="cct" style="font-size:48px; font-weight:700; letter-spacing:-.03em; line-height:1.05; margin-top:12px">Dê o próximo passo</div>
+        <div id="ccs" style="font-size:32px; font-weight:500; line-height:1.15">no seu SaaS</div>
+        <div id="ccx" style="font-size:21px; font-weight:500; line-height:1.3; margin-top:12px; opacity:.95">Para quem já tem cliente pagando <b>e quer mais!</b></div>
+        <div id="cch" style="font-size:18px; font-weight:600; margin-top:10px; color:#00FFD4; display:flex; align-items:center; gap:10px">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00FFD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8 H7 L9 5 H15 L17 8 H20 V19 H4 Z M12 10.5 a3.2 3.2 0 1 0 0.01 0"/></svg>
+          Aponte a câmera do celular</div></div></div>`;
+  quadro = t => {
+    const cc = document.getElementById('cc'), s = pr(t, DUR - 0.55, 0.45, E.cubicIn);
+    const pe = pr(t, 0, 0.6), ps = M.prog(t, 0, 0.9, E.spring);
+    cc.style.opacity = Math.min(pr(t, 0, 0.2, E.cubicOut), 1 - s);
+    cc.style.filter = (1 - pe) + s > 0.01 ? `blur(${((1 - pe) + s) * 18}px)` : 'none';
+    cc.style.transform = `translateY(${(1 - pe) * 40 + s * 30}px) scale(${L(0.86, 1, C(ps, 0, 1.04)) * (1 - s * 0.08)})`;
+    const pq = M.prog(t, 0.3, 0.8, E.spring);
+    document.getElementById('ccq').style.transform = `scale(${C(pq, 0, 1.08)})`;
+    document.getElementById('ccqi').style.opacity = pr(t, 0.7, 0.35, E.cubicOut);
+    const pl = pr(t, 0.35, 0.5);
+    document.getElementById('cclogo').style.opacity = pl; document.getElementById('cclogo').style.transform = `translateY(${(1 - pl) * 14}px)`;
+    palavras(document.getElementById('cct'), t, 0.45, 0.08, { desf: 14, sobe: 0.45 });
+    palavras(document.getElementById('ccs'), t, 0.72, 0.07, { desf: 10, sobe: 0.4 });
+    palavras(document.getElementById('ccx'), t, 0.9, 0.04, { desf: 8, sobe: 0.35 });
+    const ph = pr(t, 1.3, 0.5);
+    document.getElementById('cch').style.opacity = ph; document.getElementById('cch').style.transform = `translateX(${(1 - ph) * -16}px)`;
+  };
+}
+
+window.quadro = t => quadro(t);
+window.pronto = (async () => { await document.fonts.ready; for (const i of document.images) await i.decode().catch(() => {}); window.quadro(0); })();
+</script>
+</body></html>

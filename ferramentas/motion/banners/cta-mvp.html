@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>CTA — Programa MVP para SaaS</title>
+<link rel="stylesheet" href="../motion.css">
+<style>
+  #grupo { position: absolute; inset: 0; }
+  #olho { top: 300px; }
+  .selo { display: inline-flex; align-items: center; gap: 16px; height: 84px; padding: 0 36px 0 26px; border-radius: 42px;
+    font-size: 36px; font-weight: 500; letter-spacing: -0.01em; color: #fff; opacity: 0; }
+  .selo img { height: 34px; }
+  #titulo { top: 426px; font-size: 88px; }
+  #caminho { top: 760px; }
+  #caminho svg { width: 920px; height: 170px; overflow: visible; }
+  #sub { top: 960px; font-size: 46px; }
+  #sub > div { width: 820px; }
+  #rodape { top: 1128px; }
+</style>
+</head>
+<body>
+<canvas id="fundo" width="1080" height="1920"></canvas>
+<div class="palco" id="grupo">
+  <div class="camada" id="olho">
+    <div class="selo vidro" id="selo"><img src="../img/simbolo-blueocean.png"><span>Programa MVP para SaaS</span></div>
+  </div>
+  <div class="camada titulo" id="titulo"><div id="tit">Se você quer lançar<br>seu SaaS, precisa de um<br><span class="grad">caminho validado</span></div></div>
+
+  <div class="camada" id="caminho">
+    <svg viewBox="0 0 920 170">
+      <defs>
+        <linearGradient id="gl" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset=".6" stop-color="#A9D4FF"/><stop offset="1" stop-color="#5CE1FF"/>
+        </linearGradient>
+        <filter id="luz" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+      </defs>
+      <path id="trilho" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round"/>
+      <path id="linhaLuz" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="#5CE1FF" stroke-width="14" stroke-linecap="round" filter="url(#luz)" opacity=".55"/>
+      <path id="linha" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="url(#gl)" stroke-width="6" stroke-linecap="round"/>
+      <g id="nos"></g>
+      <g id="final">
+        <circle r="44" fill="#5CE1FF" opacity=".45" filter="url(#luz)"/>
+        <circle r="36" fill="#fff"/>
+        <path id="check" d="M -14 1 L -4 11 L 15 -10" fill="none" stroke="#0137FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <circle id="cometa" r="9" fill="#fff"/>
+    </svg>
+  </div>
+
+  <div class="camada sub" id="sub"><div id="subtxt">Clica no link abaixo e veja<br>como funciona o programa</div></div>
+
+  <div class="camada" id="rodape">
+    <div class="cta" id="cta"><span class="brilho"></span><span>Saiba mais</span><span class="seta">→</span></div>
+    <div class="chevrons" id="chev">
+      <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+</div>
+<script src="../motion.js"></script>
+<script>
+  const M = Motion, E = M.ease, $ = s => document.querySelector(s);
+  window.DURACAO = 10.5;
+  const desenhaFundo = M.fundo($('#fundo'), { energia: 1, inicio: 11 });
+  const palTit = M.palavras($('#tit')), palSub = M.palavras($('#subtxt'));
+  const grupo = $('#grupo'), selo = $('#selo'), cta = $('#cta'), brilho = $('.brilho'), seta = $('.seta');
+  const linha = $('#linha'), luz = $('#linhaLuz'), trilho = $('#trilho'), L = linha.getTotalLength();
+  [linha, luz].forEach(p => p.style.strokeDasharray = `${L} ${L}`);
+  // nós do caminho (o último é o check)
+  const PARADAS = [0, 0.34, 0.67];
+  const nos = PARADAS.map(f => {
+    const pt = linha.getPointAtLength(f * L);
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+    g.innerHTML = '<circle class="halo" r="22" fill="#5CE1FF" opacity="0" filter="url(#luz)"/><circle class="aro" r="13" fill="#0A2BD6" stroke="rgba(255,255,255,.45)" stroke-width="3"/><circle class="miolo" r="7" fill="#fff" opacity="0"/>';
+    $('#nos').appendChild(g); return g;
+  });
+  const pf = linha.getPointAtLength(L);
+  const fin = $('#final'), chk = $('#check'), CL = chk.getTotalLength(); chk.style.strokeDasharray = CL;
+  window.pronto = Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+
+  window.quadro = function (t) {
+    desenhaFundo(t);
+    // o bloco começa mais baixo (centrado) e sobe quando o caminho entra
+    const pg = M.prog(t, 2.1, 1.5, E.quintInOut);
+    grupo.style.transform = `translateY(${(1 - pg) * 230}px)`;
+
+    // selo
+    const ps = M.prog(t, 0.15, 1.2), psa = M.prog(t, 0.15, 0.7, E.cubicOut);
+    selo.style.opacity = psa; selo.style.filter = ps > 0.999 ? 'none' : `blur(${(1 - ps) * 16}px)`;
+    selo.style.transform = `translateY(${(1 - ps) * 30}px) scale(${M.lerp(0.9, 1, ps)})`;
+    // título palavra a palavra
+    M.entrar(palTit, t, 0.4, { atraso: 0.075, dur: 1.2 });
+
+    // caminho: trilho aparece, a linha se desenha, os nós acendem, o check fecha
+    trilho.style.opacity = M.prog(t, 2.4, 0.8, E.cubicOut);
+    const pl = M.prog(t, 2.7, 1.9, E.cubicInOut);
+    linha.style.strokeDashoffset = L * (1 - pl); luz.style.strokeDashoffset = L * (1 - pl);
+    nos.forEach((g, i) => {
+      const ai = M.prog(t, 2.4 + i * 0.08, 0.6, E.cubicOut);
+      g.querySelector('.aro').setAttribute('opacity', ai);
+      const aceso = M.clamp((pl - PARADAS[i]) / 0.06);
+      g.querySelector('.miolo').setAttribute('opacity', aceso);
+      g.querySelector('.halo').setAttribute('opacity', aceso * 0.7);
+      g.querySelector('.miolo').setAttribute('r', 7 * E.spring(aceso));
+    });
+    const cp = linha.getPointAtLength(L * pl), cometa = $('#cometa');
+    cometa.setAttribute('cx', cp.x); cometa.setAttribute('cy', cp.y);
+    cometa.setAttribute('opacity', pl > 0 && pl < 1 ? 1 : 0);
+    const pfim = M.prog(t, 4.45, 0.9, E.spring);
+    fin.setAttribute('transform', `translate(${pf.x},${pf.y}) scale(${Math.max(0, pfim)})`);
+    fin.setAttribute('opacity', M.prog(t, 4.45, 0.3, E.cubicOut));
+    chk.style.strokeDashoffset = CL * (1 - M.prog(t, 4.75, 0.55, E.cubicInOut));
+
+    // chamada
+    M.entrar(palSub, t, 5.0, { atraso: 0.045, dur: 1.0, sobe: 0.5, desfoque: 14 });
+
+    // CTA
+    const pc = M.prog(t, 5.9, 1.1, E.spring), pca = M.prog(t, 5.9, 0.5, E.cubicOut);
+    cta.style.opacity = pca;
+    cta.style.transform = `translateY(${(1 - Math.min(pc, 1)) * 60}px) scale(${M.lerp(0.85, 1, pc)})`;
+    cta.style.filter = pca > 0.999 ? 'none' : `blur(${(1 - pca) * 12}px)`;
+    const T0 = 6.8, ciclo = ((t - T0) % 1.6 + 1.6) % 1.6;
+    brilho.style.transform = `translateX(${t < T0 ? -200 : M.lerp(-200, 560, E.cubicInOut(M.clamp(ciclo / 0.9)))}px) skewX(-20deg)`;
+    seta.style.transform = `translateX(${t < T0 ? 0 : Math.sin(M.clamp(ciclo / 0.6) * Math.PI) * 12}px)`;
+    [...document.querySelectorAll('#chev svg')].forEach((s, i) => {
+      const pe = M.prog(t, 6.5 + i * 0.12, 0.6, E.cubicOut);
+      const onda = t < T0 ? 1 : 0.35 + 0.65 * Math.max(0, Math.sin(((t - T0) * 2.4 - i * 0.35) * Math.PI));
+      s.style.opacity = pe * onda;
+      s.style.transform = `translateY(${(1 - pe) * -14 + (t < T0 ? 0 : Math.sin((t - T0) * 2.4 * Math.PI - i * 0.6) * 4)}px)`;
+    });
+  };
+  M.tocar();
+</script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Inserções de motion — SaaS crescendo sem ficar saudável (Mateus, gabrielSM2909-1)</title>
+<link rel="stylesheet" href="fm.css">
+<style>
+  /* inserções: página transparente por cima do vídeo (render.mjs --sobre). Tempos = base-mateus.mp4 já cortada.
+     Camisa clara: cartões do peito em azul; legenda do editor em 24% (fundo escuro) e 72% só nas cenas do topo. */
+  html, body { background: transparent !important; }
+  #azul, #leg { display: none !important; }
+  .ic.st { position: static; opacity: 1; margin: 0; box-shadow: none; flex: none; }
+  .azc { border-radius: 36px; color: #fff; background: linear-gradient(150deg, #1446FF, #0630C4); box-shadow: 0 30px 70px rgba(0, 15, 90, .45); }
+  .rotulo { padding: 14px 34px; border-radius: 16px; background: var(--azul); color: #fff; font-weight: 700; white-space: nowrap; box-shadow: 0 20px 50px rgba(0, 20, 120, .45); }
+  .rotulo b { color: var(--verde); }
+  .pil { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 18px; border-radius: 999px; font-size: 28px; font-weight: 700; white-space: nowrap;
+         font-variant-numeric: tabular-nums; }
+  .pil svg { width: 24px; height: 24px; }
+  .pil.vd { background: #DFFCF6; color: #069B80; }
+  .pil.vm { background: #FDE8E9; color: #D93A40; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* 1 · gancho */
+  #s1 { width: 880px; padding: 26px 32px; }
+  #s1 .cab { font-size: 24px; font-weight: 700; letter-spacing: .1em; color: #9AA1B5; }
+  .lin1 { display: flex; align-items: center; gap: 20px; height: 96px; font-size: 36px; font-weight: 700; white-space: nowrap; }
+  .lin1 + .lin1 { border-top: 2px solid #EEF0F5; }
+  .lin1 .pil { margin-left: auto; }
+  .lin1 svg.sp { width: 150px; height: 56px; }
+  #s1b { opacity: 0; overflow: hidden; }
+
+  /* 2 · tela cheia clara */
+  #tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+  .fs { z-index: 6; }
+  #fora { font-size: 26px; height: 56px; padding: 0 22px; border-radius: 999px; background: #fff; color: #8A90A2; display: flex; align-items: center; gap: 10px;
+          font-weight: 700; letter-spacing: .08em; box-shadow: 0 12px 30px rgba(10, 25, 80, .12); white-space: nowrap; }
+  #fora svg { width: 30px; height: 30px; }
+  #mrr { width: 900px; height: 400px; padding: 34px 40px; }
+  #mrr .rot { font-size: 30px; font-weight: 600; color: #8A90A2; }
+  #mrr .v { font-size: 104px; font-weight: 700; letter-spacing: -0.05em; margin-top: 2px; }
+  #mrr .bars { position: absolute; right: 40px; bottom: 40px; display: flex; align-items: flex-end; gap: 14px; height: 210px; }
+  #mrr .bars i { width: 44px; border-radius: 12px; background: linear-gradient(180deg, #4C74FF, #0037FF); transform-origin: 50% 100%; }
+  #mrr .pil { position: absolute; left: 40px; bottom: 40px; }
+  .ct { font-size: 32px; }
+  .ct .ok { width: 46px; height: 46px; }
+  #evol { font-size: 46px; }
+  #parece { padding: 10px 24px; border-radius: 14px; background: #fff; color: #8A90A2; font-size: 30px; font-weight: 600; font-style: italic; box-shadow: 0 14px 30px rgba(10, 25, 80, .2); }
+  @font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../fontes/Montserrat-Bold.ttf'); }
+  #legFS { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 70; pointer-events: none; }
+  #legFS text { font-family: 'MontB'; font-weight: 700; font-size: 46.1px; letter-spacing: 0; }
+
+  /* 3 · custo para sustentar o crescimento */
+  #custo { width: 840px; padding: 30px 36px; overflow: hidden; }
+  #custo .rot { font-size: 28px; font-weight: 600; opacity: .85; }
+  #custo .tot { font-size: 80px; font-weight: 700; letter-spacing: -0.04em; display: flex; align-items: center; gap: 18px; }
+  #custo .tot .pil { background: rgba(255, 255, 255, .16); color: #fff; }
+  .rc { height: 84px; margin-top: 12px; border-radius: 22px; background: rgba(255, 255, 255, .12); display: flex; align-items: center; gap: 18px; padding: 0 22px 0 14px;
+        font-size: 32px; font-weight: 600; white-space: nowrap; opacity: 0; }
+  .rc .ic { --s: 58px; }
+  .rc b { margin-left: auto; color: var(--verde); }
+
+  /* 4 · só a receita */
+  #painel { width: 820px; padding: 22px 30px 18px; }
+  .pr4 { display: flex; align-items: center; gap: 18px; height: 78px; font-size: 32px; font-weight: 700; white-space: nowrap; border-radius: 20px; padding: 0 16px; }
+  .pr4 .ic { --s: 52px; }
+  .pr4 span { margin-left: auto; color: #8A90A2; }
+  #p4r { font-size: 38px; }
+  #p4r span { color: #069B80; }
+
+  /* 5 · CAC sobe, margem cai, payback alonga */
+  .m5 { width: 400px; height: 180px; padding: 26px 30px; }
+  .m5 .rot { font-size: 28px; font-weight: 600; opacity: .85; }
+  .m5 .v { display: flex; align-items: center; gap: 14px; font-size: 62px; font-weight: 700; letter-spacing: -0.04em; margin-top: 4px; }
+  .m5 .seta { width: 54px; height: 54px; border-radius: 50%; background: #FF5A5F; display: grid; place-items: center; }
+  .m5 .seta svg { width: 30px; height: 30px; }
+  #pb { width: 830px; height: 190px; padding: 26px 30px; }
+  #pb .rot { font-size: 28px; font-weight: 600; opacity: .85; }
+  #pb .v { font-size: 60px; font-weight: 700; letter-spacing: -0.04em; }
+  #pb .tr { position: absolute; left: 30px; right: 30px; bottom: 28px; height: 18px; border-radius: 9px; background: rgba(255, 255, 255, .2); }
+  #pb .tr i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 9px; background: var(--verde); }
+
+  /* 6 · crescendo × saudável */
+  #s6 { width: 720px; padding: 18px 30px; }
+  .r6 { display: flex; align-items: center; gap: 20px; height: 100px; font-size: 42px; font-weight: 700; white-space: nowrap; }
+  .r6 + .r6 { border-top: 2px solid #EEF0F5; }
+  .r6 .ic { --s: 66px; }
+  .r6 .bd { margin-left: auto; width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; opacity: 0; }
+  .r6 .bd svg { width: 36px; height: 36px; }
+
+  /* 7 · tela cheia CLEAN (fundo claro, cartões brancos, sem 3D): gráfico retenção × CAC → gerenciador de anúncios → não se paga */
+  #az7 { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; }
+  .f7 { z-index: 6; }
+  .cab7 { display: flex; align-items: center; gap: 18px; }
+  .cab7 .tt { font-size: 34px; font-weight: 700; color: var(--tinta); white-space: nowrap; }
+  .cab7 .tt small { display: block; font-size: 24px; font-weight: 600; color: #9AA1B5; margin-top: 2px; }
+  .leg7 { margin-left: auto; display: flex; gap: 22px; font-size: 24px; font-weight: 700; color: #6B7184; white-space: nowrap; }
+  .leg7 i { display: inline-block; width: 26px; height: 8px; border-radius: 4px; margin-right: 10px; vertical-align: middle; }
+  #gr7 { width: 940px; height: 640px; padding: 36px 40px; }
+  #gr7 > svg { position: absolute; left: 40px; top: 150px; width: 860px; height: 450px; overflow: visible; }
+  #gr7 > svg text { font-family: 'Inst'; font-size: 22px; font-weight: 600; fill: #9AA1B5; }
+  .tg7 { position: absolute; height: 54px; padding: 0 18px; border-radius: 999px; display: flex; align-items: center; gap: 8px; font-size: 26px; font-weight: 700;
+         white-space: nowrap; color: #fff; opacity: 0; font-variant-numeric: tabular-nums; }
+  .tg7 svg { width: 22px; height: 22px; }
+  #ads7 { width: 980px; padding: 30px 34px 18px; }
+  #ads7 .tabs { display: flex; gap: 34px; margin-top: 22px; border-bottom: 2px solid #EEF0F5; font-size: 24px; font-weight: 600; color: #9AA1B5; white-space: nowrap; }
+  #ads7 .tabs span { padding-bottom: 14px; }
+  #ads7 .tabs .on { color: var(--azul); font-weight: 700; box-shadow: inset 0 -4px 0 var(--azul); }
+  #ads7 .dias { margin-left: auto; height: 46px; padding: 0 18px; border-radius: 999px; background: #F1F2F5; color: #6B7184; font-size: 22px; font-weight: 700;
+                display: flex; align-items: center; white-space: nowrap; }
+  .tb7 { position: relative; display: grid; grid-template-columns: 370px 90px 300px 1fr; align-items: center; height: 82px; padding: 0 10px;
+         border-bottom: 2px solid #F1F2F5; font-size: 27px; font-weight: 600; color: var(--tinta); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tb7.h { height: 60px; font-size: 21px; font-weight: 700; color: #9AA1B5; letter-spacing: .02em; }
+  .tb7 .cp { display: flex; align-items: center; gap: 12px; }
+  .tb7 .cp i { width: 14px; height: 14px; border-radius: 50%; background: #12D6B4; flex: none; }
+  .tb7 .c3 { font-weight: 700; }
+  .tb7 .al { display: inline-flex; margin-left: 10px; height: 34px; padding: 0 12px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 19px;
+             align-items: center; gap: 4px; opacity: 0; vertical-align: middle; }
+  .tb7 .al svg { width: 16px; height: 16px; }
+  #col7 { position: absolute; top: 0; bottom: 0; width: 300px; border-radius: 18px; background: rgba(0, 55, 255, .07); box-shadow: inset 0 0 0 3px rgba(0, 55, 255, .55); opacity: 0; }
+  #pb7 { width: 980px; height: 270px; padding: 30px 34px; }
+  #pb7 .lin { display: flex; align-items: center; gap: 18px; font-size: 30px; font-weight: 700; color: var(--tinta); white-space: nowrap; }
+  #pb7 .lin .av { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(150deg, #2BF0CF, #12D6B4); display: grid; place-items: center; flex: none; }
+  #pb7 .lin .av svg { width: 36px; height: 36px; }
+  #pb7 .lin small { display: block; font-size: 22px; font-weight: 600; color: #9AA1B5; }
+  #pb7 .ret { margin-left: auto; text-align: right; font-size: 22px; font-weight: 600; color: #9AA1B5; opacity: 0; }
+  #pb7 .ret b { display: block; font-size: 32px; color: var(--tinta); font-variant-numeric: tabular-nums; }
+  #pb7 .tl { position: absolute; left: 34px; right: 34px; bottom: 54px; height: 22px; border-radius: 11px; background: #EEF0F5; }
+  #pb7 .tl .f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 11px; background: linear-gradient(90deg, #4C74FF, #0037FF); }
+  #pb7 .tl .m9 { position: absolute; top: -14px; width: 4px; height: 50px; border-radius: 2px; background: #12D6B4; }
+  #pb7 .tl .m9 span { position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%); font-size: 21px; font-weight: 700; color: #069B80; white-space: nowrap; }
+  #pb7 .tl .ms { position: absolute; top: 34px; font-size: 18px; font-weight: 600; color: #B4BACB; transform: translateX(-50%); white-space: nowrap; }
+  #pb7 .tl .cx { position: absolute; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: var(--navy); display: grid; place-items: center;
+                 box-shadow: 0 0 0 6px #fff; opacity: 0; }
+  #pb7 .tl .cx svg { width: 24px; height: 24px; }
+  #pb7 .tl .cxl { position: absolute; bottom: 40px; transform: translateX(-50%); height: 40px; padding: 0 14px; border-radius: 999px; background: var(--navy); color: #fff;
+                  font-size: 20px; font-weight: 700; display: flex; align-items: center; white-space: nowrap; opacity: 0; }
+  #np7 { font-size: 36px; }
+  #np7 .xx { width: 54px; height: 54px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; }
+  #np7 .xx svg { width: 28px; height: 28px; }
+
+  /* 8/9 · os 4 pontos + lucro */
+  #sus { font-size: 46px; }
+  #quatro { width: 96px; height: 96px; border-radius: 28px; background: var(--verde); color: #0A1A5C; display: grid; place-items: center; font-size: 60px; font-weight: 700;
+            box-shadow: 0 18px 40px rgba(0, 120, 100, .4); }
+  .pt { width: 410px; height: 140px; padding: 0 24px; display: flex; align-items: center; gap: 18px; font-size: 32px; font-weight: 700; line-height: 1.08; }
+  .pt .ic { --s: 74px; }
+  .pt .ck { position: absolute; right: -12px; top: -12px; width: 46px; height: 46px; border-radius: 50%; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  .pt .ck svg { width: 26px; height: 26px; }
+  #lucro { font-size: 48px; }
+
+  /* 10 · MRR cresceu × ficou no caixa */
+  #s10 { width: 880px; padding: 28px 34px 30px; }
+  .b10 { margin-top: 8px; }
+  .b10 + .b10 { margin-top: 22px; }
+  .b10 .lb { display: flex; align-items: baseline; font-size: 30px; font-weight: 700; white-space: nowrap; }
+  .b10 .lb b { margin-left: auto; font-size: 40px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .b10 .tr { height: 40px; border-radius: 14px; background: #EEF0F5; margin-top: 10px; position: relative; overflow: hidden; }
+  .b10 .tr i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 14px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · gancho: crescimento ↑ × custo de aquisição ↑ -->
+<div class="p cartao" id="s1" style="left:540px;top:350px">
+  <div class="cab">SEU SAAS</div>
+  <div class="lin1"><div class="ic tl st" id="s1ai" style="--s:64px"></div>Crescimento<svg class="sp" viewBox="0 0 150 56"><path id="s1sp" d="M4 50 C 30 46, 46 36, 66 34 S 104 18, 146 6" fill="none" stroke="#12D6B4" stroke-width="6" stroke-linecap="round"/></svg><div class="pil vd" id="s1ap"></div></div>
+  <div class="lin1" id="s1b"><div class="ic az st" id="s1bi" style="--s:64px"></div>Custo de aquisição<div class="pil vm" id="s1bp"></div></div>
+</div>
+
+<!-- 2 · TELA CHEIA clara (5,0 → 11,05): MRR sobe, contratos entram, "parece" evoluindo -->
+<svg id="tela" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="cinza" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="#FAFAFB"/><stop offset=".55" stop-color="#EFEFF1"/><stop offset="1" stop-color="#E6E6E9"/></radialGradient>
+    <filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0A1A5C" flood-opacity=".28"/></filter>
+  </defs>
+  <path id="telaFundo" fill="url(#cinza)" fill-rule="evenodd" d=""/>
+  <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
+  <path id="telaArco" fill="none" stroke="#00FFD4" stroke-width="26" stroke-linecap="round" d=""/>
+</svg>
+<div class="p fs" id="fora" style="left:540px;top:600px"><span id="foraI"></span>VISTO DE FORA</div>
+<div class="p fs cartao" id="mrr" style="left:540px;top:860px">
+  <div class="rot">MRR</div><div class="v num" id="mrrV">R$ 84.000</div>
+  <div class="pil vd" id="mrrP"></div>
+  <div class="bars" id="mrrB"></div>
+</div>
+<div class="p fs chip claro ct" id="ct1" style="left:300px;top:1150px"><div class="ok" id="ct1o"></div>Novo contrato</div>
+<div class="p fs chip claro ct" id="ct2" style="left:780px;top:1150px"><div class="ok" id="ct2o"></div>Novo contrato</div>
+<div class="p fs chip claro ct" id="ct3" style="left:540px;top:1270px"><div class="ok" id="ct3o"></div>Novo contrato</div>
+<div class="p fs chip azulc" id="evol" style="left:540px;top:1440px"><div class="ok" id="evolI" style="width:56px;height:56px;border-radius:50%;background:var(--verde);display:grid;place-items:center"></div>Operação evoluindo</div>
+<div class="p fs" id="parece" style="left:860px;top:1350px">“parece”</div>
+
+<!-- 3 · custo para sustentar o crescimento (peito) -->
+<div class="p azc" id="custo" style="left:540px;top:1300px">
+  <div class="rot">Custo para sustentar o crescimento</div>
+  <div class="tot"><span class="num" id="custoV">R$ 18 mil</span><div class="pil" id="custoP">/mês</div></div>
+  <div class="rc" id="rc1"><div class="ic tl st" id="rc1i"></div>Tráfego pago<b>+R$ 22 mil</b></div>
+  <div class="rc" id="rc2"><div class="ic tl st" id="rc2i"></div>Equipe comercial<b>+R$ 35 mil</b></div>
+  <div class="rc" id="rc3"><div class="ic tl st" id="rc3i"></div>Ferramentas<b>+R$ 9 mil</b></div>
+</div>
+
+<!-- 4 · olhando apenas para a receita (topo) -->
+<div class="p cartao" id="painel" style="left:540px;top:370px">
+  <div class="pr4" id="p4r"><div class="ic tl st" id="p4ri"></div>Receita<span>R$ 132 mil ↑</span></div>
+  <div class="pr4 p4o" id="p4a"><div class="ic az st" id="p4ai"></div>CAC<span>R$ 1.250</span></div>
+  <div class="pr4 p4o" id="p4b"><div class="ic az st" id="p4bi"></div>Margem<span>41%</span></div>
+  <div class="pr4 p4o" id="p4c"><div class="ic az st" id="p4ci"></div>Payback<span>14 meses</span></div>
+</div>
+
+<!-- 5 · CAC ↑, margem ↓, payback mais longo (peito) -->
+<div class="p azc m5" id="m5a" style="left:330px;top:1220px"><div class="rot">CAC</div><div class="v"><span class="num" id="m5aV">R$ 480</span><div class="seta" id="m5aS"></div></div></div>
+<div class="p azc m5" id="m5b" style="left:750px;top:1220px"><div class="rot">Margem</div><div class="v"><span class="num" id="m5bV">68%</span><div class="seta" id="m5bS"></div></div></div>
+<div class="p azc" id="pb" style="left:540px;top:1440px"><div class="rot">Payback (tempo para o cliente devolver o CAC)</div><div class="v num" id="pbV">6 meses</div><div class="tr"><i id="pbT"></i></div></div>
+
+<!-- 6 · crescendo × saudável (topo) -->
+<div class="p cartao" id="s6" style="left:540px;top:380px">
+  <div class="r6"><div class="ic tl st" id="r6ai"></div>Crescendo<div class="bd" id="r6a" style="background:var(--verde)"></div></div>
+  <div class="r6"><div class="ic az st" id="r6bi"></div>Saudável<div class="bd" id="r6b" style="background:#E5484D"></div></div>
+</div>
+
+<!-- 7 · TELA CHEIA AZUL (31,5 → 39,4): retenção cai; cliente caro cancela antes do retorno -->
+<svg id="az7" viewBox="0 0 1080 1920">
+  <defs><radialGradient id="cinza7" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="#FAFAFB"/><stop offset=".55" stop-color="#EFEFF1"/><stop offset="1" stop-color="#E6E6E9"/></radialGradient></defs>
+  <path id="az7f" fill="url(#cinza7)" d=""/>
+</svg>
+<!-- gráfico: retenção cai, CAC sobe (duas métricas contrárias) -->
+<div class="p f7 cartao" id="gr7" style="left:540px;top:980px">
+  <div class="cab7"><div class="ic az st" id="gr7i" style="--s:64px"></div><div class="tt">Retenção × CAC<small>últimos 6 meses</small></div>
+    <div class="leg7"><span><i style="background:#0037FF"></i>Retenção</span><span><i style="background:#12D6B4"></i>CAC</span></div></div>
+  <svg viewBox="0 0 860 450">
+    <g stroke="#EEF0F5" stroke-width="2"><line x1="0" y1="40" x2="860" y2="40"/><line x1="0" y1="150" x2="860" y2="150"/><line x1="0" y1="260" x2="860" y2="260"/><line x1="0" y1="370" x2="860" y2="370"/></g>
+    <defs><linearGradient id="ar7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0037FF" stop-opacity=".16"/><stop offset="1" stop-color="#0037FF" stop-opacity="0"/></linearGradient>
+      <clipPath id="cl7"><rect id="cl7r" x="0" y="0" width="0" height="450"/></clipPath></defs>
+    <path id="ar7p" fill="url(#ar7)" clip-path="url(#cl7)" d="M20 70 C 120 72, 200 84, 300 110 S 480 190, 580 240 S 760 320, 840 340 V370 H20 Z"/>
+    <path id="ln7a" fill="none" stroke="#0037FF" stroke-width="8" stroke-linecap="round" d="M20 70 C 120 72, 200 84, 300 110 S 480 190, 580 240 S 760 320, 840 340"/>
+    <path id="ln7b" fill="none" stroke="#12D6B4" stroke-width="8" stroke-linecap="round" d="M20 330 C 120 326, 200 314, 300 290 S 480 210, 580 160 S 760 80, 840 60"/>
+    <circle id="dt7a" cx="840" cy="340" r="13" fill="#0037FF" stroke="#fff" stroke-width="5" opacity="0"/>
+    <circle id="dt7b" cx="840" cy="60" r="13" fill="#12D6B4" stroke="#fff" stroke-width="5" opacity="0"/>
+    <circle id="cr7" cx="487" cy="200" r="22" fill="none" stroke="#0A1A5C" stroke-width="4" opacity="0"/>
+    <g text-anchor="middle"><text x="20" y="420">Jan</text><text x="184" y="420">Fev</text><text x="348" y="420">Mar</text><text x="512" y="420">Abr</text><text x="676" y="420">Mai</text><text x="840" y="420">Jun</text></g>
+  </svg>
+  <div class="tg7" id="tg7a" style="right:30px;top:430px;background:var(--azul)"></div>
+  <div class="tg7" id="tg7b" style="right:30px;top:150px;background:#12D6B4;color:#0A1A5C"></div>
+</div>
+<!-- gerenciador de anúncios: custo por cliente altíssimo -->
+<div class="p f7 cartao" id="ads7" style="left:540px;top:880px">
+  <div class="cab7"><div class="ic az st" id="ads7i" style="--s:60px"></div><div class="tt">Gerenciador de anúncios</div><div class="dias">Últimos 30 dias</div></div>
+  <div class="tabs"><span class="on">Campanhas</span><span>Conjuntos de anúncios</span><span>Anúncios</span></div>
+  <div style="position:relative">
+    <div id="col7"></div>
+    <div class="tb7 h"><span>Campanha</span><span>Clientes</span><span>Custo/cliente<span class="al" id="al7"></span></span><span>Valor usado</span></div>
+    <div class="tb7 r7"><span class="cp"><i></i>Aquisição · Fundo de funil</span><span>12</span><span class="c3" data-v="1250">R$ 0</span><span>R$ 15.000</span></div>
+    <div class="tb7 r7"><span class="cp"><i></i>Tráfego · Topo de funil</span><span>4</span><span class="c3" data-v="1480">R$ 0</span><span>R$ 5.920</span></div>
+    <div class="tb7 r7" style="border-bottom:0"><span class="cp"><i></i>Remarketing · Demo</span><span>7</span><span class="c3" data-v="1090">R$ 0</span><span>R$ 7.630</span></div>
+  </div>
+</div>
+<!-- o cliente cancela antes de o custo se pagar -->
+<div class="p f7 cartao" id="pb7" style="left:540px;top:1340px">
+  <div class="lin"><div class="av" id="pb7a"></div><div>Cliente #12<small>adquirido por R$ 1.250</small></div>
+    <div class="ret" id="pb7r">Retorno até agora<b id="pb7v">R$ 0 de R$ 1.250</b></div></div>
+  <div class="tl" id="pb7t"><div class="f" id="pb7f"></div><div class="m9" style="left:75%"><span>se pagaria no mês 9</span></div>
+    <div class="cx" id="pb7x" style="left:25%"></div><div class="cxl" id="pb7l" style="left:25%">Cancelou no mês 3</div></div>
+</div>
+<div class="p f7 chip claro" id="np7" style="left:540px;top:1560px"><div class="xx" id="np7x"></div>Não se pagou</div>
+
+<!-- 8/9 · crescimento sustentável = 4 pontos → lucro (peito) -->
+<div class="p rotulo" id="sus" style="left:470px;top:1110px">Crescimento <b>sustentável</b></div>
+<div class="p" id="quatro" style="left:880px;top:1110px">4</div>
+<div class="p azc pt" id="pt1" style="left:330px;top:1270px"><div class="ic tl st" id="pt1i"></div>CAC<br>controlado<div class="ck"></div></div>
+<div class="p azc pt" id="pt2" style="left:750px;top:1270px"><div class="ic tl st" id="pt2i"></div>Margem<br>saudável<div class="ck"></div></div>
+<div class="p azc pt" id="pt3" style="left:330px;top:1430px"><div class="ic tl st" id="pt3i"></div>Payback<br>curto<div class="ck"></div></div>
+<div class="p azc pt" id="pt4" style="left:750px;top:1430px"><div class="ic tl st" id="pt4i"></div>Retenção<br>suficiente<div class="ck"></div></div>
+<div class="p chip claro" id="lucro" style="left:540px;top:1590px"><div class="ok" id="lucroI" style="width:60px;height:60px"></div>= Lucro</div>
+
+<!-- 10 · MRR cresceu × ficou no caixa (topo) -->
+<div class="p cartao" id="s10" style="left:540px;top:370px">
+  <div class="b10"><div class="lb">MRR cresceu<b id="b10aV">+R$ 0</b></div><div class="tr"><i id="b10a" style="background:linear-gradient(90deg,#4C74FF,#0037FF)"></i></div></div>
+  <div class="b10"><div class="lb">Ficou no caixa<b id="b10bV" style="color:#069B80">R$ 0</b></div><div class="tr"><i id="b10b" style="background:linear-gradient(90deg,#2BF0CF,#12D6B4)"></i></div></div>
+</div>
+
+<svg id="legFS" viewBox="0 0 1080 1920"><g id="legFSg"></g></svg>
+<script src="../motion.js"></script>
+<script src="fm.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM, A = FM.anim;
+window.DURACAO = 55.74;
+
+Object.assign(FM.GLIFO, {
+  sobe: 'M12 19 V5 M6 11 L12 5 L18 11',
+  desce: 'M12 5 V19 M6 13 L12 19 L18 13',
+  olho: 'M2 12 C5 6, 19 6, 22 12 C19 18, 5 18, 2 12 Z M12 9 a3 3 0 1 0 0.01 0',
+  coracao: 'M12 20 C 4 14, 3 10, 3 8 a4.5 4.5 0 0 1 9 -1 a4.5 4.5 0 0 1 9 1 C 21 10, 20 14, 12 20 Z',
+  megafone: 'M3 10 V14 H6 L15 19 V5 L6 10 Z M18.5 9.5 a3.5 3.5 0 0 1 0 5',
+  ferramenta: 'M14.5 6.5 a4 4 0 0 0 5 5 L11 20 a2.1 2.1 0 0 1 -3 -3 L16.5 8.5 Z M14.5 6.5 L17 4',
+  ampulheta: 'M6 3 H18 M6 21 H18 M7 3 C7 9, 17 9, 17 12 C17 15, 7 15, 7 21 M17 3 C17 9, 7 9, 7 12 C7 15, 17 15, 17 21',
+  etiqueta: 'M3 12 V4 H11 L21 14 L14 21 Z M7.5 8 h0.01',
+  escudo: 'M12 3 L20 6 V12 C20 16.5, 16.5 19.5, 12 21 C7.5 19.5, 4 16.5, 4 12 V6 Z M8.5 12 L11 14.5 L15.5 9.5',
+});
+const ico = (sel, g) => { $(sel).innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO[g]}"/></svg>`; };
+const glifo = (sel, g, cor, w = 2.6) => { $(sel).innerHTML = FM.svg(g, cor, w); };
+const pilTx = (sel, g, cor, tx) => { $(sel).innerHTML = FM.svg(g, cor, 3) + `<span class="num">${tx}</span>`; };
+ico('#s1ai', 'bars'); ico('#s1bi', 'dolar');
+$('#foraI').innerHTML = FM.svg('olho', '#8A90A2', 2.4);
+for (const k of [1, 2, 3]) glifo(`#ct${k}o`, 'check', '#0A1A5C', 3.2);
+glifo('#evolI', 'sobe', '#0A1A5C', 3.2);
+const BARS = [0.34, 0.42, 0.5, 0.62, 0.78, 1.0];
+const barras = BARS.map(h => { const i = document.createElement('i'); i.style.height = (h * 210) + 'px'; $('#mrrB').appendChild(i); return i; });
+ico('#rc1i', 'megafone'); ico('#rc2i', 'gente'); ico('#rc3i', 'ferramenta');
+ico('#p4ri', 'dolar'); ico('#p4ai', 'etiqueta'); ico('#p4bi', 'bars'); ico('#p4ci', 'ampulheta');
+glifo('#m5aS', 'sobe', '#fff', 3.2); glifo('#m5bS', 'desce', '#fff', 3.2);
+ico('#r6ai', 'bars'); ico('#r6bi', 'coracao'); glifo('#r6a', 'check', '#0A1A5C', 3.2); glifo('#r6b', 'x', '#fff', 3.2);
+ico('#pt1i', 'etiqueta'); ico('#pt2i', 'bars'); ico('#pt3i', 'ampulheta'); ico('#pt4i', 'escudo');
+for (const c of document.querySelectorAll('.pt .ck')) c.innerHTML = FM.svg('check', '#0A1A5C', 3.2);
+$('#lucroI').className = 'ok'; $('#lucroI').innerHTML = FM.svg('dolar', '#0A1A5C', 2.8); $('#lucroI').firstChild.style.width = '36px';
+ico('#gr7i', 'bars'); ico('#ads7i', 'megafone'); glifo('#pb7a', 'pessoa', '#0A1A5C', 2.4);
+glifo('#pb7x', 'x', '#fff', 3.2); glifo('#np7x', 'x', '#fff', 3.2);
+$('#al7').innerHTML = FM.svg('sobe', '#fff', 3) + 'altíssimo';
+for (const [m, x] of [[1, 0], [3, 18.18], [6, 45.45], [9, 72.72], [12, 100]]) { const d = document.createElement('div'); d.className = 'ms'; d.style.left = x + '%'; if (m === 12) d.style.transform = 'translateX(-90%)'; if (m === 1) d.style.transform = 'translateX(-10%)'; d.textContent = 'mês ' + m; $('#pb7t').appendChild(d); }
+
+const FORA = 'M-60 -60 H1140 V1980 H-60 Z ';
+const circulo = (cx, cy, r) => `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
+const retang = (cx, cy, w, h, rr) => { const x = cx - w / 2, y = cy - h / 2; rr = Math.min(rr, w / 2, h / 2);
+  return `M${x + rr} ${y} H${x + w - rr} A${rr} ${rr} 0 0 1 ${x + w} ${y + rr} V${y + h - rr} A${rr} ${rr} 0 0 1 ${x + w - rr} ${y + h} H${x + rr} A${rr} ${rr} 0 0 1 ${x} ${y + h - rr} V${y + rr} A${rr} ${rr} 0 0 1 ${x + rr} ${y} Z`; };
+const tranco = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-6 * s) * Math.sin(s * 18); return ` rotate(${-5 * k}deg) scale(${1 + 0.04 * k})`; };
+const pulso = (t, t0) => { if (t < t0) return ''; const s = t - t0; return ` scale(${1 + 0.12 * Math.exp(-6 * s) * Math.sin(s * 14)})`; };
+const BR = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+const linhaDesenha = (sel, t, a, d) => { const g = $(sel), gl = g.getTotalLength(), p = pr(t, a, d, E.cubicInOut); g.style.strokeDasharray = `${gl}`; g.style.strokeDashoffset = gl * (1 - p); };
+
+FM.iniciar({ estouros: [{ t0: 47.9, ps: FM.criaConfete(5, 80, 540, 1590, 520, 110), cor: 'branco' }] });
+
+const CX = 550, CY = 800;   // rosto dele na base (zoom 1)
+window.quadro = function (t) {
+  FM.antes(t);
+
+  /* 1 · gancho (0–4,95): crescimento sobe; no "custo de aquisição" o CAC dispara; tranco no "caro" */
+  A($('#s1'), t, -0.35, 4.95, { de: 0.86 });
+  linhaDesenha('#s1sp', t, 0.1, 1.0);
+  pilTx('#s1ap', 'sobe', '#069B80', Math.round(pr(t, 0.15, 1.1, E.quintOut) * 32) + '%');
+  const b = pr(t, 2.3, 0.6), ba = pr(t, 2.3, 0.3, E.cubicOut);
+  $('#s1b').style.opacity = ba; $('#s1b').style.height = (pr(t, 2.25, 0.45, E.cubicInOut) * 96) + 'px'; $('#s1b').style.transform = `translateY(${(1 - b) * 24}px)`; $('#s1b').style.filter = b < 0.99 ? `blur(${(1 - b) * 10}px)` : 'none';
+  pilTx('#s1bp', 'sobe', '#D93A40', BR(L(480, 1250, pr(t, 3.3, 1.3, E.cubicInOut))));
+  $('#s1bp').style.transform = pulso(t, 4.64);
+
+  /* 2 · TELA CHEIA clara (5,0 → 11,05) */
+  const TI = 5.0, TO = 11.05;
+  if (t < TI || t > TO + 0.6) { $('#tela').style.opacity = 0; }
+  else {
+    $('#tela').style.opacity = 1;
+    let furo = '', borda = '';
+    if (t < TO) {
+      const r = L(1250, 300, pr(t, TI, 0.42, E.expoOut)) * (1 - pr(t, TI + 0.36, 0.3, E.cubicIn));
+      if (r > 1) { furo = circulo(CX, CY, r); if (r < 1100) borda = furo; }
+    } else {
+      const p1 = M.prog(t, TO, 0.32, E.spring), p2 = pr(t, TO + 0.2, 0.36, E.cubicInOut);
+      const w = L(L(0, 430, p1), 1320, p2), h = L(L(0, 560, p1), 2400, p2);
+      furo = retang(CX, CY + 60, Math.max(1, w), Math.max(1, h), L(70, 0, p2)); if (p2 < 0.97) borda = furo;
+    }
+    const fim = t >= TO + 0.56;
+    $('#telaFundo').setAttribute('d', fim ? '' : FORA + furo);
+    $('#telaBorda').setAttribute('d', fim ? '' : borda);
+    const ar = $('#telaArco');
+    if (t >= TO + 0.02 && t < TO + 0.55) {
+      ar.setAttribute('d', 'M 170 1220 C 350 1440, 810 1380, 930 920 C 990 680, 900 480, 760 390');
+      const L0 = ar.getTotalLength(), q = E.cubicInOut(C((t - TO - 0.02) / 0.5)), seg = L0 * 0.45;
+      ar.setAttribute('stroke-dasharray', `${seg} ${L0 * 2}`); ar.setAttribute('stroke-dashoffset', L(seg, -L0, q)); ar.style.opacity = 1;
+    } else ar.style.opacity = 0;
+  }
+  const saiFS = TO - 0.02;
+  A($('#mrr'), t, 5.25, saiFS, { de: 0.88, dout: 0.18 });
+  $('#mrrV').textContent = BR(L(84000, 132000, pr(t, 5.4, 1.2, E.quintOut)));
+  pilTx('#mrrP', 'sobe', '#069B80', '+' + Math.round(pr(t, 5.4, 1.2, E.quintOut) * 57) + '%');
+  barras.forEach((i, k) => { i.style.transform = `scaleY(${M.prog(t, 5.5 + k * 0.08, 0.6, E.spring)})`; });
+  [['#ct1', 6.36], ['#ct2', 6.68], ['#ct3', 7.24]].forEach(([s, a], k) => A($(s), t, a, saiFS, { de: 0.7, dout: 0.18, rot: k === 1 ? 5 : -5 }));
+  A($('#fora'), t, 7.9, saiFS, { de: 0.8, dout: 0.18, dy: -30 });
+  A($('#evol'), t, 9.5, saiFS, { de: 0.8, dout: 0.18, extra: tranco(t, 10.56) });
+  A($('#parece'), t, 9.84, saiFS, { de: 0.6, dout: 0.18, rot: 10, extra: ' rotate(7deg)' + tranco(t, 10.0) });
+
+  /* 3 · custo para sustentar o crescimento (12,3–17,95), peito */
+  const RCS = [15.22, 16.02, 17.2], VAL = [18, 40, 75, 84];
+  const nR = RCS.reduce((s, a) => s + pr(t, a, 0.5, E.cubicInOut), 0);
+  $('#custo').style.height = (196 + nR * 96) + 'px'; $('#custo').style.top = (1110 + (196 + nR * 96) / 2) + 'px';
+  A($('#custo'), t, 12.3, 17.95, { de: 0.86, extra: tranco(t, 17.45) });
+  let tot = VAL[0]; RCS.forEach((a, k) => { tot += (VAL[k + 1] - VAL[k]) * pr(t, a + 0.1, 0.6, E.cubicOut); });
+  tot += 0;
+  $('#custoV').textContent = 'R$ ' + Math.round(tot) + ' mil';
+  RCS.forEach((a, k) => { const el = $(`#rc${k + 1}`), pe = pr(t, a, 0.6), pai = pr(t, a, 0.3, E.cubicOut);
+    el.style.opacity = pai; el.style.transform = `translateY(${(1 - pe) * 24}px)`; el.style.filter = pe < 0.99 ? `blur(${(1 - pe) * 10}px)` : 'none'; });
+
+  /* 4 · olhando apenas para a receita (18,1–21,95), topo: o resto do painel desfoca */
+  A($('#painel'), t, 18.1, 21.95, { de: 0.86 });
+  const so = pr(t, 20.4, 0.5, E.cubicInOut);
+  for (const el of document.querySelectorAll('.p4o')) { el.style.filter = so > 0.01 ? `blur(${so * 9}px)` : 'none'; el.style.opacity = 1 - so * 0.55; }
+  const rr = pr(t, 21.3, 0.35, E.cubicOut);
+  $('#p4r').style.background = `rgba(0,255,212,${0.18 * rr})`; $('#p4r').style.boxShadow = `0 0 0 ${4 * rr}px rgba(18,214,180,${rr})`;
+  $('#p4r').style.transform = `scale(${1 + 0.03 * rr})`;
+
+  /* 5 · CAC ↑, margem ↓, payback alonga (22,0–27,95), peito */
+  A($('#m5a'), t, 22.05, 27.95, { de: 0.84, rot: -4, extra: tranco(t, 22.6) });
+  $('#m5aV').textContent = BR(L(480, 1250, pr(t, 22.35, 0.9, E.cubicInOut)));
+  A($('#m5b'), t, 23.1, 27.95, { de: 0.84, rot: 4, extra: tranco(t, 23.75) });
+  $('#m5bV').textContent = Math.round(L(68, 41, pr(t, 23.3, 0.8, E.cubicInOut))) + '%';
+  A($('#pb'), t, 24.3, 27.95, { de: 0.86 });
+  const pm = pr(t, 25.0, 2.2, E.cubicInOut);
+  $('#pbV').textContent = Math.round(L(6, 14, pm)) + ' meses';
+  $('#pbT').style.width = L(30, 100, pm) + '%'; $('#pbT').style.background = pm > 0.6 ? '#FF5A5F' : 'var(--verde)';
+
+  /* 6 · crescendo ✓ × saudável ✕ (28,1–31,35), topo */
+  A($('#s6'), t, 28.1, 31.35, { de: 0.86 });
+  [['#r6a', 29.3], ['#r6b', 30.9]].forEach(([s, a]) => { const el = $(s);
+    el.style.opacity = pr(t, a, 0.2, E.cubicOut); el.style.transform = `scale(${L(0.4, 1, M.prog(t, a, 0.5, E.spring))})${tranco(t, a + 0.05)}`; });
+
+  /* 7 · TELA CHEIA CLEAN (31,5 → 39,7): gráfico retenção × CAC → gerenciador de anúncios → o cliente cancela antes de se pagar */
+  const AI = 31.5, AO = 39.4;
+  const wi = pr(t, AI, 0.5, E.cubicInOut), wo = pr(t, AO, 0.5, E.cubicInOut);   // entra varrendo da direita, sai varrendo para a esquerda
+  const x0 = wo > 0 ? -60 : L(1140, -60, wi), x1 = wo > 0 ? L(1140, -60, wo) : 1140;
+  $('#az7f').setAttribute('d', t < AI || t > AO + 0.5 ? '' : `M${x0} -60 H${x1} V1980 H${x0} Z`);
+  const sai7 = AO - 0.05;
+  // 1 · gráfico: as duas linhas se desenham; retenção cai, CAC sobe; elas se cruzam no "não acompanha"
+  A($('#gr7'), t, 31.75, 34.45, { de: 0.9 });
+  const da = pr(t, 32.1, 1.4, E.cubicInOut), db = pr(t, 32.3, 1.4, E.cubicInOut);
+  for (const [id, p] of [['#ln7a', da], ['#ln7b', db]]) { const g = $(id), gl = g.getTotalLength(); g.style.strokeDasharray = gl; g.style.strokeDashoffset = gl * (1 - p); }
+  $('#cl7r').setAttribute('width', 20 + 820 * da);
+  const ta = pr(t, 33.1, 0.3, E.cubicOut), tb = pr(t, 33.7, 0.3, E.cubicOut);
+  $('#dt7a').setAttribute('opacity', ta); $('#dt7b').setAttribute('opacity', tb);
+  $('#tg7a').style.opacity = ta; $('#tg7a').style.transform = `translateY(${(1 - ta) * 14}px)`;
+  $('#tg7a').innerHTML = FM.svg('desce', '#fff', 3) + 'Retenção ' + Math.round(L(92, 71, ta)) + '%';
+  $('#tg7b').style.opacity = tb; $('#tg7b').style.transform = `translateY(${(1 - tb) * 14}px)`;
+  $('#tg7b').innerHTML = FM.svg('sobe', '#0A1A5C', 3) + 'CAC ' + BR(L(480, 1250, tb));
+  const cr = pr(t, 33.6, 0.4, E.cubicOut);
+  $('#cr7').setAttribute('opacity', cr * (1 - pr(t, 34.2, 0.3)));
+  $('#cr7').setAttribute('r', L(10, 26, M.prog(t, 33.6, 0.6, E.spring)));
+  // 2 · gerenciador de anúncios: custo por cliente sobe até altíssimo
+  A($('#ads7'), t, 34.6, sai7, { de: 0.9, dout: 0.25 });
+  document.querySelectorAll('#ads7 .r7').forEach((r, k) => { const a = 34.85 + k * 0.1, p = pr(t, a, 0.5), pa = pr(t, a, 0.25, E.cubicOut);
+    r.style.opacity = pa; r.style.transform = `translateY(${(1 - p) * 16}px)`; });
+  const sobe = pr(t, 35.76, 0.7, E.quintOut);
+  document.querySelectorAll('#ads7 .c3').forEach(c => { c.textContent = BR(L(310, +c.dataset.v, sobe)); });
+  const col = pr(t, 35.76, 0.3, E.cubicOut); $('#col7').style.opacity = col; $('#col7').style.left = '466px';
+  const al = $('#al7'); al.style.opacity = pr(t, 36.08, 0.25, E.cubicOut); al.style.transform = `scale(${L(0.5, 1, M.prog(t, 36.08, 0.5, E.spring))})`;
+  // 3 · o cliente: a barra de retorno anda até o mês 3 e para (cancelou); se pagaria só no mês 9
+  A($('#pb7'), t, 36.9, sai7, { de: 0.9, dout: 0.25, dy: 60 });
+  const pf = pr(t, 37.25, 0.5, E.cubicOut) * 25;
+  $('#pb7f').style.width = pf + '%';
+  const cx = pr(t, 37.76, 0.25, E.cubicOut);
+  $('#pb7x').style.opacity = cx; $('#pb7x').style.transform = `scale(${L(0.4, 1, M.prog(t, 37.76, 0.5, E.spring))})`;
+  $('#pb7l').style.opacity = pr(t, 37.86, 0.3, E.cubicOut);
+  $('#pb7f').style.background = cx > 0.5 ? 'linear-gradient(90deg, #9AA1B5, #6B7184)' : '';
+  const rv = pr(t, 38.25, 0.3, E.cubicOut); $('#pb7r').style.opacity = rv;
+  $('#pb7v').textContent = BR(pr(t, 38.3, 0.5, E.quintOut) * 420) + ' de R$ 1.250';
+  A($('#np7'), t, 38.62, sai7, { de: 0.8, dout: 0.22, extra: tranco(t, 38.74) });
+
+  /* 8/9 · crescimento sustentável = 4 pontos → lucro (39,8–48,6), peito */
+  A($('#sus'), t, 39.8, 48.6, { de: 0.8 });
+  A($('#quatro'), t, 42.1, 48.6, { de: 0.4, rot: 12, extra: tranco(t, 42.2) });
+  [['#pt1', 43.04], ['#pt2', 44.2], ['#pt3', 45.36], ['#pt4', 46.34]].forEach(([s, a]) => {
+    A($(s), t, a, 48.6, { de: 0.82, dy: 50 });
+    const ck = $(s).querySelector('.ck'); ck.style.opacity = pr(t, a + 0.35, 0.2, E.cubicOut);
+    ck.style.transform = `scale(${L(0.4, 1, M.prog(t, a + 0.35, 0.5, E.spring))})`;
+  });
+  A($('#lucro'), t, 47.8, 48.6, { de: 0.6, extra: tranco(t, 47.95) });
+
+  /* 10 · MRR cresceu × ficou no caixa (49,0–fim), topo */
+  A($('#s10'), t, 49.0, null, { de: 0.86 });
+  const pa10 = pr(t, 50.9, 1.0, E.cubicInOut), pb10 = pr(t, 54.4, 0.8, E.cubicInOut);
+  $('#b10a').style.width = (pa10 * 100) + '%'; $('#b10aV').textContent = '+' + BR(pa10 * 48000);
+  $('#b10b').style.width = (pb10 * 19) + '%'; $('#b10bV').textContent = BR(pb10 * 9000);
+  $('#b10bV').style.display = 'inline-block'; $('#b10bV').style.transform = pulso(t, 55.26);
+
+  FM.depois(t);
+};
+
+/* legenda desenhada na página nas telas cheias claras — mesmos blocos e medidas do editor (tam 72 → 46,1 px; pos 24% → y 461;
+   caixa #0137FF 74 px raio 15). Escura no fundo claro; fica branca quando ele volta. [blocos, fim do último, quando fica branca] */
+const LEGS = [
+  [[[['MRR', 5.22], ['sobe,', 5.76], ['novos', 6.36]], [['contratos', 6.68], ['entram', 7.24], ['e', 7.68]],
+    [['olhando', 7.9], ['tudo', 8.2], ['de', 8.5]], [['fora,', 8.7], ['a', 9.32], ['sua', 9.34]],
+    [['operação', 9.48], ['parece', 9.84], ['estar', 10.22]], [['evoluindo.', 10.56]]], 11.2, 10.9],
+  [[[['E', 31.54], ['a', 31.72], ['situação', 31.8]], [['piora', 32.14], ['quando', 32.74], ['a', 32.94]],
+    [['retenção', 33.08], ['não', 33.6], ['acompanha,', 33.86]], [['porque', 34.62], ['não', 34.94], ['adianta', 35.22]],
+    [['pagar', 35.76], ['caro', 36.08], ['para', 36.52]], [['adquirir', 36.68], ['um', 37.1], ['cliente', 37.2]],
+    [['que', 37.62], ['cancela', 37.76], ['antes', 38.2]], [['de', 38.56], ['gerar', 38.74], ['retorno.', 39.0]]], 39.6, 39.45],
+];
+{ const NS = 'http://www.w3.org/2000/svg', g = $('#legFSg'), Y = 461;
+  const blocos = [];
+  for (const [lista, fimSet, tBranco] of LEGS) lista.forEach((bl, b) => {
+    const grupo = document.createElementNS(NS, 'g'), caixa = document.createElementNS(NS, 'rect'), tx = document.createElementNS(NS, 'text');
+    caixa.setAttribute('height', 74); caixa.setAttribute('rx', 15); caixa.setAttribute('fill', '#0137FF'); caixa.setAttribute('y', Y + 7 - 37);
+    tx.setAttribute('x', 540); tx.setAttribute('y', Y + 15.1); tx.setAttribute('text-anchor', 'middle');
+    const spans = bl.map(([w], i) => { const sp = document.createElementNS(NS, 'tspan'); sp.textContent = (i ? ' ' : '') + w; tx.appendChild(sp); return sp; });
+    grupo.append(caixa, tx); g.appendChild(grupo); grupo.style.opacity = 0;
+    blocos.push({ bl, grupo, caixa, tx, spans, fim: b + 1 < lista.length ? lista[b + 1][0][1] : fimSet, tBranco });
+  });
+  const q1 = window.quadro;
+  window.quadro = t => {
+    q1(t);
+    blocos.forEach(({ bl, grupo, caixa, tx, spans, fim, tBranco }) => {
+      const ini = bl[0][1];
+      if (t < ini || t >= fim) { grupo.style.opacity = 0; return; }
+      grupo.style.opacity = 1;
+      const branco = pr(t, tBranco, 0.3, E.cubicInOut), cor = `rgb(${L(16, 255, branco)},${L(18, 255, branco)},${L(24, 255, branco)})`;
+      let k = 0; bl.forEach(([, ti], i) => { if (t >= ti) k = i; });
+      spans.forEach((sp, i) => sp.setAttribute('fill', i === k ? '#fff' : cor));
+      const n0 = spans.slice(0, k).reduce((n, sp) => n + sp.textContent.length, 0) + (k ? 1 : 0);
+      const pos = tx.getStartPositionOfChar(n0), wLarg = tx.getSubStringLength(n0, bl[k][0].length);
+      caixa.setAttribute('x', pos.x - 8); caixa.setAttribute('width', wLarg + 16);
+    });
+  };
+}
+
+if (!window.RENDER) { const t0 = performance.now(); const loop = () => { window.quadro(((performance.now() - t0) / 1000) % window.DURACAO); requestAnimationFrame(loop); }; loop(); }
+</script>
+</body>
+</html>

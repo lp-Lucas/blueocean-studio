@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — reveal do Spotify (9:16, sem locução)</title>
+<!-- Receita 13 (reveal de SaaS) em 9:16, sem fala: o ritmo vem da música (Flashing Lights instr., 90,5 BPM, batida
+     0,663 s; a virada da faixa em 21,39 s cai em 9,0 s do vídeo → compassos em 1,04 · 3,70 · 6,35 · 9,0 · 11,65 ·
+     14,30 · 16,96 · 19,61 · 22,26 · 24,91). Estilo de animação = pin 333759022406800725 (tipografia cinética sobre fundo
+     verde-escuro com anéis de luz, pílula + cursor, painéis de UI se montando em 3D, troca escuro ↔ claro, fecho com
+     frase). Interface e conteúdo = open.spotify.com (ref/captura.mjs): fonte SpotifyMix (fontes/), logo SVG oficial,
+     busca em pílula #1F1F1F, cartões de categoria com as cores e capas do site, playlist Today's Top Hits.
+     node render.mjs fullmotion/spotify/spotify.html fullmotion/spotify/spotify-video.mp4 -->
+<style>
+  @font-face { font-family: 'Mix'; font-weight: 400; src: url('fontes/SpotifyMixUI-Regular.woff2'); }
+  @font-face { font-family: 'Mix'; font-weight: 700; src: url('fontes/SpotifyMixUI-Bold.woff2'); }
+  @font-face { font-family: 'MixT'; font-weight: 700; src: url('fontes/SpotifyMixUITitle-Bold.woff2'); }
+  @font-face { font-family: 'MixT'; font-weight: 800; src: url('fontes/SpotifyMixUITitle-Extrabold.woff2'); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; }
+  body { background: #020a05; font-family: 'Mix', Arial, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+  canvas { position: absolute; left: 0; top: 0; }
+  #claro { position: absolute; inset: 0; clip-path: circle(0px at 540px 960px);
+    background: radial-gradient(900px 800px at 85% 8%, rgba(30, 215, 96, .30), rgba(30, 215, 96, .12) 40%, rgba(30, 215, 96, 0) 72%),
+                radial-gradient(900px 900px at 5% 95%, rgba(196, 240, 110, .42), rgba(196, 240, 110, .14) 45%, rgba(196, 240, 110, 0) 75%),
+                linear-gradient(180deg, #F6FCF3, #E6F7E2); }
+  .cena { position: absolute; inset: 0; display: none; }
+  .mundo { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
+  .pw { display: inline-block; white-space: nowrap; }
+  .lt { display: inline-block; white-space: pre; }
+  .b { font-weight: 700; }
+  .v { color: #1ED760; }
+  .hl { position: relative; display: inline-block; isolation: isolate; color: #000; padding: 0 .14em; }
+  .hlb { position: absolute; left: 0; right: 0; top: .08em; bottom: .02em; background: #1ED760; border-radius: .12em; transform-origin: 0 50%; z-index: -1; }
+  svg.i { display: block; flex: none; }
+
+  /* 1 · abertura */
+  #l1 { position: absolute; left: 0; right: 0; top: 860px; height: 110px; display: flex; align-items: center; justify-content: center; font-size: 64px; letter-spacing: -.01em; }
+  #pill1 { position: relative; height: 96px; margin-left: 22px; border-radius: 48px; overflow: hidden; flex: none;
+           background: linear-gradient(90deg, rgba(30, 215, 96, .16), rgba(30, 215, 96, .55) 55%, #1ED760); box-shadow: 0 0 60px rgba(30, 215, 96, .35); }
+  #pill1 .ptxt { position: absolute; left: 34px; top: 0; line-height: 96px; font-weight: 700; font-size: 46px; color: #fff; }
+  #bola1 { position: absolute; width: 76px; height: 76px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+  #anel1 { position: absolute; left: 540px; top: 960px; width: 0; height: 0; }
+  #anel1 .o { position: absolute; left: -120px; top: -120px; width: 240px; height: 240px; border-radius: 50%; border: 10px solid #1ED760;
+              box-shadow: 0 0 40px #1ED760, inset 0 0 40px rgba(30, 215, 96, .8); }
+  #anel1 .p { position: absolute; left: -46px; top: -50px; }
+
+  /* 2 · palavras */
+  #s2c { position: absolute; left: 0; top: 0; overflow: visible; }
+  .w2 { position: absolute; left: 0; right: 0; top: 880px; text-align: center; line-height: 1; }
+  #w2a { font-family: 'MixT'; font-weight: 800; font-size: 176px; color: #1ED760; letter-spacing: -.03em; top: 860px; }
+  #w2b { font-size: 160px; letter-spacing: -.02em; }
+  #w2c { font-weight: 700; font-size: 160px; letter-spacing: -.03em; }
+  #eq2 { position: absolute; left: 540px; top: 760px; height: 0; }
+  #eq2 i { position: absolute; bottom: 0; width: 24px; border-radius: 12px; background: #1ED760; box-shadow: 0 0 24px rgba(30, 215, 96, .7); }
+  #onda2 { position: absolute; left: 140px; top: 1090px; }
+  #capas2 { position: absolute; left: 540px; top: 770px; }
+  #capas2 img { position: absolute; width: 190px; height: 190px; left: -95px; top: -190px; border-radius: 10px; box-shadow: 0 20px 50px rgba(0, 0, 0, .6); transform-origin: 50% 100%; }
+
+  /* 3 · busca + categorias */
+  #h3 { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font-size: 72px; letter-spacing: -.01em; }
+  #busca { position: absolute; left: 540px; top: 760px; height: 120px; border-radius: 60px; background: #1F1F1F; transform-origin: 50% 50%;
+           box-shadow: 0 30px 80px rgba(0, 0, 0, .55); overflow: hidden; }
+  #busca.foco { box-shadow: inset 0 0 0 4px #fff, 0 30px 80px rgba(0, 0, 0, .55); }
+  #busca .lupa { position: absolute; left: 34px; top: 34px; color: #B3B3B3; }
+  #busca .q { position: absolute; left: 112px; top: 0; line-height: 120px; font-size: 42px; white-space: pre; color: #fff; }
+  #busca .q .ph { color: #B3B3B3; }
+  .car { display: inline-block; width: 3px; height: 48px; background: #fff; vertical-align: -8px; margin-left: 2px; }
+  #busca .div { position: absolute; right: 112px; top: 30px; width: 2px; height: 60px; background: #7C7C7C; }
+  #busca .nav { position: absolute; right: 36px; top: 34px; color: #B3B3B3; }
+  .tile { position: absolute; width: 450px; height: 250px; border-radius: 16px; overflow: hidden; }
+  .tile b { position: absolute; left: 28px; top: 24px; width: 300px; font-family: 'Mix'; font-weight: 700; font-size: 46px; line-height: 1.12; letter-spacing: -.01em; }
+  .tile img { position: absolute; right: -34px; bottom: -14px; width: 190px; height: 190px; transform: rotate(25deg); box-shadow: 0 4px 24px rgba(0, 0, 0, .5); border-radius: 4px; }
+  .tile .anelT { position: absolute; inset: 0; border-radius: 16px; box-shadow: inset 0 0 0 5px #fff; opacity: 0; }
+
+  /* 4 · painéis */
+  .pn { position: absolute; background: #121212; border-radius: 26px; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .08), 0 50px 100px rgba(0, 0, 0, .65), 0 0 80px rgba(30, 215, 96, .10); overflow: hidden; }
+  .pn .tit { position: absolute; left: 34px; top: 30px; font-family: 'MixT'; font-weight: 700; font-size: 44px; letter-spacing: -.01em; }
+  .pn .mt { position: absolute; right: 34px; top: 42px; font-size: 26px; font-weight: 700; color: #B3B3B3; }
+  .card { position: absolute; width: 276px; }
+  .card img { width: 276px; height: 276px; border-radius: 10px; display: block; }
+  .card .ct { font-size: 28px; font-weight: 400; margin-top: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .ca { font-size: 24px; color: #B3B3B3; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .art { position: absolute; width: 240px; text-align: left; }
+  .art img { width: 240px; height: 240px; border-radius: 50%; display: block; }
+  .art .ct { font-size: 28px; margin-top: 14px; white-space: nowrap; }
+  .art .ca { font-size: 24px; color: #B3B3B3; margin-top: 4px; }
+  .bib { position: absolute; left: 26px; height: 92px; display: flex; align-items: center; gap: 18px; width: 300px; }
+  .bib .th { width: 84px; height: 84px; border-radius: 8px; flex: none; overflow: hidden; }
+  .bib .th img { width: 100%; height: 100%; display: block; }
+  .bib .tx { min-width: 0; }
+  .bib .tx b { display: block; font-size: 26px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bib .tx span { display: block; font-size: 22px; color: #B3B3B3; margin-top: 4px; white-space: nowrap; }
+  .curtidas { background: linear-gradient(135deg, #450AF5, #8E8EE5); display: grid !important; place-items: center; }
+  #np .cap { position: absolute; left: 26px; top: 26px; width: 128px; height: 128px; border-radius: 10px; }
+  #np .nt { position: absolute; left: 176px; top: 40px; font-size: 32px; font-weight: 700; }
+  #np .na { position: absolute; left: 176px; top: 86px; font-size: 26px; color: #B3B3B3; }
+  #np .ok { position: absolute; left: 470px; top: 40px; }
+  #np .bar { position: absolute; left: 26px; right: 26px; bottom: 30px; height: 8px; border-radius: 4px; background: #4D4D4D; }
+  #np .bar b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: #1ED760; }
+  #np .pp { position: absolute; right: 30px; top: 40px; width: 88px; height: 88px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+  #mini { position: absolute; border-radius: 48px; background: #1F1F1F; height: 96px; display: flex; align-items: center; gap: 22px; padding: 0 34px; font-size: 34px; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .08), 0 40px 80px rgba(0, 0, 0, .6); }
+  #l4 { position: absolute; left: 0; right: 0; top: 800px; text-align: center; }
+  #l4a { font-size: 84px; letter-spacing: -.01em; line-height: 1.15; }
+  #l4b { font-family: 'MixT'; font-weight: 800; font-size: 118px; letter-spacing: -.03em; line-height: 1.2; margin-top: 6px; }
+
+  /* 5 · playlists (claro) */
+  .fant { position: absolute; left: 0; width: 1080px; text-align: center; font-family: 'MixT'; font-weight: 800; font-size: 178px; letter-spacing: -.035em; line-height: 1; white-space: nowrap; color: rgba(23, 160, 72, .12); }
+  .fant.c { color: #17A94C; }
+  #pl { position: absolute; left: 70px; top: 440px; width: 940px; height: 1250px; border-radius: 30px; overflow: hidden; background: #121212; box-shadow: 0 60px 120px rgba(10, 60, 30, .35), 0 0 0 1.5px rgba(0, 0, 0, .06); }
+  #pl .topo { position: absolute; left: 0; top: 0; right: 0; height: 640px; background: linear-gradient(180deg, #8C2F2A 0%, #5A2020 45%, #121212 100%); }
+  #pl .capa { position: absolute; left: 44px; top: 44px; width: 310px; height: 310px; border-radius: 8px; box-shadow: 0 16px 50px rgba(0, 0, 0, .55); }
+  #pl .pub { position: absolute; left: 390px; top: 120px; font-size: 26px; font-weight: 700; }
+  #pl h1 { position: absolute; left: 388px; top: 156px; font-family: 'MixT'; font-weight: 800; font-size: 80px; line-height: .98; letter-spacing: -.035em; }
+  #pl .meta { position: absolute; left: 390px; top: 330px; display: flex; align-items: center; gap: 10px; font-size: 25px; white-space: nowrap; }
+  #pl .ctl { position: absolute; left: 44px; top: 410px; height: 128px; display: flex; align-items: center; gap: 40px; }
+  #play5 { width: 128px; height: 128px; border-radius: 50%; background: #1ED760; display: grid; place-items: center; position: relative; }
+  #play5 .pulso { position: absolute; inset: -6px; border-radius: 50%; border: 6px solid #1ED760; opacity: 0; }
+  #pl .cab { position: absolute; left: 44px; right: 44px; top: 580px; height: 50px; border-bottom: 2px solid #2A2A2A; font-size: 24px; color: #B3B3B3; display: flex; align-items: center; }
+  .fx5 { position: absolute; left: 30px; right: 30px; height: 104px; display: flex; align-items: center; border-radius: 10px; }
+  .fx5 .n { width: 58px; text-align: center; font-size: 28px; color: #B3B3B3; flex: none; position: relative; height: 40px; line-height: 40px; }
+  .fx5 img { width: 80px; height: 80px; border-radius: 6px; margin: 0 22px 0 14px; flex: none; }
+  .fx5 .tx { flex: 1; min-width: 0; }
+  .fx5 .tx b { display: block; font-size: 31px; font-weight: 400; white-space: nowrap; }
+  .fx5 .tx span { display: block; font-size: 24px; color: #B3B3B3; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fx5 .d { width: 90px; font-size: 25px; color: #B3B3B3; text-align: right; padding-right: 14px; }
+  .eqm { position: absolute; left: 14px; top: 4px; width: 30px; height: 32px; }
+  .eqm i { position: absolute; bottom: 0; width: 6px; background: #1ED760; border-radius: 1px; }
+  #l5 { position: absolute; left: 0; right: 0; top: 196px; text-align: center; color: #0E1A12; }
+  #l5a { font-size: 80px; letter-spacing: -.01em; line-height: 1.1; }
+  #l5b { font-family: 'MixT'; font-weight: 800; font-size: 96px; letter-spacing: -.03em; line-height: 1.2; }
+
+  /* 6 · celular */
+  #fone { position: absolute; left: 255px; top: 440px; width: 570px; height: 1160px; border-radius: 84px; background: #050505; padding: 14px;
+          box-shadow: 0 0 0 3px #2B2B2B, 0 0 0 6px #0A0A0A, 0 60px 140px rgba(0, 0, 0, .8), 0 0 120px rgba(30, 215, 96, .18); }
+  #tela { position: relative; width: 542px; height: 1132px; border-radius: 70px; overflow: hidden; background: linear-gradient(180deg, #7E2C27 0%, #4A1C1A 46%, #121212 88%); }
+  #tela .ilha { position: absolute; left: 196px; top: 20px; width: 150px; height: 42px; border-radius: 21px; background: #000; }
+  #tela .hd { position: absolute; left: 30px; right: 30px; top: 92px; height: 56px; text-align: center; }
+  #tela .hd small { display: block; font-size: 16px; letter-spacing: .08em; color: rgba(255, 255, 255, .8); }
+  #tela .hd b { display: block; font-size: 22px; margin-top: 2px; }
+  #tela .hd .l { position: absolute; left: 0; top: 10px; } #tela .hd .r { position: absolute; right: 0; top: 10px; }
+  #tela .capa { position: absolute; left: 36px; top: 186px; width: 470px; height: 470px; border-radius: 10px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+  #tela .nt { position: absolute; left: 36px; top: 700px; font-size: 40px; font-weight: 700; }
+  #tela .na { position: absolute; left: 36px; top: 752px; font-size: 28px; color: rgba(255, 255, 255, .7); }
+  #bx6 { position: absolute; left: 380px; top: 712px; width: 52px; height: 52px; }
+  #ok6 { position: absolute; left: 454px; top: 712px; width: 52px; height: 52px; }
+  #tela .pg { position: absolute; left: 36px; right: 36px; top: 832px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .3); }
+  #tela .pg b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: #fff; }
+  #tela .pg i { position: absolute; top: -6px; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: #fff; }
+  #tela .tm { position: absolute; left: 36px; right: 36px; top: 852px; display: flex; justify-content: space-between; font-size: 18px; color: rgba(255, 255, 255, .7); }
+  #tela .ct { position: absolute; left: 36px; right: 36px; top: 900px; height: 120px; display: flex; align-items: center; justify-content: space-between; }
+  #pp6 { width: 116px; height: 116px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+  #tela .rod { position: absolute; left: 36px; right: 36px; top: 1052px; display: flex; justify-content: space-between; }
+  #toast { position: absolute; left: 24px; right: 24px; top: 1150px; height: 84px; border-radius: 12px; background: #fff; color: #000; display: flex; align-items: center; gap: 16px; padding: 0 20px; font-size: 25px; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); }
+  #toast img { width: 52px; height: 52px; border-radius: 4px; }
+  #toast b { margin-left: auto; color: #117A37; font-weight: 700; }
+  #selo6 { position: absolute; left: 640px; top: 1060px; height: 64px; border-radius: 32px; background: #1ED760; color: #000; font-weight: 700; font-size: 28px; display: flex; align-items: center; gap: 10px; padding: 0 26px 0 18px; box-shadow: 0 16px 40px rgba(0, 0, 0, .5); white-space: nowrap; }
+  #l6 { position: absolute; left: 0; right: 0; top: 250px; text-align: center; }
+  #l6a { font-size: 80px; letter-spacing: -.01em; line-height: 1.1; }
+  .l6b { position: absolute; left: 0; right: 0; top: 92px; font-family: 'MixT'; font-weight: 800; font-size: 104px; letter-spacing: -.03em; line-height: 1.1; }
+
+  /* 7 · fim */
+  #logo7 { position: absolute; left: 130px; top: 780px; width: 820px; height: 220px; overflow: visible; }
+  #l7 { position: absolute; left: 0; right: 0; top: 1090px; text-align: center; font-size: 70px; letter-spacing: -.01em; }
+  #bt7 { position: absolute; left: 540px; top: 1260px; height: 112px; border-radius: 56px; background: #1ED760; color: #000; font-weight: 700; font-size: 40px;
+         display: flex; align-items: center; justify-content: center; white-space: nowrap; transform-origin: 50% 50%; }
+  #bt7 .pulso { position: absolute; inset: -6px; border-radius: 62px; border: 5px solid #1ED760; opacity: 0; }
+
+  #mouse { position: absolute; left: 0; top: 0; width: 46px; height: 58px; z-index: 50; opacity: 0; transform-origin: 6px 4px; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .6)); }
+  #flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(220, 255, 230, 1), rgba(30, 215, 96, .9) 40%, rgba(30, 215, 96, 0) 75%); opacity: 0; }
+</style>
+</head>
+<body>
+<canvas id="bg" width="1080" height="1920"></canvas>
+<div id="claro"></div>
+
+<!-- 1 · Tudo começa com um [play] -->
+<section class="cena" id="c1">
+  <div id="l1"><span id="t1"><span class="b v">Tudo</span> começa com um</span><span id="pill1"><span class="ptxt">play</span><div id="bola1"></div></span></div>
+  <div id="anel1"><div class="o"></div><div class="p"></div></div>
+</section>
+
+<!-- 2 · Batida / Podcast / Playlist -->
+<section class="cena" id="c2">
+  <svg id="s2c" width="1080" height="1920"></svg>
+  <div id="eq2"></div>
+  <div class="w2" id="w2a">Batida</div>
+  <svg id="onda2" width="800" height="120"><polyline fill="none" stroke="#1ED760" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 10px #1ED760)"/></svg>
+  <div class="w2" id="w2b">Podcast</div>
+  <div id="capas2"><img src="capas/t0.jpg"><img src="capas/04.jpg"><img src="capas/t7.jpg"></div>
+  <div class="w2" id="w2c">Playlist</div>
+</section>
+
+<!-- 3 · busca → categorias -->
+<section class="cena" id="c3"><div class="mundo" id="m3">
+  <div id="h3">É só <span class="b v">procurar.</span></div>
+  <div id="busca"><div class="lupa"></div><div class="q"></div><div class="div"></div><div class="nav"></div></div>
+  <div id="tiles"></div>
+</div></section>
+
+<!-- 4 · tudo num lugar só (painéis em 3D) -->
+<section class="cena" id="c4"><div class="mundo" id="m4">
+  <div class="pn" id="p1" style="left:60px;top:250px;width:960px;height:560px"><div class="tit">Músicas em alta</div><div class="mt">Mostrar tudo</div></div>
+  <div class="pn" id="p2" style="left:60px;top:850px;width:590px;height:430px"><div class="tit">Artistas populares</div></div>
+  <div class="pn" id="p3" style="left:680px;top:850px;width:340px;height:640px"><div class="tit" style="font-size:34px;top:28px">Sua Biblioteca</div></div>
+  <div class="pn" id="np" style="left:60px;top:1310px;width:590px;height:180px"></div>
+  <div id="mini" style="left:60px;top:1530px"></div>
+  <div class="tile" id="tmini" style="left:660px;top:1530px;width:360px;height:180px"></div>
+</div>
+  <div id="l4"><div id="l4a">Milhões de músicas</div><div id="l4b"><span class="hl"><i class="hlb"></i>num lugar só.</span></div></div>
+</section>
+
+<!-- 5 · playlists (fundo claro) -->
+<section class="cena" id="c5">
+  <div id="fants"></div>
+  <div class="mundo" id="m5">
+    <div id="l5"><div id="l5a">Playlists com</div><div id="l5b"><span class="hl" style="color:#000"><i class="hlb"></i>a sua cara.</span></div></div>
+    <div id="pl"><div class="topo"></div><img class="capa" src="capas/t0.jpg">
+      <div class="pub">Playlist pública</div><h1>Today’s<br>Top Hits</h1>
+      <div class="meta"><span id="mlogo"></span><b>Spotify</b> • 50 músicas, cerca de 2h 45min</div>
+      <div class="ctl"><div id="play5"><div class="pulso"></div><span id="pi5"></span></div><span id="ic5"></span></div>
+      <div class="cab"><span style="width:58px;text-align:center">#</span><span style="margin-left:116px;flex:1">Título</span><span id="relo"></span></div>
+      <div id="faixas"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · tocando agora no celular -->
+<section class="cena" id="c6">
+  <div class="mundo" id="m6">
+    <div id="fone"><div id="tela">
+      <div class="ilha"></div>
+      <div class="hd"><span class="l" id="hdl"></span><small>TOCANDO DA PLAYLIST</small><b>Today’s Top Hits</b><span class="r" id="hdr"></span></div>
+      <img class="capa" src="capas/t0.jpg">
+      <div class="nt">Patient Zero</div><div class="na">Taylor Swift</div>
+      <div id="bx6"></div><div id="ok6"></div>
+      <div class="pg"><b></b><i></i></div>
+      <div class="tm"><span id="tm0">1:12</span><span>3:45</span></div>
+      <div class="ct" id="ct6"></div>
+      <div class="rod" id="rod6"></div>
+      <div id="toast"><img src="capas/t0.jpg"><span>Adicionada a <b style="margin:0;color:#000">Músicas Curtidas</b></span><b>Alterar</b></div>
+    </div></div>
+    <div id="selo6"><span id="selo6i"></span>Baixada</div>
+  </div>
+  <div id="l6"><div id="l6a">Ouça</div><div class="l6b" id="l6b">onde <span class="v">estiver.</span></div><div class="l6b" id="l6c">até <span class="v">offline.</span></div></div>
+</section>
+
+<!-- 7 · logo + frase final -->
+<section class="cena" id="c7">
+  <svg id="logo7" viewBox="0 0 89.5 24">
+    <defs><clipPath id="cIc"><rect x="-1" y="-1" width="26" height="26"/></clipPath><clipPath id="cWm"><rect id="wmR" x="25" y="-1" width="0" height="26"/></clipPath></defs>
+    <g id="ic7"><path id="pIc" fill="#1ED760" clip-path="url(#cIc)"/></g>
+    <g id="wm7"><path id="pWm" fill="#fff" clip-path="url(#cWm)"/></g>
+  </svg>
+  <div id="l7">Pronto pra dar o <span class="b v">play?</span></div>
+  <div id="bt7"><div class="pulso"></div>Ouvir agora</div>
+</section>
+
+<canvas id="fx" width="1080" height="1920"></canvas>
+<div id="flash"></div>
+<svg id="mouse" viewBox="0 0 24 30"><path d="M3 2 L3 24 L8.5 18.5 L12.5 27.5 L16.5 25.7 L12.6 17 L20 17 Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+
+<script src="../../motion.js"></script>
+<script>
+const M = Motion, E = M.ease, C = M.clamp, L = M.lerp;
+const pr = (t, t0, d, e = E.expoOut) => M.prog(t, t0, d, e);
+const $ = s => document.querySelector(s);
+const h = s => { const d = document.createElement('div'); d.innerHTML = s.trim(); return d.firstElementChild; };
+const sino = (t, a, d) => Math.sin(C((t - a) / d) * Math.PI);   // 0 → 1 → 0 (aperto de botão)
+window.DURACAO = 28.2;
+
+/* batida da música (0,663 s); a virada em 9,0 */
+const BT = 0.663, B0 = 9.0;
+const batida = t => { const f = ((t - B0) / BT) % 1; return Math.exp(-((f < 0 ? f + 1 : f) * 6)); };   // 1 no tempo, cai até a próxima
+
+/* ── logo oficial (svg do open.spotify.com) ── */
+const LOGO_D = 'M13.427.01C6.805-.253 1.224 4.902.961 11.524.698 18.147 5.853 23.728 12.476 23.99c6.622.263 12.203-4.892 12.466-11.514S20.049.272 13.427.01m5.066 17.579a.717.717 0 0 1-.977.268 14.4 14.4 0 0 0-5.138-1.747 14.4 14.4 0 0 0-5.42.263.717.717 0 0 1-.338-1.392c1.95-.474 3.955-.571 5.958-.29 2.003.282 3.903.928 5.647 1.92a.717.717 0 0 1 .268.978m1.577-3.15a.93.93 0 0 1-1.262.376 17.7 17.7 0 0 0-5.972-1.96 17.7 17.7 0 0 0-6.281.238.93.93 0 0 1-1.11-.71.93.93 0 0 1 .71-1.11 19.5 19.5 0 0 1 6.94-.262 19.5 19.5 0 0 1 6.599 2.165c.452.245.62.81.376 1.263m1.748-3.551a1.147 1.147 0 0 1-1.546.488 21.4 21.4 0 0 0-6.918-2.208 21.4 21.4 0 0 0-7.259.215 1.146 1.146 0 0 1-.456-2.246 23.7 23.7 0 0 1 8.034-.24 23.7 23.7 0 0 1 7.657 2.445c.561.292.78.984.488 1.546m13.612-.036-.832-.247c-1.67-.495-2.14-.681-2.14-1.353 0-.637.708-1.327 2.264-1.327 1.539 0 2.839.752 3.51 1.31.116.096.24.052.24-.098V6.935c0-.097-.027-.15-.098-.203-.83-.62-2.272-1.07-3.723-1.07-2.953 0-4.722 1.68-4.722 3.59 0 2.157 1.371 2.91 3.626 3.546l.973.274c1.689.478 1.998.902 1.998 1.556 0 1.097-.831 1.433-2.07 1.433-1.556 0-3.457-.911-4.35-2.025-.08-.098-.177-.053-.177.062v2.423c0 .097.01.141.08.22.743.814 2.52 1.53 4.59 1.53 2.546 0 4.456-1.485 4.456-3.784 0-1.787-1.052-2.865-3.625-3.635m10.107-1.76c-1.68 0-2.653 1.026-3.219 2.052V9.376c0-.08-.044-.124-.124-.124h-2.22c-.079 0-.123.044-.123.124V20.72c0 .08.044.124.124.124h2.22c.079 0 .123-.044.123-.124v-4.536c.566 1.025 1.521 2.034 3.237 2.034 2.264 0 3.89-1.955 3.89-4.581s-1.644-4.545-3.908-4.545m-.654 6.986c-1.185 0-2.211-1.167-2.618-2.458.407-1.362 1.344-2.405 2.618-2.405 1.211 0 2.051.92 2.051 2.423s-.84 2.44-2.051 2.44m40.633-6.826h-2.264c-.08 0-.115.017-.15.097l-2.282 5.483-2.29-5.483c-.035-.08-.07-.097-.15-.097h-3.661v-.584c0-.955.645-1.397 1.476-1.397.496 0 1.035.256 1.415.486.089.053.15-.008.115-.088l-.796-1.901a.26.26 0 0 0-.124-.133c-.389-.203-1.025-.38-1.644-.38-1.875 0-2.954 1.432-2.954 3.254v.743h-1.503c-.08 0-.124.044-.124.124v1.768c0 .08.044.124.124.124h1.503v6.668c0 .08.044.123.124.123h2.264c.08 0 .124-.044.124-.123v-6.668h1.936l2.812 6.11-1.512 3.325c-.044.098.009.142.097.142h2.414c.08 0 .116-.018.15-.097l4.997-11.355c.035-.08-.009-.141-.097-.141M54.964 9.04c-2.865 0-4.837 2.025-4.837 4.616 0 2.573 1.971 4.616 4.837 4.616 2.856 0 4.846-2.043 4.846-4.616 0-2.591-1.99-4.616-4.846-4.616m.008 7.065c-1.37 0-2.343-1.043-2.343-2.45 0-1.405.973-2.449 2.343-2.449 1.362 0 2.335 1.043 2.335 2.45 0 1.406-.973 2.45-2.335 2.45m33.541-6.334a1.24 1.24 0 0 0-.483-.471 1.4 1.4 0 0 0-.693-.17q-.384 0-.693.17a1.24 1.24 0 0 0-.484.471q-.174.302-.174.681 0 .375.174.677.175.3.484.471t.693.17.693-.17.483-.471.175-.676q0-.38-.175-.682m-.211 1.247a1 1 0 0 1-.394.39 1.15 1.15 0 0 1-.571.14 1.16 1.16 0 0 1-.576-.14 1 1 0 0 1-.391-.39 1.14 1.14 0 0 1-.14-.566q0-.316.14-.562t.391-.388.576-.14q.32 0 .57.14.253.141.395.39t.142.565q0 .312-.142.56m-19.835-5.78c-.85 0-1.468.6-1.468 1.396s.619 1.397 1.468 1.397c.866 0 1.485-.6 1.485-1.397 0-.796-.619-1.397-1.485-1.397m19.329 5.19a.31.31 0 0 0 .134-.262q0-.168-.132-.266-.132-.099-.381-.099h-.588v1.229h.284v-.489h.154l.374.489h.35l-.41-.518a.5.5 0 0 0 .215-.084m-.424-.109h-.26v-.3h.27q.12 0 .184.036a.12.12 0 0 1 .065.116.12.12 0 0 1-.067.111.4.4 0 0 1-.192.037M69.607 9.252h-2.263c-.08 0-.124.044-.124.124v8.56c0 .08.044.123.124.123h2.263c.08 0 .124-.044.124-.123v-8.56c0-.08-.044-.124-.124-.124m-3.333 6.605a2.1 2.1 0 0 1-1.053.257c-.725 0-1.185-.425-1.185-1.362v-3.484h2.211c.08 0 .124-.044.124-.124V9.376c0-.08-.044-.124-.124-.124h-2.21V6.944c0-.097-.063-.15-.15-.08l-3.954 3.113c-.053.044-.07.088-.07.16v1.007c0 .08.044.124.123.124h1.539v3.855c0 2.087 1.203 3.06 2.918 3.06.743 0 1.46-.194 1.884-.442.062-.035.07-.07.07-.133v-1.68c0-.088-.044-.115-.123-.07';
+const ICONE_SVG = (px, cor = '#1ED760') => `<svg class="i" width="${px}" height="${px}" viewBox="0 0 26 24"><path fill="${cor}" d="${LOGO_D}"/></svg>`;   // só o ícone (o nome fica fora da caixa)
+$('#pIc').setAttribute('d', LOGO_D); $('#pWm').setAttribute('d', LOGO_D);
+$('#logo7').querySelectorAll('path').forEach(p => p.setAttribute('transform', 'translate(-0.95,0)'));
+
+/* ── ícones (traço, no desenho dos do app) ── */
+const ic = (px, corpo, cor = 'currentColor', w = 2) => `<svg class="i" width="${px}" height="${px}" viewBox="0 0 24 24" style="color:${cor}" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${corpo}</svg>`;
+const IC = {
+  lupa: '<circle cx="10.5" cy="10.5" r="7.5"/><path d="M16 16l5.5 5.5"/>',
+  nav: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M5 4h14M8 12h8"/>',
+  play: '<path d="M7 4.2v15.6L20 12z" fill="currentColor" stroke="none"/>',
+  pause: '<rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/>',
+  shuffle: '<path d="M16 4h4v4M4 19L20 4M20 16v4h-4M14.5 14.5L20 20M4 5l5 5"/>',
+  prev: '<path d="M6 5v14" /><path d="M19 5L9 12l10 7z" fill="currentColor"/>',
+  next: '<path d="M18 5v14" /><path d="M5 5l10 7-10 7z" fill="currentColor"/>',
+  repeat: '<path d="M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4"/>',
+  mais: '<circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v9M7.5 12h9"/>',
+  dots: '<circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/>',
+  baixo: '<path d="M6 9l6 6 6-6"/>',
+  baixar: '<circle cx="12" cy="12" r="9.5"/><path d="M12 7v9.5M8 12.5l4 4 4-4"/>',
+  disp: '<rect x="3" y="4" width="12" height="16" rx="2"/><path d="M19 7v13"/><circle cx="9" cy="15" r="2"/>',
+  share: '<path d="M12 3v12M7.5 7.5L12 3l4.5 4.5M5 12v8h14v-8"/>',
+  fila: '<path d="M4 6h16M4 12h10M4 18h10M18 14v6l3-3z"/>',
+  relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  coracao: '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z" fill="#fff" stroke="none"/>',
+};
+const okVerde = (px, p = 1) => `<svg class="i" width="${px}" height="${px}" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1ED760"/><path d="M7 12.4l3.3 3.3L17.2 8.8" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16" stroke-dashoffset="${16 * (1 - p)}"/></svg>`;
+const baixadoVerde = px => `<svg class="i" width="${px}" height="${px}" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1ED760"/><path d="M12 6.5v10M8 12.5l4 4 4-4" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+/* ── texto cinético: letra a letra saindo do desfoque (como na referência) ── */
+function kin(el) {
+  const out = [];
+  const anda = no => { for (const n of [...no.childNodes]) {
+    if (n.nodeType === 3) { const fr = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(w => { if (!w) return; if (/^\s+$/.test(w)) { fr.appendChild(document.createTextNode(' ')); return; }
+        const ws = document.createElement('span'); ws.className = 'pw';
+        [...w].forEach(ch => { const s = document.createElement('span'); s.className = 'lt'; s.textContent = ch; ws.appendChild(s); out.push(s); }); fr.appendChild(ws); });
+      n.replaceWith(fr);
+    } else if (n.nodeType === 1 && !n.classList.contains('hlb')) anda(n); } };
+  anda(el); el._lt = out; return el;
+}
+function escreve(el, t, t0, vel = 0.032, dur = 0.55) {
+  el._lt.forEach((s, i) => { const a = t0 + i * vel, p = pr(t, a, dur), pa = pr(t, a, dur * 0.4, E.cubicOut);
+    s.style.opacity = pa; s.style.transform = `translateY(${(1 - p) * 0.32}em)`; s.style.filter = p < 0.985 ? `blur(${(1 - p) * 12}px)` : 'none'; });
+}
+function some(el, t, t1, dur = 0.35, ex = '') {   // sai desfocando; devolve a opacidade
+  const p = pr(t, t1, dur, E.cubicIn);
+  el.style.opacity = 1 - p; el.style.filter = p > 0 ? `blur(${p * 16}px)` : 'none'; if (ex !== null) el.style.transform = p > 0 ? `${ex} scale(${1 + p * 0.06})` : ex;
+  return 1 - p;
+}
+const hlBox = (el, t, t0) => { el.querySelector('.hlb').style.transform = `scaleX(${pr(t, t0, 0.45, E.quintOut)})`; };
+['#t1', '#w2a', '#w2b', '#w2c', '#h3', '#l4a', '#l4b', '#l5a', '#l5b', '#l6a', '#l6b', '#l6c', '#l7'].forEach(s => kin($(s)));
+
+/* ── câmera: quadros-chave (chega → fica → anda), escala em log ── */
+const mixC = (a, b, k) => { const o = {}; for (const key of ['fx', 'fy', 'rx', 'ry', 'rz']) o[key] = L(a[key] || 0, b[key] || 0, k); o.S = Math.exp(L(Math.log(a.S), Math.log(b.S), k)); return o; };
+function kf(t, K) {
+  if (t <= K[0][0]) return mixC(K[0][1], K[0][1], 0);
+  for (let i = 0; i < K.length - 1; i++) { const [a, A] = K[i], [b, B] = K[i + 1]; if (t < b) return mixC(A, B, E.cubicInOut((t - a) / (b - a))); }
+  return mixC(K[K.length - 1][1], K[K.length - 1][1], 0);
+}
+const camCss = (c, t) => `translate(540px, 960px) perspective(2200px) rotateX(${c.rx}deg) rotateY(${c.ry}deg) rotateZ(${c.rz}deg) scale(${c.S}) translate(${-c.fx - Math.sin(t * 1.1) * 3}px, ${-c.fy - Math.cos(t * 0.9) * 3}px)`;
+
+/* ── fundo: verde-escuro com anéis de luz desfocados (canvas) ── */
+const bg = $('#bg').getContext('2d');
+const ANEIS = [   // [t, cx, cy, raio, espessura, alfa]
+  [0.0, 170, 820, 430, 85, 0.62], [1.8, 540, 1720, 380, 95, 0.62], [3.4, 540, 1720, 380, 95, 0.62], [4.0, 540, 1820, 560, 120, 0.42],
+  [6.2, 540, 1820, 560, 120, 0.42], [6.9, 930, 330, 330, 80, 0.5], [8.6, 900, 360, 330, 80, 0.5], [9.3, 520, 980, 760, 140, 0.34],
+  [14.0, 560, 940, 720, 140, 0.34], [19.9, 540, 1050, 560, 110, 0.48], [24.4, 540, 1050, 560, 110, 0.48], [25.3, 540, 890, 360, 80, 0.55], [28.2, 540, 890, 380, 84, 0.55]];
+function anelEm(t) {
+  let i = 0; while (i < ANEIS.length - 1 && t >= ANEIS[i + 1][0]) i++;
+  const a = ANEIS[i], b = ANEIS[Math.min(i + 1, ANEIS.length - 1)], k = b === a ? 0 : E.cubicInOut(C((t - a[0]) / (b[0] - a[0])));
+  return a.map((v, j) => L(v, b[j], k));
+}
+function fundo(t) {
+  const g = bg.createLinearGradient(0, 0, 0, 1920); g.addColorStop(0, '#03170C'); g.addColorStop(0.55, '#020D07'); g.addColorStop(1, '#042012');
+  bg.globalCompositeOperation = 'source-over'; bg.fillStyle = g; bg.fillRect(0, 0, 1080, 1920);
+  bg.globalCompositeOperation = 'lighter';
+  const blob = (x, y, r, cor, a) => { const rg = bg.createRadialGradient(x, y, 0, x, y, r);
+    [[0, 1], [0.2, 0.82], [0.4, 0.52], [0.6, 0.25], [0.8, 0.07], [1, 0]].forEach(([s, k]) => rg.addColorStop(s, `rgba(${cor},${a * k})`));
+    bg.fillStyle = rg; bg.fillRect(x - r, y - r, r * 2, r * 2); };
+  blob(540 + Math.sin(t * 0.3) * 120, 2050, 900, '30,215,96', 0.30);
+  blob(-80, 300 + Math.sin(t * 0.25) * 80, 700, '12,120,70', 0.30);
+  blob(1150, 900 + Math.cos(t * 0.2) * 120, 600, '20,160,90', 0.18);
+  // (sem o anel de luz: tirado a pedido, 05/10/2026)
+}
+
+/* ── partículas: poeira de luz + estouros nos cliques ── */
+const fx = $('#fx').getContext('2d');
+let sem = 7; const rnd = () => (sem = (sem * 16807) % 2147483647) / 2147483647;
+const POEIRA = Array.from({ length: 46 }, () => ({ x: rnd() * 1080, y: rnd() * 1920, v: 18 + rnd() * 40, r: 1.5 + rnd() * 3.5, f: rnd() * 6.28, a: 0.25 + rnd() * 0.5 }));
+const ESTOUROS = [];   // {t, pos: () => [x,y], n, cor}
+function estouro(t0, pos, n = 26, cor = '30,215,96') { const ps = Array.from({ length: n }, () => ({ an: rnd() * 6.283, v: 260 + rnd() * 520, r: 2 + rnd() * 5, vida: 0.6 + rnd() * 0.6 })); ESTOUROS.push({ t0, pos, ps, cor }); }
+function particulas(t, claro) {
+  fx.clearRect(0, 0, 1080, 1920);
+  const cor = claro > 0.5 ? '23,150,70' : '120,255,160';
+  POEIRA.forEach(p => { const y = ((p.y - t * p.v) % 1920 + 1920) % 1920, x = p.x + Math.sin(t * 0.7 + p.f) * 18, a = p.a * (0.5 + 0.5 * Math.sin(t * 2.2 + p.f));
+    fx.fillStyle = `rgba(${cor},${a * (claro > 0.5 ? 0.5 : 0.7)})`; fx.beginPath(); fx.arc(x, y, p.r, 0, 6.283); fx.fill(); });
+  fx.save(); fx.shadowColor = '#1ED760'; fx.shadowBlur = 14;
+  ESTOUROS.forEach(e => { const dt = t - e.t0; if (dt < 0 || dt > 1.3) return; const [x0, y0] = e.pos();
+    e.ps.forEach(p => { const k = C(dt / p.vida); if (k >= 1) return; const d = p.v * (1 - Math.pow(1 - k, 3)) * 0.55;
+      fx.fillStyle = `rgba(${e.cor},${1 - k})`; fx.beginPath(); fx.arc(x0 + Math.cos(p.an) * d, y0 + Math.sin(p.an) * d + 60 * k * k, p.r * (1 - k * 0.6), 0, 6.283); fx.fill(); }); });
+  fx.restore();
+}
+const centroTela = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+/* ── mouse (na tela; o alvo é o elemento onde ele está naquele quadro) ── */
+const MOUSE = [   // [aparece, de, alvo(), clique, some]
+  [1.45, [880, 1380], () => centroTela($('#bola1')), 2.2, 2.42],
+  [8.05, [860, 1560], () => centroTela(TILES[2]), 8.6, 8.78],
+  [16.25, [820, 1560], () => centroTela($('#play5')), 16.94, 17.35],
+  [20.85, [880, 1600], () => centroTela($('#ok6')), 21.58, 21.95],
+  [22.3, [880, 1600], () => centroTela($('#bx6')), 22.9, 23.3],
+  [26.75, [900, 1640], () => { const [x, y] = centroTela($('#bt7')); return [x + 60, y + 14]; }, 27.55, 28.3],
+];
+function mouse(t) {
+  const el = $('#mouse'), a = MOUSE.find(([t0, , , , ts]) => t >= t0 && t < ts + 0.15);
+  if (!a) { el.style.opacity = 0; return; }
+  const [t0, de, alvo, tc, ts] = a, para = alvo(), p = E.cubicInOut(C((t - t0) / Math.max(0.25, (tc - t0) * 0.82))), arco = Math.sin(p * Math.PI) * 60;
+  const x = L(de[0], para[0], p), y = L(de[1], para[1], p) - arco, k = sino(t, tc, 0.18);
+  el.style.opacity = Math.min(pr(t, t0, 0.15, E.linear), 1 - pr(t, ts, 0.15, E.linear));
+  el.style.transform = `translate(${x - 6}px, ${y - 4}px) scale(${1 - 0.18 * k})`;
+}
+
+/* ════ 1 · abertura ════ */
+$('#bola1').innerHTML = ic(40, IC.play, '#000');
+$('#anel1 .p').innerHTML = ic(100, IC.play, '#1ED760');
+function cena1(t) {
+  // a frase entra no quadro 0 (começa em t negativo); a pílula abre e empurra a frase
+  escreve($('#t1'), t, -0.28, 0.045);
+  const pw = 250 * C(M.prog(t, 1.12, 0.75, E.spring), 0, 1.15);
+  const pl = $('#pill1'); pl.style.width = pw + 'px'; pl.style.marginLeft = (22 * C(pw / 60)) + 'px';
+  $('#pill1 .ptxt').style.opacity = pr(t, 1.45, 0.3, E.cubicOut); $('#pill1 .ptxt').style.transform = `translateX(${(1 - pr(t, 1.45, 0.6)) * -20}px)`;
+  const b1 = $('#bola1'); b1.style.left = (pw - 86) + 'px'; b1.style.top = '10px';
+  b1.style.transform = `scale(${C(pr(t, 1.3, 0.6, E.spring), 0, 1.2) * (1 - 0.14 * sino(t, 2.2, 0.2))})`;
+  b1.style.opacity = t < 2.34 ? 1 : 0;
+  // depois do clique: a frase sai e a bolinha vira o anel de luz no centro
+  const sai = some($('#l1'), t, 2.34, 0.4, null);
+  const an = $('#anel1');
+  if (t >= 2.34) {
+    const p = pr(t, 2.34, 0.7, E.quintOut), [bx, by] = B1;
+    const x = L(bx, 540, p), y = L(by, 960, p), mergulho = pr(t, 3.32, 0.4, E.cubicIn);
+    const s = L(76 / 240, 1, p) * L(1, 7, mergulho);
+    an.style.left = x + 'px'; an.style.top = y + 'px'; an.style.opacity = 1 - pr(t, 3.5, 0.2, E.linear);
+    an.style.transform = `scale(${s})`; an.querySelector('.o').style.borderWidth = L(38, 10, p) + 'px';
+    an.querySelector('.o').style.background = `rgba(255,255,255,${1 - p})`;
+    an.querySelector('.p').style.opacity = p; an.querySelector('.p').style.transform = `scale(${0.6 + 0.4 * p})`;
+  } else an.style.opacity = 0;
+  return sai;
+}
+let B1 = [700, 915];
+
+/* ════ 2 · Batida / Podcast / Playlist ════ */
+{ const s = $('#s2c'); const CIRC = [[540, 250, 640, 1], [540, 1670, 640, -1], [-300, 960, 660, 1], [1380, 960, 660, -1]];
+  s.innerHTML = '<defs><filter id="gl" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' +
+    CIRC.map(([x, y, r], i) => `<g transform="translate(${x} ${y})"><g class="gc"><circle r="${r}" fill="none" stroke="rgba(110,240,150,.55)" stroke-width="3" filter="url(#gl)" stroke-dasharray="${2 * Math.PI * r}"/>
+      <circle class="pt" r="9" fill="#D8FFE4" filter="url(#gl)"/><circle class="pt2" r="5" fill="#9CFFBC" filter="url(#gl)"/></g></g>`).join('');
+  s._c = CIRC; }
+for (let i = 0; i < 5; i++) $('#eq2').appendChild(h(`<i style="left:${-92 + i * 38}px"></i>`));
+const ONDA = $('#onda2 polyline');
+function cena2(t) {
+  const s = $('#s2c'), ent = pr(t, 3.66, 0.9, E.quintOut);
+  [...s.querySelectorAll('.gc')].forEach((g, i) => { const [, , r, dir] = s._c[i], c = g.querySelector('circle');
+    c.setAttribute('stroke-dashoffset', 2 * Math.PI * r * (1 - pr(t, 3.66 + i * 0.06, 1.1, E.quintOut)));
+    g.setAttribute('transform', `rotate(${dir * (t - 3.7) * 8}) scale(${L(0.75, 1, ent)})`);
+    const a = (i * 1.7 + (t - 3.7) * 0.5 * dir); g.querySelector('.pt').setAttribute('cx', Math.cos(a) * r); g.querySelector('.pt').setAttribute('cy', Math.sin(a) * r);
+    const a2 = a + 2.4; g.querySelector('.pt2').setAttribute('cx', Math.cos(a2) * r); g.querySelector('.pt2').setAttribute('cy', Math.sin(a2) * r); });
+  s.style.opacity = ent * (1 - pr(t, 6.05, 0.3, E.cubicIn));
+  // Batida (barras no tempo da música)
+  escreve($('#w2a'), t, 3.74, 0.05); some($('#w2a'), t, 4.5, 0.3);
+  [...$('#eq2').children].forEach((b, i) => { const k = pr(t, 3.78 + i * 0.04, 0.5, E.spring), bt = batida(t + i * 0.09);
+    b.style.height = Math.max(0, k * (36 + 90 * bt * (0.6 + 0.4 * Math.sin(i * 2.1 + t * 7)))) + 'px'; });
+  $('#eq2').style.opacity = 1 - pr(t, 4.5, 0.3, E.cubicIn);
+  // Podcast (onda de voz)
+  escreve($('#w2b'), t, 4.58, 0.045); some($('#w2b'), t, 5.36, 0.3);
+  { const pts = [], k = pr(t, 4.62, 0.6, E.cubicOut); for (let x = 0; x <= 800; x += 10) { const env = Math.sin(x / 800 * Math.PI);
+      pts.push(`${x},${60 + env * k * 46 * Math.sin(x * 0.045 + t * 14) * Math.sin(x * 0.011 + t * 3)}`); }
+    ONDA.setAttribute('points', pts.join(' ')); $('#onda2').style.opacity = pr(t, 4.62, 0.3, E.cubicOut) * (1 - pr(t, 5.36, 0.3, E.cubicIn)); }
+  // Playlist (três capas abrem em leque) → tudo vem para a câmera
+  escreve($('#w2c'), t, 5.44, 0.045);
+  [...$('#capas2').children].forEach((im, i) => { const k = C(M.prog(t, 5.5 + i * 0.07, 0.8, E.spring), 0, 1.15), ang = (i - 1) * 16 * k;
+    im.style.opacity = pr(t, 5.5 + i * 0.07, 0.2, E.cubicOut); im.style.transform = `translateX(${(i - 1) * 120 * k}px) rotate(${ang}deg) scale(${0.4 + 0.6 * k})`; im.style.zIndex = i === 1 ? 2 : 1; });
+  const z = pr(t, 6.06, 0.32, E.cubicIn);
+  [$('#w2c'), $('#capas2')].forEach(el => { el.style.opacity = 1 - z; el.style.filter = z > 0 ? `blur(${z * 18}px)` : 'none'; });
+  $('#w2c').style.transform = `scale(${1 + z * 1.6})`; $('#capas2').style.transform = `translateY(${-z * 200}px) scale(${1 + z * 1.6})`;
+}
+
+/* ════ 3 · busca → categorias ════ */
+$('#busca .lupa').innerHTML = ic(52, IC.lupa, '#B3B3B3', 2.2); $('#busca .nav').innerHTML = ic(52, IC.nav, '#B3B3B3', 2);
+const Q3 = 'pagode pra sexta', Q3a = 6.82, Q3b = 7.66;
+const CATS = [['Música', '#DC148C', 't0'], ['Sertanejo', '#BA5D07', '01'], ['Samba e pagode', '#608108', '38'], ['Funk', '#0D72EA', '37'], ['Pop', '#477D95', 't8'], ['Lançamentos', '#E91429', 't7']];
+const TILES = CATS.map(([n, c, im], i) => { const d = h(`<div class="tile" style="left:${75 + (i % 2) * 480}px;top:${520 + Math.floor(i / 2) * 280}px;background:${c}"><b>${n}</b><img src="capas/${im}.jpg"><div class="anelT"></div></div>`); $('#tiles').appendChild(d); return d; });
+function cena3(t) {
+  const K = [[6.35, { fx: 540, fy: 820, S: 1.04, rx: 6, ry: -4 }], [7.7, { fx: 540, fy: 820, S: 1.08, rx: 4, ry: -2 }], [8.15, { fx: 540, fy: 900, S: 1.0, rx: 8, ry: 3 }],
+             [8.62, { fx: 330, fy: 940, S: 1.08, rx: 6, ry: 2 }], [9.0, { fx: 300, fy: 925, S: 4.2, rx: 0, ry: 0 }]];
+  const c = kf(t, K); c.S *= 1; $('#m3').style.transform = camCss(c, t);
+  // cabeçalho
+  escreve($('#h3'), t, 6.4, 0.035); some($('#h3'), t, 7.74, 0.3);
+  // a pílula da busca abre do centro (como a pílula da referência), digita, Enter, sobe
+  const b = $('#busca'), w = L(120, 860, C(M.prog(t, 6.36, 0.7, E.spring), 0, 1.08)), sobe = pr(t, 7.8, 0.6, E.quintOut);
+  b.style.width = w + 'px'; b.style.marginLeft = -w / 2 + 'px';
+  b.style.top = L(760, 300, sobe) + 'px'; b.style.transform = `scale(${L(1, 0.86, sobe) * (1 - 0.04 * sino(t, 7.72, 0.2))})`;
+  b.classList.toggle('foco', t >= 6.7 && t < 7.8);
+  const n = Math.floor(C((t - Q3a) / (Q3b - Q3a)) * Q3.length + 1e-6), dig = Q3.slice(0, n), car = t >= 6.7 && t < 7.8 && (t < Q3b + 0.1 || Math.floor(t * 2.4) % 2 === 0);
+  $('#busca .q').innerHTML = (dig || (t < Q3a ? '' : '')) + (car ? '<span class="car"></span>' : '') + (dig ? '' : '<span class="ph">O que você quer ouvir?</span>');
+  $('#busca .q').style.opacity = $('#busca .div').style.opacity = $('#busca .nav').style.opacity = C((w - 500) / 300);
+  // categorias (cores e capas do site) entram girando de baixo
+  TILES.forEach((d, i) => { const a = 7.92 + i * 0.07, p = pr(t, a, 0.8), pa = pr(t, a, 0.25, E.cubicOut);
+    d.style.opacity = pa; d.style.transform = `perspective(1400px) translateY(${(1 - p) * 160}px) rotateX(${(1 - p) * 55}deg) scale(${L(0.9, 1, p) * (i === 2 ? 1 + 0.03 * pr(t, 8.3, 0.3, E.cubicOut) - 0.04 * sino(t, 8.6, 0.2) : 1)})`;
+    d.style.filter = p < 0.98 ? `blur(${(1 - p) * 10}px)` : 'none'; });
+  TILES[2].querySelector('.anelT').style.opacity = pr(t, 8.3, 0.2, E.cubicOut);
+  TILES.forEach((d, i) => { if (i !== 2) d.style.opacity = +d.style.opacity * (1 - 0.6 * pr(t, 8.62, 0.3, E.cubicOut)); });
+}
+
+/* ════ 4 · tudo num lugar só ════ */
+[['00', 'Flash - Ao Vivo', 'Hugo & Guilherme'], ['03', 'Telefone Sem Fio - Ao Vivo', 'Mari Fernandez'], ['06', 'Aproveita Que Eu Tô Brigado', 'NATTAN, Zé Vaqueiro']]
+  .forEach(([im, n, a], i) => $('#p1').appendChild(h(`<div class="card" style="left:${34 + i * 310}px;top:116px"><img src="capas/${im}.jpg"><div class="ct">${n}</div><div class="ca">${a}</div></div>`)));
+[['20', 'Henrique & Juliano'], ['23', 'Jorge & Mateus']].forEach(([im, n], i) => $('#p2').appendChild(h(`<div class="art" style="left:${34 + i * 280}px;top:110px"><img src="capas/${im}.jpg"><div class="ct">${n}</div><div class="ca">Artista</div></div>`)));
+[['c', 'Músicas Curtidas', 'Playlist • 312 músicas'], ['t0', 'Today’s Top Hits', 'Playlist • Spotify'], ['53', 'Top 50 - Brasil', 'Playlist • Spotify'], ['40', 'Rádio Henrique & Juliano', 'Playlist • Spotify'], ['t1', 'the cure', 'Álbum • Olivia Rodrigo']]
+  .forEach(([im, n, s], i) => $('#p3').appendChild(h(`<div class="bib" style="top:${100 + i * 104}px"><div class="th${im === 'c' ? ' curtidas' : ''}">${im === 'c' ? ic(40, IC.coracao) : `<img src="capas/${im}.jpg">`}</div><div class="tx"><b>${n}</b><span>${s}</span></div></div>`)));
+$('#np').innerHTML = `<img class="cap" src="capas/t0.jpg"><div class="nt">Patient Zero</div><div class="na">Taylor Swift</div><div class="ok">${okVerde(36)}</div><div class="pp">${ic(40, IC.pause, '#000')}</div><div class="bar"><b></b></div>`;
+$('#mini').innerHTML = `${ic(44, IC.lupa, '#B3B3B3', 2.2)}<span>pagode pra sexta</span>`;
+$('#tmini').style.background = '#608108'; $('#tmini').innerHTML = '<b style="font-size:40px">Samba e pagode</b><img src="capas/38.jpg" style="width:150px;height:150px;right:-26px;bottom:-12px">';
+const PAINEIS = ['#p1', '#p2', '#p3', '#np', '#mini', '#tmini'].map(s => $(s));
+function cena4(t) {
+  const K = [[9.0, { fx: 540, fy: 640, S: 1.5, rx: 26, ry: 0, rz: -9 }], [11.4, { fx: 540, fy: 960, S: 0.9, rx: 22, ry: -8, rz: -7 }],
+             [14.3, { fx: 540, fy: 1000, S: 0.84, rx: 18, ry: -12, rz: -5 }]];
+  $('#m4').style.transform = camCss(kf(t, K), t);
+  // cada painel chega numa meia batida, vindo do fundo e desfocado
+  PAINEIS.forEach((el, i) => { const a = 9.0 + i * BT / 2 - 0.05, p = pr(t, a, 0.9), pa = pr(t, a, 0.3, E.cubicOut);
+    el.style.opacity = pa; el.style.transform = `translateZ(${(1 - p) * -700}px) translateY(${(1 - p) * 180}px) rotateX(${(1 - p) * -30}deg)`;
+    el.style.filter = p < 0.98 ? `blur(${(1 - p) * 14}px)` : 'none'; });
+  $('#np .bar b').style.width = (32 + (t - 9) * 1.6) + '%';
+  // a frase: o mundo escurece e desfoca atrás dela
+  const fr = pr(t, 11.62, 0.6, E.cubicOut), sai = pr(t, 13.95, 0.35, E.cubicIn);
+  $('#m4').style.opacity = L(1, 0.32, fr) * (1 - sai); $('#m4').style.filter = fr > 0.01 ? `blur(${fr * 5 + sai * 10}px)` : 'none';
+  escreve($('#l4a'), t, 11.66, 0.03); escreve($('#l4b'), t, 12.3, 0.03); hlBox($('#l4b'), t, 12.62);
+  some($('#l4'), t, 13.95, 0.35);
+}
+
+/* ════ 5 · playlists (claro) ════ */
+for (let i = 0; i < 7; i++) $('#fants').appendChild(h(`<div class="fant${i === 3 ? ' c' : ''}" style="top:${330 + i * 190}px">${i === 3 ? "PLAYLISTS" : "PLAYLISTS PLAYLISTS"}</div>`));
+kin($('#fants').children[3]);
+$('#mlogo').innerHTML = ICONE_SVG(30, '#1ED760'); $('#pi5').innerHTML = ic(56, IC.play, '#000');
+$('#ic5').outerHTML = `<span style="display:flex;gap:40px;align-items:center;color:#B3B3B3">${ic(54, IC.shuffle, '#B3B3B3')}${ic(56, IC.mais, '#B3B3B3', 1.8)}${ic(54, IC.dots, '#B3B3B3')}</span>`;
+$('#relo').innerHTML = ic(28, IC.relogio, '#B3B3B3');
+const FAIXAS = [['t0', 'Patient Zero', 'Taylor Swift', '3:45'], ['t1', 'the cure', 'Olivia Rodrigo', '4:57'], ['t2', 'Nicole Kidman', 'ADÉLA', '3:01'],
+                ['t3', 'Earrings', 'Malcolm Todd', '2:31'], ['t4', 'BbY WOW', 'KAROL G, Judeline, rusowsky', '3:45'], ['t5', 'Loser', 'Tame Impala', '3:43']];
+const LINHAS = FAIXAS.map(([im, n, a, d], i) => { const r = h(`<div class="fx5" style="top:${650 + i * 100}px"><div class="n"><span>${i + 1}</span><div class="eqm"><i style="left:0"></i><i style="left:9px"></i><i style="left:18px"></i></div></div><img src="capas/${im}.jpg"><div class="tx"><b>${n}</b><span>${a}</span></div><div class="d">${d}</div></div>`); $('#faixas').appendChild(r); return r; });
+function cena5(t) {
+  // palavra gigante repetida (GROWTH da referência) correndo em sentidos alternados
+  const f = $('#fants'), fs = pr(t, 15.55, 0.4, E.cubicIn);
+  f.style.opacity = pr(t, 14.3, 0.4, E.cubicOut) * (1 - fs); f.style.filter = fs > 0 ? `blur(${fs * 14}px)` : 'none';
+  [...f.children].forEach((d, i) => { d.style.transform = `translateX(${(i % 2 ? 1 : -1) * (180 - (t - 14.3) * 70) + (i === 3 ? 0 : 0)}px)`; });
+  escreve(f.children[3], t, 14.42, 0.025);
+  // a página da playlist
+  const K = [[15.55, { fx: 540, fy: 1060, S: 0.92, rx: 14 }], [16.25, { fx: 540, fy: 1000, S: 0.94, rx: 6 }], [16.6, { fx: 340, fy: 930, S: 1.42, rx: 4, ry: 4 }],
+             [17.4, { fx: 340, fy: 930, S: 1.42, rx: 4, ry: 4 }], [17.95, { fx: 540, fy: 1220, S: 1.12, rx: 5, ry: -3 }], [18.2, { fx: 540, fy: 1220, S: 1.12, rx: 5, ry: -3 }],
+             [18.7, { fx: 540, fy: 960, S: 0.86, rx: 6, ry: 0 }], [19.6, { fx: 540, fy: 940, S: 0.84, rx: 6, ry: 0 }]];
+  const m = $('#m5'); m.style.transform = camCss(kf(t, K), t);
+  const pl = $('#pl'), pe = pr(t, 15.6, 0.9), pa = pr(t, 15.6, 0.3, E.cubicOut);
+  pl.style.opacity = pa; pl.style.transform = `translateY(${(1 - pe) * 500}px) rotateX(${(1 - pe) * -24}deg)`;
+  LINHAS.forEach((r, i) => { const a = 15.95 + i * 0.07, p = pr(t, a, 0.7); r.style.opacity = pr(t, a, 0.25, E.cubicOut); r.style.transform = `translateY(${(1 - p) * 60}px)`; });
+  // play no tempo da batida: vira pausa, a 1ª faixa fica verde com o equalizador
+  const tocando = t >= 16.96, pb = $('#play5');
+  $('#pi5').innerHTML = ic(56, tocando ? IC.pause : IC.play, '#000');
+  pb.style.transform = `scale(${(1 + 0.05 * pr(t, 16.5, 0.3, E.cubicOut)) * (1 - 0.1 * sino(t, 16.94, 0.2))})`;
+  const pu = pb.querySelector('.pulso'), kp = C((t - 16.98) / 0.6); pu.style.opacity = tocando ? 0.9 * (1 - kp) : 0; pu.style.transform = `scale(${1 + kp * 0.7})`;
+  const r0 = LINHAS[0]; r0.querySelector('b').style.color = tocando ? '#1ED760' : '#fff'; r0.style.background = tocando ? `rgba(255,255,255,${0.08 * pr(t, 16.96, 0.3, E.cubicOut)})` : 'transparent';
+  r0.querySelector('.n span').style.opacity = tocando ? 0 : 1; r0.querySelector('.eqm').style.opacity = tocando ? 1 : 0;
+  [...r0.querySelectorAll('.eqm i')].forEach((b, i) => { b.style.height = (8 + 24 * Math.abs(Math.sin(t * (7 + i * 2.3) + i)) * (0.5 + 0.5 * batida(t))) + 'px'; });
+  // a frase em cima
+  escreve($('#l5a'), t, 18.3, 0.03); escreve($('#l5b'), t, 18.66, 0.03); hlBox($('#l5b'), t, 18.95);
+  const sai = pr(t, 19.32, 0.32, E.cubicIn); m.style.opacity = 1 - sai; m.style.filter = sai > 0 ? `blur(${sai * 14}px)` : 'none';
+}
+
+/* ════ 6 · tocando agora no celular ════ */
+$('#hdl').innerHTML = ic(30, IC.baixo, '#fff'); $('#hdr').innerHTML = ic(30, IC.dots, '#fff');
+$('#ct6').innerHTML = `<span style="color:#1ED760">${ic(44, IC.shuffle, '#1ED760')}</span>${ic(52, IC.prev, '#fff')}<div id="pp6">${ic(52, IC.pause, '#000')}</div>${ic(52, IC.next, '#fff')}${ic(44, IC.repeat, '#fff')}`;
+$('#rod6').innerHTML = `${ic(36, IC.disp, '#fff', 1.8)}<span style="display:flex;gap:34px">${ic(36, IC.share, '#fff', 1.8)}${ic(36, IC.fila, '#fff', 1.8)}</span>`;
+$('#selo6i').innerHTML = baixadoVerde(40).replace('#1ED760', '#000').replace('stroke="#000"', 'stroke="#1ED760"');
+const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+function cena6(t) {
+  const K = [[19.6, { fx: 540, fy: 880, S: 0.94, rx: 4, ry: 0 }], [20.6, { fx: 540, fy: 880, S: 0.95, rx: 3, ry: -2 }], [21.15, { fx: 540, fy: 850, S: 1.04, rx: 3, ry: 2 }],
+             [23.7, { fx: 540, fy: 850, S: 1.04, rx: 3, ry: 2 }], [24.25, { fx: 540, fy: 880, S: 0.94, rx: 4, ry: 0 }], [24.85, { fx: 540, fy: 880, S: 0.3, rx: 0, ry: 0 }]];
+  const m = $('#m6'); m.style.transform = camCss(kf(t, K), t);
+  const fo = $('#fone'), pe = pr(t, 19.62, 1.0), pa = pr(t, 19.62, 0.3, E.cubicOut);
+  fo.style.opacity = pa; fo.style.transform = `perspective(1800px) translateY(${(1 - pe) * 300}px) rotateY(${(1 - pe) * 40}deg) rotateX(${(1 - pe) * 12}deg)`;
+  fo.style.filter = pe < 0.98 ? `blur(${(1 - pe) * 12}px)` : 'none';
+  m.style.opacity = 1 - pr(t, 24.55, 0.3, E.cubicIn);
+  // a música andando
+  const seg = 72 + Math.max(0, t - 19.6), f = seg / 225;
+  $('#tela .pg b').style.width = f * 100 + '%'; $('#tela .pg i').style.left = f * 100 + '%'; $('#tm0').textContent = fmt(seg);
+  // curtir (no tempo) → check verde + aviso
+  const curtiu = t >= 21.6;
+  $('#ok6').innerHTML = curtiu ? okVerde(52, pr(t, 21.6, 0.35, E.cubicOut)) : ic(52, IC.mais, '#fff', 1.8);
+  $('#ok6').style.transform = `scale(${(1 - 0.15 * sino(t, 21.58, 0.18)) * (curtiu ? C(M.prog(t, 21.6, 0.6, E.spring), 0.6, 1.25) : 1)})`;
+  const to = pr(t, 21.75, 0.6) * (1 - pr(t, 23.0, 0.35, E.cubicIn));
+  $('#toast').style.opacity = C(to * 3); $('#toast').style.transform = `translateY(${-(to) * 190}px)`;
+  // baixar → anel enchendo → baixada
+  const bx = $('#bx6');
+  if (t < 22.92) bx.innerHTML = ic(52, IC.baixar, '#fff', 1.8);
+  else if (t < 23.55) { const k = E.cubicInOut(C((t - 22.92) / 0.6)); bx.innerHTML = `<svg class="i" width="52" height="52" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/><circle cx="12" cy="12" r="10" fill="none" stroke="#1ED760" stroke-width="2.4" stroke-dasharray="62.8" stroke-dashoffset="${62.8 * (1 - k)}" transform="rotate(-90 12 12)" stroke-linecap="round"/><path d="M12 7v9.5M8 12.5l4 4 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
+  else bx.innerHTML = baixadoVerde(52);
+  bx.style.transform = `scale(${(1 - 0.15 * sino(t, 22.9, 0.18)) * (t >= 23.55 ? C(M.prog(t, 23.55, 0.6, E.spring), 0.6, 1.25) : 1)})`;
+  const se = $('#selo6'), ks = C(M.prog(t, 23.6, 0.7, E.spring), 0, 1.15) * (1 - pr(t, 24.2, 0.25, E.cubicIn));
+  se.style.opacity = C(ks * 2); se.style.transform = `translate(${-40 + 40 * ks}px, ${(1 - ks) * 30}px) scale(${0.6 + 0.4 * ks})`;
+  // texto de cima: Ouça / onde estiver. → até offline.
+  escreve($('#l6a'), t, 20.2, 0.04); escreve($('#l6b'), t, 20.5, 0.035); escreve($('#l6c'), t, 22.34, 0.035);
+  const tb = some($('#l6b'), t, 22.2, 0.25); $('#l6c').style.opacity = t < 22.3 ? 0 : 1;
+  some($('#l6'), t, 24.3, 0.35);
+}
+
+/* ════ 7 · logo + frase final ════ */
+function cena7(t) {
+  const lg = $('#logo7'), si = C(M.prog(t, 24.92, 0.9, E.spring), 0, 1.3), desl = 301 * (1 - pr(t, 25.5, 0.9, E.quintOut));
+  $('#ic7').style.transformBox = 'fill-box'; $('#ic7').style.transformOrigin = '50% 50%';
+  $('#ic7').style.transform = `scale(${si * (1 + 0.04 * batida(t))})`;
+  lg.style.transform = `translateX(${desl}px)`; lg.style.opacity = t < 24.92 ? 0 : 1;
+  $('#wmR').setAttribute('width', 66 * pr(t, 25.55, 0.9, E.quintOut));
+  $('#wm7').style.transform = `translateX(${(1 - pr(t, 25.55, 0.9, E.quintOut)) * -6}px)`;
+  escreve($('#l7'), t, 26.1, 0.035);
+  const b = $('#bt7'), kb = C(M.prog(t, 26.6, 0.8, E.spring), 0, 1.15), w = L(112, 420, kb);
+  b.style.width = w + 'px'; b.style.marginLeft = -w / 2 + 'px'; b.style.opacity = pr(t, 26.6, 0.2, E.cubicOut);
+  b.style.color = `rgba(0,0,0,${pr(t, 26.85, 0.3, E.cubicOut)})`;
+  b.style.transform = `scale(${1 - 0.06 * sino(t, 27.55, 0.2)})`;
+  const pu = b.querySelector('.pulso'), kp = C((t - 27.6) / 0.7); pu.style.opacity = t >= 27.6 ? 0.9 * (1 - kp) : 0; pu.style.transform = `scale(${1 + kp * 0.35}, ${1 + kp * 0.9})`;
+  some($('#c7'), t, 28.0, 0.2, null);
+}
+
+/* estouros de luz nos cliques e chegadas */
+estouro(2.22, () => [540, 960], 34); estouro(8.62, () => centroTela(TILES[2]), 28); estouro(9.0, () => [540, 960], 40);
+estouro(16.97, () => centroTela($('#play5')), 30); estouro(21.62, () => centroTela($('#ok6')), 26); estouro(23.56, () => centroTela($('#bx6')), 22);
+estouro(24.95, () => [540 + 301 - 301 * pr(24.95, 25.5, 0.9, E.quintOut), 890], 40); estouro(27.58, () => centroTela($('#bt7')), 34);
+
+/* ── quadro ── */
+const JAN = { c1: [-1, 3.72], c2: [3.62, 6.42], c3: [6.3, 9.05], c4: [8.95, 14.38], c5: [14.05, 19.7], c6: [19.5, 24.95], c7: [24.85, 99] };
+window.quadro = async function (t) {
+  fundo(t);
+  for (const [id, [a, b]] of Object.entries(JAN)) $('#' + id).style.display = t >= a && t < b ? 'block' : 'none';
+  // fundo claro abre do centro na cena 5 e fecha de volta
+  const ab = E.cubicInOut(C((t - 14.06) / 0.5)) * (1 - E.cubicInOut(C((t - 19.36) / 0.4)));
+  $('#claro').style.clipPath = `circle(${ab * 1150}px at 540px 960px)`;
+  if (t < 3.72) cena1(t);
+  if (t >= 3.62 && t < 6.42) cena2(t);
+  if (t >= 6.3 && t < 9.05) cena3(t);
+  if (t >= 8.95 && t < 14.38) cena4(t);
+  if (t >= 14.05 && t < 19.7) cena5(t);
+  if (t >= 19.5 && t < 24.95) cena6(t);
+  if (t >= 24.85) cena7(t);
+  // clarão na virada da música (9,0) e no mergulho do play (3,7)
+  $('#flash').style.opacity = 0.85 * Math.exp(-(((t - 9.0) / 0.12) ** 2)) * (t > 8.9 ? 1 : 0) + 0.5 * Math.exp(-(((t - 3.68) / 0.1) ** 2));
+  particulas(t, ab);
+  mouse(t);
+};
+window.pronto = document.fonts.load('64px Mix').then(() => Promise.all([document.fonts.load('700 64px Mix'), document.fonts.load('800 64px MixT'), document.fonts.load('700 64px MixT')]))
+  .then(() => document.fonts.ready).then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { $('#c1').style.display = 'block'; cena1(2.0); B1 = centroTela($('#bola1')); $('#c1').style.display = 'none'; });
+M.tocar && M.tocar();
+</script>
+</body>
+</html>

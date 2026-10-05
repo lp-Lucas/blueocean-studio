@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — Doxa (Criativo 1) · duas leituras: --params '{"take":"v1"}' ou '{"take":"v2"}'</title>
+<link rel="stylesheet" href="fm.css">
+<style>
+  /* ícone de app com o nome EMBAIXO (como no celular) — nada de texto espremido dentro do quadrado */
+  .app { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .app .q { width: var(--s); height: var(--s); border-radius: calc(var(--s) * .26); display: grid; place-items: center;
+            box-shadow: 0 calc(var(--s) * .12) calc(var(--s) * .3) rgba(10, 30, 110, .22); }
+  .app .q svg { width: 46%; height: 46%; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .app .q.az { background: linear-gradient(150deg, #1E50FF, #0033F0); } .app .q.az svg { stroke: #fff; }
+  .app .q.br { background: #fff; } .app .q.br svg { stroke: #0037FF; }
+  .app .q.dx { background: linear-gradient(150deg, #23284A, #0B0D1E); } .app .q.dx img { width: 76%; }
+  .app .nm { font-size: 38px; font-weight: 600; color: var(--tinta); white-space: nowrap; letter-spacing: -0.01em; }
+  /* MRR travado: mesmo cartão azul do faturamento (design do vídeo) */
+  .mrrA { width: 480px; height: 330px; border-radius: 40px; padding: 30px 34px; color: #fff; overflow: hidden;
+          background: linear-gradient(140deg, #1446FF 0%, #0A3BE0 45%, #0630C4 100%); box-shadow: 0 30px 70px rgba(6, 40, 190, .32); }
+  .mrrA .top { display: flex; align-items: center; justify-content: space-between; font-size: 28px; font-weight: 600; }
+  .mrrA .top > span:first-child { opacity: .8; }
+  .mrrA .trav { display: flex; align-items: center; gap: 10px; background: #fff; color: #0A1A5C; font-size: 24px; font-weight: 700;
+                padding: 9px 18px 9px 12px; border-radius: 999px; opacity: 0; }
+  .mrrA .val { font-size: 78px; font-weight: 700; letter-spacing: -0.035em; line-height: 1; margin-top: 16px; font-variant-numeric: tabular-nums; }
+  .mrrA .graf { position: absolute; left: 30px; bottom: 50px; width: 420px; height: 90px; }
+  .mrrA .meses { position: absolute; left: 34px; right: 34px; bottom: 16px; display: flex; justify-content: space-between; font-size: 18px; font-weight: 500; opacity: .6; }
+  .dxMini { height: 56px; padding: 0 16px; border-radius: 16px; background: #0B0D1E; display: grid; place-items: center; }
+  .dxMini img { height: 22px; }
+  .dia { width: 44px; height: 44px; border-radius: 11px; background: #E7EAF3; }
+  .doxaTile { width: var(--s); height: var(--s); border-radius: calc(var(--s) * .26); display: grid; place-items: center; color: #fff;
+              background: linear-gradient(150deg, #23284A, #0B0D1E); font-weight: 700; font-size: calc(var(--s) * .21); letter-spacing: .06em;
+              box-shadow: 0 calc(var(--s) * .12) calc(var(--s) * .3) rgba(10, 15, 60, .3), inset 0 2px 0 rgba(255, 255, 255, .12); }
+  .tileNovo { width: 240px; height: 240px; border-radius: 62px; border: 7px dashed #0037FF; display: grid; place-items: center; }
+  .tileNovo .ench { position: absolute; inset: -7px; border-radius: 62px; background: linear-gradient(150deg, #1E50FF, #0033F0); display: flex; flex-direction: column;
+                    align-items: center; justify-content: center; color: #fff; font-size: 46px; font-weight: 700; opacity: 0; box-shadow: 0 30px 70px rgba(0, 40, 200, .3); }
+  .tileNovo .ench svg { width: 42%; height: 42%; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .tileNovo .mais { font-size: 120px; font-weight: 400; color: #0037FF; line-height: 1; }
+  /* MRR travado */
+  .mrr { width: 420px; height: 250px; padding: 28px 32px; }
+  .mrr .top { display: flex; align-items: center; justify-content: space-between; font-size: 28px; font-weight: 600; color: #8A90A2; }
+  .mrr .cad { width: 58px; height: 58px; border-radius: 50%; background: #0A1A5C; display: grid; place-items: center; opacity: 0; }
+  .mrr .val { font-size: 64px; font-weight: 700; letter-spacing: -0.035em; margin-top: 6px; }
+  .mrr .sub { font-size: 22px; color: #8A90A2; font-weight: 500; }
+  .mrr svg { position: absolute; left: 0; bottom: 18px; width: 420px; height: 60px; }
+  .bolha { background: #fff; color: var(--tinta); font-size: 38px; font-weight: 600; padding: 22px 34px; border-radius: 999px; white-space: nowrap; box-shadow: 0 18px 50px rgba(10, 25, 80, .2); }
+  .bolha .rs { position: absolute; left: 30px; right: 30px; top: 50%; height: 6px; background: #0037FF; border-radius: 3px; transform-origin: 0 50%; transform: scaleX(0); }
+  .bolha i { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 8px 20px rgba(10, 25, 80, .15); }
+  /* pilares e checklist */
+  .pilar { width: 860px; height: 170px; display: flex; align-items: center; gap: 30px; padding: 0 40px; font-size: 48px; font-weight: 500; white-space: nowrap; }
+  .pilar .ico { width: 100px; height: 100px; border-radius: 28px; display: grid; place-items: center; flex: none; background: linear-gradient(150deg, #1E50FF, #0033F0); }
+  .pilar .ico svg { width: 52px; height: 52px; }
+  .ck { width: 880px; height: 150px; display: flex; align-items: center; gap: 28px; padding: 0 40px; font-size: 42px; font-weight: 500; white-space: nowrap; }
+  .ck .bx { width: 72px; height: 72px; border-radius: 22px; border: 4px solid #D8DCE6; display: grid; place-items: center; flex: none; position: relative; }
+  .ck .bx div { position: absolute; inset: -4px; border-radius: 22px; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  .seta { position: absolute; right: -14px; top: -14px; width: 46px; height: 46px; border-radius: 50%; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  /* faturamento */
+  #fat { width: 860px; height: 440px; border-radius: 46px; padding: 44px 52px; color: #fff; overflow: hidden;
+         background: linear-gradient(140deg, #1446FF 0%, #0A3BE0 45%, #0630C4 100%); box-shadow: 0 40px 90px rgba(6, 40, 190, .35); }
+  #fat .cab { display: flex; align-items: center; gap: 20px; font-size: 34px; font-weight: 600; }
+  #fat .cab .doxaTile { --s: 66px; border-radius: 18px; font-size: 18px; }
+  #fat .cab .dir { margin-left: auto; font-size: 26px; font-weight: 500; opacity: .7; }
+  #fat .num { margin-top: 34px; font-size: 112px; font-weight: 700; letter-spacing: -0.035em; line-height: 1; font-variant-numeric: tabular-nums; }
+  #fat svg { position: absolute; left: 0; bottom: 0; width: 860px; height: 170px; }
+  /* formulário */
+  #form { width: 820px; height: 560px; padding: 44px 50px; }
+  #form .tit { display: flex; align-items: center; gap: 18px; font-size: 38px; font-weight: 700; }
+  #form .tit img { width: 46px; filter: brightness(0) saturate(100%) invert(16%) sepia(97%) saturate(5000%) hue-rotate(228deg); }
+  #form .lab { font-size: 24px; color: #8A90A2; font-weight: 600; margin: 30px 0 10px; }
+  #form .cx { height: 76px; border-radius: 18px; background: #F3F5FA; border: 2px solid #E3E6EE; display: flex; align-items: center; padding: 0 24px; font-size: 32px; font-weight: 600; }
+  #enviar { margin-top: 34px; height: 104px; border-radius: 999px; background: var(--azul); color: #fff; display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 38px; font-weight: 700; }
+  #conexao { position: absolute; inset: 0; width: 1080px; height: 1920px; z-index: 2; pointer-events: none; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="mao" x="0" y="0" width="971" height="1620" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feImage id="maoMapa" x="0" y="0" width="971" height="1620" preserveAspectRatio="none" result="mapa"/>
+    <feDisplacementMap id="maoDesloca" in="SourceGraphic" in2="mapa" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- 1: abertura 3D — Blue Ocean faz marketing e vendas para SaaS → abriu o próprio SaaS -->
+<div class="p logoTile" id="boTile" style="left:0;top:0;width:300px;height:300px;border-radius:80px"><img src="../img/simbolo-blueocean.png"></div>
+<img class="p" id="boMarca" src="../img/LOGO-BLUE.svg" style="left:0;top:0;height:72px">
+<div class="p app" id="tMkt" style="--s:190px;left:0;top:0"><div class="q br"></div><div class="nm">Marketing</div></div>
+<div class="p app" id="tVen" style="--s:190px;left:0;top:0"><div class="q az"></div><div class="nm">Vendas</div></div>
+<div class="p tileNovo" id="tNovo" style="left:0;top:0"><span class="mais">+</span><div class="ench"></div></div>
+<div class="p chip azulc" id="cNovo" style="left:0;top:0">Nosso próprio <b>SaaS</b></div>
+
+<!-- 2: Sabe qual o motivo? (azul) -->
+<div class="p linha" id="mot1" style="left:540px;top:770px;font-size:90px;font-weight:500;color:#fff">Sabe qual</div>
+<div class="p linha" id="mot2" style="left:540px;top:960px;font-size:200px;font-weight:700;color:var(--verde);letter-spacing:-0.05em">o motivo?</div>
+
+<!-- 3 e 7: o dono de SaaS no trono (cena 3D) -->
+<div id="dono1" data-caixa="50,130,910,1490" class="dono" style="position:absolute;left:0;top:0;width:971px;height:1620px;transform-origin:0 0;z-index:2;opacity:0"><img src="../img/dono-saas.png" style="width:971px;height:1620px;filter:url(#mao)"></div>
+<div id="dono2" data-caixa="50,130,910,1490" class="dono" style="position:absolute;left:0;top:0;width:971px;height:1620px;transform-origin:0 0;z-index:2;opacity:0"><img src="../img/dono-saas.png" style="width:971px;height:1620px;filter:url(#mao)"></div>
+<div class="p logoTile" id="boRosto" style="left:0;top:0;width:262px;height:262px;border-radius:50%"><img src="../img/simbolo-blueocean.png"></div>
+<div class="p linha" id="rotA" style="left:0;top:0;font-size:56px;font-weight:700;color:#1F45C8"></div>
+<div class="p linha" id="rotB0" style="left:0;top:0;font-size:38px;font-weight:600;color:#1F45C8">Blue Ocean</div>
+<div class="p linha" id="rotB" style="left:0;top:0;font-size:56px;font-weight:700;color:#1F45C8"></div>
+<div class="p app" id="pProd" style="--s:210px;left:0;top:0"><div class="q br"></div><div class="nm">Produto</div></div>
+<div class="p chip claro" id="pStars" style="left:0;top:0;font-size:40px;color:#0037FF;letter-spacing:.08em;padding:16px 30px">★★★★★</div>
+<div class="p mrrA" id="pMrr" style="left:0;top:0">
+  <div class="top"><span>MRR</span><span class="trav" id="trav"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A1A5C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11 H18 V21 H6 Z M8.5 11 V8 a3.5 3.5 0 0 1 7 0 V11"/></svg>Travado</span></div>
+  <div class="val">R$ 48.200</div>
+  <svg class="graf" viewBox="0 0 420 90">
+    <path d="M0 22 H420 M0 52 H420 M0 82 H420" stroke="rgba(255,255,255,.16)" stroke-width="2" stroke-dasharray="4 8"/>
+    <path id="mrrLinha" d="M6 50 L64 47 L122 51 L180 48 L238 50 L296 47 L354 50 L412 49" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="412" cy="49" r="8" fill="#fff"/></svg>
+  <div class="meses"><span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span></div>
+</div>
+<div class="p bolha" id="pBolha" style="left:0;top:0"><span>É o <b>software</b>?</span><div class="rs"></div>
+  <i style="width:26px;height:26px;left:40px;bottom:-30px"></i><i style="width:15px;height:15px;left:22px;bottom:-52px"></i></div>
+<div class="p app" id="dxMundo" style="--s:210px;left:0;top:0"><div class="q dx"><img src="../img/doxa-branco.png"></div><div class="nm">Doxa</div></div>
+<div class="p app" id="teuT" style="--s:210px;left:0;top:0"><div class="q az"></div><div class="nm">Teu SaaS</div></div>
+<svg id="conexao" viewBox="0 0 1080 1920"><path id="cxLinha" fill="none" stroke="#0037FF" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 18"/><circle id="cxPonto" r="14" fill="#0037FF"/></svg>
+
+<!-- 4: 1.100 SaaS, quem crescia, os 3 pilares -->
+<div class="p linha" id="mil" style="left:540px;top:470px;font-size:150px;font-weight:700;letter-spacing:-0.045em"><span class="az" id="milN">+0</span> SaaS</div>
+<div id="icones"></div>
+<div class="p linha" id="cresc" style="left:540px;top:470px;font-size:58px;font-weight:500">quem <b class="az">crescia</b> tinha algo em comum</div>
+<div class="p cartao pilar" id="pl1" style="left:540px;top:700px"><div class="ico"></div><span>Oferta <b class="az">clara</b></span></div>
+<div class="p cartao pilar" id="pl2" style="left:540px;top:900px"><div class="ico"></div><span>Demanda <b class="az">qualificada</b></span></div>
+<div class="p cartao pilar" id="pl3" style="left:540px;top:1100px"><div class="ico"></div><span>Comercial que <b class="az">converte</b></span></div>
+
+<!-- 5: na própria pele (azul) -->
+<div class="p linha" id="pe1" style="left:540px;top:690px;font-size:66px;font-weight:500;color:#fff">Então a gente provou</div>
+<div class="p linha" id="pe2" style="left:540px;top:870px;font-size:150px;font-weight:700;color:var(--verde);letter-spacing:-0.05em">na própria</div>
+<div class="p linha" id="pe3" style="left:540px;top:1070px;font-size:260px;font-weight:700;color:var(--verde);letter-spacing:-0.05em;text-shadow:0 0 60px rgba(0,255,212,.45)">pele.</div>
+
+<!-- 6: Doxa, 98 dias, R$ 400 mil -->
+<div class="p cartao" id="dias98" style="left:540px;top:880px;width:860px;height:640px;padding:44px 50px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div><div style="font-size:30px;font-weight:600;color:#8A90A2">nosso próprio SaaS</div><div style="font-size:52px;font-weight:700;letter-spacing:-0.03em">Do zero</div></div>
+    <div style="font-size:100px;font-weight:700;color:var(--azul);letter-spacing:-0.045em;line-height:1;font-variant-numeric:tabular-nums"><span id="dias">0</span><span style="font-size:40px;font-weight:600;color:#8A90A2;letter-spacing:0"> dias</span></div>
+  </div>
+  <div id="grade" style="display:grid;grid-template-columns:repeat(14,44px);gap:10px;margin-top:40px"></div>
+</div>
+<div class="p" id="dxTile" style="left:540px;top:700px;width:640px;height:220px;border-radius:56px;background:linear-gradient(150deg,#23284A,#0B0D1E);display:grid;place-items:center;box-shadow:0 30px 70px rgba(10,15,60,.3)"><img src="../img/doxa-branco.png" style="width:440px"></div>
+<div class="p chip claro" id="dxChip" style="left:540px;top:930px;font-size:40px">nosso <b class="az">próprio software</b></div>
+<div class="p" id="fat" style="left:540px;top:900px">
+  <div class="cab"><div class="dxMini"><img src="../img/doxa-branco.png"></div><span>Faturamento</span><span class="dir">últimos 98 dias</span></div>
+  <div class="num" id="valor">R$ 0</div>
+  <svg viewBox="0 0 860 170" preserveAspectRatio="none">
+    <defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <clipPath id="cg"><rect id="cgr" x="0" y="0" width="0" height="170"/></clipPath></defs>
+    <path d="M0 160 L120 156 L240 148 L330 138 L420 124 L520 102 L610 80 L700 52 L780 30 L860 8 L860 170 L0 170 Z" fill="url(#ga)" clip-path="url(#cg)"/>
+    <path id="curva" d="M0 160 L120 156 L240 148 L330 138 L420 124 L520 102 L610 80 L700 52 L780 30 L860 8" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>
+</div>
+<div class="p chip claro" id="em98" style="left:790px;top:690px;font-size:40px;font-weight:700"><span class="az">em 98 dias</span></div>
+
+<!-- 8: checklist -->
+<div class="p linha" id="pv" style="left:540px;top:540px;font-size:64px;font-weight:600">É pra você se:</div>
+<div class="p cartao ck" id="ck1" style="left:540px;top:720px"><div class="bx"><div></div></div><span>Tem <b class="az">produto bom</b></span></div>
+<div class="p cartao ck" id="ck2" style="left:540px;top:900px"><div class="bx"><div></div></div><span>Fatura <b class="az">+R$ 20 mil</b> por mês</span></div>
+<div class="p cartao ck" id="ck3" style="left:540px;top:1080px"><div class="bx"><div></div></div><span>Está <b class="az">travado</b> no crescimento</span></div>
+
+<!-- 9: formulário (azul) -->
+<div class="p logoTile" id="logo2" style="left:540px;top:410px;width:150px;height:150px;border-radius:42px"><img src="../img/simbolo-blueocean.png"></div>
+<div class="p cartao" id="form" style="left:540px;top:810px">
+  <div class="tit"><img src="../img/simbolo-blueocean.png">Diagnóstico Blue Ocean</div>
+  <div class="lab">Faturamento mensal</div><div class="cx"><span id="fx1"></span></div>
+  <div class="lab">Maior desafio</div><div class="cx"><span id="fx2"></span></div>
+  <div id="enviar"><span id="envTxt">Quero destravar meu SaaS</span><span id="envSeta">→</span></div>
+</div>
+<div class="p linha" id="h9" style="left:540px;top:1190px;font-size:66px;font-weight:500;color:#fff">vem ver como <b class="verde">destravar</b></div>
+<svg class="p" id="cadeado" viewBox="0 -24 60 94" style="left:540px;top:1301px;width:96px;height:150px;overflow:visible">
+  <g id="alca"><path d="M16 32 V20 a14 14 0 0 1 28 0 V32" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></g>
+  <rect x="6" y="30" width="48" height="36" rx="10" fill="var(--verde)"/><circle cx="30" cy="46" r="5" fill="#0A1A5C"/><rect x="28" y="48" width="4" height="9" rx="2" fill="#0A1A5C"/></svg>
+<svg class="p cursor" id="cursor" viewBox="0 0 24 30"></svg>
+
+<script src="../motion.js"></script>
+<script src="fm.js"></script>
+<script src="../img/dono-escuro.js"></script>
+<script src="doxa-v1.js"></script>
+<script src="doxa-v2.js"></script>
+<script>
+const { anim, linha, pr, E, C, L, $ } = FM, M = Motion;
+const TK = TAKES[(window.PARAMS && window.PARAMS.take) || 'v1'], T = TK.T, TT = TK.TT, F = TK.FIM;
+window.DURACAO = TK.DUR;
+$('#cursor').innerHTML = FM.CURSOR;
+FM.GLIFO.mega = 'M3 10 V14 H7 L15 19 V5 L7 10 Z M18.5 9 a4 4 0 0 1 0 6';
+FM.GLIFO.cadeado = 'M6 11 H18 V21 H6 Z M8.5 11 V8 a3.5 3.5 0 0 1 7 0 V11';
+FM.GLIFO.sobe = 'M12 19 V5 M6 11 L12 5 L18 11';
+const OK = (cor = '#0A1A5C', w = 3.4) => FM.svg('check', cor, w);
+const ic = (el, g, txt) => { el.innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO[g]}"/></svg>` + (txt ? `<span>${txt}</span>` : ''); };
+const appIc = (id, g) => { $(id + ' .q').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO[g]}"/></svg>`; };
+appIc('#tMkt', 'mega'); appIc('#tVen', 'dolar'); appIc('#pProd', 'code'); appIc('#teuT', 'code');
+$('#tNovo .ench').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.code}"/></svg><span style="font-size:40px">SaaS</span>`;
+
+/* ── câmera "3D": o ponto fx,fy do mundo aparece em sx,sy da tela com escala s; d > 1 = mais perto da câmera ── */
+const mixC = (a, b, p) => Object.fromEntries(Object.keys(a).map(k => [k, L(a[k], b[k], p)]));
+const tela = (c, wx, wy, d = 1) => [c.sx + (wx - c.fx) * c.s * d, c.sy + (wy - c.fy) * c.s * d, c.s * d];
+function camSeq(t, segs) { let c = segs[0][2]; for (let i = 1; i < segs.length; i++) { const [t0, d, cam, e = E.quintInOut] = segs[i]; if (t < t0) break; c = mixC(c, cam, e(C((t - t0) / d))); } return c; }
+function noMundo(el, t, c, w, a, b, o = {}) {
+  const { rot = 0, extra = 1, dout = 0.35, sobe = 40 } = o;
+  if (t < a || t > b + dout) { el.style.opacity = 0; return 0; }
+  const [x, y, k] = tela(c, w[0], w[1], w[2] || 1);
+  const pin = pr(t, a, 0.7), ps = M.prog(t, a, 1.0, E.spring), pa = pr(t, a, 0.3, E.cubicOut), po = pr(t, b, dout, E.cubicIn);
+  el.style.opacity = pa * (1 - po);
+  const bl = (1 - pin) * 22 + po * 18;
+  el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+  el.style.transform = `translate(${x}px,${y + (1 - pin) * sobe * k}px) translate(-50%,-50%) rotate(${(1 - pin) * rot}deg) scale(${k * L(0.4, 1, ps) * extra})`;
+  return pa * (1 - po);
+}
+function desenhaDono(el, t, c, a, b) {
+  if (t < a - 0.3 || t > b + 0.5) { el.style.opacity = 0; return; }
+  const pin = pr(t, a - 0.3, 0.75), po = pr(t, b, 0.45, E.cubicIn);
+  el.style.opacity = C((t - a + 0.3) / 0.25) * (1 - po);
+  el.style.filter = (1 - pin) * 26 + po * 30 > 0.3 ? `blur(${(1 - pin) * 26 + po * 30}px)` : 'none';
+  el.style.transform = `translate(${c.sx - c.fx * c.s}px, ${c.sy - c.fy * c.s + (1 - pin) * 160}px) scale(${c.s})`;
+}
+/* nome reto sobre a cabeça, letra a letra, preso ao mundo */
+function letrasDe(id, txt) { $('#' + id).innerHTML = [...txt].map(ch => `<span class="w" style="display:inline-block;white-space:pre">${ch}</span>`).join(''); return [...$('#' + id).children]; }
+function rotulo(id, letras, t, c, wy, a, b) {
+  const el = $('#' + id), [x, y, k] = tela(c, 503, wy), po = pr(t, b, 0.35, E.cubicIn);
+  el.style.opacity = t < a - 0.05 || t > b + 0.4 ? 0 : 1 - po;
+  el.style.filter = po > 0.01 ? `blur(${po * 16}px)` : 'none';
+  el.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${k})`;
+  letras.forEach((l, i) => { const a0 = a + i * 0.03, p = pr(t, a0, 0.6), pa = pr(t, a0, 0.25, E.cubicOut);
+    l.style.opacity = pa; l.style.filter = p > 0.99 ? 'none' : `blur(${(1 - p) * 12}px)`; l.style.transform = `translateY(${(1 - p) * 0.6}em)`; });
+}
+/* mão no queixo: só a região da mão se desloca (ciclo de 3 s) */
+(function () {
+  const cv = document.createElement('canvas'); cv.width = 971; cv.height = 1620;
+  const g = cv.getContext('2d'), img = g.createImageData(971, 1620);
+  for (let y = 0; y < 1620; y++) for (let x = 0; x < 971; x++) {
+    const dx = (x - 548) / 92, dy = (y - 458) / 58;
+    let v = Math.exp(-(dx * dx + dy * dy) / 2) * C((y - 392) / 48);
+    v += 0.55 * Math.exp(-(((x - 625) / 60) ** 2 + ((y - 500) / 45) ** 2) / 2);
+    const i = (y * 971 + x) * 4;
+    img.data[i] = 128; img.data[i + 1] = 128 + Math.round(127 * C(v)); img.data[i + 2] = 128; img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0); $('#maoMapa').setAttribute('href', cv.toDataURL());
+})();
+
+/* ── 1: abertura ── */
+const CA1 = { s: 1.5, fx: 540, fy: 760, sx: 540, sy: 880 }, CB1 = { s: 0.95, fx: 540, fy: 800, sx: 540, sy: 860 }, CC1 = { s: 0.9, fx: 540, fy: 1150, sx: 540, sy: 960 };
+const cam1 = t => camSeq(t, [[-9, 0, CA1], [0.15, 1.3, CB1], [T.abrir, 0.9, CC1]]);
+const fim1 = T.motivo - 0.15, pNovo = TT.abrir[4];
+function cena1(t) {
+  if (t > fim1 + 0.6) { ['#boTile', '#boMarca', '#tMkt', '#tVen', '#tNovo', '#cNovo'].forEach(s => $(s).style.opacity = 0); return; }
+  const c = cam1(t);
+  noMundo($('#boTile'), t, c, [540, 760], -0.3, fim1, { rot: -14 });
+  noMundo($('#boMarca'), t, c, [540, 975], 0.1, fim1);
+  noMundo($('#tMkt'), t, c, [300, 500, 1.2], TT.gente[3] - 0.05, fim1, { rot: -16 });
+  noMundo($('#tVen'), t, c, [780, 560, 1.2], TT.gente[5] - 0.05, fim1, { rot: 16 });
+  const nv = $('#tNovo'), [nx, ny, nk] = tela(c, 540, 1320, 1.05);
+  if (t < T.abrir + 0.25 || t > fim1 + 0.4) nv.style.opacity = 0;
+  else {
+    const pa = pr(t, T.abrir + 0.25, 0.4, E.cubicOut), pf = M.prog(t, pNovo, 0.8, E.spring), po = pr(t, fim1, 0.35, E.cubicIn);
+    nv.style.opacity = pa * (1 - po); nv.style.filter = po > 0.01 ? `blur(${po * 18}px)` : 'none';
+    nv.style.transform = `translate(${nx}px,${ny}px) translate(-50%,-50%) scale(${nk * (t < pNovo ? 1 : L(0.92, 1, pf))})`;
+    nv.style.borderColor = `rgba(0,55,255,${0.35 + 0.65 * Math.abs(Math.sin(t * 5))})`;
+    nv.querySelector('.ench').style.opacity = pr(t, pNovo, 0.25, E.cubicOut);
+    nv.querySelector('.mais').style.opacity = 1 - pr(t, pNovo, 0.2, E.cubicOut);
+  }
+  noMundo($('#cNovo'), t, c, [540, 1495, 1.05], pNovo + 0.15, fim1, { rot: 8 });
+}
+
+/* ── 2: Sabe qual o motivo? ── */
+function cena2(t) {
+  linha('mot1', t, TT.motivo.slice(0, 2), T.cansou - 0.15, { sobe: 0.25 });
+  linha('mot2', t, TT.motivo.slice(2), T.cansou - 0.15, { sobe: 0.15, desf: 30, dur: 0.8 });
+}
+
+/* ── 3: dono de SaaS travado ── */
+const DA = { s: 0.95, fx: 485, fy: 820, sx: 540, sy: 1010 }, DB = { s: 1.6, fx: 503, fy: 400, sx: 540, sy: 860 },
+      DC = { s: 0.8, fx: 760, fy: 600, sx: 540, sy: 960 }, DC2 = { s: 0.86, fx: 800, fy: 590, sx: 540, sy: 960 };
+const fim3 = T.mil - 0.15;
+const cam3 = t => camSeq(t, [[-9, 0, DA], [T.dono - 0.1, 0.8, DB], [T.produto - 0.05, 0.7, DC], [T.produto + 0.7, Math.max(0.5, fim3 - T.produto - 0.7), DC2, E.cubicInOut]]);
+const letrasA = letrasDe('rotA', 'Dono de SaaS'), letrasB = letrasDe('rotB', 'Dono de SaaS');
+function cena3(t) {
+  const c = cam3(t);
+  desenhaDono($('#dono1'), t, c, T.cansou + 0.35, fim3);   // só depois que o azul sai
+  rotulo('rotA', letrasA, t, c, 92, T.dono - 0.05, T.produto - 0.1);
+  if (t < T.cansou - 0.3 || t > fim3 + 0.5) { ['#pProd', '#pStars', '#pMrr', '#pBolha'].forEach(s => $(s).style.opacity = 0); return; }
+  noMundo($('#pProd'), t, c, [1080, 250, 1.15], T.produto, fim3, { rot: -14 });
+  noMundo($('#pStars'), t, c, [1080, 455, 1.15], TT.produto[2], fim3, { rot: 6 });
+  noMundo($('#pMrr'), t, c, [1080, 740, 1.15], T.travado, fim3, { rot: -6 });
+  const cad = $('#trav'), pc = M.prog(t, TT.travado[3], 0.7, E.spring);
+  cad.style.opacity = pr(t, TT.travado[3], 0.15, E.cubicOut); cad.style.transform = `scale(${Math.max(0, pc)})`;
+  const treme = t > T.achando && t < T.naoera ? Math.sin(t * 18) * 1.5 : 0;
+  noMundo($('#pBolha'), t, c, [720, 70, 1.1], T.achando, fim3, { rot: 10 });
+  $('#pBolha').style.transform += ` rotate(${treme}deg)`;
+  $('#pBolha .rs').style.transform = `scaleX(${pr(t, TT.naoera[1], 0.4, E.cubicInOut)})`;
+}
+
+/* ── 4: 1.100 SaaS → quem crescia → 3 pilares ── */
+const VAR = ['az', 'br', 'nv', 'tl', 'br', 'tl', 'az', 'br', 'nv', 'az', 'nv', 'br', 'az', 'tl', 'br', 'br', 'nv', 'az', 'br', 'tl'];
+const GL = ['bars', 'chat', 'code', 'dolar', 'nuvem', 'raio', 'agenda', 'gente', 'check', 'carro', 'chat', 'bars', 'code', 'agenda', 'dolar', 'raio', 'nuvem', 'check', 'gente', 'bars'];
+const CRESCE = [1, 7, 10, 13, 18];
+const icones = VAR.map((v, i) => {
+  const el = FM.icone(v, GL[i], i === 12 ? 'SaaS' : '', 130, $('#icones'));
+  if (CRESCE.includes(i)) { const s = document.createElement('div'); s.className = 'seta'; s.innerHTML = FM.svg('sobe', '#0A1A5C', 3).replace('<svg', '<svg width="28" height="28"'); el.appendChild(s); }
+  return { el, x: 212 + (i % 5) * 164, y: 720 + Math.floor(i / 5) * 164, ordem: Math.hypot((i % 5) - 2, Math.floor(i / 5) - 1.5) };
+});
+[['#pl1', 'alvo'], ['#pl2', 'funil'], ['#pl3', 'dolar']].forEach(([id, g]) => { $(id + ' .ico').innerHTML = FM.svg(g, '#fff', 2.4); });
+function cena4(t) {
+  const fimG = T.oferta - 0.1;
+  anim($('#mil'), t, T.mil, T.crescia - 0.1, { de: 0.85, dy: 40 });
+  $('#milN').textContent = '+' + Math.round(1100 * E.quintOut(C((t - TT.mil[3]) / Math.max(0.5, F.mil - TT.mil[3] + 0.2)))).toLocaleString('pt-BR');
+  const pc = pr(t, T.crescia, 0.5);
+  icones.forEach((c, i) => {
+    if (t < T.mil - 0.1 || t > fimG + 0.5) { c.el.style.opacity = 0; return; }
+    const a = T.mil + 0.05 + c.ordem * 0.08, pin = pr(t, a, 0.7), ps = M.prog(t, a, 1.0, E.spring), po = pr(t, fimG + (i % 5) * 0.03, 0.4, E.cubicIn);
+    const cr = CRESCE.includes(i);
+    c.el.style.opacity = pr(t, a, 0.3, E.cubicOut) * (cr ? 1 : L(1, 0.3, pc)) * (1 - po);
+    const bl = (1 - pin) * 22 + po * 22;
+    c.el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+    c.el.style.transform = `translate(${c.x}px, ${c.y - po * 40}px) rotate(${(1 - pin) * (i % 2 ? 18 : -18)}deg) scale(${L(0.5, 1, ps) * (cr ? L(1, 1.12, pc) : 1) * (1 - po * 0.2)})`;
+    const s = c.el.querySelector('.seta');
+    if (s) { const pp = M.prog(t, T.crescia + 0.15 + CRESCE.indexOf(i) * 0.08, 0.6, E.spring); s.style.opacity = pr(t, T.crescia + 0.15, 0.2, E.cubicOut); s.style.transform = `scale(${Math.max(0, pp)})`; }
+  });
+  linha('cresc', t, TT.crescia, T.provou - 0.2);
+  [['#pl1', T.oferta], ['#pl2', T.demanda], ['#pl3', T.comercial]].forEach(([id, a]) => anim($(id), t, a, T.provou - 0.2, { rot: -5, de: 0.75, dy: 70 }));
+}
+
+/* ── 5: na própria pele ── */
+function cena5(t) {
+  linha('pe1', t, TT.provou, T.zero - 0.15);
+  linha('pe2', t, TT.pele.slice(0, 2), T.zero - 0.15, { sobe: 0.2, desf: 26 });
+  linha('pe3', t, TT.pele.slice(2), T.zero - 0.15, { sobe: 0.15, desf: 34, dur: 0.8 });
+}
+
+/* ── 6: do zero em 98 dias → Doxa → R$ 400 mil ── */
+const dias = Array.from({ length: 98 }, () => { const d = document.createElement('div'); d.className = 'dia'; $('#grade').appendChild(d); return d; });
+const curva = $('#curva'), CL = curva.getTotalLength(); curva.style.strokeDasharray = CL;
+const tBate = F.v400;
+function cena6(t) {
+  const fim6 = T.hoje - 0.15;
+  anim($('#dias98'), t, T.zero, T.doxa - 0.12, { de: 0.75, dy: 80, rot: -6 });
+  const d = 98 * E.cubicInOut(C((t - TT.zero[1]) / Math.max(0.6, TT.zero[3] - TT.zero[1] + 0.3)));
+  $('#dias').textContent = Math.round(d);
+  dias.forEach((c, i) => { const q = C(d - i); c.style.background = q > 0 ? `rgb(${Math.round(L(231, 0, q))},${Math.round(L(234, 55, q))},${Math.round(L(243, 255, q))})` : '#E7EAF3'; c.style.transform = `scale(${1 + 0.25 * Math.sin(q * Math.PI)})`; });
+  const pu = pr(t, T.faturou - 0.4, 0.6, E.quintInOut);
+  anim($('#dxTile'), t, T.doxa, fim6, { rot: -14, de: 0.45, dy: 60, y: -300 * pu, esc: L(1, 0.7, pu) });
+  anim($('#dxChip'), t, T.nosso, T.faturou - 0.45, { de: 0.6, dy: 30, rot: 6 });
+  const kb = t >= tBate ? Math.exp(-(t - tBate) * 7) * Math.sin((t - tBate) * 24) : 0;
+  anim($('#fat'), t, T.faturou + 0.1, fim6, { rot: -8, de: 0.72, dy: 140, desf: 30, din: 0.85, extra: ` rotate(${kb * -5}deg) scale(${1 + Math.abs(kb) * 0.04})` });
+  const v = 400000 * E.cubicInOut(C((t - T.faturou - 0.2) / Math.max(0.6, tBate - T.faturou - 0.2)));
+  $('#valor').textContent = (v > 0 ? '+' : '') + FM.PT(v);
+  const pg = v / 400000; curva.style.strokeDashoffset = CL * (1 - pg); $('#cgr').setAttribute('width', 860 * pg);
+  anim($('#em98'), t, tBate + 0.1, fim6, { rot: 12, de: 0.5, dy: 20, extra: ' rotate(3deg)' });
+}
+
+/* ── 7: hoje a Blue Ocean também é dono de SaaS → leva o que funciona para o teu ── */
+const fim7 = T.se - 0.15;
+const cam7 = t => camSeq(t, [[-9, 0, DB], [T.hoje + 0.3, 1.1, DA], [T.funciona - 0.1, 0.8, DC], [T.funciona + 0.7, Math.max(0.5, fim7 - T.funciona - 0.7), DC2, E.cubicInOut]]);
+function cena7(t) {
+  const c = cam7(t);
+  desenhaDono($('#dono2'), t, c, T.hoje, fim7);
+  // o rosto vira a Blue Ocean
+  const rosto = $('#boRosto');
+  if (t < T.hoje - 0.1 || t > fim7 + 0.5) rosto.style.opacity = 0;
+  else {
+    const [x, y, k] = tela(c, 503, 310), ps = M.prog(t, TT.hoje[2], 0.8, E.spring), po = pr(t, fim7, 0.45, E.cubicIn);
+    rosto.style.opacity = pr(t, TT.hoje[2], 0.2, E.cubicOut) * (1 - po);
+    rosto.style.filter = po > 0.01 ? `blur(${po * 30}px)` : 'none';
+    rosto.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${k * L(0.3, 1, ps)}) rotate(${(1 - C(ps)) * -40}deg)`;
+  }
+  const [bx, by, bk] = tela(c, 503, 30), pb = pr(t, T.funciona - 0.2, 0.35, E.cubicIn), b0 = $('#rotB0');
+  b0.style.opacity = t < TT.hoje[2] || t > T.funciona + 0.2 ? 0 : pr(t, TT.hoje[2], 0.3, E.cubicOut) * (1 - pb);
+  b0.style.transform = `translate(${bx}px,${by}px) translate(-50%,-50%) scale(${bk})`;
+  rotulo('rotB', letrasB, t, c, 92, TT.hoje[4] - 0.05, T.funciona - 0.2);
+  if (t < T.funciona - 0.3 || t > fim7 + 0.5) { ['#dxMundo', '#teuT', '#conexao'].forEach(s => $(s).style.opacity = 0); return; }
+  noMundo($('#dxMundo'), t, c, [1080, 260, 1.15], T.funciona + 0.3, fim7, { rot: -14 });
+  const tTeu = TT.leva[TT.leva.length - 1];
+  noMundo($('#teuT'), t, c, [1080, 780, 1.15], tTeu - 0.1, fim7, { rot: 14 });
+  // a linha leva da Doxa para o teu SaaS
+  const [ax, ay] = tela(c, 1080, 420, 1.15), [zx, zy] = tela(c, 1080, 610, 1.15), q = pr(t, T.leva, Math.max(0.5, tTeu - T.leva), E.cubicInOut);
+  const cx = $('#conexao'); cx.style.opacity = t < T.leva ? 0 : 1 - pr(t, fim7, 0.35, E.cubicIn);
+  const cl = $('#cxLinha'); cl.setAttribute('d', `M ${ax} ${ay} C ${ax - 90} ${L(ay, zy, 0.35)}, ${zx - 90} ${L(ay, zy, 0.65)}, ${zx} ${zy}`);
+  const len = cl.getTotalLength(); cl.style.strokeDasharray = `${len * q} ${len}`;
+  const pt = cl.getPointAtLength(len * q); $('#cxPonto').setAttribute('cx', pt.x); $('#cxPonto').setAttribute('cy', pt.y); $('#cxPonto').style.opacity = q > 0 && q < 1 ? 1 : 0;
+}
+
+/* ── 8: checklist ── */
+function cena8(t) {
+  const fim8 = T.preenche - 0.15;
+  anim($('#pv'), t, T.se, fim8, { de: 0.9, dy: 30 });
+  [['#ck1', T.se + 0.1, TT.se[5]], ['#ck2', T.fatura, TT.v20[1]], ['#ck3', T.mas, TT.mas[2]]].forEach(([id, a, tc]) => {
+    anim($(id), t, a, fim8, { rot: -4, de: 0.75, dy: 60 });
+    const ok = $(id + ' .bx div'), ps = M.prog(t, tc, 0.7, E.spring);
+    if (!ok.innerHTML) ok.innerHTML = OK();
+    ok.style.opacity = pr(t, tc, 0.15, E.cubicOut); ok.style.transform = `scale(${Math.max(0, ps)}) rotate(${(1 - C(ps)) * -30}deg)`;
+  });
+}
+
+/* ── 9: formulário + destravar ── */
+const T1 = 'R$ 20 mil+', T2 = 'Crescimento travado', tClique = TT.vem[1] - 0.1;
+function cena9(t) {
+  anim($('#logo2'), t, T.preenche, null, { rot: -16, de: 0.45, dy: 40 });
+  anim($('#form'), t, T.preenche + 0.1, null, { rot: -5, de: 0.7, dy: 120, desf: 30 });
+  const t1 = T.preenche + 0.4, t2 = t1 + T1.length * 0.04 + 0.1;
+  $('#fx1').textContent = T1.slice(0, Math.floor(C((t - t1) / (T1.length * 0.04)) * T1.length));
+  $('#fx2').textContent = T2.slice(0, Math.floor(C((t - t2) / (T2.length * 0.025)) * T2.length));
+  const cl = FM.cursor($('#cursor'), t, tClique - 0.45, [930, 1560], [690, 1010], tClique, tClique + 0.7);
+  const env = t >= tClique + 0.1, en = $('#enviar');
+  en.style.transform = `scale(${1 - 0.06 * cl})`; en.style.background = env ? 'var(--verde)' : 'var(--azul)'; en.style.color = env ? '#0A1A5C' : '#fff';
+  $('#envTxt').textContent = env ? 'Enviado' : 'Quero destravar meu SaaS';
+  $('#envSeta').innerHTML = env ? OK().replace('<svg', '<svg width="40" height="40"') : '→';
+  linha('h9', t, TT.vem.slice(1), 99);
+  const tD = TT.vem[TT.vem.length - 1];
+  anim($('#cadeado'), t, TT.vem[1], null, { de: 0.5, dy: 30, rot: -10 });
+  const pa = M.prog(t, tD + 0.05, 0.8, E.spring);
+  $('#alca').setAttribute('transform', `translate(${14 * C(pa)} ${-12 * pa}) rotate(${-25 * C(pa)} 44 32)`);
+}
+
+/* the cursor só existe no formulário */
+const AZUL = [[T.motivo - 0.15, T.cansou - 0.12], [T.provou - 0.15, T.zero - 0.12], [T.preenche - 0.15, 99]];
+FM.iniciar({
+  azul: AZUL,
+  voos: [[0, T.motivo - 0.1, 1.4], [2, T.provou - 0.1, 1.7], [1, T.pele, 1.5], [1, T.preenche - 0.1, 1.6], [2, T.vem, 1.5]],
+  grupos: TK.GRUPOS,
+  legendaFixa: true,
+  legendaSoSemTexto: true,
+  legendaOculta: [[AZUL[0][0], AZUL[0][1] + 0.15], [AZUL[1][0], AZUL[1][1] + 0.15], [TT.vem[1] - 0.1, 99]],
+  estouros: [
+    { t0: pNovo, ps: FM.criaConfete(5, 45, 540, 1121, 240, 240, 0.7) },
+    { t0: tBate, ps: FM.criaConfete(9, 95, 540, 900, 860, 440) },
+    { t0: tClique + 0.1, ps: FM.criaConfete(31, 70, 540, 1005, 700, 104, 0.8), cor: 'branco' },
+  ],
+});
+window.pronto = Promise.all([window.pronto, new Promise(r => setTimeout(r, 500))]);
+/* legenda: as letras ficam brancas onde passam por cima das partes escuras do personagem (img/dono-escuro.png) */
+FM.mascaraEscura = function () {
+  for (const id of ['#dono1', '#dono2']) { const el = $(id);
+    if (parseFloat(el.style.opacity) > 0.3) return { url: window.DONO_ESCURO, r: el.getBoundingClientRect() }; }
+  return null;
+};
+window.quadro = function (t) {
+  FM.antes(t);
+  $('#maoDesloca').setAttribute('scale', (2 * 11 * Math.sin(t * Math.PI * 2 / 3.0)).toFixed(2));
+  cena1(t); cena2(t); cena3(t); cena4(t); cena5(t); cena6(t); cena7(t); cena8(t);
+  if (t > T.preenche - 0.5) cena9(t); else ['#cursor', '#logo2', '#form', '#h9', '#cadeado'].forEach(q => $(q).style.opacity = 0);
+  FM.depois(t);
+};
+window.pronto = window.pronto.then(() => FM.medirLegenda(TK.DUR));
+M.tocar();
+</script>
+</body>
+</html>

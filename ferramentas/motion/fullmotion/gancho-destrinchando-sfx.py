@@ -1,0 +1,87 @@
+"""SFX do gancho "Destrinchando Cases" (16:9) — tempos iguais aos do gancho-destrinchando.html.
+uso: python gancho-destrinchando-sfx.py <saida.wav>"""
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from fmsfx import *
+
+m = nova(31.1)
+# 1 · Meta: 0 leads
+entra(m, 0.02, 560, 0.18)
+for i, c in enumerate([0.55, 0.9, 1.2, 1.47, 1.71, 1.93, 2.13, 2.32]):
+    clique(m, c)
+    m.add(c + 0.04, whoosh(0.4, 900, 3200, pico=0.5, q=1.2, pan=(0.0, 0.0)), 0.07, nome='cédula voa')
+    m.add(c + 0.3, vidro(2093 + i * 60, 0.5, 0.9), 0.05, nome='entra no Meta')
+    m.add(c + 0.25, tick(2600 + i * 80, 0.03), 0.06, nome='tique contador')
+teclas(m, [1.02, 1.38, 1.64, 1.9, 2.14, 2.4, 2.62])
+m.add(2.14, baque(0.35, 70), 0.14, nome='zero treme')
+m.add(2.7, pop(420, 0.3, 0.6), 0.16, nome='ROI 0%: pop')
+m.add(2.74, pop(300, 0.35, 0.8), 0.14, nome='ROI 0%: desce')
+m.add(2.75, baque(0.4, 60), 0.12, nome='zero treme de novo')
+sai(m, 3.35)
+# 2 · só torrou grana (azul)
+troca_azul(m, 3.62)
+arco(m, 3.75); arco(m, 4.6)
+teclas(m, [3.7, 3.82, 3.95])
+impacto(m, 4.0, C6)
+for i in range(14):
+    m.add(4.05 + i * 0.1 + r.uniform(0, 0.05), whoosh(0.18, 1800, 4200, pico=0.3, q=1.4, pan=(r.uniform(-.8, .8),) * 2), 0.035, nome='cédula')
+teclas(m, [5.4, 5.56])
+m.add(5.6, pop(480, 0.35, 0.7), 0.2, nome='vídeo volta: pop')
+m.add(5.78, whoosh(0.5, 400, 2600, pico=0.5, q=1.0), 0.2, nome='vídeo volta: cresce')
+# 3 · LinkedIn
+entra(m, 6.05, 640)
+for a in [6.9, 7.55, 8.8, 9.25]:   # rolagens do feed
+    m.add(a, whoosh(0.45, 1400, 600, pico=0.35, q=1.1), 0.09, nome='rola o feed')
+    for k in range(3): m.add(a + 0.05 + k * 0.07, tick(3000 - k * 200, 0.02), 0.03, nome='tique roda')
+m.add(9.6, whoosh(0.3, 500, 2200, pico=0.7, q=1.0), 0.12, nome='punch-in')
+clique(m, 9.76)
+teclas(m, [9.9 + i * 0.06 for i in range(10)], 0.14)
+m.add(10.55, whoosh(0.3, 2400, 900, pico=0.3, q=1.0), 0.12, nome='resultado abre')
+m.add(10.75, pop(360, 0.35, 0.8), 0.2, nome='0 resultados: pop')
+m.add(10.8, baque(0.4, 60), 0.12, nome='0 resultados: grave')
+sai(m, 11.25)
+# 4 · 28 milhões
+entra(m, 11.5, 520, 0.22)
+contador(m, 11.85, 1.45, quintInOut, 28)
+confete_som(m, 13.32)
+check(m, 13.35, E6)
+sai(m, 14.6)
+# 5 · opinião × dado (corte para claro)
+m.add(15.01, whoosh(0.25, 3000, 900, pico=0.2, q=1.0), 0.2, nome='corte para claro')
+teclas(m, [15.11, 15.49, 15.51, 15.63, 15.73])
+m.add(16.0, zip_linha(0.4, 600, 1300), 0.09, nome='risco opinião')
+impacto(m, 16.4, E6)
+entra(m, 16.55, 760, 0.16, pan=0.4)
+m.add(16.96, whoosh(0.3, 900, 3000, pico=0.3, q=1.0), 0.16, nome='volta ao vídeo')
+# 6 · padrão
+teclas(m, [17.23, 17.33, 17.47, 17.91, 18.05, 18.39, 18.61, 18.87, 19.03, 19.33, 19.45])
+for i, k in enumerate([0, 2, 4, 6, 8, 10]):
+    m.add(19.0 + k * 0.045, vidro(1760 + i * 160, 0.6, 0.6, pan=-0.5), 0.04, nome='padrão acende')
+impacto(m, 19.5, A6)
+teclas(m, [19.91, 19.99, 20.23, 20.31, 20.4], 0.12)
+m.add(20.5, zip_linha(0.4, 600, 1300), 0.08, nome='risco mais sabe')
+sai(m, 20.75)
+# 7 · faturamento
+entra(m, 21.0, 560, 0.22)
+contador(m, 21.6, 0.9, quintOut, 12)
+m.add(22.95, pop(900, 0.3, 0.3), 0.2, nome='+40: pop')
+m.add(22.95, vidro(G6, 1.0, 0.8), 0.08, nome='+40: brilho')
+m.add(22.9, whoosh(0.3, 500, 2200, pico=0.7, q=1.0), 0.12, nome='punch-in')
+m.add(24.6, whoosh(0.6, 700, 3200, pico=0.6, q=1.0), 0.16, nome='+40 voa para a barra')
+contador(m, 25.0, 1.0, quintInOut, 16)
+confete_som(m, 26.06)
+check(m, 26.1, G6)
+sai(m, 26.7)
+# 8 · propostas (azul)
+troca_azul(m, 26.78)
+arco(m, 26.9); arco(m, 28.2)
+for t, f in [(27.2, 1320), (27.65, 1480), (28.1, 1660)]:
+    entra(m, t, 700, 0.15, pan=0.5)
+    m.add(t + 0.08, vidro(f, 0.9, 0.7, pan=0.5), 0.07, nome='notificação')
+teclas(m, [27.4, 27.6, 27.78, 27.94, 28.22])
+impacto(m, 28.45, C7)
+confete_som(m, 28.75)
+teclas(m, [28.94, 29.1, 29.48])
+arco(m, 29.6)
+
+salvar(m, sys.argv[1])

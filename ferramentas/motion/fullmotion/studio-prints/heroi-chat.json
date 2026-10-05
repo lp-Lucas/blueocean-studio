@@ -1,0 +1,140 @@
+{
+ "#mensagens": [
+  1323,
+  95,
+  388,
+  767
+ ],
+ "#direita": [
+  1322,
+  46,
+  390,
+  946
+ ],
+ "#tela": [
+  666,
+  105,
+  285,
+  506
+ ],
+ "#moldura": [
+  303,
+  87,
+  1010,
+  542
+ ],
+ "#palco": [
+  302,
+  86,
+  1012,
+  598
+ ],
+ "#esquerda": [
+  8,
+  46,
+  286,
+  946
+ ],
+ "#listaReceitas": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#barraComps": [
+  302,
+  46,
+  1012,
+  40
+ ],
+ ".chat-topo": [
+  1323,
+  47,
+  388,
+  48
+ ],
+ "#mensagens > :nth-child(1)": [
+  1387,
+  111,
+  310,
+  52
+ ],
+ "#mensagens > :nth-child(2)": [
+  1337,
+  173,
+  360,
+  20
+ ],
+ "#mensagens > :nth-child(3)": [
+  1337,
+  203,
+  360,
+  32
+ ],
+ "#mensagens > :nth-child(4)": [
+  1337,
+  245,
+  360,
+  32
+ ],
+ "#mensagens > :nth-child(5)": [
+  1337,
+  287,
+  360,
+  32
+ ],
+ "#mensagens > :nth-child(6)": [
+  1337,
+  329,
+  360,
+  32
+ ],
+ "#mensagens > :nth-child(7)": [
+  1337,
+  371,
+  360,
+  32
+ ],
+ "#mensagens > :nth-child(8)": [
+  1337,
+  413,
+  360,
+  60
+ ],
+ "#listaReceitas > :nth-child(1)": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#listaReceitas > :nth-child(2)": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#listaReceitas > :nth-child(3)": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#listaReceitas > :nth-child(4)": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#listaReceitas > :nth-child(5)": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "#listaReceitas > :nth-child(6)": [
+  0,
+  0,
+  0,
+  0
+ ]
+}

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Inserções de motion — Não contrate uma agência de marketing (gabrielSM2909-1)</title>
+<link rel="stylesheet" href="fm.css">
+<style>
+  /* inserções: página transparente por cima do vídeo (render.mjs --sobre). Tempos = base.mp4 já cortada. */
+  html, body { background: transparent !important; }
+  #azul, #leg { display: none !important; }
+  .sh { color: #fff; text-shadow: 0 4px 22px rgba(0, 0, 0, .55), 0 1px 3px rgba(0, 0, 0, .4); }
+  .sh b { color: var(--verde); }
+  .veu { position: absolute; width: 1080px; height: 520px; left: 0; transform: translateY(-50%); opacity: 0; z-index: 1; pointer-events: none;
+         background: radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0, 4, 20, .62), rgba(0, 4, 20, .32) 55%, transparent 100%); }
+  .risca { position: absolute; left: -2%; right: -2%; top: 52%; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0);
+           box-shadow: 0 2px 10px rgba(0, 0, 0, .4); }
+  .rotulo { padding: 14px 34px; border-radius: 16px; background: var(--azul); color: #fff; font-weight: 700; white-space: nowrap; box-shadow: 0 20px 50px rgba(0, 20, 120, .45); }
+  .rotulo b { color: var(--verde); }
+  .ic.st { position: static; opacity: 1; margin: 0; box-shadow: none; flex: none; }
+
+  /* 1 · gancho: agência de marketing com a chave ligada → desliga */
+  #ag { width: 860px; padding: 30px 34px; display: flex; align-items: center; gap: 24px; }
+  #ag .tx { flex: 1; }
+  #ag .t1 { font-size: 40px; font-weight: 700; }
+  #ag .t2 { font-size: 27px; font-weight: 600; color: #8A90A2; margin-top: 4px; position: relative; height: 36px; }
+  #ag .t2 span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  #ag .t2 .nao { color: #E5484D; opacity: 0; }
+  #chave { position: relative; width: 130px; height: 76px; border-radius: 38px; background: var(--azul); flex: none; }
+  #chave i { position: absolute; top: 6px; left: 6px; width: 64px; height: 64px; border-radius: 50%; background: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, .2); }
+  #agX { position: absolute; right: -18px; top: -18px; width: 62px; height: 62px; border-radius: 50%; background: #E5484D; display: grid; place-items: center; opacity: 0;
+         box-shadow: 0 8px 20px rgba(229, 72, 77, .45); }
+  #agX svg { width: 34px; height: 34px; }
+
+  /* 2 · estratégia comprovada (supostamente) */
+  #comp .ok, #comp .qq { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+  #comp .ok { background: var(--verde); }
+  #comp .ok svg { width: 34px; height: 34px; }
+  #comp .qq { position: absolute; left: 18px; top: 50%; margin-top: -29px; background: #E3E6EE; color: #6B7184; font-size: 34px; font-weight: 700; opacity: 0; }
+  #supo { padding: 10px 24px; border-radius: 14px; background: #fff; color: #8A90A2; font-size: 30px; font-weight: 600; font-style: italic; box-shadow: 0 14px 30px rgba(10, 25, 80, .25); }
+  .mini { width: 92px; height: 92px; border-radius: 26px; background: #fff; display: grid; place-items: center; box-shadow: 0 14px 34px rgba(10, 25, 80, .25); }
+  .mini svg { width: 48px; height: 48px; }
+
+  /* 3 · tela cheia: mesmo funil, mesmos anúncios, mesmas promessas, só muda o nome */
+  #tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+  .fs { z-index: 6; }
+  #fsRot { font-size: 38px; font-weight: 600; color: #8A90A2; white-space: nowrap; }
+  .igual { width: 860px; height: 150px; padding: 0 34px 0 30px; display: flex; align-items: center; gap: 28px; font-size: 50px; font-weight: 700; white-space: nowrap; }
+  .igual .ic { --s: 96px; }
+  .igual .cp { margin-left: auto; height: 54px; padding: 0 20px; border-radius: 999px; background: #F1F2F5; color: #8A90A2; font-size: 26px; font-weight: 700;
+               display: flex; align-items: center; gap: 10px; }
+  .igual .cp svg { width: 26px; height: 26px; }
+  #nomeC { width: 860px; height: 230px; border-radius: 40px; padding: 34px 40px; color: #fff; overflow: hidden;
+           background: linear-gradient(150deg, #1446FF, #0630C4); box-shadow: 0 30px 70px rgba(0, 15, 90, .4); }
+  #nomeC .rot { font-size: 32px; font-weight: 600; opacity: .85; }
+  #nomeC .jan { position: relative; height: 100px; margin-top: 8px; overflow: hidden; }
+  #nomeC .jan div { position: absolute; left: 0; top: 0; height: 100px; line-height: 100px; font-size: 84px; font-weight: 700; letter-spacing: -0.04em; white-space: nowrap; }
+  #nomeC .jan div b { color: var(--verde); }
+  @font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../fontes/Montserrat-Bold.ttf'); }
+  #legFS { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 70; pointer-events: none; }
+  #legFS text { font-family: 'MontB'; font-weight: 700; font-size: 46.1px; letter-spacing: 0; }
+
+  /* 4 · varejo × software para locadoras */
+  .lado { width: 400px; height: 300px; padding: 30px 30px; display: flex; flex-direction: column; align-items: flex-start; }
+  .lado .ic { --s: 92px; }
+  .lado .nm { font-size: 40px; font-weight: 700; margin-top: 22px; line-height: 1.08; }
+  .lado .sb { font-size: 25px; font-weight: 600; color: #8A90A2; margin-top: 8px; line-height: 1.2; }
+  #vs { width: 120px; height: 120px; border-radius: 50%; background: var(--azul); color: #fff; display: grid; place-items: center; font-size: 66px; font-weight: 700;
+        box-shadow: 0 18px 40px rgba(0, 20, 120, .45); z-index: 3; }
+  #vs span { position: absolute; }
+  #vsQ { position: absolute; right: -8px; top: -8px; width: 48px; height: 48px; border-radius: 50%; background: var(--verde); color: #0A1A5C; font-size: 32px;
+         display: grid; place-items: center; }
+
+  /* 5 · produtos, públicos e motivos diferentes */
+  .pers { width: 476px; padding: 22px 24px; overflow: hidden; }
+  .pers small { display: block; font-size: 18px; font-weight: 700; letter-spacing: .1em; color: #9AA1B5; margin-bottom: 1px; }
+  .pers .pr, .pers .pu { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 700; white-space: nowrap; }
+  .pers .pu { margin-top: 16px; padding-top: 16px; border-top: 2px solid #EEF0F5; font-size: 29px; opacity: 0; }
+  .pers .av { width: 72px; height: 72px; border-radius: 50%; background: #12D6B4; display: grid; place-items: center; flex: none; }
+  .pers .av svg { width: 40px; height: 40px; }
+  .pers .de { margin-top: 16px; height: 56px; padding: 0 22px; border-radius: 999px; background: #EEF2FF; color: var(--azul); font-size: 26px; font-weight: 700;
+              display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; opacity: 0; }
+  .pers .de i { width: 14px; height: 14px; border-radius: 50%; background: currentColor; }
+
+  /* 6 · o que a agência precisa entender */
+  #lista { width: 900px; padding: 30px 34px 26px; overflow: hidden; }
+  #lista .cab { display: flex; align-items: center; gap: 20px; font-size: 36px; font-weight: 700; height: 80px; white-space: nowrap; }
+  .item { position: relative; height: 92px; display: flex; align-items: center; gap: 20px; font-size: 34px; font-weight: 600; white-space: nowrap;
+          border-top: 2px solid #EEF0F5; opacity: 0; }
+  .item .ic { --s: 60px; }
+  .item .bx { margin-left: auto; width: 50px; height: 50px; border-radius: 50%; border: 4px solid #D5D9E3; position: relative; flex: none; }
+  .item .bx .xx { position: absolute; inset: -4px; border-radius: 50%; background: #E5484D; display: grid; place-items: center; opacity: 0; }
+  .item .bx .xx svg { width: 28px; height: 28px; }
+
+  /* 7 · tela cheia azul: construindo × replicando */
+  #az7 { position: absolute; inset: 0; z-index: 5; background: radial-gradient(ellipse at 40% 35%, #1A4BFF 0%, #0037FF 50%, #002BE0 100%); clip-path: inset(0 100% 0 0); }
+  #az7 svg { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  .f7 { z-index: 6; }
+  #cab7a, #cab7b { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -0.04em; }
+  #cab7a b, #cab7b b { color: var(--verde); }
+  #tw { width: 640px; height: 470px; }
+  .bar { position: absolute; left: 20px; width: 600px; height: 128px; border-radius: 32px; background: #fff; display: flex; align-items: center; gap: 22px;
+         padding: 0 28px 0 26px; font-size: 38px; font-weight: 700; white-space: nowrap; box-shadow: 0 24px 50px rgba(0, 10, 70, .35); opacity: 0; }
+  .bar .ok7 { margin-left: auto; width: 50px; height: 50px; border-radius: 50%; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  .bar .ok7 svg { width: 28px; height: 28px; }
+  #x7 { left: 540px; top: 830px; width: 200px; height: 200px; border-radius: 50%; background: #E5484D; display: grid; place-items: center; box-shadow: 0 24px 60px rgba(120, 0, 0, .4); }
+  #x7 svg { width: 110px; height: 110px; }
+  #docs { width: 1080px; height: 800px; }
+  .doc { position: absolute; width: 250px; height: 320px; margin: -160px 0 0 -125px; border-radius: 30px; background: #fff; padding: 26px 24px; box-shadow: 0 24px 50px rgba(0, 10, 70, .35); opacity: 0; }
+  .doc .tg { display: inline-flex; height: 40px; padding: 0 16px; border-radius: 999px; background: #EEF2FF; color: var(--azul); font-size: 20px; font-weight: 700; align-items: center; letter-spacing: .06em; }
+  .doc .ln { height: 14px; border-radius: 7px; background: #E6E9F0; margin-top: 16px; }
+  .doc .gf { display: flex; align-items: flex-end; gap: 10px; height: 70px; margin-top: 18px; }
+  .doc .gf i { flex: 1; border-radius: 6px; background: #C9D3FF; }
+  .doc .cl { position: absolute; left: 24px; bottom: 22px; font-size: 24px; font-weight: 700; color: #8A90A2; white-space: nowrap; }
+  .fant { position: absolute; left: 540px; top: 0; transform: translate(-50%, -50%); white-space: nowrap; color: #fff; opacity: 0; z-index: 2;
+          font-size: 76px; font-weight: 700; letter-spacing: -0.04em; }
+
+  /* 8 · fórmula pronta não garante resultado */
+  #res { width: 760px; height: 310px; border-radius: 40px; padding: 34px 40px; color: #fff; overflow: hidden;
+         background: linear-gradient(150deg, #1446FF, #0630C4); box-shadow: 0 30px 70px rgba(0, 15, 90, .45); }
+  #res .rot { font-size: 30px; font-weight: 600; opacity: .85; }
+  #res .num { font-size: 76px; font-weight: 700; letter-spacing: -0.04em; margin-top: 4px; }
+  #res svg.graf { position: absolute; right: 34px; top: 40px; width: 300px; height: 170px; }
+  #res .alerta { position: absolute; left: 40px; bottom: 32px; height: 54px; padding: 0 22px; border-radius: 999px; background: #fff; color: var(--tinta);
+                 display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 700; opacity: 0; }
+  #res .alerta i { width: 14px; height: 14px; border-radius: 50%; background: #E5484D; }
+
+  /* 10 · método adaptado */
+  .perg { display: flex; align-items: center; gap: 24px; width: 640px; padding: 18px 30px 18px 18px; border-radius: 28px; color: #fff;
+          background: linear-gradient(135deg, #1C46F0, #0A2CB8); box-shadow: 0 24px 60px rgba(0, 10, 60, .5); }
+  .perg .tile { width: 86px; height: 86px; border-radius: 24px; background: linear-gradient(150deg, #2BF0CF, #12D6B4); display: grid; place-items: center; flex: none; }
+  .perg .tile svg { width: 46px; height: 46px; }
+  .perg small { display: block; font-size: 22px; font-weight: 700; color: var(--verde); letter-spacing: .08em; margin-bottom: 2px; }
+  .perg span { display: block; font-size: 40px; font-weight: 700; }
+
+  /* 11 · CTA */
+  #saas { font-size: 46px; }
+  #bio { height: 120px; font-size: 48px; }
+  #bio svg { width: 44px; height: 44px; }
+</style>
+</head>
+<body>
+
+<div class="veu" id="veuTopo" style="top:380px"></div>
+
+<!-- 1 · gancho -->
+<div class="p cartao" id="ag" style="left:540px;top:400px">
+  <div class="ic az st" id="agIc" style="--s:88px"></div>
+  <div class="tx"><div class="t1">Agência de marketing</div>
+    <div class="t2"><span id="agSim">contratar agora?</span><span class="nao" id="agNao">melhor não contratar</span></div></div>
+  <div id="chave"><i id="chaveB"></i></div>
+  <div id="agX"></div>
+</div>
+
+<!-- 2 · estratégia comprovada… supostamente -->
+<div class="p chip claro" id="comp" style="left:540px;top:1390px;font-size:44px"><div class="ok" id="compOk"></div><div class="qq" id="compQ">?</div>Estratégia comprovada</div>
+<div class="p" id="supo" style="left:800px;top:1290px">“supostamente”</div>
+<div class="p mini" id="mn1" style="left:380px;top:1530px"></div>
+<div class="p mini" id="mn2" style="left:540px;top:1530px"></div>
+<div class="p mini" id="mn3" style="left:700px;top:1530px"></div>
+
+<!-- 3 · TELA CHEIA -->
+<svg id="tela" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="cinza" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="#FAFAFB"/><stop offset=".55" stop-color="#EFEFF1"/><stop offset="1" stop-color="#E6E6E9"/></radialGradient>
+    <filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0A1A5C" flood-opacity=".28"/></filter>
+  </defs>
+  <path id="telaFundo" fill="url(#cinza)" fill-rule="evenodd" d=""/>
+  <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
+  <path id="telaArco" fill="none" stroke="#00FFD4" stroke-width="26" stroke-linecap="round" d=""/>
+</svg>
+<div class="p fs" id="fsRot" style="left:540px;top:300px">Para qualquer cliente:</div>
+<div class="p fs cartao igual" id="ig1" style="left:540px;top:450px"><div class="ic az st" id="ig1i"></div>Mesmo funil<div class="cp" id="ig1c"></div></div>
+<div class="p fs cartao igual" id="ig2" style="left:540px;top:630px"><div class="ic az st" id="ig2i"></div>Mesmos anúncios<div class="cp" id="ig2c"></div></div>
+<div class="p fs cartao igual" id="ig3" style="left:540px;top:810px"><div class="ic az st" id="ig3i"></div>Mesmas promessas<div class="cp" id="ig3c"></div></div>
+<div class="p fs" id="nomeC" style="left:540px;top:1080px">
+  <div class="rot">Proposta para</div>
+  <div class="jan" id="jan"></div>
+</div>
+
+<!-- 4 · varejo × software para locadoras -->
+<div class="p cartao lado" id="ladoA" style="left:285px;top:1400px"><div class="ic tl st" id="ladoAi"></div><div class="nm">Varejo</div><div class="sb">vende para o consumidor final</div></div>
+<div class="p cartao lado" id="ladoB" style="left:795px;top:1400px"><div class="ic az st" id="ladoBi"></div><div class="nm">Software B2B</div><div class="sb" id="ladoBs">locadoras de equipamento de construção civil</div></div>
+<div class="p" id="vs" style="left:540px;top:1400px"><span id="vsIg">=</span><span id="vsDif" style="opacity:0">≠</span><div id="vsQ">?</div></div>
+
+<!-- 5 · diferentes -->
+<!-- produto → público → como decide, lado a lado, acima da cabeça -->
+<div class="p cartao pers" id="psA" style="left:282px;top:300px">
+  <div class="pr"><div class="ic tl st" id="psAi" style="--s:72px"></div><div><small>PRODUTO</small>Loja de varejo</div></div>
+  <div class="pu" id="psAu"><div class="av" id="psAa"></div><div><small>PÚBLICO</small>Consumidor final</div></div>
+  <div class="de" id="psAd"><i></i>Decide por impulso</div>
+</div>
+<div class="p cartao pers" id="psB" style="left:798px;top:300px">
+  <div class="pr"><div class="ic az st" id="psBi" style="--s:72px"></div><div><small>PRODUTO</small>Software B2B</div></div>
+  <div class="pu" id="psBu"><div class="av" id="psBa" style="background:#0A1A5C"></div><div><small>PÚBLICO</small>Gestor de locadora</div></div>
+  <div class="de" id="psBd"><i></i>Decide por ROI</div>
+</div>
+
+<!-- 6 · o que a agência precisa entender -->
+<div class="p cartao" id="lista" style="left:540px;top:1330px">
+  <div class="cab"><div class="ic az st" id="listaIc" style="--s:70px"></div>A agência precisa entender:</div>
+  <div class="item" id="it1"><div class="ic tl st" id="it1i"></div>Como seu cliente decide<div class="bx"><div class="xx"></div></div></div>
+  <div class="item" id="it2"><div class="ic tl st" id="it2i"></div>As dores que movem o mercado<div class="bx"><div class="xx"></div></div></div>
+  <div class="item" id="it3"><div class="ic tl st" id="it3i"></div>O que diferencia o produto<div class="bx"><div class="xx"></div></div></div>
+  <div class="item" id="it4"><div class="ic tl st" id="it4i"></div>Como o interesse vira receita<div class="bx"><div class="xx"></div></div></div>
+</div>
+
+<!-- 7 · TELA CHEIA AZUL (43,2 → 47,7): estratégia sendo construída → desaba → fórmula pronta copiada para todo cliente -->
+<div id="az7"><svg viewBox="0 0 1080 1920"><path id="az7arco" d="M -200 520 C 300 760, 820 240, 1300 40" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/></svg></div>
+<div class="p f7 linha" id="cab7a" style="left:540px;top:380px">Estratégia <b>sob medida</b></div>
+<div class="p f7 linha" id="cab7b" style="left:540px;top:380px">Fórmula <b>pronta</b></div>
+<div class="p f7" id="tw" style="left:540px;top:830px">
+  <div class="bar" id="br0"><div class="ic tl st" id="br0i" style="--s:76px"></div>Pesquisa do mercado<div class="ok7"></div></div>
+  <div class="bar" id="br1"><div class="ic tl st" id="br1i" style="--s:76px"></div>Posicionamento<div class="ok7"></div></div>
+  <div class="bar" id="br2"><div class="ic tl st" id="br2i" style="--s:76px"></div>Canais e mensagem<div class="ok7"></div></div>
+</div>
+<div class="p f7" id="x7"></div>
+<div class="p f7" id="docs" style="left:540px;top:830px"></div>
+<div class="p f7 chip claro" id="ctrl" style="left:540px;top:1240px;font-size:34px"><div class="tile" id="ctrlI" style="width:56px;height:56px;border-radius:16px;background:var(--azul)"></div>Copiar e colar para todo cliente</div>
+
+<!-- 8 · fórmula pronta não garante resultado -->
+<div class="p" id="res" style="left:540px;top:1420px">
+  <div class="rot">Fórmula pronta</div><div class="num">Resultado?</div>
+  <svg class="graf" viewBox="0 0 300 170"><path id="resG" d="M10 150 C 50 140, 80 110, 120 80 S 170 30, 195 28 S 230 70, 250 110 S 280 150, 292 158" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="alerta" id="resA"><i></i>sem garantia de resultado</div>
+</div>
+
+<!-- 9 · conclusão -->
+<div class="p rotulo" id="concl" style="left:540px;top:400px;font-size:62px">Conclusão</div>
+
+<!-- 10 · método adaptado ao seu… -->
+<div class="p linha sh" id="metodo" style="left:540px;top:1130px;font-size:46px;font-weight:600">Método <b>adaptado</b> ao seu:</div>
+<div class="p perg" id="ad1" style="left:540px;top:1250px"><div class="tile" id="ad1t"></div><div><small>01</small><span>Produto</span></div></div>
+<div class="p perg" id="ad2" style="left:540px;top:1390px"><div class="tile" id="ad2t"></div><div><small>02</small><span>Público</span></div></div>
+<div class="p perg" id="ad3" style="left:540px;top:1530px"><div class="tile" id="ad3t"></div><div><small>03</small><span>Momento do negócio</span></div></div>
+
+<!-- 11 · CTA -->
+<div class="p chip azulc" id="saas" style="left:540px;top:1290px"><div class="ok" id="saasOk"></div><span>Estratégias para <b style="color:var(--verde)">SaaS</b></span></div>
+<div class="p botao" id="bio" style="left:540px;top:1460px">Link na bio <span id="bioSeta"></span></div>
+<svg class="p cursor" id="cur" viewBox="0 0 24 30" style="left:0;top:0;transform:none">${''}</svg>
+
+<svg id="legFS" viewBox="0 0 1080 1920"><g id="legFSg"></g></svg>
+<script src="../motion.js"></script>
+<script src="fm.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM, A = FM.anim;
+window.DURACAO = 63.92;
+
+// ícones extras (mesmo traço dos de FM.GLIFO)
+Object.assign(FM.GLIFO, {
+  megafone: 'M3 10 V14 H6 L15 19 V5 L6 10 Z M18.5 9.5 a3.5 3.5 0 0 1 0 5',
+  sacola: 'M5 8 H19 L18 21 H6 Z M9 8 V6.5 a3 3 0 0 1 6 0 V8',
+  guindaste: 'M3 21 H21 M7 21 V4 L20 8 M7 4 L3.5 8 H7 M16.5 7 V12 M14.5 12 H18.5 V15 H14.5 Z',
+  estrela: 'M12 3 L14.6 8.6 L20.6 9.2 L16 13.2 L17.4 19.2 L12 16.1 L6.6 19.2 L8 13.2 L3.4 9.2 L9.4 8.6 Z',
+  copia: 'M9 9 H20 V20 H9 Z M5 15 V4 H16',
+  loja: 'M4 9 L5.5 4 H18.5 L20 9 M4 9 H20 V20 H4 Z M10 20 V14 H14 V20',
+  predio: 'M5 21 V4 H15 V21 M15 9 H19 V21 M3 21 H21 M8.5 8 h0.01 M11.5 8 h0.01 M8.5 12 h0.01 M11.5 12 h0.01 M8.5 16 h0.01 M11.5 16 h0.01',
+  caixa: 'M3 7.5 L12 3 L21 7.5 V16.5 L12 21 L3 16.5 Z M3 7.5 L12 12 L21 7.5 M12 12 V21',
+  olho: 'M2 12 C5 6, 19 6, 22 12 C19 18, 5 18, 2 12 Z M12 9 a3 3 0 1 0 0.01 0',
+  relogio: 'M12 3 a9 9 0 1 0 0.01 0 M12 7 V12 L15 14',
+});
+const ico = (sel, g) => { $(sel).innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO[g]}"/></svg>`; };
+const glifo = (sel, g, cor, w = 2.6) => { $(sel).innerHTML = FM.svg(g, cor, w); };
+ico('#agIc', 'megafone'); glifo('#agX', 'x', '#fff', 3.4);
+glifo('#compOk', 'check', '#0A1A5C', 3.2);
+glifo('#mn1', 'loja', '#0037FF'); glifo('#mn2', 'predio', '#0037FF'); glifo('#mn3', 'carro', '#0037FF');
+ico('#ig1i', 'funil'); ico('#ig2i', 'megafone'); ico('#ig3i', 'estrela');
+for (const k of [1, 2, 3]) $(`#ig${k}c`).innerHTML = FM.svg('copia', '#8A90A2', 2.6) + 'igual';
+ico('#ladoAi', 'sacola'); ico('#ladoBi', 'guindaste');
+ico('#br0i', 'alvo'); ico('#br1i', 'estrela'); ico('#br2i', 'megafone');
+for (const o of document.querySelectorAll('.ok7')) o.innerHTML = FM.svg('check', '#0A1A5C', 3.2);
+$('#x7').innerHTML = FM.svg('x', '#fff', 3.2); $('#ctrlI').innerHTML = FM.svg('copia', '#fff', 2.6); $('#ctrlI').firstChild.style.width = '32px';
+const docsEl = 'ABCDEF'.split('').map((c, k) => { const d = document.createElement('div'); d.className = 'doc';
+  d.innerHTML = '<div class="tg">FÓRMULA</div><div class="ln" style="width:90%"></div><div class="ln" style="width:70%"></div><div class="gf"><i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i><i style="height:85%"></i></div><div class="ln" style="width:80%"></div><div class="cl">Cliente ' + c + '</div>';
+  $('#docs').appendChild(d); return d; });
+ico('#psAi', 'sacola'); ico('#psBi', 'guindaste'); glifo('#psAa', 'pessoa', '#0A1A5C'); glifo('#psBa', 'pessoa', '#fff');
+ico('#listaIc', 'alvo'); ico('#it1i', 'pessoa'); ico('#it2i', 'raio'); ico('#it3i', 'estrela'); ico('#it4i', 'dolar');
+for (const x of document.querySelectorAll('.item .xx')) x.innerHTML = FM.svg('x', '#fff', 3.4);
+glifo('#ad1t', 'caixa', '#0A1A5C'); glifo('#ad2t', 'gente', '#0A1A5C'); glifo('#ad3t', 'relogio', '#0A1A5C');
+glifo('#saasOk', 'check', '#0A1A5C', 3.2); $('#saasOk').className = 'ok';
+$('#bioSeta').innerHTML = FM.svg('seta', '#0037FF', 3);
+$('#cur').innerHTML = FM.CURSOR;
+// nomes de clientes que trocam (ilustrativos)
+const NOMES = ['Loja Aurora', 'Clínica Vita', 'Locadora Forte', 'SaaS <b>Nuvio</b>'];
+const nomesEl = NOMES.map(n => { const d = document.createElement('div'); d.innerHTML = n; $('#jan').appendChild(d); return d; });
+
+/* furo no fundo claro: círculo ou retângulo arredondado centrado em (cx, cy) */
+const FORA = 'M-60 -60 H1140 V1980 H-60 Z ';
+const circulo = (cx, cy, r) => `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
+const retang = (cx, cy, w, h, rr) => { const x = cx - w / 2, y = cy - h / 2; rr = Math.min(rr, w / 2, h / 2);
+  return `M${x + rr} ${y} H${x + w - rr} A${rr} ${rr} 0 0 1 ${x + w} ${y + rr} V${y + h - rr} A${rr} ${rr} 0 0 1 ${x + w - rr} ${y + h} H${x + rr} A${rr} ${rr} 0 0 1 ${x} ${y + h - rr} V${y + rr} A${rr} ${rr} 0 0 1 ${x + rr} ${y} Z`; };
+
+const riscar = id => { const r = document.createElement('div'); r.className = 'risca'; $('#' + id).appendChild(r);
+  return (t, t0) => { r.style.transform = `scaleX(${pr(t, t0, 0.45, E.cubicInOut)})`; }; };
+const veu = (el, t, trechos) => { let v = 0; for (const [a, b] of trechos) v = Math.max(v, pr(t, a - 0.1, 0.4, E.cubicOut) * (1 - pr(t, b, 0.4, E.cubicIn))); el.style.opacity = v; };
+const tranco = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-6 * s) * Math.sin(s * 18); return ` rotate(${-5 * k}deg) scale(${1 + 0.04 * k})`; };
+const treme = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-7 * s) * Math.sin(s * 40); return ` translateX(${14 * k}px)`; };
+
+FM.iniciar({ estouros: [{ t0: 61.86, ps: FM.criaConfete(7, 85, 540, 1460, 560, 120), cor: 'branco' }] });
+
+const CX = 540, CY = 640;   // rosto dele na base (zoom 1)
+window.quadro = function (t) {
+  FM.antes(t);
+  veu($('#veuTopo'), t, []);
+
+  /* 1 · gancho (0–3,95): chave ligada → desliga no "não deveria" */
+  A($('#ag'), t, -0.35, 3.9, { de: 0.86 });
+  const des = M.prog(t, 1.38, 0.5, E.spring);
+  $('#chaveB').style.transform = `translateX(${54 * (1 - C(des))}px)`;
+  $('#chave').style.background = `rgb(${L(0, 214, C(des))},${L(55, 218, C(des))},${L(255, 228, C(des))})`;
+  const nx = pr(t, 1.45, 0.3, E.cubicOut);
+  $('#agSim').style.opacity = 1 - nx; $('#agNao').style.opacity = nx;
+  $('#agX').style.opacity = pr(t, 2.36, 0.2, E.cubicOut);
+  $('#agX').style.transform = `scale(${L(0.3, 1, M.prog(t, 2.36, 0.55, E.spring))})${tranco(t, 2.4)}`;
+  $('#ag').style.transform += treme(t, 2.4);
+  $('#chaveB').style.transform = `translateX(${54 * (1 - C(des))}px)`;
+  // começa ligada (bolinha à direita)
+  if (t < 1.38) $('#chaveB').style.transform = 'translateX(54px)';
+
+  /* 2 · estratégia comprovada (6,0–10,3) → "?" no "supostamente" */
+  A($('#comp'), t, 6.05, 10.3, { de: 0.84 });
+  const sup = pr(t, 7.9, 0.35, E.cubicOut);
+  $('#compOk').style.opacity = 1 - sup; $('#compQ').style.opacity = sup;
+  $('#compQ').style.transform = `scale(${L(0.5, 1, M.prog(t, 7.9, 0.5, E.spring))})`;
+  A($('#supo'), t, 7.92, 10.3, { de: 0.7, rot: 8, extra: ' rotate(6deg)' + tranco(t, 8.1) });
+  [['#mn1', 9.5], ['#mn2', 9.6], ['#mn3', 9.7]].forEach(([s, a]) => A($(s), t, a, 10.3, { de: 0.6, dy: 40 }));
+
+  /* 3 · TELA CHEIA (10,45 → 15,6) */
+  const TI = 10.45, TO = 15.6;
+  if (t < TI || t > TO + 0.6) { $('#tela').style.opacity = 0; }
+  else {
+    $('#tela').style.opacity = 1;
+    let furo = '', borda = '';
+    if (t < TO) {
+      const r = L(1250, 300, pr(t, TI, 0.42, E.expoOut)) * (1 - pr(t, TI + 0.36, 0.3, E.cubicIn));
+      if (r > 1) { furo = circulo(CX, CY, r); if (r < 1100) borda = furo; }
+    } else {
+      const p1 = M.prog(t, TO, 0.32, E.spring), p2 = pr(t, TO + 0.2, 0.36, E.cubicInOut);
+      const w = L(L(0, 430, p1), 1320, p2), h = L(L(0, 560, p1), 2400, p2);
+      furo = retang(CX, CY + 60, Math.max(1, w), Math.max(1, h), L(70, 0, p2)); if (p2 < 0.97) borda = furo;
+    }
+    const fim = t >= TO + 0.56;
+    $('#telaFundo').setAttribute('d', fim ? '' : FORA + furo);
+    $('#telaBorda').setAttribute('d', fim ? '' : borda);
+    const ar = $('#telaArco');
+    if (t >= TO + 0.02 && t < TO + 0.55) {
+      ar.setAttribute('d', 'M 160 1060 C 340 1280, 800 1220, 920 760 C 980 520, 890 320, 750 230');
+      const L0 = ar.getTotalLength(), q = E.cubicInOut(C((t - TO - 0.02) / 0.5)), seg = L0 * 0.45;
+      ar.setAttribute('stroke-dasharray', `${seg} ${L0 * 2}`); ar.setAttribute('stroke-dashoffset', L(seg, -L0, q)); ar.style.opacity = 1;
+    } else ar.style.opacity = 0;
+  }
+  const saiFS = TO - 0.02;
+  A($('#fsRot'), t, 10.85, saiFS, { de: 0.9, dout: 0.18 });
+  [['#ig1', 11.0], ['#ig2', 12.14], ['#ig3', 13.5]].forEach(([s, a], k) => {
+    A($(s), t, a, saiFS, { de: 0.88, dout: 0.18, dy: 60 });
+    const c = $(`${s}c`), pc = pr(t, a + 0.35, 0.35, E.cubicOut);
+    c.style.opacity = pc; c.style.transform = `scale(${L(0.6, 1, M.prog(t, a + 0.35, 0.5, E.spring))})`;
+  });
+  A($('#nomeC'), t, 14.3, saiFS, { de: 0.85, dout: 0.18, esc: 1 });
+  // o nome do cliente rola: Loja Aurora → Clínica Vita → Locadora Forte → SaaS Nuvio
+  const TROCAS = [14.62, 14.9, 15.18];
+  const pos = TROCAS.reduce((s, a) => s + pr(t, a, 0.24, E.cubicInOut), 0);
+  nomesEl.forEach((d, k) => { const y = (k - pos) * 100; d.style.transform = `translateY(${y}px)`; d.style.opacity = C(1 - Math.abs(k - pos)); });
+
+  /* 4 · varejo × software (18,85–25,3) */
+  A($('#ladoA'), t, 18.85, 25.3, { de: 0.85, rot: -4, x: -0 });
+  A($('#vs'), t, 20.02, 25.3, { de: 0.5, extra: tranco(t, 25.02) });
+  A($('#ladoB'), t, 21.25, 25.3, { de: 0.85, rot: 4 });
+  const sb = pr(t, 22.5, 0.4, E.cubicOut); $('#ladoBs').style.opacity = sb;
+  const df = pr(t, 24.95, 0.25, E.cubicOut);
+  $('#vsIg').style.opacity = 1 - df; $('#vsDif').style.opacity = df;
+  $('#vsQ').style.opacity = 1 - df;
+  $('#vs').style.background = df > 0.5 ? '#E5484D' : 'var(--azul)';
+
+  /* 5 · diferentes (25,6–30,75) */
+  // "produtos" → os dois cartões; "públicos" → quem compra; "decisões" → como decide; "diferentes" → se afastam com tranco
+  const afasta = M.prog(t, 30.28, 0.6, E.spring);
+  [['A', -1, 25.62], ['B', 1, 25.82]].forEach(([k, s, a]) => {
+    const el = $('#ps' + k), pu = pr(t, 27.05 + (s > 0 ? 0.2 : 0), 0.5, E.cubicInOut), de = pr(t, 28.15 + (s > 0 ? 0.25 : 0), 0.5, E.cubicInOut);
+    const h = 118 + pu * 104 + de * 72;
+    el.style.height = h + 'px'; el.style.top = (205 + h / 2) + 'px';
+    A(el, t, a, 30.75, { de: 0.85, rot: -4 * s, extra: ` translateX(${s * 10 * afasta}px) rotate(${s * 2.5 * afasta}deg)` + tranco(t, 30.3) });
+    const u = $(`#ps${k}u`), d = $(`#ps${k}d`);
+    u.style.opacity = pu; u.style.transform = `translateY(${(1 - pu) * 20}px)`; u.style.filter = pu < 0.99 ? `blur(${(1 - pu) * 8}px)` : 'none';
+    d.style.opacity = de; d.style.transform = `translateY(${(1 - de) * 20}px) scale(${L(0.8, 1, M.prog(t, 28.15 + (s > 0 ? 0.25 : 0), 0.5, E.spring))})`;
+    const v = pr(t, 30.28, 0.3, E.cubicOut) > 0.5;   // "diferentes": os motivos acendem em verde-água
+    d.style.background = v ? 'var(--verde)' : '#EEF2FF'; d.style.color = v ? '#0A1A5C' : 'var(--azul)';
+  });
+
+  /* 6 · o que a agência precisa entender (31,5–43,9): itens entram; no "não está construindo" levam ✕ */
+  const ITS = [33.5, 34.88, 38.0, 40.4];
+  const nIt = ITS.reduce((s, a) => s + pr(t, a, 0.5, E.cubicInOut), 0);
+  $('#lista').style.height = (136 + nIt * 92) + 'px';
+  A($('#lista'), t, 31.55, 43.9, { de: 0.88, extra: treme(t, 43.45) });
+  ITS.forEach((a, k) => {
+    const el = $(`#it${k + 1}`), pe = pr(t, a, 0.6), pai = pr(t, a, 0.3, E.cubicOut);
+    el.style.opacity = pai; el.style.transform = `translateY(${(1 - pe) * 26}px)`;
+    el.style.filter = pe < 0.99 ? `blur(${(1 - pe) * 10}px)` : 'none';
+    const xx = el.querySelector('.xx'), tx = 43.3 + k * 0.08;
+    xx.style.opacity = pr(t, tx, 0.18, E.cubicOut); xx.style.transform = `scale(${L(0.4, 1, M.prog(t, tx, 0.45, E.spring))})`;
+    el.style.color = t > tx + 0.1 ? '#9AA1B5' : '';
+  });
+
+  /* 7 · TELA CHEIA AZUL (43,55 → 47,7): onda azul entra da esquerda e sai para a direita */
+  const AI = 43.55, AO = 47.72;
+  const pi7 = pr(t, AI, 0.5, E.cubicInOut), po7 = pr(t, AO, 0.5, E.cubicInOut);
+  $('#az7').style.clipPath = t < AI || t > AO + 0.5 ? 'inset(0 100% 0 0)' : po7 > 0 ? `inset(0 0 0 ${po7 * 100}%)` : `inset(0 ${(1 - pi7) * 100}% 0 0)`;
+  const arc = $('#az7arco'), al = arc.getTotalLength(), qa = E.cubicInOut(C((t - AI - 0.1) / 0.9)), sg = al * 0.4;
+  arc.setAttribute('stroke-dasharray', `${sg} ${al * 2}`); arc.setAttribute('stroke-dashoffset', L(sg, -al, qa)); arc.style.opacity = t > AI + 0.1 && t < AI + 1.0 ? 1 : 0;
+  const sai7 = AO - 0.05;
+  A($('#cab7a'), t, 44.55, 45.75, { de: 0.85, dout: 0.25 });
+  A($('#cab7b'), t, 45.96, sai7, { de: 0.85, dout: 0.2 });
+  // a estratégia sendo construída, bloco a bloco (de baixo para cima), e desabando no "está apenas"
+  A($('#tw'), t, 43.9, null, { de: 1, desf: 0, dy: 0 });
+  const DESABA = 45.62;
+  [[0, 43.92], [1, 44.3], [2, 44.72]].forEach(([k, a]) => {
+    const el = $('#br' + k), pe = M.prog(t, a, 0.6, E.spring), pai = pr(t, a, 0.2, E.cubicOut);
+    const f = C((t - DESABA - k * 0.05) / 0.7), cai = f * f;
+    el.style.top = (330 - k * 150) + 'px';
+    el.style.opacity = pai * (1 - C((f - 0.4) / 0.6));
+    el.style.transform = `translateY(${(1 - pe) * -260 + cai * 900}px) rotate(${cai * [14, -18, 10][k]}deg)`;
+    el.style.filter = pai < 0.99 ? `blur(${(1 - pai) * 14}px)` : f > 0 ? `blur(${f * 6}px)` : 'none';
+    const ok = el.querySelector('.ok7'), po = pr(t, a + 0.3, 0.25, E.cubicOut);
+    ok.style.opacity = po * (1 - pr(t, DESABA - 0.1, 0.15)); ok.style.transform = `scale(${L(0.5, 1, M.prog(t, a + 0.3, 0.5, E.spring))})`;
+  });
+  A($('#x7'), t, 45.6, 46.15, { de: 0.4, dout: 0.25, extra: tranco(t, 45.68) });
+  // a fórmula pronta: um documento entra e é copiado para 6 clientes iguais
+  const SLOT = [[200, 210], [540, 210], [880, 210], [200, 580], [540, 580], [880, 580]];
+  docsEl.forEach((d, k) => {
+    const a = k === 1 ? 45.96 : 46.4 + [0, 0, 0.1, 0.2, 0.3, 0.4][k];
+    const p = pr(t, a, 0.6), pai = pr(t, a, 0.2, E.cubicOut), ps = pr(t, sai7, 0.3, E.cubicIn);
+    const [x1, y1] = SLOT[k], x = k === 1 ? 540 : L(540, x1, p), y = k === 1 ? L(400, 210, pr(t, 46.3, 0.5, E.cubicInOut)) : L(210, y1, p);
+    d.style.left = x + 'px'; d.style.top = y + 'px';
+    d.style.opacity = t < a ? 0 : pai * (1 - ps);
+    d.style.transform = `scale(${k === 1 ? L(0.85, 1, M.prog(t, a, 0.6, E.spring)) * (1 + 0.04 * Math.sin(C((t - 46.38) / 0.3) * Math.PI)) : L(0.7, 1, p)})`;
+    d.style.filter = p < 0.99 || ps > 0 ? `blur(${(1 - p) * 10 + ps * 16}px)` : 'none';
+  });
+  A($('#docs'), t, 45.9, null, { de: 1, desf: 0, dy: 0 });
+  A($('#ctrl'), t, 47.0, sai7, { de: 0.8, dout: 0.2, extra: tranco(t, 47.28) });
+
+  /* 8 · fórmula pronta não garante resultado (48,3–50,45: espera a onda azul sair) */
+  A($('#res'), t, 48.3, 50.45, { de: 0.82, extra: tranco(t, 49.4) });
+  const g = $('#resG'), gl = g.getTotalLength(), pg = pr(t, 48.5, 1.2, E.cubicInOut);
+  g.style.strokeDasharray = `${gl}`; g.style.strokeDashoffset = gl * (1 - pg);
+  const pa = pr(t, 49.36, 0.4, E.cubicOut);
+  $('#resA').style.opacity = pa; $('#resA').style.transform = `translateY(${(1 - pa) * 14}px)`;
+
+  /* 9 · conclusão (50,58–51,4) */
+  A($('#concl'), t, 50.55, 51.4, { de: 0.7, extra: tranco(t, 50.8) });
+
+  /* 10 · método adaptado ao seu produto / público / momento (53,1–57,95) */
+  FM.linha('metodo', t, [53.18, 53.18, 53.9, 54.48], 57.95);
+  [['#ad1', 54.78], ['#ad2', 55.78], ['#ad3', 56.74]].forEach(([s, a]) => A($(s), t, a, 57.95, { de: 0.84, dy: 60 }));
+
+  /* 11 · CTA (59,6–fim) */
+  A($('#saas'), t, 59.62, null, { de: 0.8, extra: tranco(t, 60.72) });
+  const clique = FM.cursor($('#cur'), t, 61.15, [880, 1760], [700, 1480], 61.78, 62.6);
+  A($('#bio'), t, 61.05, null, { de: 0.8, extra: ` scale(${1 - 0.06 * clique})` + tranco(t, 61.86) });
+
+  FM.depois(t);
+};
+
+/* legenda da tela cheia — mesmos blocos e medidas do editor (tam 72 → 46,1 px; pos 72% → y 1382; caixa #0137FF 74 px raio 15).
+   Escura no fundo claro; fica branca quando ele volta no quadrado. */
+const LEG_FS = [[['O', 10.56], ['mesmo', 10.74], ['funil,', 11.04]], [['os', 11.72], ['mesmos', 11.86], ['anúncios,', 12.18]],
+  [['as', 12.94], ['mesmas', 13.16], ['promessas.', 13.54]], [['Só', 14.14], ['muda', 14.34], ['o', 14.72]],
+  [['nome', 14.94], ['do', 15.12], ['cliente.', 15.22]]], LEG_FIM = 15.72;
+{ const NS = 'http://www.w3.org/2000/svg', g = $('#legFSg'), Y = 1382;
+  const blocos = LEG_FS.map(bl => {
+    const grupo = document.createElementNS(NS, 'g'), caixa = document.createElementNS(NS, 'rect'), tx = document.createElementNS(NS, 'text');
+    caixa.setAttribute('height', 74); caixa.setAttribute('rx', 15); caixa.setAttribute('fill', '#0137FF'); caixa.setAttribute('y', Y + 7 - 37);
+    tx.setAttribute('x', 540); tx.setAttribute('y', Y + 15.1); tx.setAttribute('text-anchor', 'middle');
+    const spans = bl.map(([w], i) => { const sp = document.createElementNS(NS, 'tspan'); sp.textContent = (i ? ' ' : '') + w; tx.appendChild(sp); return sp; });
+    grupo.append(caixa, tx); g.appendChild(grupo); grupo.style.opacity = 0;
+    return { bl, grupo, caixa, tx, spans };
+  });
+  const q1 = window.quadro;
+  window.quadro = t => {
+    q1(t);
+    const branco = pr(t, 15.45, 0.3, E.cubicInOut), cor = `rgb(${L(16, 255, branco)},${L(18, 255, branco)},${L(24, 255, branco)})`;
+    blocos.forEach(({ bl, grupo, caixa, tx, spans }, b) => {
+      const ini = bl[0][1], fim = b + 1 < blocos.length ? blocos[b + 1].bl[0][1] : LEG_FIM;
+      if (t < ini || t >= fim) { grupo.style.opacity = 0; return; }
+      grupo.style.opacity = 1;
+      let k = 0; bl.forEach(([, ti], i) => { if (t >= ti) k = i; });
+      spans.forEach((sp, i) => sp.setAttribute('fill', i === k ? '#fff' : cor));
+      const n0 = spans.slice(0, k).reduce((n, sp) => n + sp.textContent.length, 0) + (k ? 1 : 0);
+      const pos = tx.getStartPositionOfChar(n0), wLarg = tx.getSubStringLength(n0, bl[k][0].length);
+      caixa.setAttribute('x', pos.x - 8); caixa.setAttribute('width', wLarg + 16);
+    });
+  };
+}
+
+if (!window.RENDER) { const t0 = performance.now(); const loop = () => { window.quadro(((performance.now() - t0) / 1000) % window.DURACAO); requestAnimationFrame(loop); }; loop(); }
+</script>
+</body>
+</html>

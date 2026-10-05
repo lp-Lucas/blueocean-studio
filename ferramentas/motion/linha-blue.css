@@ -1,0 +1,39 @@
+/* Linha de design dos carrosséis Blue Ocean: degradê marinho, cabeçalho BLUE OCEAN + símbolo,
+   caixas escuras com borda azul, caixa de destaque azul #003BFF, verde #00FFD4.
+   Título: Tusker Grotesk 4500 Medium. Texto: Outfit. */
+@font-face { font-family: 'Tusker'; src: url('fontes/TuskerGrotesk-4500Medium.ttf'); }
+@font-face { font-family: 'OutfitV'; font-weight: 100 900; src: url('fontes/Outfit.ttf'); }
+
+:root { --verde: #00FFD4; --azul: #003BFF; --borda: #1E3DD8; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #02011D; }
+body { font-family: 'OutfitV', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+#fundo { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.camada { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.w { display: inline-block; will-change: transform, filter, opacity; opacity: 0; }
+
+/* cabeçalho */
+#cab { position: absolute; top: 286px; left: 80px; right: 80px; height: 60px; display: flex; align-items: center; gap: 28px; }
+#cab .nome { height: 52px; filter: invert(1); opacity: 0; }
+#cab .fio { flex: 1; height: 1.5px; background: rgba(255, 255, 255, 0.28); transform-origin: 0 50%; transform: scaleX(0); }
+#cab .simb { height: 40px; filter: brightness(0) invert(1); opacity: 0; }
+
+.titulo { font-family: 'Tusker', sans-serif; text-transform: uppercase; line-height: 1.06; letter-spacing: 0.004em; }
+.verde { color: var(--verde); }
+.texto { font-weight: 400; line-height: 1.25; }
+.texto b { font-weight: 700; }
+
+/* caixas (como as listas dos carrosséis) */
+.caixa { background: linear-gradient(90deg, #040A3E 0%, #0A1A78 100%); border: 2px solid var(--borda); border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 59, 255, 0.18); }
+.destaque { background: linear-gradient(90deg, #003BFF, #2F5CFF); border-radius: 16px; box-shadow: 0 10px 50px rgba(0, 59, 255, 0.45); }
+
+/* botão */
+.cta { position: relative; display: inline-flex; align-items: center; gap: 20px; overflow: hidden; height: 100px; padding: 6px 64px 0;
+  font-family: 'Tusker'; font-size: 66px; letter-spacing: 0.01em; text-transform: uppercase; }
+.cta .seta { display: inline-block; font-family: 'OutfitV'; font-weight: 600; font-size: 52px; margin-top: -8px; }
+.cta .brilho { position: absolute; top: -20%; bottom: -20%; width: 160px; left: 0;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent); transform: skewX(-20deg); }
+.chevrons { display: flex; flex-direction: column; align-items: center; margin-top: 18px; }
+.chevrons svg { width: 54px; height: 26px; display: block; margin-top: -6px; }
+.branco { filter: brightness(0) invert(1); }

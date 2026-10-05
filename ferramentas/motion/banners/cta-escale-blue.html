@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>CTA (linha Blue) — Escale seu SaaS com a Blue Ocean</title>
+<link rel="stylesheet" href="../linha-blue.css">
+<style>
+  #titulo { top: 380px; font-size: 118px; }
+  #texto { top: 700px; font-size: 42px; }
+  #logos { top: 890px; flex-direction: row; justify-content: center; gap: 70px; align-items: center; }
+  #logos img { opacity: 0; display: block; }
+  #cases { top: 1046px; left: 80px; right: 80px; gap: 22px; align-items: stretch; }
+  .linha { display: flex; gap: 14px; height: 98px; opacity: 0; }
+  .linha .marca { width: 250px; flex: none; display: flex; align-items: center; justify-content: center; }
+  .linha .res { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 0 30px; font-size: 38px; line-height: 1.12; }
+  .linha .res b { font-weight: 700; }
+  .linha .res .peq { font-size: 27px; color: rgba(255,255,255,.8); }
+  .num { font-variant-numeric: tabular-nums; }
+  #rodape { top: 1478px; }
+  #cab { top: 220px; }
+</style>
+</head>
+<body>
+<canvas id="fundo" width="1080" height="1920"></canvas>
+
+<div id="cab"><img class="nome" src="../img/LOGO-BLUE.svg"><div class="fio"></div><img class="simb" src="../img/simbolo-blueocean.png"></div>
+
+<div class="camada titulo" id="titulo"><div id="tit">Escale seu SaaS<br>com a <span class="verde">Blue Ocean</span></div></div>
+<div class="camada texto" id="texto"><div id="txt">Descubra a melhor solução de<br><b>marketing e vendas</b> pro seu software</div></div>
+
+<div class="camada" id="logos">
+  <img class="branco" src="../img/devzapp.svg" style="height:50px">
+  <img class="branco" src="../img/greatpages.svg" style="height:33px">
+  <img class="branco" src="../img/smarthint.png" style="height:64px">
+</div>
+
+<div class="camada" id="cases">
+  <div class="linha">
+    <div class="marca caixa"><img src="../img/envioecom.png" style="height:36px"></div>
+    <div class="res caixa"><div>de R$40mil para <b class="verde">R$<span class="num" id="n1">40</span>mil</b></div></div>
+  </div>
+  <div class="linha">
+    <div class="marca caixa"><img class="branco" src="../img/tripmee.png" style="height:46px"></div>
+    <div class="res caixa"><div>de 13% para <b class="verde"><span class="num" id="n2">13</span>%</b> <span class="peq">de qualificação do lead</span></div></div>
+  </div>
+  <div class="linha">
+    <div class="marca caixa"><img class="branco" src="../img/acrux.png" style="height:54px"></div>
+    <div class="res caixa"><div><b>Time de vendas</b> estruturado</div></div>
+  </div>
+</div>
+
+<div class="camada" id="rodape">
+  <div class="cta destaque" id="cta"><span class="brilho"></span><span class="seta">→</span><span>Saiba mais</span></div>
+  <div class="chevrons" id="chev">
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+
+<script src="../motion.js"></script>
+<script src="../linha-blue.js"></script>
+<script>
+  const M = Motion, E = M.ease, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  window.DURACAO = 10;
+  const desenhaFundo = M.fundoMarinho($('#fundo'));
+  const palTit = M.palavras($('#tit')), palTxt = M.palavras($('#txt'));
+  const logos = $$('#logos img'), linhas = $$('.linha');
+  window.pronto = Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+
+  window.quadro = function (t) {
+    desenhaFundo(t);
+    Blue.cabecalho(t, 0.1);                       // logo e nome primeiro
+    M.entrar(palTit, t, 0.75, { atraso: 0.08, dur: 1.2, sobe: 0.32 });
+    M.entrar(palTxt, t, 1.65, { atraso: 0.04, dur: 1.0, sobe: 0.5, desfoque: 14 });
+    logos.forEach((img, i) => Blue.bloco(img, t, 2.35 + i * 0.14, { filtro: 'brightness(0) invert(1)' }));
+    linhas.forEach((l, i) => Blue.bloco(l, t, 3.0 + i * 0.22, { sobe: 50, desf: 16, esc: 0.97 }));
+    M.contar($('#n1'), t, 3.45, 1.5, 40, 200);
+    M.contar($('#n2'), t, 3.67, 1.5, 13, 70);
+    Blue.cta(t, 4.95);
+  };
+  M.tocar();
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — reveal do Claude (interface do claude.ai recriada, tema escuro)</title>
+<!-- Receita 13 (reveal de SaaS) em 16:9. Interface recriada do zero a partir do claude.ai (ref/captura.mjs, ref/detalhes.mjs):
+     tema escuro do site (bg-100 #151515, bg-200 #111, bg-000 #20201F, texto #F9F9F7 / #C3C2B7 / #97958D, clay #D97757),
+     fontes oficiais anthropic-sans / anthropic-serif (resposta do Claude em serifa), logo oficial (logo.js).
+     Voz com respiros (respiros.json): S1 0,00 · S2 3,63 · S3 10,00 · S4 16,10 · S5 23,15.
+     node render.mjs fullmotion/claude/claude.html fullmotion/claude/claude-video.mp4 --w 1920 --h 1080 -->
+<style>
+  @font-face { font-family: 'ASans'; font-weight: 300 800; src: url('fontes/anthropic-sans.woff2'); }
+  @font-face { font-family: 'ASerif'; font-weight: 300 800; src: url('fontes/anthropic-serif.woff2'); }
+  @font-face { font-family: 'AMono'; font-weight: 300 800; src: url('fontes/anthropic-mono.woff2'); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body { background: #0A0A0A; font-family: 'ASans', system-ui, sans-serif; color: #F9F9F7; -webkit-font-smoothing: antialiased; }
+  #bg { position: absolute; inset: 0; background:
+        radial-gradient(1500px 950px at 50% 48%, rgba(217, 119, 87, 0.12) 0%, rgba(217, 119, 87, 0.09) 18%, rgba(217, 119, 87, 0.055) 38%, rgba(217, 119, 87, 0.025) 60%, rgba(217, 119, 87, 0.008) 80%, rgba(217, 119, 87, 0) 100%), #0A0A0A; }
+  svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; display: block; flex: none; }
+  #camfx { position: absolute; inset: 0; }
+  #mundo { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; background: #151515;
+           border-radius: 14px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 60px 160px rgba(0, 0, 0, .85), 0 0 240px 40px rgba(217, 119, 87, .08); }
+
+  /* ── barra do sistema (relógio) ── */
+  #sis { position: absolute; left: 0; top: 0; width: 1920px; height: 30px; background: #0B0B0B; display: flex; align-items: center; padding: 0 18px; gap: 22px; font-size: 13px; color: #C3C2B7; z-index: 30; }
+  #sis b { font-weight: 600; color: #F9F9F7; }
+  #sisDir { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+  #sisDir svg.i { width: 16px; height: 16px; }
+  #relogio { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; color: #F9F9F7; font-weight: 500; }
+  .dg { display: inline-block; height: 16px; line-height: 16px; overflow: hidden; width: 7.6px; text-align: center; vertical-align: -3px; }
+  #relogio { gap: 0; }
+  #relogio > span:not(.dg) { margin: 0 1px; }
+  .dg i { display: block; font-style: normal; }
+
+  /* ── barra lateral ── */
+  #side { position: absolute; left: 0; top: 30px; width: 288px; height: 1050px; background: #111111; border-right: 1px solid rgba(225, 224, 217, .07); padding: 14px 10px; z-index: 5; }
+  #sideTopo { display: flex; align-items: center; height: 36px; padding: 0 10px; }
+  #sideTopo .wm { font-family: 'ASerif'; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+  #sideTopo svg { margin-left: auto; color: #97958D; }
+  .si { height: 36px; display: flex; align-items: center; gap: 12px; padding: 0 10px; border-radius: 8px; font-size: 14px; color: #C3C2B7; }
+  .si.novo { color: #F9F9F7; font-weight: 500; margin: 14px 0 6px; }
+  .si.novo .mais { width: 24px; height: 24px; border-radius: 50%; background: #D97757; display: grid; place-items: center; color: #fff; }
+  .si.novo .mais svg { width: 14px; height: 14px; stroke-width: 2.2; }
+  .si.on { background: #1E1E1D; color: #F9F9F7; }
+  .stit { font-size: 12px; color: #97958D; padding: 22px 10px 8px; font-weight: 500; }
+  .rec { height: 32px; display: flex; align-items: center; padding: 0 10px; border-radius: 8px; font-size: 13.5px; color: #C3C2B7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rec.on { background: #1E1E1D; color: #F9F9F7; }
+  #eu { position: absolute; left: 10px; right: 10px; bottom: 14px; height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 10px; border-top: 1px solid rgba(225, 224, 217, .07); }
+  #eu .av { width: 32px; height: 32px; border-radius: 50%; background: #C3C2B7; color: #151515; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+  #eu b { display: block; font-size: 14px; font-weight: 500; }
+  #eu span { display: block; font-size: 12px; color: #97958D; }
+
+  /* ── caixa de entrada (igual nas duas telas) ── */
+  .caixa { background: #20201F; border: 1px solid rgba(225, 224, 217, .1); border-radius: 20px; padding: 14px 14px 12px; box-shadow: 0 4px 24px rgba(0, 0, 0, .25); }
+  .anexos { display: flex; gap: 10px; margin-bottom: 10px; }
+  .card { position: relative; width: 150px; height: 116px; border-radius: 10px; background: #151515; border: 1px solid rgba(225, 224, 217, .12); padding: 10px; overflow: hidden; }
+  .card .nm { font-size: 12.5px; line-height: 16px; font-weight: 500; color: #F9F9F7; word-break: break-all; }
+  .card .sub { font-size: 11.5px; color: #97958D; margin-top: 4px; }
+  .card .tipo { position: absolute; left: 10px; bottom: 10px; height: 20px; padding: 0 6px; border-radius: 5px; border: 1px solid rgba(225, 224, 217, .18); font-size: 10.5px; line-height: 18px; font-weight: 600; color: #C3C2B7; letter-spacing: .04em; }
+  .card.colado { width: 210px; }
+  .card.colado .prev { font-size: 11px; line-height: 15px; color: #97958D; }
+  .linhaTxt { min-height: 24px; font-size: 16px; line-height: 24px; padding: 2px 4px; white-space: pre; color: #F9F9F7; }
+  .linhaTxt .ph { color: #97958D; }
+  .car { display: inline-block; width: 1.5px; height: 19px; background: #F9F9F7; vertical-align: -4px; }
+  .ferr { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+  .bt { width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(225, 224, 217, .14); display: grid; place-items: center; color: #C3C2B7; }
+  .bt svg { width: 18px; height: 18px; }
+  .env { margin-left: auto; width: 32px; height: 32px; border-radius: 8px; background: #D97757; display: grid; place-items: center; color: #fff; opacity: .45; }
+  .env svg { width: 17px; height: 17px; stroke-width: 2.2; }
+
+  /* ── tela inicial (novo chat) ── */
+  #home { position: absolute; left: 712px; top: 296px; width: 784px; }
+  #saud { display: flex; align-items: center; justify-content: center; gap: 14px; height: 60px; margin-bottom: 26px; }
+  #saud svg { width: 38px; height: 38px; }
+  #saudTxt { font-family: 'ASerif'; font-size: 42px; font-weight: 330; letter-spacing: -0.015em; color: #F2F1EC; white-space: nowrap; }
+  #chips { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+  .chip { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 13px; border-radius: 9px; border: 1px solid rgba(225, 224, 217, .12); font-size: 13.5px; color: #C3C2B7; background: #151515; }
+  .chip svg { width: 16px; height: 16px; }
+
+  /* ── conversa ── */
+  #chat { position: absolute; inset: 0; }
+  .col { position: absolute; top: 60px; width: 690px; }
+  .msgU { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .bolha { max-width: 560px; background: #2A2A28; border-radius: 16px; padding: 10px 16px; font-size: 16px; line-height: 24px; color: #F9F9F7; }
+  .msgA { margin-top: 30px; font-family: 'ASerif'; font-size: 17px; line-height: 28px; color: #F2F1EC; font-weight: 360; }
+  .msgA p { margin-bottom: 14px; }
+  .msgA b { font-weight: 600; color: #FFFFFF; }
+  .msgA ol { margin: 0 0 14px 24px; }
+  .msgA li { margin-bottom: 8px; padding-left: 4px; }
+  .w { opacity: 0; }
+  .status { font-family: 'ASans'; display: flex; align-items: center; gap: 10px; height: 34px; font-size: 14.5px; color: #C3C2B7; }
+  .status svg.f { width: 20px; height: 20px; }
+  .status .cnt { color: #97958D; font-variant-numeric: tabular-nums; }
+  .status .ok { width: 18px; height: 18px; color: #7FBF8A; opacity: 0; }
+  .pags { display: flex; gap: 3px; margin: 4px 0 18px 30px; }
+  .pags i { width: 9px; height: 13px; border-radius: 2px; background: #2A2A28; }
+  .artCard { font-family: 'ASans'; display: flex; align-items: center; gap: 12px; width: 380px; height: 62px; border-radius: 12px; border: 1px solid rgba(225, 224, 217, .14); background: #1B1B1A; padding: 0 14px; margin: 4px 0 16px; }
+  .artCard .ic { width: 38px; height: 38px; border-radius: 8px; background: #262624; display: grid; place-items: center; color: #C3C2B7; }
+  .artCard b { display: block; font-size: 14px; font-weight: 500; color: #F9F9F7; }
+  .artCard span { display: block; font-size: 12.5px; color: #97958D; }
+  .faisca { width: 26px; height: 26px; position: absolute; left: 0; }
+  #a3 { position: relative; }
+  .inC { position: absolute; width: 690px; bottom: 34px; }
+  .inC.caixa { padding: 12px 14px 10px; }
+  #fadeC { position: absolute; left: 288px; right: 0; top: 860px; height: 220px; background: linear-gradient(rgba(21, 21, 21, 0), #151515 45%); }
+
+  /* ── painel lateral (artefato) ── */
+  #art { position: absolute; left: 1060px; top: 46px; width: 844px; height: 1020px; border-radius: 14px; background: #1B1B1A; border: 1px solid rgba(225, 224, 217, .1); overflow: hidden; box-shadow: -20px 0 60px rgba(0, 0, 0, .35); }
+  #artTopo { position: absolute; left: 0; top: 0; right: 0; height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 16px 0 20px; border-bottom: 1px solid rgba(225, 224, 217, .08); background: #1B1B1A; z-index: 3; }
+  #artTopo b { font-size: 15px; font-weight: 500; }
+  #artTopo span { font-size: 13px; color: #97958D; }
+  #copiar { margin-left: auto; height: 32px; display: flex; align-items: center; gap: 7px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(225, 224, 217, .14); font-size: 13.5px; color: #F9F9F7; white-space: nowrap; }
+  #copiar svg { width: 16px; height: 16px; }
+  #artTopo .bt { border: none; }
+  #pdfCorpo { position: absolute; left: 0; top: 60px; right: 0; bottom: 0; background: #262624; overflow: hidden; }
+  #pagina { position: absolute; left: 62px; top: 24px; width: 720px; height: 2200px; background: #FFFFFF; border-radius: 3px; box-shadow: 0 2px 16px rgba(0, 0, 0, .4); }
+  #pagCab { position: absolute; left: 64px; top: 14px; font-size: 10.5px; color: #8A8A8A; letter-spacing: .02em; }
+  .ln { position: absolute; left: 0; height: 30px; line-height: 30px; width: 560px; font-family: 'ASerif'; font-size: 15px; color: #1F1F1F; white-space: nowrap; }
+  .ln i { display: inline-block; width: 52px; padding-right: 14px; text-align: right; font-family: 'AMono'; font-style: normal; font-size: 11px; color: #A3A3A3; }
+  .ln.tit { font-weight: 650; }
+  #marca { position: absolute; left: 58px; height: 26px; border-radius: 4px; background: rgba(217, 119, 87, .32); width: 0; }
+  #erro { position: absolute; height: 22px; border: 2px solid #C6613F; border-radius: 5px; opacity: 0; }
+  .carimbo { position: absolute; left: 572px; width: 136px; height: 34px; border: 2px solid #2D55B5; border-radius: 6px; color: #2D55B5; font-size: 12px; font-weight: 650; line-height: 13px; display: flex; flex-direction: column; justify-content: center; padding-left: 26px; transform: rotate(-4deg); opacity: .78; }
+  .carimbo:before { content: '✓'; position: absolute; left: 7px; top: 7px; font-size: 15px; }
+  .carimbo span { font-weight: 500; font-size: 11px; }
+  #coment { position: absolute; left: 52px; width: 520px; border-radius: 12px; background: #1B1B1A; border-left: 3px solid #D97757; padding: 12px 16px 13px; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); opacity: 0; }
+  #coment .cab { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #F9F9F7; margin-bottom: 4px; }
+  #coment .cab svg { width: 16px; height: 16px; }
+  #coment p { font-size: 14.5px; line-height: 21px; color: #E6E5DF; }
+  #mailCorpo { position: absolute; left: 0; top: 60px; right: 0; bottom: 0; padding: 44px 64px; font-size: 17px; line-height: 28px; color: #F2F1EC; display: none; }
+  #mailCorpo p { margin-bottom: 18px; }
+  #mailCorpo b { font-weight: 600; }
+
+  /* mouse (dentro do mundo) */
+  #mouse { position: absolute; left: 0; top: 0; width: 22px; height: 28px; z-index: 40; opacity: 0; transform-origin: 3px 2px; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .6)); }
+  #noite { position: absolute; inset: 0; background: #000; opacity: 0; z-index: 50; pointer-events: none; }
+  #vinheta { position: absolute; inset: 0; z-index: 45; pointer-events: none; opacity: 0;
+             background: radial-gradient(1300px 800px at 50% 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .55) 100%); }
+
+  /* ── final: o logo ── */
+  #fim { position: absolute; inset: 0; opacity: 0; background:
+        radial-gradient(1200px 760px at 50% 46%, rgba(217, 119, 87, 0.16) 0%, rgba(217, 119, 87, 0.11) 18%, rgba(217, 119, 87, 0.065) 38%, rgba(217, 119, 87, 0.03) 60%, rgba(217, 119, 87, 0.01) 80%, rgba(217, 119, 87, 0) 100%), #0E0E0D; }
+  #logoFim { position: absolute; left: 624px; top: 388px; width: 672px; height: 144px; overflow: visible; }
+  #fx { transform-box: fill-box; transform-origin: 50% 50%; }
+  #pilula { position: absolute; left: 640px; top: 610px; width: 640px; height: 64px; border-radius: 18px; background: #20201F; border: 1px solid rgba(225, 224, 217, .12); display: flex; align-items: center; padding: 0 12px 0 22px; font-size: 19px; color: #97958D; opacity: 0; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); }
+  #pilula .env { opacity: 1; width: 40px; height: 40px; border-radius: 10px; }
+  #pilula .car { height: 22px; margin-right: 4px; vertical-align: -5px; }
+  #site { position: absolute; left: 0; right: 0; top: 712px; text-align: center; font-size: 20px; color: #97958D; letter-spacing: .01em; opacity: 0; }
+
+  /* ── legenda ── */
+  #leg { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; z-index: 60; pointer-events: none; }
+  #leg span { display: inline-block; background: rgba(12, 12, 11, .78); color: #fff; font-size: 40px; line-height: 56px; padding: 0 18px; border-radius: 12px; font-weight: 500; white-space: pre; letter-spacing: -0.005em; }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<svg width="0" height="0" style="position:absolute"><filter id="mb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
+
+<div id="camfx"><div id="mundo">
+  <div id="sis"><b>Claude</b><span>Arquivo</span><span>Editar</span><span>Visualizar</span><span>Janela</span><span>Ajuda</span>
+    <div id="sisDir">
+      <svg class="i" viewBox="0 0 20 20"><path d="M2.5 7.5a11 11 0 0 1 15 0M5 10.5a7 7 0 0 1 10 0M7.6 13.4a3.2 3.2 0 0 1 4.8 0"/><circle cx="10" cy="16" r=".6" fill="currentColor"/></svg>
+      <svg class="i" viewBox="0 0 20 20" style="width:22px"><rect x="1.5" y="6" width="15" height="8" rx="2"/><path d="M18.5 9v2"/><rect x="3.3" y="7.8" width="9" height="4.4" rx="1" fill="currentColor" stroke="none"/></svg>
+      <span id="dia">sex. 3 de out.</span><span id="relogio"></span>
+    </div>
+  </div>
+
+  <nav id="side">
+    <div id="sideTopo"><span class="wm">Claude</span><svg class="i" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M8 4v12"/></svg></div>
+    <div class="si novo"><span class="mais"><svg class="i" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></svg></span>Novo chat</div>
+    <div class="si"><svg class="i" viewBox="0 0 20 20"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h7A2.5 2.5 0 0 1 16 5.5v5a2.5 2.5 0 0 1-2.5 2.5H9l-3.5 3v-3h0A2.5 2.5 0 0 1 4 10.5z"/></svg>Chats</div>
+    <div class="si"><svg class="i" viewBox="0 0 20 20"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H8l1.5 2h6A1.5 1.5 0 0 1 17 8.5v6a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 14.5z"/></svg>Projetos</div>
+    <div class="si"><svg class="i" viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1.5"/><circle cx="14" cy="6" r="3"/><path d="M6 11.5l3.5 5.5h-7z"/><rect x="11" y="11" width="6" height="6" rx="1.5"/></svg>Artefatos</div>
+    <div class="stit">Recentes</div>
+    <div id="recentes"></div>
+    <div id="eu"><div class="av">L</div><div><b>Lucas</b><span>Plano Max</span></div></div>
+  </nav>
+
+  <!-- novo chat -->
+  <section id="home">
+    <div id="saud"><svg viewBox="0 0 24 24" class="fH"></svg><span id="saudTxt">Bom dia, Lucas</span></div>
+    <div class="caixa" id="inH">
+      <div class="anexos" id="anexoH"><div class="card"><div class="nm">Contrato_Fornecimento_v7.pdf</div><div class="sub">48 páginas</div><span class="tipo">PDF</span></div></div>
+      <div class="linhaTxt" id="txtH"></div>
+      <div class="ferr">
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></svg></div>
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M3 6h8M14 6h3M3 14h3M9 14h8"/><circle cx="12.5" cy="6" r="1.6"/><circle cx="7.5" cy="14" r="1.6"/></svg></div>
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 1.5"/></svg></div>
+        <div class="env" id="envH"><svg class="i" viewBox="0 0 20 20"><path d="M10 16V4M5 9l5-5 5 5"/></svg></div>
+      </div>
+    </div>
+    <div id="chips">
+      <div class="chip"><svg class="i" viewBox="0 0 20 20"><path d="M4 16l1-4 8-8 3 3-8 8z"/></svg>Escrever</div>
+      <div class="chip"><svg class="i" viewBox="0 0 20 20"><path d="M2 8l8-4 8 4-8 4z"/><path d="M5.5 9.8V13c0 1 2 2.5 4.5 2.5s4.5-1.5 4.5-2.5V9.8"/></svg>Aprender</div>
+      <div class="chip"><svg class="i" viewBox="0 0 20 20"><path d="M7 6l-4 4 4 4M13 6l4 4-4 4"/></svg>Código</div>
+      <div class="chip"><svg class="i" viewBox="0 0 20 20"><path d="M4 8h10v4a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M14 9h1.5a2 2 0 0 1 0 4H14M7 3.5v2M10 3.5v2"/></svg>Vida pessoal</div>
+      <div class="chip"><svg viewBox="0 0 24 24" class="fC" style="width:15px;height:15px"></svg>Escolha do Claude</div>
+    </div>
+  </section>
+
+  <!-- conversa -->
+  <section id="chat">
+    <!-- manhã: contrato + e-mail -->
+    <div class="col" id="c1">
+      <div class="msgU" id="u1">
+        <div class="card"><div class="nm">Contrato_Fornecimento_v7.pdf</div><div class="sub">48 páginas</div><span class="tipo">PDF</span></div>
+        <div class="bolha">Revisa antes da reunião</div>
+      </div>
+      <div class="msgA" id="a1">
+        <div class="status" id="st1"><svg viewBox="0 0 24 24" class="f fS"></svg><span id="st1Txt">Lendo Contrato_Fornecimento_v7.pdf</span><span class="cnt" id="st1Cnt"></span><svg class="i ok" viewBox="0 0 20 20" style="stroke-width:2"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg></div>
+        <div class="pags" id="pags"></div>
+        <p class="s" id="a1p1">Li as 48 páginas. Antes da reunião, um ponto crítico:</p>
+        <p class="s" id="a1p2">**Linha 214** — a multa por rescisão remete ao item 9.3, que não existe. O correto é o 8.3.</p>
+        <div class="artCard" id="a1card"><div class="ic"><svg class="i" viewBox="0 0 20 20"><path d="M5 2.5h6.5L15 6v11.5H5z"/><path d="M11 2.5V6h4M7.5 10h5M7.5 13h5"/></svg></div><div><b>Revisão do contrato</b><span>Documento · clique para abrir</span></div></div>
+        <p class="s" id="a1p3">Do jeito que está, a multa pode ser contestada. Deixei a redação corrigida — vale levar essa versão às 10h.</p>
+      </div>
+      <div class="msgU" id="u2" style="margin-top:34px">
+        <div class="card colado"><div class="prev">Oi Ricardo, então... sobre o prazo, eu sei que a gente tinha combinado dia 15 mas aconteceram umas coisas aqui e enfim, talvez</div><span class="tipo">COLADO</span></div>
+        <div class="bolha">firme, mas gentil</div>
+      </div>
+      <div class="msgA" id="a2">
+        <p class="s" id="a2p1">Aqui está — direto, sem pedir desculpas demais, e com uma data que você consegue cumprir:</p>
+        <div class="artCard" id="a2card"><div class="ic"><svg class="i" viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="M3 5.5l7 5.5 7-5.5"/></svg></div><div><b>E-mail para o Ricardo</b><span>Documento</span></div></div>
+      </div>
+    </div>
+    <!-- madrugada -->
+    <div class="col" id="c2" style="left:757px">
+      <div class="msgU"><div class="bolha">Largo tudo e abro a cafeteria. É boa ideia?</div></div>
+      <div class="msgA" id="a3">
+        <p class="s" id="a3p0">**Ainda não.**</p>
+        <p class="s" id="a3p1">E não é a ideia — são os números:</p>
+        <ol>
+          <li class="s" id="a3b1">**Reserva:** a sua cobre 4 meses. Uma cafeteria leva uns 14 para empatar.</li>
+          <li class="s" id="a3b2">**Aluguel:** o ponto come 31% da receita prevista. O saudável é até 12%.</li>
+          <li class="s" id="a3b3">**Teste antes:** 8 sábados numa feira. Se vender 150 cafés por dia, a gente monta o plano.</li>
+        </ol>
+        <svg viewBox="0 0 24 24" class="faisca fS" id="f3"></svg>
+      </div>
+    </div>
+    <div id="fadeC"></div>
+    <div class="caixa inC" id="inC">
+      <div class="anexos" id="anexoC" style="display:none"><div class="card colado"><div class="prev">Oi Ricardo, então... sobre o prazo, eu sei que a gente tinha combinado dia 15 mas aconteceram umas coisas aqui e enfim, talvez</div><span class="tipo">COLADO</span></div></div>
+      <div class="linhaTxt" id="txtC"></div>
+      <div class="ferr">
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></svg></div>
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M3 6h8M14 6h3M3 14h3M9 14h8"/><circle cx="12.5" cy="6" r="1.6"/><circle cx="7.5" cy="14" r="1.6"/></svg></div>
+        <div class="env" id="envC"><svg class="i" viewBox="0 0 20 20"><path d="M10 16V4M5 9l5-5 5 5"/></svg></div>
+      </div>
+    </div>
+
+    <aside id="art">
+      <div id="artTopo">
+        <svg class="i" viewBox="0 0 20 20" style="color:#C3C2B7"><path d="M5 2.5h6.5L15 6v11.5H5z"/><path d="M11 2.5V6h4"/></svg>
+        <div><b id="artTit">Revisão do contrato</b> <span id="artSub">· Contrato_Fornecimento_v7.pdf</span></div>
+        <div id="copiar"><svg class="i" viewBox="0 0 20 20" id="copIc"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/></svg><span id="copTxt">Copiar</span></div>
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M10 3v10M6 9l4 4 4-4M4 16h12"/></svg></div>
+        <div class="bt"><svg class="i" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15"/></svg></div>
+      </div>
+      <div id="pdfCorpo"><div id="pagina">
+        <div id="pagCab">CONTRATO DE FORNECIMENTO — VERSÃO 7 · PÁGINA 31 DE 48</div>
+        <div id="marca"></div><div id="erro"></div>
+        <div id="linhas"></div>
+        <div class="carimbo" id="cb1">Jurídico<span>revisado 02/10</span></div>
+        <div class="carimbo" id="cb2">Compras<span>revisado 03/10</span></div>
+        <div class="carimbo" id="cb3">Financeiro<span>revisado 04/10</span></div>
+        <div id="coment"><div class="cab"><svg viewBox="0 0 24 24" class="fC"></svg>Claude</div>
+          <p>O item 9.3 não existe — a cláusula 9 vai até o 9.2. Os percentuais estão no <b>item 8.3</b>. Do jeito que está, a multa da 12.4 pode ser contestada.</p></div>
+      </div></div>
+      <div id="mailCorpo">
+        <p class="s" id="m0">**Assunto:** Prazo da entrega — nova data</p>
+        <p class="s" id="m1">Ricardo,</p>
+        <p class="s" id="m2">Vou ser direto: não vamos entregar no dia 15.</p>
+        <p class="s" id="m3">Subestimei a integração com o seu sistema, e prefiro te avisar agora a prometer uma data que eu não consigo cumprir.</p>
+        <p class="s" id="m4">A versão completa fica pronta no dia 22. Até sexta, te mando a primeira parte para o seu time já começar os testes.</p>
+        <p class="s" id="m5">Sei que isso mexe no seu planejamento — e assumo a responsabilidade.</p>
+        <p class="s" id="m6">Um abraço, Lucas</p>
+      </div>
+    </aside>
+  </section>
+
+  <svg id="mouse" viewBox="0 0 24 30"><path d="M3 2 L3 24 L8.5 18.5 L12.5 27.5 L16.5 25.7 L12.6 17 L20 17 Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div id="vinheta"></div>
+  <div id="noite"></div>
+</div></div>
+
+<div id="fim">
+  <svg id="logoFim" viewBox="0 0 112 24">
+    <defs><clipPath id="clipNome"><rect id="clipR" x="26" y="-4" width="0" height="32"/></clipPath></defs>
+    <g id="nomeG" clip-path="url(#clipNome)"><path id="nomeP" fill="#F2F1EC"/></g>
+    <g id="fxG"><path id="fx" fill="#D97757"/></g>
+  </svg>
+  <div id="pilula"><span id="pilTxt"></span><span style="flex:1"></span><div class="env"><svg class="i" viewBox="0 0 20 20"><path d="M10 16V4M5 9l5-5 5 5"/></svg></div></div>
+  <div id="site">claude.ai</div>
+</div>
+
+<div id="leg"></div>
+
+<script src="../../motion.js"></script>
+<script src="logo.js"></script>
+<script>
+const M = Motion, E = M.ease, C = M.clamp, L = M.lerp;
+const pr = (t, t0, d, e = E.expoOut) => M.prog(t, t0, d, e);
+const $ = s => document.querySelector(s);
+const liso = (t, a, b) => E.cubicInOut(C((t - a) / Math.max(1e-4, b - a)));
+const pulsoS = (t, tc, d = 0.2) => Math.sin(C((t - tc) / d) * Math.PI);
+window.DURACAO = 26.2;
+
+/* tempos de tudo (o som usa os mesmos) — fala: S1 0,06–2,67 · S2 4,02–8,52 · S3 10,21–14,81 · S4 16,30–22,32 · S5 23,39–24,67 */
+const T = {
+  dig1: [0.05, 1.10], env1: 1.35, corte1: 1.52, ler: [1.62, 3.32],
+  a1p1: [3.42, 3.86], painel: [3.66, 4.08], a1p2: [3.95, 4.55], rola: [4.25, 4.95], marca: 4.99, erro: 5.18, coment: 5.42,
+  a1card: 4.62, a1p3: [4.75, 5.6], cb: [6.35, 6.95, 7.51],
+  cola: 8.72, dig3: [8.95, 9.75], env3: 9.93, corte3: 10.1, a2p1: [10.12, 10.6], a2card: 10.62, mail: [10.35, 13.35],
+  copiar: 14.45, noite: [14.85, 15.15, 15.6], relogio: [16.5, 17.25],
+  dig4: [17.55, 19.35], env4: 19.48, corte4: 19.64, a3p0: [20.12, 20.3], a3p1: [20.42, 20.85], a3b: [[21.2, 21.6], [21.6, 22.0], [22.0, 22.42]],
+  mergulho: 22.58, fim: 22.82, faisca: 23.33, nome: 23.98, pilula: 24.45, site: 24.7,
+};
+
+/* ── logo e faíscas ── */
+document.querySelectorAll('.fH, .fC, .fS').forEach(s => s.innerHTML = `<path fill="#D97757" d="${LOGO.faisca}"/>`);
+$('#fx').setAttribute('d', LOGO.faisca); $('#nomeP').setAttribute('d', LOGO.nome);
+
+/* ── recentes (a lista muda de manhã para a madrugada) ── */
+const REC1 = ['Revisão do contrato — fornecedor', 'Resumo do relatório Q3', 'Roteiro da apresentação', 'Dúvida sobre imposto PJ', 'Planilha de custos do mês', 'Tradução do pitch', 'Ideias para o aniversário da Bia'];
+const REC2 = ['Cafeteria: boa ideia?', 'E-mail para o Ricardo', 'Revisão do contrato — fornecedor', 'Resumo do relatório Q3', 'Roteiro da apresentação', 'Dúvida sobre imposto PJ', 'Planilha de custos do mês'];
+let recK = -1;
+function recentes(k) { if (recK === k) return; recK = k; $('#recentes').innerHTML = (k ? REC2 : REC1).map((r, i) => `<div class="rec${i === 0 && k ? ' on' : ''}">${r}</div>`).join(''); }
+
+/* ── relógio: 09:12 de manhã; de madrugada rola de 23:58 para 02:07 ── */
+$('#relogio').innerHTML = [0, 1, ':', 2, 3].map(d => d === ':' ? '<span>:</span>' : `<span class="dg" id="dg${d}"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span>`).join('');
+function relogio(t) {
+  const manha = t < T.noite[1];
+  const de = manha ? [0, 9, 1, 2] : [2, 3, 5, 8], para = manha ? [0, 9, 1, 2] : [0, 2, 0, 7];
+  de.forEach((a, i) => { let b = para[i]; if (b < a) b += 10;   // sempre para a frente, como um odômetro
+    const p = manha ? 0 : E.cubicInOut(C((t - T.relogio[0] - (3 - i) * 0.08) / (T.relogio[1] - T.relogio[0] - 0.24)));
+    $(`#dg${i}`).firstElementChild.style.marginTop = -L(a, b, p) * 16 + 'px'; });
+  $('#dia').textContent = manha ? 'sex. 3 de out.' : t < T.relogio[0] + 0.4 ? 'sex. 3 de out.' : 'sáb. 4 de out.';
+}
+
+/* ── texto em palavras (o Claude escreve palavra a palavra) ── */
+function quebra(el) {
+  let neg = false;
+  el.innerHTML = el.textContent.trim().split(/\s+/).map(w => {
+    const ini = w.startsWith('**'), fim = w.endsWith('**') && (w.length > 2);
+    w = w.replace(/\*\*/g, ''); if (ini) neg = true; const s = `<span class="w">${neg ? `<b>${w}</b>` : w}</span>`; if (fim) neg = false; return s;
+  }).join(' ');
+  el._w = [...el.querySelectorAll('.w')];
+}
+document.querySelectorAll('.s').forEach(quebra);
+function escreve(sel, [a, b], t) {
+  const el = $(sel), n = el._w.length;
+  el._w.forEach((w, i) => { const ti = a + (b - a) * i / n; w.style.opacity = C((t - ti) / 0.09); });
+  const k = Math.min(n - 1, Math.max(0, Math.floor((t - a) / (b - a) * n)));
+  return el._w[k];
+}
+
+/* ── página do contrato (linhas 176–240, numeradas) ── */
+const CONTRATO = [
+  'prazo de 5 (cinco) dias úteis contados do recebimento.', '',
+  '#CLÁUSULA 11 — DO REAJUSTE',
+  '11.1. Os preços serão reajustados a cada 12 (doze) meses,', 'contados da assinatura, pela variação do IPCA/IBGE', 'acumulada no período, ou por índice que venha a', 'substituí-lo oficialmente.',
+  '11.2. O reajuste não se aplica a pedidos já faturados', 'nem a entregas em atraso por culpa da CONTRATADA.', '11.3. A CONTRATADA apresentará memória de cálculo', 'com antecedência mínima de 30 (trinta) dias.', '',
+  '#CLÁUSULA 12 — DA RESCISÃO',
+  '12.1. Este contrato poderá ser rescindido por qualquer', 'das partes, mediante aviso prévio por escrito de 60', '(sessenta) dias, sem prejuízo das obrigações assumidas.',
+  '12.2. Constituem motivo para rescisão imediata:', 'a) o descumprimento de qualquer cláusula contratual;', 'b) atraso superior a 15 (quinze) dias nas entregas;', 'c) a decretação de falência ou recuperação judicial;', 'd) a cessão do contrato a terceiros sem anuência.',
+  '12.3. Na hipótese da alínea "b", a CONTRATANTE poderá', 'contratar terceiros para suprir o fornecimento,', 'sendo a diferença de preço suportada pela', 'CONTRATADA.',
+  '12.4. Em caso de rescisão imotivada, a parte que lhe', 'der causa pagará à outra multa compensatória sobre', 'o valor remanescente do contrato, sem prejuízo de', 'perdas e danos devidamente comprovados.',
+  '12.5. Os valores devidos serão pagos em até 10 (dez)', 'dias da notificação, corrigidos pelo IPCA/IBGE.',
+  '12.6. Rescindido o contrato, a CONTRATADA entregará', 'os pedidos em andamento, nas condições originais,', 'salvo acordo em contrário firmado por escrito.',
+  '12.7. A rescisão não exime as partes do sigilo e das', 'obrigações que, por natureza, devam subsistir', 'ao término do contrato.',
+  '12.8. Para os fins desta cláusula, aplicam-se os', 'percentuais e prazos definidos no item 9.3 acima.',   // ← linha 214
+  '', '#CLÁUSULA 13 — DA CONFIDENCIALIDADE',
+  '13.1. As partes manterão sigilo sobre todas as', 'informações técnicas e comerciais a que tiverem', 'acesso em razão deste contrato, inclusive preços,', 'volumes, fórmulas, processos e dados de clientes.',
+  '13.2. A obrigação de sigilo vigorará durante o prazo', 'contratual e por 5 (cinco) anos após o seu término.', '13.3. Não se considera violação a divulgação exigida', 'por lei ou por ordem judicial, desde que a parte',
+  'notifique a outra em até 48 (quarenta e oito) horas.', '', '#CLÁUSULA 14 — DAS DISPOSIÇÕES GERAIS', '14.1. A tolerância de uma parte quanto ao',
+  'descumprimento de obrigação da outra não implica', 'novação ou renúncia de direito.', '14.2. Este contrato obriga as partes e seus', 'sucessores a qualquer título.',
+  '14.3. Alterações somente terão validade se feitas', 'por aditivo assinado pelos representantes legais.', '', '#CLÁUSULA 15 — DO FORO', '15.1. Fica eleito o foro da Comarca de São Paulo/SP', 'para dirimir quaisquer dúvidas deste contrato.',
+];
+const L0 = 176, LH = 30, PAD = 40;
+const yLinha = n => PAD + (n - L0) * LH;   // y da linha dentro da página
+$('#linhas').innerHTML = CONTRATO.map((s, i) => `<div class="ln${s[0] === '#' ? ' tit' : ''}" style="top:${yLinha(L0 + i)}px"><i>${L0 + i}</i>${s.replace('#', '')}</div>`).join('');
+const L214 = $('#linhas').children[214 - L0];
+L214.innerHTML = L214.innerHTML.replace('9.3', '<span id="n93">9.3</span>');
+$('#marca').style.top = yLinha(214) + 2 + 'px';
+[205, 208, 211].forEach((n, i) => $(`#cb${i + 1}`).style.top = yLinha(n) - 2 + 'px');
+$('#coment').style.top = yLinha(215) + 6 + 'px';
+const ROLA = yLinha(214) - 400;   // linha 214 na altura 400 do painel (y 520 no mundo)
+
+/* páginas lidas (uma barrinha por página) */
+$('#pags').innerHTML = Array.from({ length: 48 }, () => '<i></i>').join('');
+const PAGS = [...$('#pags').children];
+
+/* ── câmera: o mundo é o app inteiro; chega antes da ação, fica parada, anda em 0,5–1 s ── */
+const noMundo = el => { let x = 0, y = 0; while (el && el.id !== 'mundo') { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+const centroM = el => { const [x, y] = noMundo(el); return [x + el.offsetWidth / 2, y + el.offsetHeight / 2]; };
+const em = (sel, S, dx = 0, dy = 0, rx = 3, ry = 0) => () => { const [x, y] = centroM($(sel)); return { fx: x + dx, fy: y + dy, S, rx, ry }; };
+const mixC = (a, b, k) => k <= 0 ? a : k >= 1 ? b : ({ fx: L(a.fx, b.fx, k), fy: L(a.fy, b.fy, k), S: Math.exp(L(Math.log(a.S), Math.log(b.S), k)), rx: L(a.rx, b.rx, k), ry: L(a.ry, b.ry, k) });
+let mailY = 260;   // altura da palavra que o Claude está escrevendo no e-mail (a câmera desce junto)
+const PLANOS = [
+  // 1 · o pedido + leitura
+  [1.05, 1.3, () => ({ fx: 1190, fy: 500, S: 2.05, rx: 3, ry: -2 })],
+  [T.corte1, T.corte1, () => ({ fx: 1080, fy: 250, S: 2.0, rx: 4, ry: 3 })],
+  [1.6, 2.6, () => ({ fx: 1090, fy: 300, S: 2.15, rx: 3, ry: 2 })],
+  // 2 · painel abre → linha 214 → comentário → carimbos → aberto
+  [3.55, 4.15, () => ({ fx: 1450, fy: 470, S: 1.85, rx: 3, ry: -4 })],
+  [4.3, 4.85, () => ({ fx: 1420, fy: 525, S: 2.1, rx: 2, ry: -3 })],
+  [5.3, 5.75, () => ({ fx: 1430, fy: 600, S: 1.8, rx: 3, ry: -2 })],
+  [6.0, 6.4, () => ({ fx: 1620, fy: 360, S: 1.85, rx: 3, ry: 4 })],
+  [7.95, 8.4, () => ({ fx: 1010, fy: 540, S: 1.1, rx: 4, ry: 0 })],
+  // 3 · cola o rascunho e pede → e-mail sendo escrito → copiar
+  [8.45, 8.8, em('#inC', 1.9, 40, -10, 3, 3)],
+  [T.corte3, T.corte3, () => ({ fx: 1430, fy: 250, S: 1.8, rx: 3, ry: -4 })],
+  [10.5, 13.0, () => ({ fx: 1450, fy: Math.max(260, mailY + 40), S: 1.7, rx: 3, ry: -3 })],
+  [13.45, 13.95, () => ({ fx: 960, fy: 470, S: 1.18, rx: 4, ry: 2 })],
+  [14.0, 14.35, () => ({ fx: 1680, fy: 140, S: 2.0, rx: 3, ry: -4 })],
+  // 4 · madrugada: relógio → pergunta → resposta
+  [T.noite[1], T.noite[1], () => ({ fx: 1745, fy: 26, S: 3.4, rx: 5, ry: -6 })],
+  [15.2, 16.3, () => ({ fx: 1750, fy: 22, S: 3.7, rx: 4, ry: -5 })],
+  [17.2, 17.6, () => ({ fx: 1104, fy: 420, S: 1.95, rx: 3, ry: 2 })],
+  [18.8, 19.3, () => ({ fx: 1200, fy: 432, S: 2.05, rx: 3, ry: -2 })],
+  [T.corte4, T.corte4, () => ({ fx: 1110, fy: 175, S: 2.0, rx: 4, ry: 3 })],
+  [20.75, 21.3, () => ({ fx: 1060, fy: 260, S: 2.2, rx: 3, ry: 0 })],
+  [21.6, 22.35, () => ({ fx: 1080, fy: 320, S: 2.0, rx: 3, ry: -2 })],
+];
+function abertura(t) {   // quadro 0: a caixa com o contrato anexado, empurrando devagar
+  const p = E.cubicInOut(C(t / 1.2));
+  return { fx: L(1104, 1110, p), fy: L(450, 485, p), S: Math.exp(L(Math.log(1.85), Math.log(2.05), p)), rx: L(9, 3, p), ry: L(-8, -3, p) };
+}
+const CORTES = [T.corte1, T.noite[1], T.corte3, T.corte4];
+const pulso = (t, tc, f = 26) => f * Math.exp(-(((t - tc) / 0.045) ** 2));
+function cam(t) {
+  let c = abertura(t);
+  for (const [a, b, fn] of PLANOS) if (t >= a) c = mixC(c, fn(t), liso(t, a, b));
+  // mergulho na faísca → final
+  if (t >= T.mergulho) { const [x, y] = centroM($('#f3')), p = E.cubicIn(C((t - T.mergulho) / 0.3));
+    c = { fx: L(c.fx, x, E.cubicOut(C((t - T.mergulho) / 0.2))), fy: L(c.fy, y, E.cubicOut(C((t - T.mergulho) / 0.2))), S: c.S * L(1, 7, p), rx: c.rx * (1 - p), ry: c.ry * (1 - p) }; }
+  c.fx += Math.sin(t * 1.1) * 2; c.fy += Math.cos(t * 0.9) * 1.5;
+  return c;
+}
+const camCss = c => `translate(960px, 540px) perspective(1700px) rotateX(${c.rx}deg) rotateY(${c.ry}deg) scale(${c.S}) translate(${-c.fx}px, ${-c.fy}px)`;
+
+/* ── mouse ── */
+const ACOES = () => [
+  [0.82, [1340, 720], centroM($('#envH')), T.env1 - 0.03, T.env1 + 0.12],
+  [9.4, [960, 760], centroM($('#envC')), T.env3 - 0.03, T.env3 + 0.12],
+  [13.95, [1500, 420], (() => { const [x, y] = centroM($('#copiar')); return [x - 18, y + 2]; })(), T.copiar - 0.03, T.copiar + 0.25],
+  [18.95, [1330, 640], centroM($('#envH')), T.env4 - 0.03, T.env4 + 0.12],
+];
+function mouse(t) {
+  const el = $('#mouse'), a = ACOES().find(([t0, , , , ts]) => t >= t0 && t < ts + 0.12);
+  if (!a) { el.style.opacity = 0; return; }
+  const [t0, de, para, tc, ts] = a, p = E.cubicInOut(C((t - t0) / Math.max(0.2, (tc - t0) * 0.8))), arco = Math.sin(p * Math.PI) * 40;
+  const x = L(de[0], para[0], p), y = L(de[1], para[1], p) - arco, k = Math.sin(C((t - tc) / 0.18) * Math.PI);
+  el.style.opacity = Math.min(pr(t, t0, 0.12, E.linear), 1 - pr(t, ts, 0.12, E.linear));
+  el.style.transform = `translate(${x - 3}px, ${y - 2}px) scale(${1 - 0.18 * k})`;
+}
+
+/* ── digitação ── */
+function digita(el, texto, [a, b], t, ph, focado = true) {
+  const n = Math.floor(C((t - a) / (b - a)) * texto.length + 1e-6), s = texto.slice(0, n);
+  const car = focado && (t < b + 0.1 || Math.floor(t * 2.4) % 2 === 0);
+  el.innerHTML = (s || '') + (car ? '<span class="car"></span>' : '') + (s ? '' : `<span class="ph">${ph}</span>`);
+  return n;
+}
+const envia = (el, t, tEnv, cheio) => { el.style.opacity = cheio ? 1 : 0.45; el.style.transform = `scale(${1 - 0.12 * pulsoS(t, tEnv - 0.02, 0.18)})`; };
+
+/* ── legenda (pílula escura, palavra a palavra) ── */
+const FALA = [
+  [[0.06, 'Ele'], [0.19, 'leu'], [0.43, 'o'], [0.55, 'contrato'], [1.03, 'inteiro']],
+  [[1.63, 'antes'], [1.97, 'da'], [2.15, 'reunião.']],
+  [[4.02, 'Achou'], [4.33, 'o'], [4.45, 'erro'], [4.63, 'na'], [4.79, 'linha'], [4.99, '214']],
+  [[6.11, 'que'], [6.35, 'ninguém'], [6.71, 'tinha'], [6.99, 'visto']],
+  [[7.37, 'em'], [7.51, 'três'], [7.87, 'dias.']],
+  [[10.21, 'Reescreveu'], [10.83, 'aquele'], [11.07, 'e-mail'], [11.31, 'difícil']],
+  [[12.01, 'do'], [12.23, 'jeito'], [12.61, 'que'], [12.79, 'você'], [13.01, 'queria'], [13.27, 'dizer']],
+  [[13.65, 'e'], [13.85, 'não'], [14.07, 'conseguia.']],
+  [[16.30, 'E'], [16.38, 'às'], [16.54, 'duas'], [16.80, 'da'], [16.96, 'manhã,']],
+  [[17.54, 'quando'], [17.70, 'você'], [17.92, 'perguntou']],
+  [[18.40, 'se'], [18.52, 'a'], [18.60, 'ideia'], [18.80, 'era'], [18.96, 'boa,']],
+  [[19.72, 'ele'], [19.82, 'disse'], [20.06, 'que'], [20.22, 'não']],
+  [[21.24, 'e'], [21.34, 'explicou'], [21.84, 'o'], [21.96, 'porquê.']],
+];
+const FIMG = [1.62, 3.5, 6.1, 7.36, 9.0, 12.0, 13.64, 15.0, 17.53, 18.39, 19.71, 21.23, 22.75];
+function legenda(t) {
+  const g = FALA.findIndex((ws, i) => t >= ws[0][0] - 0.02 && t < FIMG[i]);
+  const txt = g < 0 ? '' : FALA[g].filter(([w]) => t >= w - 0.02).map(([, x]) => x).join(' ');
+  $('#leg').innerHTML = txt ? `<span>${txt}</span>` : '';
+}
+
+/* ── quadro ── */
+window.quadro = async function (t) {
+  const fase = t < T.corte1 ? 'home1' : t < T.noite[1] ? 'chat1' : t < T.corte4 ? 'home2' : 'chat2';
+  const home = fase.startsWith('home');
+  $('#home').style.display = home ? '' : 'none';
+  $('#chat').style.display = home ? 'none' : '';
+  recentes(t < T.noite[1] ? 0 : 1);
+  relogio(t);
+
+  /* novo chat */
+  if (home) {
+    const um = fase === 'home1';
+    $('#saudTxt').textContent = um ? 'Bom dia, Lucas' : 'Boa madrugada, Lucas';
+    $('#anexoH').style.display = um ? '' : 'none';
+    const txt = um ? 'Revisa antes da reunião' : 'Largo tudo e abro a cafeteria. É boa ideia?';
+    const n = digita($('#txtH'), t >= (um ? T.env1 : T.env4) + 0.06 ? '' : txt, um ? T.dig1 : T.dig4, t, 'Como posso ajudar você hoje?', um || t > 17.4);
+    envia($('#envH'), t, um ? T.env1 : T.env4, n > 0);
+  }
+
+  /* conversa */
+  if (!home) {
+    const um = fase === 'chat1';
+    $('#c1').style.display = um ? '' : 'none'; $('#c2').style.display = um ? 'none' : '';
+    $('#art').style.display = um && t >= T.painel[0] ? '' : 'none';
+    const col = um ? L(757, 330, liso(t, T.painel[0], T.painel[1])) : 757;
+    if (um) {
+      $('#c1').style.left = col + 'px';
+      $('#c1').style.top = (t >= T.corte3 ? 60 - ($('#u2').offsetTop - 0) : 60) + 'px';
+      // leitura: faísca girando, contador de páginas, barrinhas acendendo
+      const pl = C((t - T.ler[0]) / (T.ler[1] - T.ler[0])), lidas = Math.round(pl * 48), feito = t >= T.ler[1] + 0.05;
+      $('#st1 .f').style.transform = feito ? '' : `rotate(${(t - T.ler[0]) * 260}deg) scale(${1 + 0.08 * Math.sin(t * 9)})`;
+      $('#st1Txt').textContent = feito ? 'Leu Contrato_Fornecimento_v7.pdf' : 'Lendo Contrato_Fornecimento_v7.pdf';
+      $('#st1Cnt').textContent = t < T.ler[0] ? '' : feito ? '· 48 de 48 páginas' : `· página ${Math.max(1, lidas)} de 48`;
+      $('#st1 .ok').style.opacity = pr(t, T.ler[1] + 0.05, 0.25, E.cubicOut);
+      $('#st1').style.opacity = pr(t, T.corte1 + 0.04, 0.25, E.cubicOut);
+      PAGS.forEach((p, i) => p.style.background = i < lidas ? '#D97757' : '#2A2A28');
+      $('#pags').style.opacity = 1 - pr(t, 7.9, 0.4, E.cubicOut) * 0;
+      escreve('#a1p1', T.a1p1, t); escreve('#a1p2', T.a1p2, t); escreve('#a1p3', T.a1p3, t);
+      { const c = $('#a1card'), p = pr(t, T.a1card, 0.6); c.style.opacity = pr(t, T.a1card, 0.25, E.cubicOut); c.style.transform = `translateY(${(1 - p) * 14}px)`; }
+      // pedido 2
+      $('#u2').style.opacity = t >= T.corte3 ? 1 : 0; $('#a2').style.opacity = t >= T.corte3 ? 1 : 0;
+      escreve('#a2p1', T.a2p1, t);
+      { const c = $('#a2card'), p = pr(t, T.a2card, 0.6); c.style.opacity = pr(t, T.a2card, 0.25, E.cubicOut); c.style.transform = `translateY(${(1 - p) * 14}px)`; }
+      // caixa de baixo: cola o rascunho, digita, envia
+      const inC = $('#inC'); inC.style.left = col + 'px';
+      const colando = t >= T.cola && t < T.env3 + 0.06;
+      $('#anexoC').style.display = colando ? '' : 'none';
+      if (colando) { const p = pr(t, T.cola, 0.5, E.spring); $('#anexoC').firstElementChild.style.transform = `scale(${L(0.6, 1, C(p, 0, 1.2))})`; $('#anexoC').firstElementChild.style.opacity = pr(t, T.cola, 0.15, E.linear); }
+      const nC = digita($('#txtC'), colando ? 'firme, mas gentil' : '', T.dig3, t, 'Responder ao Claude…', t > T.cola - 0.3 && t < T.env3 + 0.06);
+      envia($('#envC'), t, T.env3, nC > 0 || colando);
+
+      /* painel: contrato → e-mail */
+      if (t >= T.painel[0]) {
+        const pa = $('#art'), p = liso(t, T.painel[0], T.painel[1]);
+        pa.style.transform = `translateX(${(1 - E.cubicOut(p)) * 880}px)`; pa.style.opacity = C(p * 3);
+        const mail = t >= T.corte3;
+        $('#pdfCorpo').style.display = mail ? 'none' : ''; $('#mailCorpo').style.display = mail ? 'block' : 'none';
+        $('#artTit').textContent = mail ? 'E-mail para o Ricardo' : 'Revisão do contrato';
+        $('#artSub').textContent = mail ? '· Documento' : '· Contrato_Fornecimento_v7.pdf';
+        if (!mail) {
+          $('#pagina').style.top = 24 - ROLA * E.quintInOut(C((t - T.rola[0]) / (T.rola[1] - T.rola[0]))) + 'px';
+          // a linha 214 se acende, o 9.3 ganha um contorno, o comentário do Claude abre embaixo
+          $('#marca').style.width = 506 * E.cubicOut(C((t - T.marca) / 0.35)) + 'px';
+          const n93 = $('#n93'), [xn, yn] = [n93.offsetLeft + L214.offsetLeft, L214.offsetTop];
+          const er = $('#erro'); er.style.left = xn - 5 + 'px'; er.style.top = yn + 4 + 'px'; er.style.width = n93.offsetWidth + 10 + 'px';
+          er.style.opacity = pr(t, T.erro, 0.2, E.cubicOut); er.style.transform = `scale(${L(1.6, 1, pr(t, T.erro, 0.45))})`;
+          { const c = $('#coment'), p = pr(t, T.coment, 0.7); c.style.opacity = pr(t, T.coment, 0.25, E.cubicOut); c.style.transform = `translateY(${(1 - p) * 18}px) scale(${L(0.96, 1, p)})`; }
+          // carimbos das revisões: cada um "pisca" quando a fala passa (três dias, três revisões)
+          T.cb.forEach((tc, i) => { const k = pulsoS(t, tc - 0.04, 0.32), d = $(`#cb${i + 1}`);
+            d.style.transform = `rotate(-4deg) scale(${1 + 0.12 * k})`; d.style.opacity = 0.62 + 0.38 * C((t - tc + 0.04) / 0.1); d.style.background = `rgba(45,85,181,${0.12 * k})`; });
+        } else {
+          const ms = ['#m0', '#m1', '#m2', '#m3', '#m4', '#m5', '#m6'], tot = ms.reduce((s, m) => s + $(m)._w.length, 0);
+          let acc = 0, atual = null;
+          ms.forEach(m => { const n = $(m)._w.length, a = L(T.mail[0], T.mail[1], acc / tot), b = L(T.mail[0], T.mail[1], (acc + n) / tot); acc += n;
+            const w = escreve(m, [a, b], t); if (t >= a) atual = w; });
+          if (atual) mailY = noMundo(atual)[1];
+          // copiar → copiado
+          const ok = t >= T.copiar + 0.04;
+          $('#copTxt').textContent = ok ? 'Copiado' : 'Copiar';
+          $('#copIc').innerHTML = ok ? '<path d="M4.5 10.5l3.5 3.5 7.5-8"/>' : '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>';
+          $('#copiar').style.transform = `scale(${1 - 0.08 * pulsoS(t, T.copiar - 0.02, 0.2)})`;
+          $('#copiar').style.background = ok ? 'rgba(127,191,138,.14)' : ''; $('#copiar').style.color = ok ? '#9FD3A8' : '';
+        }
+      }
+    } else {
+      $('#inC').style.left = '757px';
+      $('#anexoC').style.display = 'none'; digita($('#txtC'), '', [0, 1], t, 'Responder ao Claude…', false); envia($('#envC'), t, -9, false);
+      // a faísca fica logo abaixo da última palavra escrita (como no app)
+      let ult = null;
+      [['#a3p0', T.a3p0], ['#a3p1', T.a3p1], ...T.a3b.map((ab, i) => [`#a3b${i + 1}`, ab])].forEach(([s, ab]) => { const w = escreve(s, ab, t); if (t >= ab[0]) ult = w; });
+      document.querySelectorAll('#a3 li').forEach((li, i) => li.style.setProperty('color', t >= T.a3b[i][0] ? '' : 'transparent'));
+      const f = $('#f3'), esc = t < T.a3b[2][1] + 0.1;
+      const yUlt = ult ? noMundo(ult)[1] - noMundo($('#a3'))[1] + ult.offsetHeight : 0;
+      f.style.top = (ult ? yUlt + 12 : 4) + 'px';
+      f.style.transform = esc ? `rotate(${(t - T.corte4) * 200}deg) scale(${1 + 0.1 * Math.sin(t * 10)})` : '';
+    }
+  }
+
+  /* madrugada: escurece, volta com vinheta */
+  $('#noite').style.opacity = C((t - T.noite[0]) / (T.noite[1] - T.noite[0])) * (1 - C((t - T.noite[1]) / (T.noite[2] - T.noite[1])));
+  $('#vinheta').style.opacity = t >= T.noite[1] ? 1 : 0;
+
+  /* câmera + borrão */
+  const c = cam(t), c0 = cam(t - 1 / 30);
+  $('#mundo').style.transform = camCss(c);
+  { const dx = (c0.fx - c.fx) * c.S, dy = (c0.fy - c.fy) * c.S, dz = Math.abs(Math.log(c.S / c0.S)) * 260;
+    const pul = CORTES.reduce((s, tc) => s + pulso(t, tc), 0) + (t > T.mergulho ? 6 * C((t - T.mergulho) / 0.25) * (1 - C((t - T.fim - 0.05) / 0.1)) : 0);
+    const bx = Math.min(1, Math.abs(dx) * 0.03 + dz * 0.02) + pul, by = Math.min(1, Math.abs(dy) * 0.03 + dz * 0.02) + pul * 0.25;
+    $('#mbg').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+    $('#camfx').style.filter = bx + by > 0.4 ? 'url(#mb)' : 'none'; }
+
+  mouse(t);
+
+  /* final: a faísca nasce com mola, o nome sai de trás dela, a caixa vazia esperando */
+  { const f = $('#fim'); f.style.opacity = pr(t, T.fim, 0.25, E.cubicOut); $('#camfx').style.opacity = 1 - pr(t, T.fim + 0.1, 0.2, E.linear);
+    const s = M.prog(t, T.faisca - 0.45, 0.95, E.spring), gira = L(-120, 0, pr(t, T.faisca - 0.45, 1.1));
+    const desl = L(44, 0, E.cubicInOut(C((t - T.nome + 0.12) / 0.6)));   // a faísca começa no centro e vai para o lugar quando o nome chega
+    const pulsa = 1 + 0.05 * pulsoS(t, T.nome + 0.5, 0.4);
+    $('#fx').style.transform = `translateX(${desl}px) rotate(${gira}deg) scale(${C(s, 0, 1.3) * pulsa})`;
+    $('#fx').style.opacity = t < T.faisca - 0.45 ? 0 : 1;
+    $('#clipR').setAttribute('width', 90 * E.expoOut(C((t - T.nome) / 0.75)));
+    $('#nomeG').style.transform = `translateX(${L(-10, 0, pr(t, T.nome, 0.75))}px)`;
+    const pi = $('#pilula'), pp = pr(t, T.pilula, 0.7);
+    pi.style.opacity = pr(t, T.pilula, 0.3, E.cubicOut); pi.style.transform = `translateY(${(1 - pp) * 22}px) scale(${L(0.97, 1, pp)})`;
+    $('#pilTxt').innerHTML = (Math.floor(t * 2.2) % 2 === 0 ? '<span class="car" style="background:#F9F9F7"></span>' : '<span class="car" style="background:transparent"></span>') + 'Como posso ajudar você hoje?';
+    $('#site').style.opacity = pr(t, T.site, 0.4, E.cubicOut); $('#site').style.transform = `translateY(${(1 - pr(t, T.site, 0.7)) * 12}px)`;
+  }
+
+  legenda(t);
+};
+window.pronto = document.fonts.load('16px ASans').then(() => document.fonts.load('17px ASerif')).then(() => document.fonts.load('11px AMono')).then(() => document.fonts.ready);
+</script>
+</body>
+</html>

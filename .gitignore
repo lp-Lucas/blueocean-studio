@@ -1,0 +1,25 @@
+# dependências
+node_modules/
+__pycache__/
+*.pyc
+
+# dados de cada máquina (projetos, cache, configuração, controle do bo)
+projetos/
+cache/
+config.json
+.controle*.json
+*.lnk
+
+# mídia pesada gerada pelas ferramentas de motion
+ferramentas/motion/fullmotion/**/*.png
+ferramentas/motion/fullmotion/**/*.jpg
+ferramentas/motion/fullmotion/**/*.mp4
+ferramentas/motion/fullmotion/**/*.wav
+ferramentas/motion/vinhetas/**/*.png
+ferramentas/motion/vinhetas/**/*.mp4
+ferramentas/motion/vinhetas/**/*.wav
+
+# modelos de IA (baixados à parte)
+*.onnx
+*.pt
+*.torchscript

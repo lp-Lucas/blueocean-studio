@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-br"><head><meta charset="utf-8">
+<title>Peças técnicas de comercial (podcast YouTube) — faixa de cima, acima das cabeças</title>
+<!-- Fundo transparente, tela 1920×520 (vai no topo do quadro 16:9, acima das cabeças no plano aberto):
+     node render.mjs fullmotion/explica-comercial.html <saida.webm> --alfa --w 1920 --h 520 --params '{...}'
+     tipos (ts = instantes da fala, em segundos desde o início da peça):
+       barras  {"titulo","itens":[{"rot","v","cor"}...],"ts":[...]}          barras com contador, uma por fala
+       tempo   {"ts":[t5min, tSegundos, tResposta, tDobrou, tTriplicou]}     cronômetro 5:00 → segundos + resposta 3x
+       lista   {"titulo","itens":["..",".."],"ts":[tTitulo, t1, t2, t3],"destaque":2,"tDestaque":x}
+       versus  {"a","da","b","db","ts":[tA, tB, tDiferente, tDefA, tDefB]}
+       divisao {"titulo","a","va","b","vb","ts":[tTitulo, tA, tB]}
+     "dur" = duração total. -->
+<style>
+@font-face { font-family: 'Inst'; font-weight: 500; src: url('../fontes/InstrumentSans-Medium.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 600; src: url('../fontes/InstrumentSans-SemiBold.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 700; src: url('../fontes/InstrumentSans-Bold.ttf'); }
+:root { --azul: #0137FF; --navy: #0A1A5C; --verde: #00FFD4; --tinta: #101218; --cinza: #5b6380; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 520px; background: transparent !important; overflow: hidden; }
+body { font-family: 'Inst', sans-serif; -webkit-font-smoothing: antialiased; letter-spacing: -0.02em; color: var(--tinta); }
+.p { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); opacity: 0; will-change: transform, filter, opacity; }
+.w { display: inline-block; }
+.cartao { background: #fff; border-radius: 34px; box-shadow: 0 26px 60px rgba(0, 8, 40, .45); }
+.pilula { display: flex; align-items: center; gap: 16px; padding: 12px 30px 12px 14px; border-radius: 999px; background: var(--azul); color: #fff;
+          font-size: 36px; font-weight: 700; white-space: nowrap; box-shadow: 0 18px 44px rgba(0, 20, 120, .45); }
+.tile { width: 56px; height: 56px; border-radius: 17px; display: grid; place-items: center; flex: none; background: #fff; }
+.tile .onda { width: 34px; height: 24px; background: url(../img/simbolo-blueocean-branco.png) center / contain no-repeat; filter: brightness(0) saturate(100%) invert(14%) sepia(98%) saturate(6000%) hue-rotate(232deg); }
+.chip { display: flex; align-items: center; gap: 20px; padding: 18px 34px 18px 18px; border-radius: 30px; background: #fff; font-size: 38px; font-weight: 700;
+        white-space: nowrap; box-shadow: 0 20px 50px rgba(0, 8, 40, .42); }
+.num { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; background: var(--azul); color: #fff; font-size: 36px; font-weight: 700; flex: none; }
+.sub { font-size: 24px; font-weight: 500; color: var(--cinza); margin-top: 2px; letter-spacing: -.01em; }
+.tag { display: inline-flex; align-items: center; height: 58px; padding: 0 30px; border-radius: 18px 18px 18px 6px; font-size: 28px; font-weight: 700; letter-spacing: .02em; color: #fff; }
+.risco { position: absolute; left: -4%; right: -4%; top: 52%; height: 8px; border-radius: 4px; background: #E5484D; transform-origin: 0 50%; transform: scaleX(0); }
+</style></head>
+<body>
+<div id="raiz"></div>
+<script src="../motion.js"></script>
+<script>
+const M = Motion, E = M.ease, C = M.clamp, L = M.lerp, $ = s => document.querySelector(s);
+const P = Object.assign({ tipo: 'barras' }, window.PARAMS || {});
+const TS = P.ts || [0.5, 2, 4, 6, 7];
+const DUR = P.dur || 8;
+window.DURACAO = DUR;
+const R = document.getElementById('raiz');
+const pr = (t, a, d, e = E.expoOut) => M.prog(t, a, d, e);
+const SAI = DUR - 0.5;   // tudo sai junto no fim
+
+/* entra com mola saindo do desfoque e sai desfocando (mesmo jeito das peças da Blue) */
+function anim(el, t, a, b = SAI, o = {}) {
+  const { x = 0, y = 0, de = 0.8, desf = 24, dy = 40, din = 0.75, dout = 0.4, extra = '', esc = 1, rot = 0 } = o;
+  if (t < a || t > b + dout) { el.style.opacity = 0; return 0; }
+  const pin = pr(t, a, din), ps = M.prog(t, a, din * 1.4, E.spring), pa = pr(t, a, din * 0.45, E.cubicOut), po = pr(t, b, dout, E.cubicIn);
+  el.style.opacity = pa * (1 - po);
+  const bl = (1 - pin) * desf + po * desf;
+  el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+  el.style.transform = `translate(-50%,-50%) translate(${x}px,${y + (1 - pin) * dy - po * dy * 0.6}px) rotate(${(1 - pin) * rot}deg) scale(${L(de, 1, ps) * (1 - po * 0.1) * esc})${extra}`;
+  return pa * (1 - po);
+}
+const cache = new Map();
+function palavras(el, t, t0, atraso = 0.05) {
+  const ws = cache.get(el) || (cache.set(el, M.palavras(el)), cache.get(el));
+  ws.forEach((s, i) => { const a = t0 + i * atraso, p = pr(t, a, 0.6), pa = pr(t, a, 0.28, E.cubicOut);
+    s.style.opacity = pa; s.style.filter = p > 0.99 ? 'none' : `blur(${(1 - p) * 12}px)`; s.style.transform = `translateY(${(1 - p) * 0.4}em)`; });
+}
+const tranco = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-s * 7) * Math.sin(s * 22); return ` rotate(${-4 * k}deg) scale(${1 + 0.04 * k})`; };
+const pct = v => Math.round(v) + '%';
+let quadro;
+
+if (P.tipo === 'barras') {
+  /* cartão branco: título + uma barra por item, crescendo com o número na hora da fala */
+  const itens = P.itens || [{ rot: 'Média do mercado B2B', v: 25, cor: '#0A1A5C' }, { rot: 'Blue Ocean', v: 15, cor: '#0137FF' }, { rot: 'Melhor mês da Blue', v: 10, cor: '#00C9A7' }];
+  const MAX = P.max || 30;
+  R.innerHTML = `<div class="p cartao" id="card" style="left:960px; top:262px; width:1180px; height:${120 + itens.length * 96}px; padding:30px 46px">
+      <div id="tit" style="font-size:40px; font-weight:700; letter-spacing:-.03em">${P.titulo || 'Taxa de no-show'}</div>
+      ${itens.map((it, i) => `<div class="lin" style="position:absolute; left:46px; right:46px; top:${108 + i * 96}px; height:78px; opacity:0">
+        <div style="font-size:26px; font-weight:600; color:var(--cinza); white-space:nowrap">${it.rot}</div>
+        <div style="position:absolute; left:0; right:150px; top:40px; height:30px; border-radius:15px; background:#eef0f6; overflow:hidden">
+          <div class="bar" style="height:100%; width:0; border-radius:15px; background:${it.cor}"></div></div>
+        <div class="v" style="position:absolute; right:0; top:14px; width:140px; text-align:right; font-size:56px; font-weight:700; letter-spacing:-.04em; color:${it.cor}">0%</div></div>`).join('')}
+    </div>`;
+  quadro = t => {
+    anim($('#card'), t, TS[0] - 0.4, SAI, { de: 0.9 });
+    palavras($('#tit'), t, TS[0] - 0.25);
+    [...document.querySelectorAll('.lin')].forEach((l, i) => {
+      const a = TS[i + 1] ?? TS[TS.length - 1], pa = pr(t, a - 0.15, 0.4, E.cubicOut), pv = M.prog(t, a - 0.1, 0.9, E.quintOut);
+      l.style.opacity = pa; l.style.transform = `translateX(${(1 - pa) * -30}px)`;
+      l.querySelector('.bar').style.width = (itens[i].v / MAX * 100 * pv) + '%';
+      l.querySelector('.v').textContent = pct(itens[i].v * pv);
+      l.querySelector('.v').style.transform = tranco(t, a + 0.8).replace(/^ /, '');
+    });
+  };
+}
+
+if (P.tipo === 'tempo') {
+  /* esquerda: cronômetro 5:00 riscado → "segundos"; direita: cartão azul "taxa de 1ª resposta" 1x → 2x → 3x */
+  R.innerHTML = `<div class="p cartao" id="crono" style="left:620px; top:262px; width:640px; height:330px; padding:34px 44px">
+      <div style="font-size:30px; font-weight:600; color:var(--cinza)">Tempo para falar com o lead</div>
+      <div style="display:flex; align-items:center; gap:28px; margin-top:22px">
+        <svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="66" r="46" fill="none" stroke="#eef0f6" stroke-width="12"/>
+          <circle id="arco" cx="60" cy="66" r="46" fill="none" stroke="#0137FF" stroke-width="12" stroke-linecap="round" transform="rotate(-90 60 66)"/>
+          <rect x="52" y="4" width="16" height="12" rx="4" fill="#0A1A5C"/><path id="pont" d="M60 66 L60 32" stroke="#0A1A5C" stroke-width="6" stroke-linecap="round"/></svg>
+        <div style="position:relative; height:150px; width:360px">
+          <div id="cinco" style="position:absolute; left:0; top:6px; font-size:96px; font-weight:700; letter-spacing:-.05em; white-space:nowrap"><span style="position:relative">5 min<i class="risco" id="r5"></i></span></div>
+          <div id="seg" style="position:absolute; left:0; top:6px; font-size:96px; font-weight:700; letter-spacing:-.05em; color:var(--azul); white-space:nowrap; opacity:0">segundos</div>
+        </div></div></div>
+    <div class="p" id="resp" style="left:1340px; top:262px; width:560px; height:330px; padding:34px 44px; border-radius:34px; background:linear-gradient(150deg,#1446FF,#0630C4); color:#fff; box-shadow:0 30px 70px rgba(0,10,80,.5)">
+      <div style="font-size:30px; font-weight:600; opacity:.85">Taxa de 1ª resposta</div>
+      <div id="vx" style="font-size:140px; font-weight:700; letter-spacing:-.05em; line-height:1.05; margin-top:6px">1x</div>
+      <div style="position:absolute; right:44px; bottom:40px; display:flex; align-items:flex-end; gap:16px; height:150px">
+        ${[0, 1, 2].map(i => `<div class="cx" style="width:44px; height:${50 * (i + 1)}px; border-radius:12px; background:${i === 2 ? 'var(--verde)' : 'rgba(255,255,255,.9)'}; transform-origin:50% 100%; transform:scaleY(0)"></div>`).join('')}
+      </div></div>`;
+  const arco = $('#arco'), CIRC = 2 * Math.PI * 46;
+  quadro = t => {
+    anim($('#crono'), t, TS[0] - 0.4);
+    // o cronômetro anda até 5:00 e depois volta quase a zero ("segundos")
+    const ida = M.prog(t, TS[0] - 0.2, 1.0, E.cubicInOut), volta = M.prog(t, TS[1], 0.6, E.quintOut);
+    const f = ida * (1 - volta * 0.92);
+    arco.setAttribute('stroke-dasharray', CIRC); arco.setAttribute('stroke-dashoffset', CIRC * (1 - f));
+    $('#pont').setAttribute('transform', `rotate(${f * 360} 60 66)`);
+    $('#r5').style.transform = `scaleX(${pr(t, TS[1] - 0.25, 0.35, E.cubicInOut)})`;
+    const ts = pr(t, TS[1] + 0.25, 0.4, E.cubicOut);
+    $('#cinco').style.opacity = 1 - ts; $('#cinco').style.transform = `translateY(${ts * -40}px)`; $('#cinco').style.filter = ts > 0.01 ? `blur(${ts * 12}px)` : 'none';
+    $('#seg').style.opacity = ts; $('#seg').style.transform = `translateY(${(1 - ts) * 40}px)${tranco(t, TS[1] + 0.5)}`; $('#seg').style.filter = ts < 0.99 ? `blur(${(1 - ts) * 12}px)` : 'none';
+    anim($('#resp'), t, TS[2] - 0.3);
+    const n = t < TS[3] ? 1 : t < TS[4] ? 2 : 3;
+    $('#vx').textContent = n + 'x';
+    $('#vx').style.transform = tranco(t, n === 3 ? TS[4] : n === 2 ? TS[3] : 99).replace(/^ /, '');
+    [...document.querySelectorAll('.cx')].forEach((b, i) => { b.style.transform = `scaleY(${M.prog(t, [TS[2], TS[3], TS[4]][i], 0.6, E.spring)})`; });
+  };
+}
+
+if (P.tipo === 'lista') {
+  /* pílula azul com o título + itens numerados entrando um a um no tempo da fala; o destaque ganha contorno verde e check */
+  const itens = P.itens || ['Produto', 'Pessoa', 'Processo'];
+  const larg = P.larg || 520, gap = 34, total = itens.length * larg + (itens.length - 1) * gap;
+  R.innerHTML = `<div class="p pilula" id="tit" style="left:960px; top:110px"><div class="tile"><div class="onda"></div></div><span id="titx">${P.titulo || 'Os 3 P’s da compra'}</span></div>
+    ${itens.map((it, i) => `<div class="p chip it" style="left:${960 - total / 2 + larg / 2 + i * (larg + gap)}px; top:${P.sub ? 330 : 320}px; width:${larg}px; white-space:normal; line-height:1.12; font-size:${P.fonte || 38}px">
+      <div class="num">${i + 1}</div><div><div>${it}</div>${P.sub ? `<div class="sub">${P.sub[i]}</div>` : ''}</div>
+      <svg class="ok" viewBox="0 0 24 24" width="46" height="46" style="position:absolute; right:-14px; top:-14px; opacity:0"><circle cx="12" cy="12" r="12" fill="#00FFD4"/><path d="M7 12.5 L10.5 16 L17 9" fill="none" stroke="#00281f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`).join('')}`;
+  quadro = t => {
+    anim($('#tit'), t, TS[0] - 0.3, SAI, { de: 0.85 });
+    palavras($('#titx'), t, TS[0] - 0.15, 0.06);
+    const D = P.destaque, tD = P.tDestaque ?? 99;
+    [...document.querySelectorAll('.it')].forEach((el, i) => {
+      const a = (TS[i + 1] ?? TS[TS.length - 1]) - 0.2;
+      const apaga = D != null && t > tD && i !== D ? pr(t, tD, 0.4, E.cubicOut) : 0;
+      anim(el, t, a, SAI, { dy: 60, extra: i === D ? tranco(t, tD) : '' });
+      if (apaga) el.style.opacity = parseFloat(el.style.opacity) * (1 - apaga * 0.55);
+      el.style.boxShadow = i === D && t > tD ? `0 0 0 ${6 * pr(t, tD, 0.4)}px #00FFD4, 0 20px 50px rgba(0,8,40,.42)` : '';
+      const ok = el.querySelector('.ok'); const po = i === D ? M.prog(t, tD + 0.1, 0.6, E.spring) : 0;
+      ok.style.opacity = C(po * 3); ok.style.transform = `scale(${C(po, 0, 1.2)})`;
+    });
+  };
+}
+
+if (P.tipo === 'versus') {
+  /* dois cartões lado a lado com etiqueta (preta × azul) e o "≠" entre eles; a definição de cada um entra depois */
+  R.innerHTML = `<div class="p cartao" id="ca" style="left:560px; top:280px; width:700px; height:290px; padding:30px 40px">
+      <div class="tag" style="background:#050608">${P.a || 'QUEBRA-GELO'}</div>
+      <div id="da" style="font-size:34px; font-weight:600; line-height:1.22; margin-top:22px">${P.da || 'Um comentário rápido no começo da call para descontrair.'}</div></div>
+    <div class="p cartao" id="cb" style="left:1360px; top:280px; width:700px; height:290px; padding:30px 40px">
+      <div class="tag" style="background:var(--azul)">${P.b || 'RAPPORT'}</div>
+      <div id="db" style="font-size:34px; font-weight:600; line-height:1.22; margin-top:22px">${P.db || 'A conexão construída na conversa, puxando gancho do que o lead fala.'}</div></div>
+    <div class="p" id="dif" style="left:960px; top:280px; width:120px; height:120px; border-radius:50%; background:var(--verde); display:grid; place-items:center;
+      font-size:80px; font-weight:700; color:#00281f; box-shadow:0 18px 40px rgba(0,40,30,.4)">≠</div>`;
+  quadro = t => {
+    anim($('#ca'), t, TS[0] - 0.3, SAI, { x: 0, rot: -3 });
+    anim($('#cb'), t, TS[1] - 0.3, SAI, { rot: 3 });
+    anim($('#dif'), t, TS[2] - 0.1, SAI, { de: 0.3, rot: -30, extra: tranco(t, TS[2] + 0.3) });
+    palavras($('#da'), t, TS[3] ?? TS[0], 0.045);
+    palavras($('#db'), t, TS[4] ?? TS[1], 0.045);
+  };
+}
+
+if (P.tipo === 'divisao') {
+  /* uma barra só dividida: escutar 80 % (azul) | falar 20 % (verde), com os números contando */
+  R.innerHTML = `<div class="p cartao" id="card" style="left:960px; top:262px; width:1240px; height:300px; padding:32px 46px">
+      <div id="tit" style="font-size:40px; font-weight:700; letter-spacing:-.03em">${P.titulo || 'Regra 80/20 na call'}</div>
+      <div style="position:absolute; left:46px; right:46px; top:112px; height:96px; border-radius:26px; background:#eef0f6; overflow:hidden; display:flex">
+        <div id="ba" style="height:100%; width:0; background:var(--azul); display:flex; align-items:center; padding-left:30px; color:#fff; font-size:44px; font-weight:700; white-space:nowrap; overflow:hidden">
+          <span id="va">0%</span>&nbsp;<span style="font-weight:600; opacity:.9">${P.a || 'escutar'}</span></div>
+        <div id="bb" style="height:100%; width:0; background:var(--verde); display:flex; align-items:center; justify-content:center; color:#00281f; font-size:40px; font-weight:700; white-space:nowrap; overflow:hidden">
+          <span id="vb">0%</span>&nbsp;<span style="font-weight:600">${P.b || 'falar'}</span></div></div>
+      <div id="rod" style="position:absolute; left:46px; top:228px; font-size:26px; font-weight:500; color:var(--cinza)">${P.rodape || 'Quem conduz a venda escuta mais do que fala.'}</div></div>`;
+  quadro = t => {
+    anim($('#card'), t, TS[0] - 0.4, SAI, { de: 0.9 });
+    palavras($('#tit'), t, TS[0] - 0.25);
+    const pa = M.prog(t, TS[1] - 0.1, 0.8, E.quintOut), pb = M.prog(t, TS[2] - 0.1, 0.6, E.quintOut);
+    $('#ba').style.width = (P.va || 80) * pa + '%'; $('#va').textContent = pct((P.va || 80) * pa);
+    $('#bb').style.width = (P.vb || 20) * pb + '%'; $('#vb').textContent = pct((P.vb || 20) * pb);
+    palavras($('#rod'), t, TS[2] + 0.7, 0.04);
+  };
+}
+
+window.quadro = t => quadro(t);
+window.pronto = (async () => { await document.fonts.ready; for (const i of document.images) await i.decode().catch(() => {}); window.quadro(0); })();
+</script>
+</body></html>

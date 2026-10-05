@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import { abrirChrome, dormir } from '../../../chrome.mjs';
+const c = await abrirChrome(['--lang=pt-BR', '--accept-lang=pt-BR']);
+await c.cdp('Emulation.setDeviceMetricsOverride', { width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false });
+await c.cdp('Network.enable');
+await c.cdp('Network.setUserAgentOverride', { userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', acceptLanguage: 'pt-BR' });
+await c.cdp('Page.enable');
+await c.cdp('Page.navigate', { url: 'https://claude.ai/new' }); await dormir(10000);
+fs.writeFileSync('../logo.svg', await c.avaliar(`(document.querySelector('svg[data-cds="ClaudeLogo"]')||{outerHTML:'NADA'}).outerHTML`));
+await c.fechar();

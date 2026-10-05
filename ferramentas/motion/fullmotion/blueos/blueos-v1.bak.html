@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — Agente de Copy no Blue OS (interface recriada)</title>
+<link rel="stylesheet" href="../fm.css">
+<style>
+  /* a fonte do próprio Blue OS (Outfit) — interface recriada a partir dos prints, em vetor */
+  @font-face { font-family: 'OS'; font-weight: 100 900; src: url('../../fontes/Outfit.ttf'); }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; }
+  body { background: #050608; color: #F1F2F5; }
+  #bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(1100px 800px at 50% 44%, rgba(45, 107, 255, 0.11), transparent 70%), #050608; }
+  #bolinhas { position: absolute; inset: 0; width: 1080px; height: 1920px; z-index: 1;
+              -webkit-mask-image: radial-gradient(120% 90% at 50% 45%, #000 35%, rgba(0,0,0,.35) 75%, transparent 100%); }
+  #azul { display: none; }
+  .p { z-index: 5; }
+  #camfx { position: absolute; inset: 0; z-index: 3; }
+  #mundo { position: absolute; left: 0; top: 0; width: 1920px; height: 1020px; transform-origin: 0 0; overflow: hidden; border-radius: 22px;
+           background: #08090D; border: 1px solid rgba(255, 255, 255, .07);
+           box-shadow: 0 60px 160px rgba(0, 0, 0, .85), 0 0 220px 30px rgba(45, 107, 255, .13);
+           font-family: 'OS', sans-serif; font-size: 13px; line-height: 1.3; letter-spacing: 0; color: #E9EAEE; }
+  #mundo .ab { position: absolute; }
+  #mundo .icn { width: 20px; height: 20px; display: block; flex: none; }
+  .fx { display: flex; align-items: center; }
+
+  /* trilho azul + painel */
+  #rail { left: 10px; top: 8px; width: 76px; height: 1004px; border-radius: 16px; border: 1px solid rgba(90, 130, 255, .16);
+          background: linear-gradient(180deg, #113289 0%, #0F2B72 22%, #10224C 50%, #0C1631 75%, #0A0F1A 100%); }
+  #railAt { left: 12px; top: 95px; width: 50px; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, .13); }
+  .ri { left: 12px; width: 50px; height: 36px; display: grid; place-items: center; color: #E3E9FF; }
+  .ri .icn { width: 19px; height: 19px; stroke-width: 1.7; }
+  #painel { left: 97px; top: 8px; width: 1813px; height: 1004px; border-radius: 14px; background: #101116; border: 1px solid #212226; }
+  #grade { left: 346px; top: 9px; width: 1563px; height: 1002px; border-radius: 0 13px 13px 0;
+           background-image: radial-gradient(rgba(255, 255, 255, .055) 1px, transparent 1.5px); background-size: 22px 22px; }
+  #divisa { left: 345px; top: 9px; width: 1px; height: 1002px; background: #1D1E23; }
+  .rot { font-size: 11px; font-weight: 700; letter-spacing: .17em; color: #8E929C; }
+  .item { left: 109px; width: 199px; height: 37px; padding-left: 16px; gap: 11px; border-radius: 8px; font-size: 13.5px; color: #D5D7DD; }
+  .item .icn { width: 15px; height: 15px; color: #A3A6AE; stroke-width: 1.8; }
+  .item.on { background: #202228; color: #fff; font-weight: 600; }
+  .item.on .icn { color: #fff; }
+  .badge { margin-left: auto; margin-right: 10px; height: 20px; padding: 0 8px; border-radius: 10px; background: #00DEB9; color: #06302A; font-size: 11px; font-weight: 800; display: flex; align-items: center; opacity: 0; }
+  #barCopy { left: 101px; top: 263px; width: 3px; height: 20px; border-radius: 2px; background: #699FD7; }
+  #btBug { left: 1767px; top: 975px; width: 136px; height: 40px; border-radius: 20px; background: #033AE9; color: #fff; font-weight: 700; font-size: 13px; justify-content: center; gap: 7px;
+           box-shadow: 0 6px 18px rgba(3, 58, 233, .4); }
+  #btBug .icn { width: 16px; height: 16px; }
+
+  /* home */
+  #saud { left: 1128px; top: 440px; transform: translate(-50%, -50%); gap: 16px; font-size: 36px; font-weight: 500; letter-spacing: -0.02em; color: #F4F5F8; white-space: nowrap; }
+  #saud img { width: 38px; }
+  #homeIn { left: 678px; top: 852px; width: 900px; height: 91px; border-radius: 14px; background: #17191E; border: 1px solid #2A2C32; }
+
+  /* página do Agente de Copy */
+  .bt { height: 34px; padding: 0 13px; gap: 7px; border-radius: 8px; border: 1px solid #2E3036; font-size: 13px; font-weight: 600; color: #E9EAEE; white-space: nowrap; background: #121317; }
+  .bt .icn { width: 14px; height: 14px; }
+  .bt.br { background: #EEF0F6; color: #111216; border-color: #EEF0F6; }
+  .bt.cz { background: #77797F; color: #1E2025; border-color: #77797F; }
+  .bt.off { color: #6E717A; }
+  .card { background: #15161A; border: 1px solid #24262B; border-radius: 14px; }
+  .lb { font-size: 11px; font-weight: 700; letter-spacing: .03em; color: #C9CBD1; white-space: nowrap; }
+  .lb span { font-size: 10px; font-weight: 400; letter-spacing: 0; color: #A3A6AE; }
+  .st { width: 113px; height: 38px; gap: 9px; padding-left: 10px; font-size: 13.5px; color: #C9CBD1; }
+  .st i { width: 22px; height: 22px; border-radius: 50%; background: #8E939E; color: #4A4D55; font-size: 10px; font-style: normal; font-weight: 700; display: grid; place-items: center; flex: none; }
+  .st.dim { color: #6E717A; } .st.dim i { background: #4A4D55; color: #33353B; }
+  .st.ok i { background: #1FCCC2; color: transparent; }
+  .st.on { color: #fff; } .st.on i { background: rgba(255, 255, 255, .32); color: #fff; }
+  #stPill { top: 10px; width: 113px; height: 38px; border-radius: 9px; background: #003CFF; box-shadow: 0 6px 20px rgba(0, 60, 255, .35); }
+  .tg { height: 24px; padding: 0 8px; border-radius: 6px; font-size: 11px; font-weight: 800; display: flex; align-items: center; letter-spacing: .02em; }
+  .tg.mofu { color: #DAB928; border: 1px solid rgba(218, 185, 40, .32); background: rgba(218, 185, 40, .05); }
+  .tg.bofu { color: #1FCCC2; border: 1px solid rgba(31, 204, 194, .32); background: rgba(31, 204, 194, .05); }
+  .tg.tofu { color: #6FB1F4; border: 1px solid rgba(111, 177, 244, .32); background: rgba(111, 177, 244, .05); }
+  .tg.est { color: #6FA0E0; font-weight: 600; background: #1D2735; border: 1px solid #263346; }
+  .cnt { height: 32px; gap: 8px; padding: 0 9px; border-radius: 8px; border: 1px solid #2A2C32; }
+  .cnt .tg { border: none; background: none; padding: 0 4px 0 0; height: auto; }
+  .cnt b { width: 20px; height: 20px; border-radius: 5px; border: 1px solid #3A3C42; display: grid; place-items: center; font-weight: 400; color: #C9CBD1; font-size: 13px; }
+  .cnt .v { width: 16px; text-align: center; font-weight: 700; font-size: 13.5px; color: #fff; overflow: hidden; height: 18px; position: relative; }
+  .cnt .v span { position: absolute; left: 0; right: 0; }
+  .row { left: 19px; width: 805px; height: 56px; border-radius: 10px; border: 1px solid #26282E; background: #15161B; }
+  .azl { color: #6FA0E0; font-weight: 700; font-size: 13.5px; gap: 8px; }
+  .azl .icn { width: 15px; height: 15px; stroke-width: 1.8; }
+  .peca { left: 17px; width: 810px; height: 148px; border-radius: 12px; border: 1px solid #26282E; background: #15161A; }
+  .ln { left: 13px; right: 13px; height: 22px; gap: 11px; font-size: 13px; color: #C9CBD1; white-space: nowrap; }
+  .ln .k { height: 20px; padding: 0 7px; border-radius: 5px; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; letter-spacing: .03em; flex: none; }
+  .ln .k.head { color: #00DEB9; border: 1.5px solid #00DEB9; background: rgba(0, 222, 185, .05); }
+  .ln .k.sub { color: #6E9BCB; border: 1.5px solid #4E78A6; }
+  .ln .k.cta { color: #A9A7F2; border: 1.5px solid #7D7BCF; }
+  .ln.h .tx { font-weight: 700; color: #fff; font-size: 13.5px; }
+  .ln .tx { position: relative; }
+  .ln .c { margin-left: auto; font-size: 11px; color: #8E929C; }
+  .mk { font-style: normal; background: linear-gradient(rgba(0, 222, 185, .30), rgba(0, 222, 185, .30)) no-repeat 0 60% / 0% 70%; border-radius: 3px; }
+  .sq { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #2E3036; display: grid; place-items: center; color: #A3A6AE; }
+  .sq .icn { width: 13px; height: 13px; }
+  .spin { width: 13px; height: 13px; border-radius: 50%; border: 2px solid rgba(0, 0, 0, .15); border-top-color: #111; flex: none; }
+  .car { display: inline-block; width: 1.5px; height: 15px; background: #5287FF; vertical-align: -3px; margin-left: 1px; }
+  .ph { color: #8E929C; }
+  .voo { width: 150px; height: 46px; margin: -23px 0 0 -75px; border-radius: 9px; background: #1B1D22; border: 1px solid #3A3C42; box-shadow: 0 14px 30px rgba(0, 0, 0, .55); padding: 8px 10px; opacity: 0; }
+  .voo i { display: block; height: 6px; border-radius: 3px; background: #4A4D55; margin-top: 6px; }
+  .voo i.hd { width: 30px; height: 10px; margin: 0; border: 1.5px solid #00DEB9; border-radius: 3px; background: none; display: inline-block; vertical-align: middle; }
+  .voo i.h1 { display: inline-block; width: 92px; margin: 0 0 0 6px; vertical-align: middle; background: #D5D7DD; height: 6px; }
+
+  /* final */
+  #brilho { width: 1500px; height: 1500px; border-radius: 50%; z-index: 3;
+            background: radial-gradient(circle closest-side, rgba(45, 107, 255, 0.34) 0%, rgba(45, 107, 255, 0.27) 15%, rgba(45, 107, 255, 0.18) 32%, rgba(45, 107, 255, 0.1) 52%, rgba(45, 107, 255, 0.04) 72%, rgba(45, 107, 255, 0.01) 88%, rgba(45, 107, 255, 0) 100%); }
+  #onda { width: 330px; z-index: 6; filter: drop-shadow(0 0 40px rgba(0, 222, 185, .35)); }
+  #onda img { width: 100%; display: block; }
+  .fim { font-family: 'OS', sans-serif; font-weight: 700; color: #F4F5F8; letter-spacing: -0.03em; z-index: 6; }
+  .tl { color: #00DEB9; }
+  #leg { font-family: 'OS', sans-serif; font-weight: 500; font-size: 44px; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .9); }
+  #leg > div { background: rgba(7, 8, 11, .74); padding: 6px 26px 10px; border-radius: 22px; }
+  #leg b { color: #00DEB9; }
+  .cursor { position: absolute; left: 0; top: 0; }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<canvas id="bolinhas" width="1080" height="1920"></canvas>
+<svg width="0" height="0" style="position:absolute"><filter id="mb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
+<div id="camfx"><div id="mundo"></div></div>
+
+<!-- final: a marca -->
+<div id="brilho" class="p" style="left:540px;top:820px"></div>
+<div id="onda" class="p" style="left:540px;top:700px"><img src="../../img/simbolo-blueocean.png"></div>
+<div id="fim1" class="p linha fim" style="left:540px;top:1010px;font-size:118px">Agente de Copy</div>
+<div id="fim2" class="p linha fim" style="left:540px;top:1150px;font-size:84px;font-weight:600;color:#A3A6AE">no <span class="tl" style="font-weight:700">Blue OS</span></div>
+
+<svg id="cursor" class="p cursor" viewBox="0 0 24 30" style="width:60px;height:75px;z-index:40;opacity:0"></svg>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="blueos-grupos.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM;
+window.DURACAO = 23.8;
+$('#cursor').innerHTML = FM.CURSOR;
+const ONDA = '../../img/simbolo-blueocean.png';
+
+/* ── ícones (traço, estilo lucide como no app) ── */
+const IC = {
+  inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>',
+  folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r=".8"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  monitor: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  user: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.66V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.66"/>',
+  pen: '<path d="M12 20h9"/><path d="M16.38 3.62a1 1 0 0 1 3 3L7.37 18.64a2 2 0 0 1-.86.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.86z"/>',
+  sqpen: '<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.38 2.63a2.12 2.12 0 1 1 3 3L12 15l-4 1 1-4Z"/>',
+  tag: '<path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5"/>',
+  panel: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M16 15l-3-3 3-3"/>',
+  palette: '<circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/>',
+  editor: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M7 4l2 5M12 4l2 5M17 4l2 5"/>',
+  layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  mega: '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  chart: '<path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/>',
+  phones: '<path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>',
+  file: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/>',
+  film: '<rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/>',
+  upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
+  spark: '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4M22 5h-4"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>',
+  copy: '<rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  fdown: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M12 18v-6M9 15l3 3 3-3"/>',
+  up: '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
+  down: '<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>',
+  wand: '<path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72M14 7l3 3M5 6v4M19 14v4M10 2v2M7 8H3M21 16h-4M11 3H9"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  checkc: '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  chevd: '<path d="m6 9 6 6 6-6"/>', chevl: '<path d="m15 18-6-6 6-6"/>', chevr: '<path d="m9 18 6-6-6-6"/>',
+  arrr: '<path d="M5 12h14M12 5l7 7-7 7"/>', arru: '<path d="m5 12 7-7 7 7M12 19V5"/>', arrl: '<path d="M19 12H5M12 19l-7-7 7-7"/>',
+  clip: '<path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>',
+  mic: '<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',
+  bug: '<path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6M12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.97 5c0 2.1-1.6 3.8-3.5 4M22 13h-4M17.2 17c2.1.1 3.8 1.9 3.8 4"/>',
+};
+const I = (n, st = '') => `<svg class="icn" style="${st}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+
+/* ── conteúdo do lote (o mesmo dos prints; marca-texto no contexto do cliente) ── */
+const PECAS = [
+  ['mofu', 'MOFU', [['head', 'HEAD', '<i class="mk">Dono de transportadora</i>: dez interessados no frete e nenhum perfil pra conferir?'],
+                    ['sub', 'SUB', '<i class="mk">Na Akifretes</i>, cada interessado chega com documento, perfil e histórico no mesmo painel.'],
+                    ['cta', 'CTA', 'Ver o painel']]],
+  ['mofu', 'MOFU', [['head', 'HEAD', '<i class="mk">Dono de transportadora</i>: o caminhão volta vazio de Minas e o retorno sai do seu bolso?'],
+                    ['sub', 'SUB', 'Mostramos cargas disponíveis perto do seu veículo em tempo real, sem taxa por frete fechado.'],
+                    ['cta', 'CTA', 'Ver cargas disponíveis']]],
+  ['bofu', 'BOFU', [['head', 'HEAD', 'Pagar R$ 5.000 por mês só pra publicar frete ainda faz sentido?'],
+                    ['sub', 'SUB', '<i class="mk">Na Akifretes</i>, você publica o primeiro frete hoje sem mensalidade e sem taxa por carga fechada.'],
+                    ['cta', 'CTA', 'Publicar frete agora']]],
+];
+const NOVA_HEAD = 'Dez interessados no frete e nenhum perfil pra conferir?';
+const AJUSTE = 'encurta a headline';
+const semTag = s => s.replace(/<[^>]+>/g, '');
+const CLIENTES = ['Doxa', 'Tripmee', 'Akifretes', 'Burh', 'SmartHint', 'GreatPages'];
+const STX = [23, 140, 258, 375, 493, 610, 728];
+const STN = ['Cliente', 'Peças', 'Fonte', 'Briefing', 'Geração', 'Revisar', 'Lote'];
+
+/* ── a interface do Blue OS, recriada (coordenadas = as dos prints, 1920×1020) ── */
+const esp = (y, ic, tx, id = '', on = false) => `<div class="ab item fx${on ? ' on' : ''}" ${id ? `id="${id}"` : ''} style="top:${y - 18}px">${I(ic)}<span>${tx}</span>${id ? `<span class="badge" id="${id}B">+3</span>` : ''}</div>`;
+const nav = (y, esq, msg, dir, dirCls = 'br', id = '') => `<div class="ab fx" style="left:0;top:${y}px;width:844px">
+  <div class="bt fx ${esq}">${I('chevl')}Voltar</div><span ${id ? `id="${id}M"` : ''} style="margin-left:12px;font-size:13px;color:#C9CBD1">${msg}</span>
+  <div class="bt fx ${dirCls}" ${id ? `id="${id}"` : ''} style="margin-left:auto">${dir}</div></div>`;
+const cnt = (cls, nome, id, x) => `<div class="ab cnt fx" style="left:${x}px;top:11px"><span class="tg ${cls}">${nome}</span><b>–</b><span class="v" ${id ? `id="${id}"` : ''}><span>0</span></span><b>+</b></div>`;
+$('#mundo').innerHTML = `
+<div id="painel" class="ab"></div>
+<div id="grade" class="ab"></div>
+<div id="divisa" class="ab"></div>
+<div id="rail" class="ab">
+  <img class="ab" src="${ONDA}" style="left:23px;top:30px;width:29px">
+  <div id="railAt" class="ab"></div>
+  <div class="ab ri" style="top:96px">${I('inbox')}</div>
+  <div class="ab ri" style="top:139px" id="riEsp">${I('share')}</div>
+  <div class="ab ri" style="top:180px">${I('folder')}</div>
+  <div class="ab ri" style="top:222px">${I('users')}</div>
+  <div class="ab ri" style="top:905px">${I('monitor')}</div>
+  <div class="ab" style="left:14px;top:952px;width:48px;height:1px;background:rgba(255,255,255,.12)"></div>
+  <div class="ab ri" style="top:963px">${I('user', 'width:21px;height:21px')}</div>
+</div>
+
+<!-- lateral da home -->
+<div id="ladoH">
+  <div class="ab fx" style="left:109px;top:25px;width:224px;height:42px;border-radius:10px;background:linear-gradient(90deg,#0544FF,#0A35C8);justify-content:center;gap:9px;font-size:14px;font-weight:600;color:#fff">${I('sqpen', 'width:16px;height:16px')}Nova sessão</div>
+  <div class="ab rot" style="left:109px;top:88px">CONVERSAS</div>
+  <div class="ab" style="left:292px;top:87px;color:#A3A6AE">${I('tag', 'width:15px;height:15px')}</div>
+  <div class="ab" style="left:316px;top:87px;color:#A3A6AE">${I('panel', 'width:15px;height:15px')}</div>
+  <div class="ab" style="left:109px;top:116px;width:224px;height:57px;border-radius:10px;background:#202228">
+    <span class="ab" style="left:11px;top:11px;color:#D9DBE0">Nova conversa</span><span class="ab" style="right:10px;top:33px;font-size:11px;color:#8E929C">agora</span></div>
+</div>
+<!-- lateral dos especialistas -->
+<div id="ladoE" style="opacity:0">
+  <div class="ab" style="left:115px;top:22px;font-size:16px;font-weight:700;color:#fff">Especialistas</div>
+  <div class="ab rot" style="left:115px;top:78px">ESTÚDIO</div>
+  ${esp(119, 'palette', 'Designer', 'itDes')}${esp(156, 'editor', 'Editor', 'itEdi')}${esp(194, 'layout', 'Agente LP')}
+  <div class="ab rot" style="left:115px;top:233px">ESPECIALISTAS</div>
+  ${esp(273, 'pen', 'Copy', 'itCopy')}${esp(310, 'mega', 'Tráfego')}${esp(348, 'search', 'SEO')}${esp(385, 'chart', 'Benchmark')}${esp(423, 'phones', 'CS')}
+  <div id="barCopy" class="ab" style="opacity:0"></div>
+</div>
+
+<!-- home -->
+<div id="saud" class="ab fx"><img src="${ONDA}"><span>Boa noite, dono de agência</span></div>
+<div id="homeIn" class="ab">
+  <span class="ab ph" style="left:14px;top:16px">Peça ou pergunte qualquer coisa para o Blue OS</span>
+  <div class="ab" style="left:20px;top:57px;color:#A3A6AE">${I('clip', 'width:16px;height:16px')}</div>
+  <div class="ab" style="left:825px;top:57px;color:#A3A6AE">${I('mic', 'width:15px;height:15px')}</div>
+  <div class="ab" style="left:854px;top:50px;width:30px;height:30px;border-radius:50%;background:#787A7F;display:grid;place-items:center;color:#2A2C30">${I('arru', 'width:15px;height:15px')}</div>
+</div>
+
+<!-- página: Agente de Copy -->
+<div id="hdr">
+  <div class="ab" style="left:693px;top:39px;width:46px;height:46px;border-radius:10px;background:#17191E;border:1px solid #2A2C33;display:grid;place-items:center;color:#90939C">${I('pen', 'width:19px;height:19px')}</div>
+  <div class="ab fx" style="left:751px;top:31px;gap:10px;font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.025em;white-space:nowrap">Agente de Copy<img src="${ONDA}" style="width:18px"></div>
+  <div class="ab" style="left:751px;top:76px;font-size:13px;color:#A3A6AE;white-space:nowrap">Régua V7 + contexto real do cliente · peças por etapa do funil, um Gerar produz tudo</div>
+</div>
+<div id="chipCli" class="ab fx" style="right:383px;top:45px;height:34px;padding:0 13px;border-radius:17px;border:1px solid #34363C;gap:6px;color:#8E929C;white-space:nowrap">Cliente: <b style="color:#fff">Akifretes</b></div>
+<div id="abas">
+  <div class="ab" style="left:695px;top:114px;font-size:13.5px;font-weight:700;color:#fff">Criar novo lote</div>
+  <div class="ab" style="left:693px;top:143px;width:94px;height:2px;background:#5B8DEF"></div>
+  <div class="ab" style="left:805px;top:114px;font-size:13.5px;color:#8E929C">Histórico de lotes</div>
+</div>
+<div id="passos" class="ab card" style="left:693px;top:147px;width:844px;height:58px;border-radius:12px;background:#141519;border-color:#23252A">
+  <div id="stPill" class="ab" style="left:23px"></div>
+  ${STN.map((n, i) => `<div class="ab st fx" id="st${i}" style="left:${STX[i]}px;top:10px"><i>${i + 1}</i>${n}</div>`).join('')}
+</div>
+
+<!-- 1. cliente -->
+<div id="s0" class="ab" style="left:693px;top:222px;width:844px">
+  <div class="ab card" style="left:0;top:0;width:844px;height:133px">
+    <div class="ab lb" style="left:21px;top:24px">PARA QUAL CLIENTE</div>
+    <div class="ab" style="left:21px;top:46px;font-size:12.5px;color:#C2C4CA">A copy usa o contexto real deste cliente. Trocar o cliente aqui refaz as etapas seguintes.</div>
+    <div id="sel" class="ab fx" style="left:21px;top:75px;width:220px;height:36px;border-radius:8px;border:1px solid #3A3C42;background:#101116;padding:0 10px 0 14px;font-size:12.5px;font-weight:600;color:#fff">
+      <span id="selTx">— escolha o cliente —</span><span style="margin-left:auto;color:#C9CBD1">${I('chevd', 'width:14px;height:14px')}</span></div>
+  </div>
+  ${nav(151, 'off', 'Falta concluir "Cliente" para continuar.', `Continuar${I('chevr')}`, 'cz', 'c0')}
+  <div id="dd" class="ab" style="left:21px;top:115px;width:220px;padding:5px;border-radius:10px;background:#1C1E23;border:1px solid #34363C;box-shadow:0 18px 40px rgba(0,0,0,.6);opacity:0;z-index:5">
+    <div id="ddHl" class="ab" style="left:5px;top:5px;width:208px;height:32px;border-radius:7px;background:#003CFF"></div>
+    ${CLIENTES.map((c, i) => `<div class="fx" ${c === 'Akifretes' ? 'id="opAki"' : ''} style="position:relative;height:32px;padding-left:10px;font-size:13px;color:#E9EAEE">${c}</div>`).join('')}
+  </div>
+</div>
+
+<!-- 2. peças -->
+<div id="s1" class="ab" style="left:693px;top:222px;width:844px;opacity:0">
+  <div class="ab card" style="left:0;top:0;width:844px;height:323px">
+    <div class="ab lb" style="left:19px;top:18px">PEÇAS POR ETAPA DO FUNIL <span>(quantas de cada - um Gerar produz tudo)</span></div>
+    <div class="ab row" style="top:43px"><div class="ab azl fx" style="left:16px;top:19px">${I('file')}Estático</div>
+      ${cnt('mofu', 'MOFU', 'vMofu', 516)}${cnt('bofu', 'BOFU', 'vBofu', 659)}</div>
+    <div class="ab row" style="top:111px"><div class="ab azl fx" style="left:16px;top:19px">${I('film')}Vídeo</div>
+      ${cnt('tofu', 'TOFU', '', 374)}${cnt('mofu', 'MOFU', '', 516)}${cnt('bofu', 'BOFU', '', 659)}</div>
+    <div class="ab" style="left:19px;top:181px;font-size:12.5px;color:#C9CBD1">Total: <b id="tot" style="color:#fff">0</b> peças - <span id="tot2">0</span> estático</div>
+    <div class="ab row" style="top:209px;height:58px"><div class="ab azl fx" style="left:16px;top:20px">${I('layout')}Landing page</div>
+      <div class="ab bt fx" style="left:611px;top:11px">Escrever a landing page${I('arrr')}</div></div>
+    <div class="ab" style="left:19px;top:277px;width:800px;font-size:11px;color:#8E929C;line-height:1.45">A landing page não é peça de funil: é a página inteira. Ela abre aqui mesmo, com o contexto deste cliente, e dá pra criar uma nova ou continuar uma que já existe — o lote em que você está não se perde.</div>
+  </div>
+  ${nav(340, '', '', `Continuar${I('chevr')}`)}
+</div>
+
+<!-- 3. fonte -->
+<div id="s2" class="ab" style="left:693px;top:222px;width:844px;opacity:0">
+  <div class="ab card" style="left:0;top:0;width:844px;height:208px">
+    <div class="ab lb" style="left:19px;top:36px">COPY DE REFERÊNCIA <span>(opcional - modela/melhora a partir de copy validada)</span></div>
+    <div id="dz" class="ab fx" style="left:19px;top:59px;width:805px;height:43px;border-radius:8px;border:1px dashed #3A3C42;justify-content:center;gap:8px;font-size:13px;font-weight:600;color:#D5D7DD">
+      <span id="dzVazio" class="fx" style="gap:8px">${I('upload', 'width:14px;height:14px')}Subir copy de contexto (.pdf, .docx, .txt, .md)</span>
+      <span id="dzArq" class="ab fx" style="left:12px;top:6px;right:12px;height:30px;gap:10px;opacity:0">
+        <span style="width:24px;height:28px;border-radius:5px;background:#E5534B;color:#fff;font-size:7.5px;font-weight:800;display:grid;place-items:center">PDF</span>
+        <span style="color:#fff">anuncio-que-vendeu-bem.pdf</span><span style="color:#8E929C;font-weight:400">2 págs · 148 KB</span>
+        <span class="ab" style="left:300px;right:150px;top:13px;height:4px;border-radius:2px;background:#26282E"><b id="dzBar" class="ab" style="left:0;top:0;height:4px;border-radius:2px;background:#2D6BFF;width:0"></b></span>
+        <span id="dzOk" class="fx" style="margin-left:auto;gap:6px;color:#00DEB9;font-size:12px;opacity:0">${I('checkc', 'width:15px;height:15px')}copy validada</span>
+      </span>
+    </div>
+    <div class="ab" style="left:19px;top:111px;width:805px;height:73px;border-radius:8px;border:1px solid #2E3036;background:#101116">
+      <div id="refTx" class="ab" style="left:11px;top:11px;right:11px;font-size:12.5px;line-height:1.5;color:#A3A6AE">Ou cole aqui uma copy já pronta/validada pra IA usar como base (ex.: um anúncio antigo que performou bem)...</div></div>
+  </div>
+  ${nav(224, '', '', `Continuar${I('chevr')}`)}
+  <div id="arq" class="ab" style="left:420px;top:-40px;width:54px;height:66px;border-radius:9px;background:#E5534B;color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center;box-shadow:0 18px 40px rgba(0,0,0,.6);opacity:0;z-index:6">PDF</div>
+</div>
+
+<!-- 4. geração -->
+<div id="s3" class="ab" style="left:693px;top:222px;width:844px;opacity:0">
+  <div class="ab card" style="left:0;top:0;width:844px;height:88px">
+    <div id="gStatus" class="ab fx" style="left:22px;top:33px;gap:10px;font-size:13px;color:#C9CBD1;opacity:0"><span class="spin" id="gSpin2" style="border-color:rgba(255,255,255,.15);border-top-color:#5287FF"></span><span id="gStTx"></span></div>
+    <div class="ab bt fx" style="left:507px;top:26px;height:40px">${I('upload')}Lançar copy pronta</div>
+    <div id="btGerar" class="ab bt fx br" style="left:686px;top:26px;height:40px;width:139px;justify-content:center;overflow:hidden">
+      <span id="gIco" class="fx">${I('spark')}</span><span id="gSpin" class="spin" style="display:none"></span><span id="gTx">Gerar lote (3)</span>
+      <i id="gBrilho" class="ab" style="left:0;top:0;width:60px;height:40px;background:linear-gradient(90deg,transparent,rgba(45,107,255,.35),transparent);opacity:0"></i></div>
+  </div>
+  ${nav(105, '', 'Falta concluir "Geração" para continuar.', `Continuar${I('chevr')}`, 'cz')}
+</div>
+
+<!-- 5. revisar -->
+<div id="s4" class="ab" style="left:693px;top:222px;width:844px;opacity:0">
+  <div class="ab card" style="left:0;top:4px;width:844px;height:710px">
+    <div class="ab" style="left:17px;top:21px;color:#02D0AE">${I('checkc', 'width:17px;height:17px')}</div>
+    <div class="ab" style="left:42px;top:19px;font-size:15px;font-weight:700;color:#fff">Lote 7 – Copy gerada</div>
+    <div id="salvo" class="ab fx" style="left:200px;top:16px;height:26px;padding:0 9px;gap:6px;border-radius:6px;border:1px solid #2E3238;background:#1E2025;font-size:11px;font-weight:700;color:#02D5B2;white-space:nowrap">${I('check', 'width:12px;height:12px')}Salvo no Histórico</div>
+    <div class="ab bt fx" style="left:557px;top:13px">${I('copy')}Copiar tudo</div>
+    <div class="ab bt fx" style="left:673px;top:13px;color:#E5534B;border-color:rgba(229,83,75,.4)">${I('fdown')}PDF</div>
+    <div class="ab bt fx" style="left:749px;top:13px;color:#5B88B7;border-color:rgba(91,136,183,.45)">${I('fdown')}DOCX</div>
+    <div class="ab bt fx" style="left:17px;top:55px;color:#C9CBD1">${I('refresh')}Gerar novamente</div>
+    <div class="ab" style="left:0;top:100px;width:842px;height:1px;background:#24262B"></div>
+    <div class="ab fx" style="left:17px;top:121px;gap:7px;font-size:13px;font-weight:700;color:#8C8AF0">${I('wand', 'width:15px;height:15px')}Ajustar com IA</div>
+    <div id="ajIn" class="ab" style="left:134px;top:114px;width:572px;height:34px;border-radius:8px;border:1px solid #33353B;background:#121317">
+      <span id="ajTx" class="ab" style="left:11px;top:8px;font-size:12.5px;white-space:pre;color:#fff"></span></div>
+    <div id="btAj" class="ab bt fx cz" style="left:717px;top:114px;width:110px;justify-content:center">${I('spark')}Novo ajuste</div>
+    <div class="ab" style="left:0;top:160px;width:842px;height:1px;background:#24262B"></div>
+    ${PECAS.map(([cls, nome, lns], k) => `<div class="ab peca" id="pc${k}" style="top:${175 + k * 162}px">
+      <div class="ab" style="left:13px;top:14px;font-size:13.5px;font-weight:800;color:#fff">Peça ${k + 1}</div>
+      <div class="ab tg ${cls}" style="left:59px;top:11px">${nome}</div>
+      <div class="ab sq" style="left:113px;top:11px">${I('up')}</div><div class="ab sq" id="p${k}down" style="left:139px;top:11px">${I('down')}</div>
+      <div class="ab tg est" style="left:176px;top:11px">Estático</div>
+      ${k === 0 ? `<div id="p0aj" class="ab tg fx" style="left:240px;top:11px;gap:5px;color:#00DEB9;border:1px solid rgba(0,222,185,.35);background:rgba(0,222,185,.07);opacity:0">${I('check', 'width:11px;height:11px')}ajustada</div>` : ''}
+      <div class="ab bt fx" style="left:664px;top:9px;height:28px">${I('pen')}Editar</div>
+      <div class="ab bt fx" style="left:745px;top:9px;height:28px;color:#C9CBD1">${I('wand')}IA</div>
+      <div class="ab" style="left:0;top:46px;width:808px;height:1px;background:#24262B"></div>
+      ${lns.map(([c, rot, tx], j) => `<div class="ab ln fx ${c === 'head' ? 'h' : ''}" id="ln${k}${j}" style="top:${59 + j * 29}px"><span class="k ${c}">${rot}</span>
+        <span class="tx" ${k === 0 && j === 0 ? 'id="h0"' : ''}><span class="velho">${tx}</span>${k === 0 && j === 0 ? '<span class="ab novo" style="left:0;top:0;white-space:pre"></span>' : ''}</span>
+        <span class="c" ${k === 0 && j === 0 ? 'id="h0c"' : ''}>${semTag(tx).length}c</span></div>`).join('')}
+    </div>`).join('')}
+    <div class="ab bt fx" style="left:17px;top:661px">${I('arrl')}Novo pedido</div>
+    <div class="ab bt fx" style="left:723px;top:661px;color:#E5534B;border-color:rgba(229,83,75,.45)">Descartar lote</div>
+  </div>
+</div>
+
+<!-- 6. lote -->
+<div id="s5" class="ab" style="left:693px;top:222px;width:844px;opacity:0">
+  <div class="ab card" style="left:0;top:2px;width:844px;height:106px">
+    <div id="loteOk" class="ab" style="left:21px;top:33px;width:40px;height:40px;border-radius:8px;border:1px solid #33353B;background:#1C1E23;display:grid;place-items:center;color:#00DEB9">${I('check', 'width:18px;height:18px')}</div>
+    <div class="ab" style="left:73px;top:26px;font-size:13.5px;font-weight:700;color:#fff">Lote salvo no histórico de Akifretes</div>
+    <div class="ab" style="left:73px;top:49px;width:512px;font-size:12px;line-height:1.55;color:#C2C4CA">Ele já está disponível para o <b id="wDes" style="font-weight:500">Designer</b> e para o <b id="wEdi" style="font-weight:500">Editor de vídeo</b>. Dá para voltar e ajustar por IA quando quiser.</div>
+    <div class="ab bt fx" style="left:597px;top:33px;height:40px">Voltar e ajustar</div>
+    <div class="ab bt fx br" style="left:734px;top:33px;height:40px">Novo lote</div>
+  </div>
+  ${nav(125, '', '', 'Ver no histórico')}
+</div>
+
+<div id="voos"></div>
+<div id="btBug" class="ab fx">${I('bug')}Reportar bug</div>`;
+
+const VOOS = Array.from({ length: 6 }, () => { const d = document.createElement('div'); d.className = 'ab voo'; d.innerHTML = '<i class="hd"></i><i class="h1"></i><i style="width:120px"></i>'; $('#voos').appendChild(d); return d; });
+
+/* ── ajudas ── */
+const pulso = (t, tc, forca = 30) => forca * Math.exp(-(((t - tc) / 0.045) ** 2));
+const pisca = t => Math.floor(t * 2.2) % 2 === 0;
+const centro = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+function pop(el, t, t0, esc0 = 0.3) {
+  const p = M.prog(t, t0, 0.7, E.spring), pa = pr(t, t0, 0.15, E.cubicOut);
+  el.style.opacity = t < t0 ? 0 : pa; el.style.transform = `scale(${L(esc0, 1, p)})`; return p;
+}
+/* peça da interface entrando no lugar dela (e saindo em b) */
+function parte(el, t, a, b, o = {}) {
+  const { dx = 0, dy = 0, s0 = 0.96, desf = 12, din = 0.7, dout = 0.4, ox = 0, base = '' } = o;
+  if (t < a || (b != null && t > b + dout)) { el.style.opacity = 0; return 0; }
+  const p = pr(t, a, din), pa = pr(t, a, din * 0.45, E.cubicOut), po = b == null ? 0 : pr(t, b, dout, E.cubicIn);
+  el.style.opacity = pa * (1 - po);
+  el.style.transform = `${base} translate(${(1 - p) * dx + po * ox}px, ${(1 - p) * dy}px) scale(${L(s0, 1, p)})`;
+  const bl = (1 - p) * desf + po * desf; el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+  return pa * (1 - po);
+}
+/* troca de etapa: a nova entra deslizando da direita, a velha sai para a esquerda (rápida) */
+const etapa = (el, t, a, b) => parte(el, t, a, b, { dx: 46, s0: 0.98, desf: 10, din: 0.55, dout: 0.2, ox: -40 });
+function aperta(el, t, tc, k0 = 0.1) { const k = Math.sin(C((t - tc) / 0.2) * Math.PI); el.style.transform = `scale(${1 - k0 * k})`; el.style.filter = k > 0 ? `brightness(${1 + k * 0.4})` : ''; }
+function digita(el, txt, t, a, b, ph = '') {
+  if (t < a) { el.innerHTML = ph ? `<span class="ph">${ph}</span>` : ''; return; }
+  const n = Math.round(C((t - a) / (b - a)) * txt.length);
+  el.innerHTML = txt.slice(0, n) + (t < b + 0.25 || pisca(t) ? '<span class="car"></span>' : '');
+}
+/* número que rola para cima quando muda */
+function rola(el, t, mud) {   // mud = [[t, valor], ...] em ordem
+  let v0 = 0, v1 = 0, tc = -9; for (const [tt, v] of mud) if (t >= tt) { v0 = v1; v1 = v; tc = tt; }
+  const p = pr(t, tc, 0.35, E.cubicOut);
+  el.innerHTML = p < 1 ? `<span style="top:${-p * 18}px">${v0}</span><span style="top:${(1 - p) * 18}px">${v1}</span>` : `<span style="top:0">${v1}</span>`;
+}
+
+/* grade de bolinhas (fundo da marca, igual ao app do editor) */
+const bg = $('#bolinhas').getContext('2d'), NIV = 24, PASSO = 26, K = 1.3;
+const tons = (rgb, [a0, a1]) => Array.from({ length: NIV }, (_, i) => `rgba(${rgb.join(',')},${(a0 + (a1 - a0) * i / (NIV - 1)).toFixed(3)})`);
+const CLAROS = tons([82, 135, 255], [0.08, 0.75]), ESCUROS = tons([30, 60, 160], [0.04, 0.24]);
+function bolinhas(t) {
+  bg.clearRect(0, 0, 1080, 1920);
+  for (let y = -PASSO; y < 1920 + PASSO; y += PASSO) for (let x = -PASSO; x < 1080 + PASSO; x += PASSO) {
+    const X = x / K, Y = y / K;
+    const a = Math.sin(X * 0.011 + t * 0.7) + Math.sin(Y * 0.0085 - t * 0.5) + Math.sin((X - Y) * 0.0065 + t * 0.32), v = a / 3;
+    const dx = 5.5 * K * Math.sin(Y * 0.021 + t * 1.05 + a * 0.7), dy = 5.5 * K * Math.cos(X * 0.019 - t * 0.85 + a * 0.7);
+    const k = Math.min(NIV - 1, Math.floor(Math.abs(v) * NIV));
+    bg.fillStyle = v > 0 ? CLAROS[k] : ESCUROS[k];
+    bg.beginPath(); bg.arc(x + dx, y + dy, (1.15 + Math.abs(v) * 0.75) * K * 1.15, 0, 6.2832); bg.fill();
+  }
+}
+
+/* ── câmera contínua: [t, foco x, foco y (no app), escala, y na tela, inclinação x, inclinação y]
+   curva de Hermite pelos pontos (velocidade contínua: a câmera nunca para) ── */
+const CAM = [
+  [-0.4, 1128, 455, 1.6, 900, 14, -10],
+  [0.90, 1142, 442, 1.85, 900, 7, -5],     // "Boa noite, dono de agência"
+  [1.95, 520, 330, 1.45, 900, 5, 4],       // abre e corre até o trilho
+  [2.55, 230, 220, 1.85, 900, 4, 8],       // trilho e especialistas
+  [3.35, 250, 262, 1.9, 900, 3, 5],        // Copy
+  [4.20, 1115, 250, 1.12, 840, 6, -6],     // a página do agente se monta
+  [4.90, 900, 300, 1.8, 900, 4, -4],       // seletor de cliente
+  [5.55, 870, 380, 1.95, 900, 3, 2],       // lista aberta
+  [6.15, 1180, 250, 1.2, 860, 5, 4],       // passos + selo do cliente
+  [6.65, 1330, 330, 1.95, 900, 3, -3],     // contadores
+  [7.20, 1115, 320, 1.12, 900, 4, 3],      // fonte: upload
+  [8.00, 1200, 330, 1.35, 900, 2, -2],
+  [8.75, 1380, 275, 2.2, 900, 3, -4],      // até o Gerar
+  [9.20, 1460, 275, 2.55, 900, 2, -2],
+  [9.90, 1060, 290, 1.5, 900, 6, 4],      // gerando
+  [10.45, 1115, 300, 1.15, 820, 5, -3],    // o lote chega
+  [11.30, 1115, 560, 1.12, 960, 6, 4],
+  [12.00, 1110, 560, 1.15, 960, 3, -3],
+  [12.60, 1022, 490, 1.85, 900, 3, -4],    // contexto real: peça 1
+  [13.40, 1040, 650, 1.8, 900, 2, 3],     // peça 2 e 3
+  [14.40, 1115, 560, 1.15, 940, 4, -2],
+  [15.30, 1000, 410, 1.95, 900, 3, 4],     // peça 1 não convenceu
+  [16.00, 905, 395, 2.2, 900, 2, 2],
+  [16.50, 1010, 362, 2.4, 900, 2, -2],     // digitando o ajuste
+  [17.00, 1330, 365, 2.35, 900, 2, -3],    // Novo ajuste
+  [17.80, 1110, 560, 1.15, 960, 4, 3],      // só ela muda
+  [18.15, 1150, 280, 1.4, 860, 5, -4],    // lote salvo
+  [18.95, 680, 230, 1.15, 900, 4, 4],      // as peças voam
+  [19.55, 250, 150, 2.05, 900, 3, 6],      // designer
+  [20.30, 250, 165, 2.2, 900, 2, 3],       // editor
+  [20.70, 250, 160, 2.3, 900, 2, 2],
+];
+const CLIQUES = [2.75, 3.52, 5.15, 5.75, 9.17, 15.98, 16.36, 17.02];
+function camera(t) {
+  const n = CAM.length; let c;
+  if (t <= CAM[0][0]) c = CAM[0].slice(1); else if (t >= CAM[n - 1][0]) c = CAM[n - 1].slice(1);
+  else {
+    let i = 0; while (CAM[i + 1][0] <= t) i++;
+    const P = k => CAM[Math.max(0, Math.min(n - 1, k))], h = CAM[i + 1][0] - CAM[i][0], s = (t - CAM[i][0]) / h;
+    const h00 = 2 * s ** 3 - 3 * s ** 2 + 1, h10 = s ** 3 - 2 * s ** 2 + s, h01 = -2 * s ** 3 + 3 * s ** 2, h11 = s ** 3 - s ** 2;
+    c = [1, 2, 3, 4, 5, 6].map(j => {
+      const v = k => j === 3 ? Math.log(P(k)[j]) : P(k)[j];
+      // tangente monotônica (Fritsch–Carlson): a câmera não passa do alvo, só desacelera onde muda de sentido
+      const sec = k => (v(k + 1) - v(k)) / (P(k + 1)[0] - P(k)[0]);
+      const tg = k => { if (k <= 0 || k >= n - 1) return 0; const a = sec(k - 1), b = sec(k); return a * b <= 0 ? 0 : 2 / (1 / a + 1 / b); };
+      const r = h00 * v(i) + h10 * h * tg(i) + h01 * v(i + 1) + h11 * h * tg(i + 1);
+      return j === 3 ? Math.exp(r) : r;
+    });
+  }
+  let [fx, fy, S, sy, rx, ry] = c;
+  fx += Math.sin(t * 1.7) * 2; fy += Math.cos(t * 1.3) * 2;   // deriva lenta
+  for (const tc of CLIQUES) S *= 1 + 0.045 * Math.sin(C((t - tc) / 0.35) * Math.PI);   // empurra no clique
+  if (t > 20.42) S *= L(1, 4.2, E.cubicIn(C((t - 20.42) / 0.24)));   // mergulho no fim
+  return { fx, fy, S, sy, rx, ry };
+}
+function aplicaCam(t) {
+  const c = camera(t), c0 = camera(t - 1 / 30);
+  $('#mundo').style.transform = `translate(540px, ${c.sy}px) perspective(1700px) rotateX(${c.rx}deg) rotateY(${c.ry}deg) scale(${c.S}) translate(${-c.fx}px, ${-c.fy}px)`;
+  const dx = (c0.fx - c.fx) * c.S, dy = (c0.fy - c.fy) * c.S, dz = Math.abs(Math.log(c.S / c0.S)) * 260;
+  const bx = Math.min(1.0, Math.abs(dx) * 0.03 + dz * 0.02), by = Math.min(1.0, Math.abs(dy) * 0.03 + dz * 0.02) + (t > 20.42 ? 8 * C((t - 20.42) / 0.24) : 0);
+  $('#mbg').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  $('#camfx').style.filter = bx + by > 0.6 ? 'url(#mb)' : 'none';
+}
+
+/* ── cursor: grupos de movimentos [chega, alvo, clique] ── */
+const CURSOR = [
+  { ini: 2.15, fim: 6.0, de: [980, 1500], segs: [[2.22, 2.66, '#riEsp', 2.75], [2.95, 3.42, '#itCopy', 3.52], [4.55, 5.05, '#sel', 5.15], [5.32, 5.66, '#opAki', 5.75]] },
+  { ini: 8.35, fim: 9.42, de: [960, 1650], segs: [[8.42, 8.98, '#btGerar', 9.17]] },
+  { ini: 15.3, fim: 17.3, de: [880, 1650], segs: [[15.36, 15.86, '#p0down', 15.98], [16.06, 16.3, '#ajIn', 16.36], [16.82, 16.98, '#btAj', 17.02]] },
+];
+function cursor(t) {
+  const el = $('#cursor'), g = CURSOR.find(g => t >= g.ini && t < g.fim + 0.5);
+  if (!g) { el.style.opacity = 0; return; }
+  let pos = g.de, clk = 0;
+  for (let i = 0; i < g.segs.length; i++) {
+    const [a, b, alvo, tc] = g.segs[i]; if (t < a) break;
+    const de = i ? centro($(g.segs[i - 1][2])) : g.de, para = centro($(alvo));
+    if (alvo === '#ajIn') para[0] += 170;
+    pos = [L(de[0], para[0], E.cubicInOut(C((t - a) / (b - a)))), L(de[1], para[1], E.cubicInOut(C((t - a) / (b - a))))];
+    clk = Math.max(clk, Math.sin(C((t - tc) / 0.22) * Math.PI));
+  }
+  const ps = pr(t, g.fim, 0.5, E.cubicIn);
+  el.style.opacity = pr(t, g.ini, 0.15, E.linear) * (1 - ps);
+  el.style.left = (pos[0] + ps * 260) + 'px'; el.style.top = (pos[1] + ps * 300) + 'px';
+  el.style.transform = `translate(-20%,-10%) scale(${1 - 0.16 * clk})`;
+  el.style.filter = 'drop-shadow(0 6px 10px rgba(0,0,0,.45))';
+}
+
+FM.iniciar({ grupos: GRUPOS, legendaFixa: true, legendaSoSemTexto: true, estouros: [] });
+
+/* ── quadro ── */
+window.quadro = async function (t) {
+  FM.antes(t);
+  bolinhas(t);
+  const mundo = $('#mundo');
+  const fora = pr(t, 20.5, 0.16, E.cubicIn);
+  mundo.style.opacity = t > 20.7 ? 0 : 1 - fora;
+  if (t <= 20.7) aplicaCam(t); else $('#camfx').style.filter = 'none';
+
+  /* 1 ─ home: "Boa noite, dono de agência" → trilho → Especialistas → Copy */
+  { const s = $('#saud'), p = pr(t, -0.35, 0.8), sai = pr(t, 3.55, 0.3, E.cubicIn);
+    s.style.opacity = C((t + 0.35) / 0.3) * (1 - sai);
+    s.style.transform = `translate(-50%,-50%) translateY(${(1 - p) * 26 - sai * 20}px) scale(${L(0.94, 1, p)})`;
+    s.style.filter = (1 - p) * 10 + sai * 12 > 0.3 ? `blur(${(1 - p) * 10 + sai * 12}px)` : 'none';
+    const o = s.querySelector('img'), po = M.prog(t, -0.2, 0.9, E.spring); o.style.transform = `rotate(${L(-25, 0, po)}deg) scale(${L(0.4, 1, po)})`; }
+  parte($('#homeIn'), t, -0.5, 3.5, { dy: 30, dout: 0.3 });
+  { const k = E.cubicInOut(C((t - 2.75) / 0.3)); $('#railAt').style.top = L(95, 138, k) + 'px'; }
+  aperta($('#riEsp'), t, 2.75, 0.15);
+  { const sw = E.cubicInOut(C((t - 2.8) / 0.35)), x = L(345, 320, sw);
+    $('#divisa').style.left = x + 'px'; $('#grade').style.left = (x + 1) + 'px'; $('#grade').style.width = (1909 - x - 1) + 'px'; }
+  parte($('#ladoH'), t, -1, 2.78, { dout: 0.22, ox: -30 });
+  parte($('#ladoE'), t, 2.85, null, { dx: -26, din: 0.5 });
+  [...$('#ladoE').querySelectorAll('.item, .rot')].forEach((el, i) => parte(el, t, 2.85 + i * 0.03, null, { dx: -18, din: 0.45, desf: 6 }));
+  const copyOn = t >= 3.52;
+  $('#itCopy').classList.toggle('on', copyOn); $('#barCopy').style.opacity = copyOn ? 1 : 0; aperta($('#itCopy'), t, 3.52, 0.05);
+
+  /* 2 ─ a página do agente se monta */
+  parte($('#hdr'), t, 3.62, null, { dy: -24 });
+  parte($('#abas'), t, 3.72, null, { dy: -16 });
+  parte($('#passos'), t, 3.8, null, { dy: 20, s0: 0.97 });
+  // passos: pílula azul desliza para a etapa ativa; concluídos ficam verde-água
+  const MUD = [[-9, 0], [6.0, 1], [7.1, 2], [8.35, 4], [10.2, 5], [17.95, 6]];
+  { let a0 = 0, a1 = 0, tc = -9; for (const [tt, i] of MUD) if (t >= tt) { a0 = a1; a1 = i; tc = tt; }
+    const p = M.prog(t, tc, 0.5, E.spring);
+    $('#stPill').style.left = L(STX[a0], STX[a1], p) + 'px';
+    const feito = i => [[0, 6.0], [1, 7.1], [2, 8.35], [4, 10.2], [5, 17.95]].some(([k, tt]) => k === i && t >= tt);
+    STN.forEach((_, i) => { const e = $('#st' + i); e.classList.toggle('on', i === a1); e.classList.toggle('ok', feito(i) && i !== a1);
+      e.classList.toggle('dim', i >= 5 && i > a1 && !feito(i)); });
+    [[0, 6.0], [1, 7.1], [2, 8.35], [4, 10.2], [5, 17.95]].forEach(([k, tt]) => { const i = $('#st' + k + ' i'); const q = M.prog(t, tt, 0.6, E.spring); i.style.transform = t >= tt ? `scale(${L(0.4, 1, q)})` : ''; }); }
+
+  // etapa 1: cliente
+  etapa($('#s0'), t, 3.9, 6.0);
+  aperta($('#sel'), t, 5.15, 0.04);
+  { const dd = $('#dd'), ab = t >= 5.2 && t < 5.85, p = pr(t, 5.2, 0.3), q = pr(t, 5.8, 0.12, E.cubicIn);
+    dd.style.opacity = t < 5.2 ? 0 : p * (1 - q); dd.style.transform = `translateY(${(1 - p) * -8}px) scale(${L(0.97, 1, p)})`; dd.style.transformOrigin = '50% 0';
+    const alvo = CLIENTES.indexOf('Akifretes'), hl = E.cubicInOut(C((t - 5.32) / 0.34)) * alvo;
+    $('#ddHl').style.top = (5 + hl * 32) + 'px'; $('#ddHl').style.opacity = t < 5.3 ? 0.35 : 1;
+    [...dd.children].slice(1).forEach((o, i) => { const pp = pr(t, 5.22 + i * 0.03, 0.3); o.style.opacity = pp; o.style.transform = `translateY(${(1 - pp) * -6}px)`; }); }
+  $('#selTx').textContent = t >= 5.75 ? 'Akifretes' : '— escolha o cliente —';
+  { const ok = t >= 5.75; $('#c0').className = 'bt fx ' + (ok ? 'br' : 'cz'); $('#c0M').style.opacity = ok ? 0 : 1; }
+  if (t < 5.85) $('#chipCli').style.opacity = 0; else pop($('#chipCli'), t, 5.85, 0.4);
+
+  // etapa 2: peças — os contadores sobem sozinhos (MOFU 2, BOFU 1)
+  etapa($('#s1'), t, 6.0, 7.1);
+  rola($('#vMofu'), t, [[6.3, 1], [6.55, 2]]); rola($('#vBofu'), t, [[6.8, 1]]);
+  { const n = (t >= 6.3) + (t >= 6.55) + (t >= 6.8); $('#tot').textContent = n; $('#tot2').textContent = n; }
+  [['#vMofu', [6.3, 6.55]], ['#vBofu', [6.8]]].forEach(([id, ts]) => { const b = $(id).nextElementSibling; const k = Math.max(0, ...ts.map(tc => Math.sin(C((t - tc + 0.06) / 0.22) * Math.PI)));
+    b.style.background = k > 0 ? `rgba(0,60,255,${0.9 * k})` : ''; b.style.borderColor = k > 0 ? '#003CFF' : ''; b.style.color = k > 0 ? '#fff' : ''; b.style.transform = `scale(${1 - 0.12 * k})`; });
+
+  // etapa 3: fonte — o anúncio que já vendeu bem cai na área de upload
+  etapa($('#s2'), t, 7.1, 8.35);
+  { const a = $('#arq'), p = pr(t, 7.12, 0.32, E.cubicIn), some = pr(t, 7.44, 0.12, E.linear);
+    a.style.opacity = t < 7.12 ? 0 : C((t - 7.12) / 0.08) * (1 - some);
+    a.style.transform = `translate(${L(260, 0, p)}px, ${L(-120, 79, p)}px) rotate(${L(14, -4, p)}deg) scale(${L(1.15, 0.6, p)})`;
+    const dz = $('#dz'), hov = t >= 7.25 && t < 7.6; dz.style.borderColor = hov ? '#2D6BFF' : t >= 7.6 ? 'rgba(0,222,185,.45)' : '';
+    dz.style.borderStyle = t >= 7.45 ? 'solid' : 'dashed'; dz.style.background = hov ? 'rgba(45,107,255,.10)' : '';
+    $('#dzVazio').style.opacity = t < 7.44 ? 1 : 0;
+    parte($('#dzArq'), t, 7.44, null, { dy: 6, din: 0.4, desf: 6 });
+    $('#dzBar').style.width = (pr(t, 7.46, 0.38, E.cubicInOut) * 100) + '%'; $('#dzBar').parentElement.style.opacity = 1 - pr(t, 7.86, 0.15);
+    pop($('#dzOk'), t, 7.9, 0.5); }
+  { const REF = '“Seu caminhão não precisa voltar vazio. Na Akifretes você acha carga de retorno perto de você, sem mensalidade.” — anúncio Meta, CTR 3,8%';
+    const r = $('#refTx'); if (t < 7.95) { r.textContent = 'Ou cole aqui uma copy já pronta/validada pra IA usar como base (ex.: um anúncio antigo que performou bem)...'; r.style.color = '#A3A6AE'; }
+    else { r.textContent = REF.slice(0, Math.round(C((t - 7.95) / 0.35) * REF.length)); r.style.color = '#E9EAEE'; } }
+
+  // etapa 4: geração — clique em "Gerar lote (3)" no "Gerar"
+  etapa($('#s3'), t, 8.35, 10.2);
+  aperta($('#btGerar'), t, 9.17, 0.08);
+  { const ger = t >= 9.24; $('#gIco').style.display = ger ? 'none' : ''; $('#gSpin').style.display = ger ? '' : 'none';
+    $('#gTx').textContent = ger ? 'Gerando…' : 'Gerar lote (3)'; $('#gSpin').style.transform = `rotate(${t * 720}deg)`; $('#gSpin2').style.transform = `rotate(${t * 720}deg)`;
+    const b = $('#gBrilho'); b.style.opacity = ger ? 1 : 0; b.style.transform = `translateX(${((t - 9.24) * 260) % 220 - 60}px)`;
+    const st = $('#gStatus'); parte(st, t, 9.26, null, { dx: -12, din: 0.4, desf: 6 });
+    $('#gStTx').textContent = t < 9.55 ? 'Lendo o contexto de Akifretes…' : t < 9.85 ? 'Aplicando a Régua V7…' : 'Escrevendo 3 peças…'; }
+
+  // etapa 5: revisar — as três peças chegam uma a uma
+  etapa($('#s4'), t, 10.2, 17.95);
+  PECAS.forEach((_, k) => { const a = 10.3 + k * 0.3; parte($('#pc' + k), t, a, null, { dy: 30, s0: 0.96, din: 0.6 });
+    [0, 1, 2].forEach(j => { const ln = $(`#ln${k}${j}`), b = a + 0.12 + j * 0.1, p = pr(t, b, 0.45, E.cubicOut);
+      ln.style.clipPath = `inset(-4px ${(1 - p) * 100}% -4px 0)`; ln.style.opacity = t < b ? 0 : 1; }); });
+  if (t < 11.55) $('#salvo').style.opacity = 0; else { pop($('#salvo'), t, 11.55, 0.5); const g = Math.sin(C((t - 11.55) / 1.0) * Math.PI);
+    $('#salvo').style.boxShadow = g > 0 ? `0 0 ${24 * g}px ${4 * g}px rgba(2,213,178,.35)` : ''; }
+  // marca-texto no contexto do cliente ("contexto real de quem você atende")
+  { const mks = [...$('#s4').querySelectorAll('.mk')], ts = [12.3, 12.75, 13.4, 13.95], apaga = 1 - pr(t, 14.9, 0.4, E.cubicIn);
+    mks.forEach((m, i) => { m.style.backgroundSize = `${pr(t, ts[i], 0.45, E.cubicInOut) * 100}% 70%`; m.style.opacity = 1; m.style.filter = ''; m.style.backgroundImage = `linear-gradient(rgba(0,222,185,${0.3 * apaga}), rgba(0,222,185,${0.3 * apaga}))`; }); }
+  // "se uma peça não convenceu": 👎 na peça 1, "encurta a headline", só ela é reescrita
+  { const dn = $('#p0down'), on = t >= 15.98; aperta(dn, t, 15.98, 0.2);
+    dn.style.color = on ? '#FF6B6B' : ''; dn.style.borderColor = on ? 'rgba(255,107,107,.5)' : ''; dn.style.background = on ? 'rgba(255,107,107,.12)' : '';
+    const sel = t >= 15.98 && t < 17.85 ? pr(t, 15.98, 0.3) * (1 - pr(t, 17.6, 0.3)) : 0;
+    $('#pc0').style.borderColor = sel > 0.01 ? `rgba(45,107,255,${0.25 + 0.6 * sel})` : '';
+    $('#pc0').style.boxShadow = sel > 0.01 ? `0 0 ${34 * sel}px ${4 * sel}px rgba(45,107,255,.28)` : '';
+    const ajI = $('#ajIn'); ajI.style.borderColor = t >= 16.36 && t < 17.05 ? '#2D6BFF' : ''; ajI.style.boxShadow = t >= 16.36 && t < 17.05 ? '0 0 0 3px rgba(45,107,255,.18)' : '';
+    if (t < 16.36) $('#ajTx').innerHTML = '<span class="ph">Cirurgia pontual mantendo estrutura, ICP e funil - ex.: encurta as headlines, tom mais direto...</span>';
+    else if (t < 17.05) digita($('#ajTx'), AJUSTE, t, 16.4, 16.82);
+    else $('#ajTx').innerHTML = `<span style="color:#8E929C">${AJUSTE}</span>`;
+    const bA = $('#btAj'), ativo = t >= 16.42; bA.className = 'ab bt fx ' + (ativo ? 'br' : 'cz'); aperta(bA, t, 17.02, 0.1);
+    // a headline velha some, a nova é escrita no lugar; contador de caracteres desce
+    const h = $('#h0'), velho = h.querySelector('.velho'), novo = h.querySelector('.novo'), sai = pr(t, 17.08, 0.18, E.cubicIn);
+    velho.style.opacity = 1 - sai; velho.style.filter = sai > 0.01 ? `blur(${sai * 6}px)` : 'none';
+    const n = Math.round(C((t - 17.18) / 0.4) * NOVA_HEAD.length);
+    novo.textContent = t < 17.18 ? '' : NOVA_HEAD.slice(0, n);
+    const old = semTag(PECAS[0][2][0][2]).length;
+    $('#h0c').textContent = (t < 17.18 ? old : Math.round(L(old, NOVA_HEAD.length, C((t - 17.18) / 0.4)))) + 'c';
+    $('#h0c').style.color = t >= 17.18 && t < 18 ? '#00DEB9' : '';
+    if (t < 17.6) $('#p0aj').style.opacity = 0; else pop($('#p0aj'), t, 17.6, 0.5);
+    const dim = t >= 17.02 && t < 17.95 ? pr(t, 17.02, 0.25) * (1 - pr(t, 17.7, 0.25)) : 0;
+    [1, 2].forEach(k => { const e = $('#pc' + k); if (t > 11.5) e.style.opacity = 1 - 0.55 * dim; }); }
+
+  // etapa 6: lote salvo — o resto já foi para o designer e para o editor
+  etapa($('#s5'), t, 17.95, null);
+  if (t >= 18.05) { const q = M.prog(t, 18.05, 0.6, E.spring); $('#loteOk').style.transform = `scale(${L(0.4, 1, q)}) rotate(${L(-20, 0, q)}deg)`; }
+  { const des = $('#itDes'), edi = $('#itEdi');
+    const voo = (d, t0, de, para) => { const p = E.cubicInOut(C((t - t0) / 0.5)), arco = Math.sin(p * Math.PI) * -90;
+      d.style.opacity = t < t0 || t > t0 + 0.55 ? 0 : C((t - t0) / 0.08) * (1 - pr(t, t0 + 0.36, 0.12, E.linear));
+      d.style.left = L(de[0], para[0], p) + 'px'; d.style.top = (L(de[1], para[1], p) + arco) + 'px';
+      d.style.transform = `scale(${L(1, 0.15, p)}) rotate(${L(0, -8, p)}deg)`; };
+    VOOS.forEach((d, i) => { const g = i < 3 ? 0 : 1, k = i % 3;
+      voo(d, (g ? 19.72 : 18.95) + k * 0.07, [960 + k * 60, 282 + k * 8], g ? [292, 156] : [292, 119]); });
+    [[des, 19.45], [edi, 20.26]].forEach(([el, tc]) => { const b = $('#' + el.id + 'B'); if (t < tc) { b.style.opacity = 0; el.style.background = ''; el.style.color = ''; return; }
+      pop(b, t, tc, 0.4); const g = Math.exp(-(t - tc) * 2.2); el.style.background = `rgba(45,107,255,${0.12 + 0.35 * g})`; el.style.color = '#fff';
+      el.style.boxShadow = `0 0 ${30 * g}px ${4 * g}px rgba(45,107,255,${0.4 * g})`; });
+    $('#wDes').style.color = t >= 19.45 ? '#fff' : ''; $('#wEdi').style.color = t >= 20.26 ? '#fff' : ''; }
+
+  /* 7 ─ assinatura: Agente de Copy no Blue OS */
+  FM.anim($('#brilho'), t, 20.56, null, { de: 0.4, desf: 60, esc: 1 + Math.sin(t * 2) * 0.03, y: -40 });
+  FM.anim($('#onda'), t, 20.6, null, { de: 0.3, rot: -14, y: -40 + Math.sin((t - 20.6) * 1.6) * 6, extra: ` scale(${1 + 0.02 * C(t - 21.5)})` });
+  FM.linha('fim1', t, [20.71, 21.41, 21.62], 99, { extra: ' translateY(-40px)' });
+  FM.linha('fim2', t, [22.12, 22.54, 22.8], 99, { extra: ' translateY(-40px)' });
+  { const g = Math.sin(C((t - 22.6) / 0.9) * Math.PI); $('#fim2').querySelector('.tl').style.textShadow = g > 0 ? `0 0 ${50 * g}px rgba(0,222,185,${0.7 * g})` : ''; }
+
+  cursor(t);
+  FM.depois(t);
+  $('#leg').style.top = '1610px'; $('#leg').style.color = '#fff';
+  // a pílula só aparece junto com a primeira palavra do bloco (sem pílula vazia na troca)
+  [...$('#leg').children].forEach(d => { if (d.style.opacity !== '0') { const w = d.querySelector('.w'); d.style.opacity = w ? Math.min(1, +w.style.opacity * 1.6) : 1; } });
+};
+window.pronto = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {})))).then(() => FM.medirLegenda(window.DURACAO));
+</script>
+</body>
+</html>

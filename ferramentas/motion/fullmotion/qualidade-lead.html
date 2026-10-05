@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — qualidade de lead (Criativo 3)</title>
+<link rel="stylesheet" href="fm.css">
+<style>
+  /* CRM */
+  #crm { width: 860px; height: 780px; padding: 0 0 20px; overflow: hidden; }
+  #crm .barra { height: 100px; display: flex; align-items: center; gap: 14px; padding: 0 36px; border-bottom: 2px solid #EEF0F5; font-size: 32px; font-weight: 600; }
+  #crm .barra i { width: 18px; height: 18px; border-radius: 50%; background: #E3E6EE; }
+  #crm .barra .tit { margin-left: 18px; }
+  #crm .barra .n { margin-left: auto; padding: 8px 20px; border-radius: 999px; background: #EEF2FF; color: var(--azul); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .lead { position: absolute; left: 24px; right: 24px; height: 76px; border-radius: 22px; display: flex; align-items: center; gap: 20px; padding: 0 18px;
+          border: 3px solid transparent; opacity: 0; }
+  .lead .av { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 700; flex: none; }
+  .lead .nm { font-size: 30px; font-weight: 600; } .lead .em { font-size: 22px; color: #8A90A2; font-weight: 500; }
+  .lead .tag { margin-left: auto; font-size: 22px; font-weight: 600; color: var(--azul); background: #EEF2FF; padding: 8px 16px; border-radius: 999px; }
+  .lead .st { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; flex: none; opacity: 0; }
+  .lead .st svg { width: 26px; height: 26px; }
+  .chip .ico { width: 64px; height: 64px; border-radius: 50%; background: #EEF2FF; display: grid; place-items: center; }
+  .chip .ico svg { width: 36px; height: 36px; }
+
+  /* agenda */
+  #agenda { width: 860px; height: 720px; padding: 34px 56px; }
+  #agenda .top { display: flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 600; }
+  #agenda .top .ico { width: 64px; height: 64px; border-radius: 18px; background: #EEF2FF; display: grid; place-items: center; }
+  #agenda .top .ico svg { width: 36px; height: 36px; }
+  #agenda .top .sem { margin-left: auto; font-size: 26px; color: #8A90A2; font-weight: 500; }
+  #agenda .dias { display: grid; grid-template-columns: repeat(5, 140px); gap: 12px; margin-top: 26px; font-size: 24px; font-weight: 600; color: #8A90A2; text-align: center; }
+  #slots { position: relative; margin-top: 12px; height: 540px; }
+  .slot { position: absolute; width: 140px; height: 80px; border-radius: 16px; border: 2px dashed #E3E6EE; }
+  .bloco { position: absolute; width: 140px; height: 80px; border-radius: 16px; display: grid; place-items: center; font-size: 22px; font-weight: 600; opacity: 0; }
+  .bloco.cur { background: #E8EBF2; color: #8A90A2; }
+  .bloco.qua { background: var(--azul); color: #fff; }
+
+  /* funil */
+  .banda { display: grid; place-items: center; color: #fff; font-size: 42px; font-weight: 700; height: 120px; }
+  .pt { position: absolute; left: 0; top: 0; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; z-index: 3; opacity: 0; }
+  .pt.cz { background: #B9BFCF; }
+  .pt.az { background: var(--azul); box-shadow: 0 0 0 4px #fff, 0 6px 14px rgba(0, 55, 255, .35); }
+  #com { width: 600px; height: 130px; display: flex; align-items: center; gap: 22px; padding: 0 30px; font-size: 38px; font-weight: 600; }
+  #com .ico { width: 76px; height: 76px; border-radius: 22px; background: var(--azul); display: grid; place-items: center; }
+  #com .ico svg { width: 42px; height: 42px; }
+  #com .n { margin-left: auto; font-size: 30px; color: var(--azul); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* checklist e formulário */
+  .ck { width: 880px; height: 150px; display: flex; align-items: center; gap: 28px; padding: 0 40px; font-size: 40px; font-weight: 500; white-space: nowrap; }
+  .ck .bx { width: 72px; height: 72px; border-radius: 22px; border: 4px solid #D8DCE6; display: grid; place-items: center; flex: none; position: relative; }
+  .ck .bx div { position: absolute; inset: -4px; border-radius: 22px; background: var(--verde); display: grid; place-items: center; opacity: 0; }
+  #form { width: 820px; height: 560px; padding: 44px 50px; }
+  #form .tit { display: flex; align-items: center; gap: 18px; font-size: 38px; font-weight: 700; }
+  #form .tit img { width: 46px; filter: brightness(0) saturate(100%) invert(16%) sepia(97%) saturate(5000%) hue-rotate(228deg); }
+  #form .lab { font-size: 24px; color: #8A90A2; font-weight: 600; margin: 30px 0 10px; }
+  #form .cx { height: 76px; border-radius: 18px; background: #F3F5FA; border: 2px solid #E3E6EE; display: flex; align-items: center; padding: 0 24px; font-size: 32px; font-weight: 600; }
+  #form .car { width: 3px; height: 38px; background: var(--azul); margin-left: 4px; }
+  #enviar { margin-top: 34px; height: 104px; border-radius: 999px; background: var(--azul); color: #fff; display: flex; align-items: center; justify-content: center; gap: 16px;
+            font-size: 38px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- 1–2: CRM, 30 leads, quantos eram qualificados -->
+<!-- abertura: o dono de SaaS no trono (personagem da Blue), já na tela no quadro 0. Cena "3D": personagem, nome e
+     ícones vivem no mesmo mundo (coordenadas da imagem 971×1620) e a câmera move tudo junto; os ícones ficam à frente -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="mao" x="0" y="0" width="971" height="1620" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feImage id="maoMapa" x="0" y="0" width="971" height="1620" preserveAspectRatio="none" result="mapa"/>
+    <feDisplacementMap id="maoDesloca" in="SourceGraphic" in2="mapa" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+<div id="dono" data-caixa="40,110,915,1600" style="position:absolute;left:0;top:0;width:971px;height:1620px;transform-origin:0 0;z-index:2;opacity:0">
+  <img src="../img/dono-saas.png" style="width:971px;height:1620px;filter:url(#mao)"></div>
+<div class="p linha" id="rot1" style="left:0;top:0;font-size:56px;font-weight:700;color:#1F45C8;letter-spacing:-0.01em"></div>
+<div class="p ic br" id="tilePula" style="--s:250px;left:0;top:0;margin:0"></div>
+<div class="p linha" id="tx1" style="left:0;top:0;font-size:46px;font-weight:600;color:#1F45C8;line-height:1.15">antes de passar<br>esse <b>vídeo...</b></div>
+<div class="p ic az com-txt" id="tileCRM" style="--s:250px;left:0;top:0;margin:0"></div>
+<div class="p linha" id="tx2" style="left:0;top:0;font-size:48px;font-weight:600;color:#1F45C8">abre o teu <b class="az">CRM</b></div>
+<div class="p linha" id="h2" style="left:540px;top:400px;font-size:62px;font-weight:500">os últimos <b class="az">30 leads</b> do anúncio</div>
+<div class="p linha" id="h3" style="left:540px;top:400px;font-size:80px;font-weight:500">Agora <b class="az">conta:</b></div>
+<div class="p chip claro" id="fDec" style="left:315px;top:400px"></div>
+<div class="p chip claro" id="fVer" style="left:765px;top:400px"></div>
+<div class="p linha" id="h4" style="left:540px;top:400px;font-size:104px;font-weight:700;letter-spacing:-0.04em;color:var(--azul)">qualificados?</div>
+<div class="p cartao" id="crm" style="left:540px;top:910px">
+  <div id="crmIcone" style="position:absolute;inset:0;z-index:5;opacity:0;background:linear-gradient(150deg,#1E50FF,#0033F0);display:grid;place-items:center"><svg viewBox="0 0 24 24" style="width:44%;height:44%" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M5 20 V12 M12 20 V5 M19 20 V9"/></svg></div>
+  <div class="barra"><i></i><i></i><i></i><span class="tit">CRM · Leads do anúncio</span><span class="n" id="nLeads">0 leads</span></div>
+  <div id="lista" style="position:relative;height:660px"></div>
+</div>
+
+<!-- 3: Sete? Nove? (azul) -->
+<div class="p linha" id="s7" style="left:540px;top:880px;font-size:300px;font-weight:700;color:#fff;letter-spacing:-0.05em">Sete?</div>
+<div class="p linha" id="s9" style="left:540px;top:880px;font-size:300px;font-weight:700;color:var(--verde);letter-spacing:-0.05em">Nove?</div>
+<div class="p linha" id="de30" style="left:540px;top:1080px;font-size:60px;font-weight:500;color:rgba(255,255,255,.75)">de 30 leads</div>
+
+<!-- 4: o resto é curioso, agenda lotada -->
+<div class="p linha" id="h5" style="left:540px;top:400px;font-size:84px;font-weight:600">Pois é,</div>
+<div class="p linha" id="h6" style="left:540px;top:400px;font-size:72px;font-weight:500">o resto é <b class="az">curioso</b></div>
+<div id="gente"></div>
+<div class="p linha" id="h7" style="left:540px;top:400px;font-size:58px;font-weight:500">ocupando a <b class="az">agenda</b> do teu vendedor</div>
+<div class="p cartao" id="agenda" style="left:540px;top:910px">
+  <div class="top"><div class="ico"></div>Agenda do vendedor<span class="sem">esta semana</span></div>
+  <div class="dias"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span></div>
+  <div id="slots"></div>
+</div>
+<div class="p chip azulc" id="lotada" style="left:790px;top:560px">Agenda lotada 😩</div>
+
+<!-- 5: não é volume, é FILTRO (azul) -->
+<div class="p linha" id="v1" style="left:540px;top:820px;font-size:66px;font-weight:500;color:#fff">o teu problema não é <b>volume,</b></div>
+<div class="p linha" id="v2" style="left:540px;top:1000px;font-size:190px;font-weight:700;color:var(--verde);letter-spacing:-0.05em;text-shadow:0 0 60px rgba(0,255,212,.45)">é FILTRO.</div>
+
+<!-- 6: Blue Ocean entra, funil -->
+<div class="p linha" id="h8" style="left:540px;top:400px;font-size:62px;font-weight:500">E é aí que a <b class="az">Blue Ocean</b> entra</div>
+<div class="p logoTile" id="logo" style="left:540px;top:650px"><img src="../img/simbolo-blueocean.png"></div>
+<img class="p" id="marca" src="../img/LOGO-BLUE.svg" style="left:540px;top:850px;height:74px">
+<div class="p linha" id="h9" style="left:540px;top:465px;font-size:56px;font-weight:500">a gente <b class="az">filtra</b> o teu cliente ideal</div>
+<div id="funil"></div>
+<div id="pts"></div>
+<div class="p cartao" id="com" style="left:540px;top:1190px"><div class="ico"></div>Comercial<span class="n" id="nCom">0</span></div>
+<div class="p chip claro" id="podeC" style="left:820px;top:1088px;font-size:34px"><div class="ok"></div>quem pode comprar</div>
+
+<!-- 7: Tripmee 13% → 70% -->
+<div class="p linha" id="h10" style="left:540px;top:440px;font-size:76px;font-weight:500">Foi <b class="az">exatamente assim</b></div>
+<div class="p cartao" id="trip" style="left:540px;top:430px;width:640px;height:200px;display:grid;place-items:center"><img src="../img/tripmee.png" style="width:440px"></div>
+<div class="p chip azulc" id="parc" style="left:540px;top:590px;font-size:34px"><div class="tile"><img src="../img/simbolo-blueocean.png"></div>Parceiro Blue Ocean</div>
+<div class="p" id="donut" style="left:540px;top:930px;width:520px;height:520px">
+  <svg viewBox="0 0 520 520" width="520" height="520" style="position:absolute;inset:0;transform:rotate(-90deg)">
+    <circle cx="260" cy="260" r="210" fill="none" stroke="#E3E7F2" stroke-width="46"/>
+    <circle id="arco" cx="260" cy="260" r="210" fill="none" stroke="#0037FF" stroke-width="46" stroke-linecap="round"/>
+  </svg>
+  <div id="pct" style="position:absolute;inset:0;display:grid;place-items:center;font-size:150px;font-weight:700;letter-spacing:-0.05em;font-variant-numeric:tabular-nums">0%</div>
+</div>
+<div class="p linha" id="h11" style="left:540px;top:1255px;font-size:56px;font-weight:500">de lead <b class="az">qualificado</b></div>
+
+<!-- 8: checklist -->
+<div class="p linha" id="h12" style="left:540px;top:560px;font-size:64px;font-weight:600">É pra você se:</div>
+<div class="p cartao ck" id="ck1" style="left:540px;top:760px"><div class="bx"><div></div></div><span>Tem problema de <b class="az">qualidade de lead</b></span></div>
+<div class="p cartao ck" id="ck2" style="left:540px;top:940px"><div class="bx"><div></div></div><span>Já fatura <b class="az">+R$ 20 mil</b> no SaaS</span></div>
+
+<!-- 9: formulário (azul) -->
+<div class="p logoTile" id="logo2" style="left:540px;top:440px;width:150px;height:150px;border-radius:42px"><img src="../img/simbolo-blueocean.png"></div>
+<div class="p cartao" id="form" style="left:540px;top:830px">
+  <div class="tit"><img src="../img/simbolo-blueocean.png">Diagnóstico Blue Ocean</div>
+  <div class="lab">Faturamento mensal</div><div class="cx"><span id="fx1"></span><span class="car" id="car1"></span></div>
+  <div class="lab">Maior desafio</div><div class="cx"><span id="fx2"></span><span class="car" id="car2"></span></div>
+  <div id="enviar"><span id="envTxt">Quero filtrar meus leads</span><span id="envSeta">→</span></div>
+</div>
+<div class="p linha" id="h13" style="left:540px;top:1200px;font-size:64px;font-weight:500;color:#fff">vem ver como <b class="verde">filtrar</b> o seu lead.</div>
+<svg class="p cursor" id="cursor" viewBox="0 0 24 30"></svg>
+
+<script src="../motion.js"></script>
+<script src="fm.js"></script>
+<script src="qualidade-grupos.js"></script>
+<script>
+const { anim, linha, pr, E, C, L, $ } = FM, M = Motion;
+window.DURACAO = 49.1;
+$('#cursor').innerHTML = FM.CURSOR;
+const OK = (cor = '#0A1A5C', w = 3.2) => FM.svg('check', cor, w);
+
+/* ── 1–2: CRM ── */
+$('#fDec').innerHTML = `<div class="ico">${FM.svg('pessoa', '#0037FF')}</div>Decisor?`;
+$('#fVer').innerHTML = `<div class="ico">${FM.svg('dolar', '#0037FF')}</div>Verba?`;
+const NOMES = [['Lucas M.', 'lucas@gmail.com', '#9AA1B5'], ['Fernanda R.', 'fe.rocha@hotmail.com', '#B4A0C8'], ['Ricardo A.', 'diretor@logfy.com.br', '#4C7DFF'],
+  ['Juliana S.', 'ju.santos@gmail.com', '#C8A88C'], ['Pedro H.', 'pedrinho99@gmail.com', '#8CB4A8'], ['Marina C.', 'marina@estudante.br', '#A8B4C8'],
+  ['Carla T.', 'ceo@finly.com.br', '#0037FF'], ['Bruno L.', 'brunol@outlook.com', '#B0A8A0']];
+const QUAL = [2, 6];
+const leads = NOMES.map(([n, e, cor], i) => {
+  const d = document.createElement('div'); d.className = 'lead'; d.style.top = (14 + i * 80) + 'px';
+  const ini = n.split(' ').map(s => s[0]).join('');
+  d.innerHTML = `<div class="av" style="background:${cor}">${ini}</div><div><div class="nm">${n}</div><div class="em">${e}</div></div>
+    <span class="tag">Meta Ads</span><div class="st"></div>`;
+  const st = d.querySelector('.st');
+  if (QUAL.includes(i)) { st.style.background = 'var(--verde)'; st.innerHTML = OK('#0A1A5C', 3.4); }
+  else { st.style.background = '#EEF0F5'; st.innerHTML = FM.svg('x', '#A3A9BA', 3); }
+  $('#lista').appendChild(d); return d;
+});
+/* abertura: câmera (o ponto fx,fy da imagem aparece em sx,sy da tela, escala s). Profundidade d > 1 = mais perto. */
+const ROT = 'Dono de SaaS';
+$('#rot1').innerHTML = [...ROT].map(c => `<span class="w" style="display:inline-block;white-space:pre">${c}</span>`).join('');
+const letras = [...$('#rot1').children];
+$('#tilePula').innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 6 L12 12 L4 18 Z M12 6 L20 12 L12 18 Z"/></svg>`;
+$('#tileCRM').innerHTML = `<svg viewBox="0 0 24 24"><path d="${FM.GLIFO.bars}"/></svg><span>CRM</span>`;
+const CAM = {
+  A: { s: 0.95, fx: 485, fy: 820, sx: 540, sy: 1010 },   // inteiro
+  B: { s: 1.85, fx: 503, fy: 390, sx: 540, sy: 820 },    // perto do rosto
+  C: { s: 0.80, fx: 760, fy: 640, sx: 540, sy: 960 },    // ele à esquerda, ícones à direita
+  C2: { s: 0.88, fx: 800, fy: 620, sx: 540, sy: 960 },   // deriva lenta (mostra a profundidade)
+};
+const TILE = { wx: 1060, wy: 330, d: 1.15 }, TXT = { wx: 1060, wy: 565, d: 1.15 };
+CAM.D = { s: 0.95, fx: 830, fy: 620, sx: 540, sy: 960 };   // continua chegando devagar enquanto o ícone vira o CRM
+const mixC = (a, b, p) => Object.fromEntries(Object.keys(a).map(k => [k, L(a[k], b[k], p)]));
+function camera(t) {
+  if (t < 1.42) return mixC(CAM.A, CAM.B, E.quintInOut(C((t - 0.62) / 0.8)));
+  if (t < 2.12) return mixC(CAM.B, CAM.C, E.quintInOut(C((t - 1.42) / 0.7)));
+  if (t < 3.55) return mixC(CAM.C, CAM.C2, E.cubicInOut(C((t - 2.12) / 1.43)));
+  return mixC(CAM.C2, CAM.D, E.cubicOut(C((t - 3.55) / 0.8)));
+}
+const tela = (c, wx, wy, d = 1) => [c.sx + (wx - c.fx) * c.s * d, c.sy + (wy - c.fy) * c.s * d, c.s * d];
+/* objeto do mundo: entra com mola/desfoque no lugar dele na cena */
+function noMundo(el, t, c, w, a, b, o = {}) {
+  const { rot = 0, extra = 1, dout = 0.35 } = o;
+  if (t < a || t > b + dout) { el.style.opacity = 0; return; }
+  const [x, y, k] = tela(c, w.wx, w.wy, w.d);
+  const pin = pr(t, a, 0.7), ps = M.prog(t, a, 1.0, E.spring), pa = pr(t, a, 0.3, E.cubicOut), po = pr(t, b, dout, E.cubicIn);
+  el.style.opacity = pa * (1 - po);
+  const bl = (1 - pin) * 22 + po * 18;
+  el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+  el.style.transform = `translate(${x}px,${y + (1 - pin) * 40 * k}px) translate(-50%,-50%) rotate(${(1 - pin) * rot}deg) scale(${k * L(0.4, 1, ps) * extra})`;
+}
+/* mapa da mão: só a região da mão no queixo se desloca (sobe e desce), o resto fica parado */
+(function () {
+  const cv = document.createElement('canvas'); cv.width = 971; cv.height = 1620;
+  const g = cv.getContext('2d'), img = g.createImageData(971, 1620);
+  for (let y = 0; y < 1620; y++) for (let x = 0; x < 971; x++) {
+    const dx = (x - 548) / 92, dy = (y - 458) / 58;
+    let v = Math.exp(-(dx * dx + dy * dy) / 2) * C((y - 392) / 48);   // protege o avatar do rosto
+    v += 0.55 * Math.exp(-(((x - 625) / 60) ** 2 + ((y - 500) / 45) ** 2) / 2);   // punho acompanha um pouco
+    const i = (y * 971 + x) * 4;
+    img.data[i] = 128; img.data[i + 1] = 128 + Math.round(127 * C(v)); img.data[i + 2] = 128; img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+  $('#maoMapa').setAttribute('href', cv.toDataURL());
+})();
+function cenaAbertura(t) {
+  if (t > 4.3) { ['#dono', '#rot1', '#tilePula', '#tx1', '#tileCRM', '#tx2'].forEach(s => $(s).style.opacity = 0); return; }
+  const c = camera(t), dono = $('#dono');
+  const pin = pr(t, -0.3, 0.75), po = pr(t, 3.7, 0.45, E.cubicIn);
+  dono.style.opacity = C((t + 0.3) / 0.25) * (1 - po);
+  dono.style.filter = (1 - pin) * 26 + po * 30 > 0.3 ? `blur(${(1 - pin) * 26 + po * 30}px)` : 'none';
+  dono.style.transform = `translate(${c.sx - c.fx * c.s}px, ${c.sy - c.fy * c.s + (1 - pin) * 160}px) scale(${c.s})`;
+  // a mão no queixo sobe e desce devagar (como quem está pensando)
+  $('#maoDesloca').setAttribute('scale', (2 * 11 * Math.sin(t * Math.PI * 2 / 3.0)).toFixed(2));
+  // "Dono de SaaS" reto, sobre a cabeça, letra a letra (faz parte da cena)
+  const rot = $('#rot1'), [rx, ry, rk] = tela(c, 503, 92);
+  const pr1 = pr(t, 1.36, 0.35, E.cubicIn);
+  rot.style.opacity = t > 1.8 ? 0 : 1 - pr1;
+  rot.style.filter = pr1 > 0.01 ? `blur(${pr1 * 16}px)` : 'none';
+  rot.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) scale(${rk})`;
+  letras.forEach((l, i) => {
+    const a = 0.64 + i * 0.03, p = pr(t, a, 0.6), pa = pr(t, a, 0.25, E.cubicOut);
+    l.style.opacity = pa; l.style.filter = p > 0.99 ? 'none' : `blur(${(1 - p) * 12}px)`;
+    l.style.transform = `translateY(${(1 - p) * 0.6}em)`;
+  });
+  // à direita, na mesma cena e um pouco à frente: "antes de passar esse vídeo..." e depois o ícone do CRM
+  noMundo($('#tilePula'), t, c, TILE, 1.42, 2.5, { rot: 14 });
+  const [x1, y1, k1] = tela(c, TXT.wx, TXT.wy, TXT.d);
+  for (const id of ['tx1', 'tx2']) { const el = $('#' + id); el.style.left = x1 + 'px'; el.style.top = y1 + 'px'; }
+  linha('tx1', t, [1.42, 1.54, 1.66, 1.86, 2.04], 2.5, { extra: ` scale(${k1})` });
+  const clq = Math.sin(C((t - 3.62) / 0.22) * Math.PI);
+  noMundo($('#tileCRM'), t, c, TILE, 2.64, 3.71, { rot: -14, extra: 1 - 0.08 * clq, dout: 0.01 });
+  linha('tx2', t, [2.64, 2.82, 2.94, 3.0], 3.5, { extra: ` scale(${k1})` });
+}
+function cenaCRM(t) {
+  cenaAbertura(t);
+  // o ícone clicado se transforma na janela do CRM: sai do tamanho/lugar do ícone e cresce até a janela
+  const crm = $('#crm'), m0 = 3.72;
+  if (t >= m0 && t < m0 + 0.8) {
+    const pm = pr(t, m0, 0.6, E.cubicInOut), [tx, ty, tk] = tela(camera(m0), TILE.wx, TILE.wy, TILE.d), lado = 250 * tk;
+    const sx = L(lado / 860, 1, pm), sy = L(lado / 780, 1, pm), R = L(65 * tk, 42, pm);
+    crm.style.opacity = 1; crm.style.filter = 'none';
+    crm.style.transform = `translate(-50%,-50%) translate(${L(tx - 540, 0, pm)}px,${L(ty - 910, 0, pm)}px) scale(${sx},${sy})`;
+    crm.style.borderRadius = `${R / sx}px / ${R / sy}px`;
+    $('#crmIcone').style.opacity = 1 - C((pm - 0.3) / 0.4);
+  } else {
+    crm.style.borderRadius = '42px'; $('#crmIcone').style.opacity = 0;
+    anim(crm, t, m0, 11.85, { din: 0.01, desf: 0 });
+  }
+  const alvo = tela(camera(3.62), TILE.wx + 25, TILE.wy + 20, TILE.d);
+  FM.cursor($('#cursor'), t, 3.05, [950, 1560], [alvo[0], alvo[1]], 3.62, 3.9);
+  linha('h2', t, [3.96, 4.08, 4.28, 4.7, 4.94, 5.1], 5.7);
+  $('#nLeads').textContent = Math.round(30 * E.quintOut(C((t - 4.1) / 1.0))) + ' leads';
+  linha('h3', t, [5.9, 6.34], 7.5, { sobe: 0.25 });
+  anim($('#fDec'), t, 7.76, 10.75, { rot: -10, de: 0.6, dy: 30, extra: ' rotate(-2deg)' });
+  anim($('#fVer'), t, 8.6, 10.75, { rot: 10, de: 0.6, dy: 30, extra: ' rotate(2deg)' });
+  linha('h4', t, [10.92], 11.85, { sobe: 0.25, desf: 24 });
+  const pq = pr(t, 10.92, 0.6);
+  leads.forEach((d, i) => {
+    const a = 4.15 + i * 0.09, pin = pr(t, a, 0.6), pa = pr(t, a, 0.25, E.cubicOut);
+    const q = QUAL.includes(i);
+    d.style.opacity = pa * (q ? 1 : L(1, 0.3, pq));
+    d.style.filter = pin < 0.995 ? `blur(${(1 - pin) * 14}px)` : 'none';
+    d.style.transform = `translateX(${(1 - pin) * 120}px) scale(${q ? L(1, 1.04, pq) : 1})`;
+    d.style.borderColor = q && pq > 0 ? `rgba(0,55,255,${pq})` : 'transparent';
+    d.style.background = q && pq > 0 ? `rgba(238,242,255,${pq})` : 'transparent';
+    const st = d.querySelector('.st'), ts = 9.2 + i * 0.17, ps = M.prog(t, ts, 0.6, E.spring);
+    st.style.opacity = pr(t, ts, 0.15, E.cubicOut); st.style.transform = `scale(${Math.max(0, ps)})`;
+  });
+}
+
+/* ── 3: Sete? Nove? ── */
+function cenaSete(t) {
+  linha('s7', t, [12.2], 13.02, { sobe: 0.15, desf: 34, dur: 0.8 });
+  linha('s9', t, [13.18], 13.88, { sobe: 0.15, desf: 34, dur: 0.8 });
+  anim($('#de30'), t, 12.45, 13.88, { de: 0.9, dy: 30 });
+}
+
+/* ── 4: curiosos e agenda ── */
+const QG = [3, 8, 16, 21, 27, 12, 25, 33];   // os qualificados (8 de 30)
+const gente = Array.from({ length: 30 }, (_, i) => {
+  const q = QG.includes(i), el = FM.icone(q ? 'az' : 'cz', 'pessoa', '', 112, $('#gente'));
+  return { el, q, x: 190 + (i % 6) * 140, y: 610 + Math.floor(i / 6) * 140, ordem: Math.hypot(i % 6 - 2.5, Math.floor(i / 6) - 2), r: FM.rng(i + 3)() };
+});
+$('#agenda .top .ico').innerHTML = FM.svg('agenda', '#0037FF');
+const SLOTS = [];
+for (let c = 0; c < 5; c++) for (let r = 0; r < 6; r++) {
+  const s = document.createElement('div'); s.className = 'slot'; s.style.left = (c * 152) + 'px'; s.style.top = (r * 92) + 'px'; $('#slots').appendChild(s);
+  SLOTS.push([c * 152, r * 92]);
+}
+const R = FM.rng(5), ordemSlots = SLOTS.map((s, i) => [R(), i]).sort((a, b) => a[0] - b[0]).map(x => x[1]).slice(0, 28);
+const blocos = ordemSlots.map((si, k) => {
+  const q = k === 9 || k === 21, b = document.createElement('div');
+  b.className = 'bloco ' + (q ? 'qua' : 'cur'); b.textContent = q ? 'Qualificado' : 'Curioso';
+  b.style.left = SLOTS[si][0] + 'px'; b.style.top = SLOTS[si][1] + 'px'; $('#slots').appendChild(b); return b;
+});
+function cenaCuriosos(t) {
+  linha('h5', t, [14.24, 14.68], 15.05, { sobe: 0.25 });
+  linha('h6', t, [15.14, 15.3, 15.5, 15.62], 16.2);
+  const pc = pr(t, 15.62, 0.5);
+  gente.forEach(g => {
+    if (t < 14.2 || t > 16.8) { g.el.style.opacity = 0; return; }
+    const a = 14.3 + g.ordem * 0.06, pin = pr(t, a, 0.6), ps = M.prog(t, a, 0.9, E.spring), po = pr(t, 16.2 + g.r * 0.15, 0.4, E.cubicIn);
+    const mexe = g.q ? 0 : pc * Math.sin(t * 9 + g.r * 6) * 6;
+    const s = L(0.4, 1, ps) * (g.q ? L(1, 1.12, pc) : L(1, 0.86, pc)) * (1 - po * 0.3);
+    g.el.style.opacity = pr(t, a, 0.25, E.cubicOut) * (g.q ? 1 : L(1, 0.55, pc)) * (1 - po);
+    g.el.style.filter = (1 - pin) * 20 + po * 18 > 0.3 ? `blur(${(1 - pin) * 20 + po * 18}px)` : 'none';
+    g.el.style.transform = `translate(${g.x}px, ${g.y + po * 80}px) rotate(${mexe}deg) scale(${s})`;
+  });
+  linha('h7', t, [16.32, 16.96, 17.16, 17.44, 17.56, 17.7], 19.12);
+  const tremor = t > 18.24 && t < 18.9 ? Math.sin((t - 18.24) * 70) * 10 * (1 - (t - 18.24) / 0.66) : 0;
+  anim($('#agenda'), t, 16.32, 19.12, { rot: -6, de: 0.7, dy: 120, desf: 30, x: tremor });
+  blocos.forEach((b, k) => {
+    const a = 16.75 + k * 0.05, ps = M.prog(t, a, 0.7, E.spring), pa = pr(t, a, 0.15, E.cubicOut);
+    b.style.opacity = pa; b.style.transform = `translateY(${(1 - Math.min(1, ps)) * -60}px) scale(${L(0.6, 1, ps)})`;
+  });
+  anim($('#lotada'), t, 18.4, 19.12, { rot: 14, de: 0.4, dy: 20, extra: ' rotate(4deg)' });
+}
+
+/* ── 5: não é volume, é FILTRO ── */
+const riscoVolume = FM.risco('v1');
+function cenaFiltro(t) {
+  const pm = pr(t, 21.45, 0.7);
+  linha('v1', t, [19.48, 19.62, 19.78, 20.26, 20.76, 20.94], 22.32, { extra: ` translateY(${-150 * pm}px) scale(${L(1, 0.84, pm)})`, opac: L(1, 0.5, pm) });
+  riscoVolume(t, 21.5);
+  linha('v2', t, [21.62, 21.76], 22.32, { sobe: 0.18, desf: 34, dur: 0.8 });
+}
+
+/* ── 6: Blue Ocean entra, funil ── */
+const BANDAS = [[660, 760, 600, 'Criativo', '#4B74FF', 26.74], [790, 600, 440, 'Oferta', '#2A5BFF', 27.62], [920, 440, 280, 'Formulário', '#0037FF', 28.58]];
+const bandas = BANDAS.map(([y, wt, wb, txt, cor]) => {
+  const d = document.createElement('div'); d.className = 'p banda'; d.textContent = txt;
+  const ins = (wt - wb) / 2 / wt * 100;
+  Object.assign(d.style, { left: '540px', top: y + 'px', width: wt + 'px', background: cor, clipPath: `polygon(0 0,100% 0,${100 - ins}% 100%,${ins}% 100%)`, borderRadius: '10px' });
+  $('#funil').appendChild(d); return d;
+});
+const bico = document.createElement('div'); bico.className = 'p';
+Object.assign(bico.style, { left: '540px', top: '1012px', width: '110px', height: '54px', background: '#0028C0', borderRadius: '0 0 22px 22px' });
+$('#funil').appendChild(bico);
+$('#com .ico').innerHTML = FM.svg('pessoa', '#fff');
+$('#podeC .ok').innerHTML = OK('#0A1A5C', 3.4);
+const V = 420, Y0 = 520, MEIO = [660, 790, 920];
+const hw = y => y < 600 ? 380 : y < 720 ? L(380, 300, (y - 600) / 120) : y < 730 ? 300 : y < 850 ? L(300, 220, (y - 730) / 120) : y < 860 ? 220 : y < 980 ? L(220, 140, (y - 860) / 120) : y < 1045 ? 55 : 0;
+const RP = FM.rng(77);
+const parts = [];
+for (let i = 0; i < 34; i++) {           // curiosos: barrados em uma das 3 etapas
+  const b = Math.floor(RP() * 3), alc = (MEIO[b] - Y0) / V;
+  parts.push({ az: false, b, x0: 250 + RP() * 580, ts: Math.max(26.4 + RP() * 4.2, BANDAS[b][5] - alc + 0.05), dir: RP() < 0.5 ? -1 : 1 });
+}
+for (let i = 0; i < 12; i++) parts.push({ az: true, x0: 300 + RP() * 480, ts: 28.75 + i * 0.2 + RP() * 0.08 });
+parts.forEach(p => { p.el = document.createElement('div'); p.el.className = 'pt ' + (p.az ? 'az' : 'cz'); $('#pts').appendChild(p.el); });
+const CHEGA = 1150, alcChega = (CHEGA - Y0) / V;
+function cenaFunil(t) {
+  linha('h8', t, [22.54, 22.78, 22.92, 23.2, 23.36, 23.52, 23.7, 24.14], 24.8);
+  const pl = pr(t, 24.86, 0.9, E.quintInOut);
+  anim($('#logo'), t, 23.52, 32.6, { rot: -16, de: 0.45, dy: 60, y: -370 * pl, esc: L(1, 0.48, pl) });
+  anim($('#marca'), t, 23.7, 24.75, { de: 0.9, dy: 20, desf: 18 });
+  linha('h9', t, [24.86, 25.02, 25.22, 25.8, 25.92, 26.02, 26.34], 32.6);
+  bandas.forEach((d, k) => anim(d, t, BANDAS[k][5], 32.6, { de: 0.7, dy: 40, desf: 20 }));
+  anim(bico, t, 28.58, 32.6, { de: 0.6, dy: 20 });
+  const fim = pr(t, 32.6, 0.4, E.cubicIn);
+  let chegaram = 0;
+  parts.forEach(p => {
+    const s = t - p.ts;
+    if (s < 0 || t > 33.1) { p.el.style.opacity = 0; return; }
+    let y = Y0 + V * s, x, op = C(s / 0.15), esc = 1;
+    if (!p.az && y >= MEIO[p.b]) {        // barrado: sai de lado, cai e some
+      const sd = (y - MEIO[p.b]) / V; y = MEIO[p.b] + 160 * sd + 300 * sd * sd;
+      x = 540 + (p.x0 - 540) / 300 * Math.max(0, hw(MEIO[p.b]) - 30) + p.dir * sd * 820;
+      op *= 1 - C(sd / 0.4); esc = 1 - sd * 0.6;
+    } else {
+      if (p.az && s >= alcChega) { chegaram++; p.el.style.opacity = 0; return; }
+      x = 540 + (p.x0 - 540) / 300 * Math.max(0, hw(y) - 30);
+    }
+    p.el.style.opacity = op * (1 - fim);
+    p.el.style.transform = `translate(${x}px, ${y}px) scale(${esc})`;
+  });
+  anim($('#com'), t, 30.42, 32.6, { rot: -5, de: 0.7, dy: 60 });
+  $('#nCom').textContent = chegaram + (chegaram === 1 ? ' qualificado' : ' qualificados');
+  anim($('#podeC'), t, 31.44, 32.6, { rot: 12, de: 0.5, dy: 20, extra: ' rotate(3deg)' });
+}
+
+/* ── 7: Tripmee 13% → 70% ── */
+const arco = $('#arco'), CIRC = 2 * Math.PI * 210; arco.style.strokeDasharray = `${CIRC} ${CIRC}`;
+function cenaTrip(t) {
+  linha('h10', t, [32.84, 33.22, 33.74], 34.2);
+  anim($('#trip'), t, 34.36, 40.35, { rot: -7, de: 0.6, dy: 60 });
+  anim($('#parc'), t, 34.86, 40.35, { rot: 8, de: 0.6, dy: 30 });
+  anim($('#donut'), t, 36.2, 40.35, { de: 0.7, dy: 60, rot: -10 });
+  const v = t < 37.68 ? 13 * E.quintOut(C((t - 36.52) / 0.5)) : L(13, 70, E.cubicInOut(C((t - 37.68) / 0.9)));
+  const k = C((v - 13) / 57);
+  const cor = `rgb(${Math.round(L(154, 0, k))},${Math.round(L(161, 55, k))},${Math.round(L(181, 255, k))})`;
+  arco.style.strokeDashoffset = CIRC * (1 - v / 100); arco.style.stroke = cor;
+  $('#pct').textContent = Math.round(v) + '%'; $('#pct').style.color = cor;
+  const kb = t >= 38.58 ? Math.exp(-(t - 38.58) * 7) * Math.sin((t - 38.58) * 24) : 0;   // tranco quando bate 70%
+  $('#donut').style.transform += ` rotate(${kb * -5}deg) scale(${1 + Math.abs(kb) * 0.05})`;
+  linha('h11', t, [39.22, 39.52, 39.7], 40.35);
+}
+
+/* ── 8: checklist ── */
+function cenaCheck(t) {
+  anim($('#h12'), t, 40.55, 44.8, { de: 0.9, dy: 30 });
+  [['#ck1', 41.06, 41.9], ['#ck2', 42.78, 43.86]].forEach(([id, a, tc]) => {
+    anim($(id), t, a, 44.8, { rot: -4, de: 0.75, dy: 60 });
+    const ok = $(id + ' .bx div'), ps = M.prog(t, tc, 0.7, E.spring);
+    if (!ok.innerHTML) ok.innerHTML = OK('#0A1A5C', 3.4);
+    ok.style.opacity = pr(t, tc, 0.15, E.cubicOut); ok.style.transform = `scale(${Math.max(0, ps)}) rotate(${(1 - C(ps)) * -30}deg)`;
+  });
+}
+
+/* ── 9: formulário ── */
+const T1 = 'R$ 20 mil+', T2 = 'Qualidade de lead';
+function cenaForm(t) {
+  anim($('#logo2'), t, 45.0, null, { rot: -16, de: 0.45, dy: 40 });
+  anim($('#form'), t, 45.1, null, { rot: -5, de: 0.7, dy: 120, desf: 30 });
+  const n1 = Math.floor(C((t - 45.4) / (T1.length * 0.05)) * T1.length), n2 = Math.floor(C((t - 45.85) / (T2.length * 0.03)) * T2.length);
+  $('#fx1').textContent = T1.slice(0, n1); $('#fx2').textContent = T2.slice(0, n2);
+  const pisca = (Math.floor(t * 2.5) % 2) ? 1 : 0;
+  $('#car1').style.opacity = t < 45.85 ? pisca || (t < 45.9 ? 1 : 0) : 0;
+  $('#car2').style.opacity = t >= 45.85 && t < 46.4 ? 1 : 0;
+  const cl = FM.cursor($('#cursor'), t, 46.0, [930, 1560], [680, 1015], 46.45, 47.2);
+  const env = t >= 46.55, en = $('#enviar');
+  en.style.transform = `scale(${1 - 0.06 * cl})`;
+  en.style.background = env ? 'var(--verde)' : 'var(--azul)'; en.style.color = env ? '#0A1A5C' : '#fff';
+  $('#envTxt').textContent = env ? 'Enviado' : 'Quero filtrar meus leads';
+  $('#envSeta').innerHTML = env ? OK('#0A1A5C', 3.4).replace('<svg', '<svg width="40" height="40"') : '→';
+  linha('h13', t, [46.5, 46.74, 46.9, 47.12, 47.66, 47.78, 47.9], 99);
+}
+
+FM.iniciar({
+  azul: [[11.95, 13.95], [19.28, 22.45], [44.88, 99]],
+  voos: [[0, 12.0, 1.6], [1, 12.9, 1.4], [2, 19.35, 1.7], [0, 21.0, 1.5], [1, 44.95, 1.6], [2, 46.6, 1.5]],
+  grupos: GRUPOS,
+  legendaOculta: [[11.9, 14.05], [19.3, 22.5], [46.4, 99]],
+  estouros: [
+    { t0: 38.58, ps: FM.criaConfete(9, 95, 540, 930, 420, 420) },        // 70% de lead qualificado
+    { t0: 46.55, ps: FM.criaConfete(31, 70, 540, 1015, 700, 104, 0.8), cor: 'branco' }, // formulário enviado
+  ],
+});
+window.pronto = Promise.all([window.pronto, new Promise(r => setTimeout(r, 500))]);   // o mapa da mão (feImage) carrega
+window.quadro = function (t) {
+  FM.antes(t);
+  if (t < 30)   // as duas cenas usam o mesmo cursor
+    cenaCRM(t); else cenaForm(t);
+  cenaSete(t); cenaCuriosos(t); cenaFiltro(t); cenaFunil(t); cenaTrip(t); cenaCheck(t);
+  FM.depois(t);
+};
+M.tocar();
+</script>
+</body>
+</html>

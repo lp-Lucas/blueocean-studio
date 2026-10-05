@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Full motion — reveal do Blue Ocean Studio (interface redesenhada)</title>
+<link rel="stylesheet" href="../fm.css">
+<!-- o próprio estilo do editor: a interface é remontada com as mesmas classes, em vetor, e animada -->
+<link rel="stylesheet" href="../../../../ui/estilo.css">
+<style>
+  @font-face { font-family: 'UI'; font-weight: 400; src: url('../../fontes/InstrumentSans-Regular.ttf'); }
+  @font-face { font-family: 'UI'; font-weight: 500; src: url('../../fontes/InstrumentSans-Medium.ttf'); }
+  @font-face { font-family: 'UI'; font-weight: 600; src: url('../../fontes/InstrumentSans-SemiBold.ttf'); }
+  @font-face { font-family: 'UI'; font-weight: 700; src: url('../../fontes/InstrumentSans-Bold.ttf'); }
+  @font-face { font-family: 'MontB'; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+  :root { --fundoV: #07080B; --tl: #2EF2D0; --cz: #A6AAB4; --vidroV: rgba(30, 32, 40, .78); }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; }
+  body { background: var(--fundoV); color: #F1F2F5; font-family: 'Inst', sans-serif; font-size: 16px; line-height: normal; letter-spacing: -0.02em; user-select: none; }
+  /* fundo da página inicial do editor: preto com a grade de bolinhas ondulando como tecido */
+  #bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(1000px 700px at 50% -6%, rgba(45, 107, 255, 0.12), transparent 65%), #050608; }
+  #bolinhas { position: absolute; inset: 0; width: 1080px; height: 1920px; z-index: 1;
+              -webkit-mask-image: radial-gradient(120% 90% at 50% 42%, #000 35%, rgba(0,0,0,.35) 75%, transparent 100%); }
+  #azul { display: none; }
+  .p { z-index: 5; }
+  .h { font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; }
+  .tl { color: var(--tl); }
+  .cz { color: var(--cz); }
+  .vidroV { background: var(--vidroV); border: 2px solid rgba(255, 255, 255, .10); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .07), 0 40px 90px rgba(0, 0, 0, .55); }
+
+  /* ── componentes do editor em tamanho de tela (escala) e o mundo (o editor inteiro) ── */
+  .ui, #mundo { font-family: 'UI', sans-serif; font-size: 12.5px; line-height: 1.4; letter-spacing: normal; color: #F1F2F5; }
+  .ui *, #mundo * { animation: none !important; transition: none !important; }
+  .ui .chip, #mundo .chip { box-shadow: none; white-space: nowrap; }
+  #camera { position: absolute; inset: 0; z-index: 3; perspective: 2600px; perspective-origin: 540px 960px; }
+  #mundo { position: absolute; left: 0; top: 0; width: 1720px; height: 1000px; transform-origin: 0 0; border-radius: 18px; overflow: hidden; opacity: 0;
+           background: radial-gradient(1100px 620px at 0% -10%, rgba(45, 107, 255, 0.10), transparent 62%), radial-gradient(900px 600px at 100% 110%, rgba(45, 107, 255, 0.06), transparent 60%), #0A0B0E;
+           border: 1px solid rgba(255, 255, 255, .09); box-shadow: 0 60px 160px rgba(0, 0, 0, .8), 0 0 200px 30px rgba(45, 107, 255, .1); }
+  #mundo #topo { padding-right: 12px; }
+  #mundo #topo .marca-btn img { height: 15px; }
+  #mundo #app { height: 954px; }
+  #mundo .aba-corpo { display: flex; }
+  #wProc { position: absolute; left: 0; right: 0; top: 52px; bottom: 0; }
+  #esquerda { position: relative; }
+  #mundo .card-midia .thumb { background-size: cover; }
+  #tela { left: 363px; top: 18px; width: 285px; height: 506px; overflow: hidden; }
+  #tela img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+  #pvSplit { position: absolute; inset: 0; opacity: 0; }
+  #pvSplit img { height: 50%; }
+  #pvSplit img + img { top: 50%; }
+  #pvSplit i { position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: #fff; }
+  #pvLeak { position: absolute; inset: -20%; opacity: 0; background: radial-gradient(circle at 30% 40%, rgba(45, 107, 255, 0.85) 0%, rgba(45, 107, 255, 0.6) 20%, rgba(45, 107, 255, 0.32) 42%, rgba(45, 107, 255, 0.1) 65%, rgba(45, 107, 255, 0) 85%); mix-blend-mode: screen; }
+  #pvLeg { position: absolute; left: 0; right: 0; top: 68%; text-align: center; font-family: 'MontB'; font-size: 19px; color: #fff; letter-spacing: 0; opacity: 0; }
+  #pvLeg span { display: inline-block; padding: 1px 5px; margin: 0 1px; border-radius: 5px; }
+  #pvLeg span.on { background: #0137FF; }
+  #aoVivo { position: absolute; left: 373px; top: 28px; display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 12px; background: #FF3B47; color: #fff;
+            font-size: 11px; font-weight: 700; letter-spacing: .06em; box-shadow: 0 4px 16px rgba(255, 59, 71, .55); opacity: 0; }
+  #aoVivo i { width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+  #mundo .aviso-externo { opacity: 0; }
+  #regua { position: relative !important; height: 24px; background: rgba(22, 23, 28, .96) repeating-linear-gradient(90deg, rgba(255, 255, 255, .14) 0 1px, transparent 1px 20px) 0 18px / 100% 6px no-repeat; }
+  #regua span { position: absolute; top: 3px; font-size: 10px; color: #6E7380; font-variant-numeric: tabular-nums; }
+  .pista { height: 40px; }
+  .pista.fx, .pista.legenda { height: 30px; }
+  .pista.v1 { height: 52px; }
+  .rotulo { height: 40px; }
+  .rotulo.fx, .rotulo.legenda { height: 30px; }
+  .rotulo.v1 { height: 52px; }
+  .item .thumbs { background-repeat: repeat-x !important; background-size: auto 100% !important; opacity: .45 !important; -webkit-mask-image: none !important; }
+  .item .ondaV { position: absolute; left: 0; right: 0; bottom: 3px; height: 50%; opacity: .55;
+                 background: repeating-linear-gradient(90deg, rgba(200, 255, 225, .9) 0 2px, transparent 2px 4px);
+                 -webkit-mask-image: linear-gradient(0deg, #000 0 20%, transparent 20%), repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 3px); }
+  #agulha { left: 0; }
+  .tesoura { position: absolute; top: -2px; width: 22px; height: 22px; margin-left: -11px; border-radius: 6px; background: var(--tl); color: #062B26; display: grid; place-items: center; opacity: 0; z-index: 7; }
+  .tesoura svg { width: 14px; height: 14px; }
+  .spin { display: block; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, .12); border-top-color: #5287FF; }
+  .passo .est i { display: none; }
+  .passo.feito .est i { display: inline-flex; }
+  .passo.feito .spin { display: none; }
+  .card-receita.nova { border-color: rgba(45, 107, 255, 0.7); box-shadow: 0 0 30px 4px rgba(45, 107, 255, 0.25), 0 0 70px 14px rgba(45, 107, 255, 0.1); }
+  .card-receita.nova .ico { background: rgba(45, 107, 255, 0.18); color: #5287FF; }
+  .card-receita .salvo2 { margin-left: auto; font-size: 10.5px; color: var(--tl); display: flex; align-items: center; gap: 4px; }
+  .card-receita .salvo2 i { width: 11px; height: 11px; }
+  #ent, #bigTxt { flex: 1; min-height: 22px; padding: 5px 0; line-height: 1.45; font-size: 13px; white-space: pre-wrap; }
+  .ph { color: #6E7380; }
+  .car { display: inline-block; width: 1.5px; height: 15px; background: #5287FF; vertical-align: -3px; margin-left: 1px; }
+
+  /* tela 1: a ideia sai e volta como vídeo pronto */
+  #bolha { z-index: 8; }
+  #orbe { width: 340px; height: 340px; border-radius: 50%; z-index: 7;
+          background: radial-gradient(circle closest-side, rgba(150, 182, 255, .95) 0%, rgba(45, 107, 255, 0.8) 12%, rgba(45, 107, 255, 0.5) 28%, rgba(45, 107, 255, 0.25) 48%, rgba(45, 107, 255, 0.08) 72%, rgba(45, 107, 255, 0) 100%); }
+  .vc { width: 300px; height: 533px; border-radius: 30px; overflow: hidden; border: 2px solid rgba(255, 255, 255, .16);
+        box-shadow: 0 40px 90px rgba(0, 0, 0, .65), 0 0 60px rgba(45, 107, 255, .18); background: #111; }
+  .vc img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ok { position: absolute; right: 18px; top: 18px; width: 66px; height: 66px; border-radius: 50%; background: var(--tl); display: grid; place-items: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .4); opacity: 0; }
+  .ok svg { width: 38px; height: 38px; }
+  #pronto { width: 420px; height: 746px; z-index: 6; }
+  #prontoSelo { display: flex; align-items: center; gap: 16px; height: 84px; padding: 0 34px 0 18px; border-radius: 999px; font-size: 36px; font-weight: 600; white-space: nowrap;
+                background: rgba(38, 40, 48, .94); border: 2px solid rgba(255, 255, 255, .14); box-shadow: 0 24px 50px rgba(0, 0, 0, .5); z-index: 7; }
+  #prontoSelo .v { width: 52px; height: 52px; border-radius: 50%; background: var(--tl); display: grid; place-items: center; }
+  #prontoSelo .v svg { width: 30px; height: 30px; }
+  .raio { position: absolute; left: 0; top: 0; width: 6px; height: 60px; margin: -30px 0 0 -3px; border-radius: 3px; background: linear-gradient(rgba(45, 107, 255, 0.9), rgba(45, 107, 255, 0)); filter: blur(2px); z-index: 7; opacity: 0; }
+
+  /* logo */
+  #logo { width: 300px; height: 300px; border-radius: 70px; box-shadow: 0 0 0 2px rgba(255, 255, 255, .08), 0 0 160px 20px rgba(45, 107, 255, .18), 0 30px 80px rgba(0, 0, 0, .55); }
+  #logo img { width: 100%; height: 100%; display: block; border-radius: 70px; }
+  #marca { font-size: 100px; font-weight: 700; letter-spacing: -0.04em; white-space: nowrap; }
+  #marca .st { color: #6E7380; font-weight: 600; }
+  #brilho { width: 1500px; height: 1500px; border-radius: 50%; background: radial-gradient(circle closest-side, rgba(45, 107, 255, 0.32) 0%, rgba(45, 107, 255, 0.256) 15%, rgba(45, 107, 255, 0.176) 32%, rgba(45, 107, 255, 0.096) 52%, rgba(45, 107, 255, 0.038) 72%, rgba(45, 107, 255, 0.01) 88%, rgba(45, 107, 255, 0) 100%); z-index: 3; }
+
+  /* números */
+  .stat { width: 900px; height: 340px; border-radius: 44px; padding: 46px 52px; display: flex; gap: 40px; align-items: center; }
+  .stat .ic2 { width: 120px; height: 120px; border-radius: 34px; background: linear-gradient(150deg, #3D7AFF, #1F55E8); display: grid; place-items: center; flex: none;
+               box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), 0 14px 34px rgba(45, 107, 255, .45); }
+  .stat .ic2 svg { width: 62px; height: 62px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .stat .tx { flex: 1; }
+  .stat .t1 { font-size: 30px; color: var(--cz); font-weight: 500; }
+  .stat .t2 { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; white-space: nowrap; }
+  .stat .gr { width: 250px; height: 200px; position: relative; flex: none; }
+  .bar { position: absolute; bottom: 0; width: 36px; border-radius: 10px; background: linear-gradient(180deg, #5287FF, #2D6BFF); transform-origin: 50% 100%; }
+  .seta { position: absolute; right: -14px; top: -20px; width: 70px; height: 70px; border-radius: 50%; background: var(--tl); display: grid; place-items: center; opacity: 0; }
+  .seta svg { width: 40px; height: 40px; fill: none; stroke: #062B26; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  #timer { height: 150px; padding: 0 56px 0 40px; border-radius: 75px; display: flex; align-items: center; gap: 28px; font-size: 84px; font-weight: 700;
+           font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  #timer svg { width: 76px; height: 76px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .risco2 { position: absolute; left: -2%; width: 104%; top: 52%; height: 10px; border-radius: 6px; background: #FF5A5F; transform-origin: 0 50%; transform: scaleX(0); }
+  #parede { width: 1000px; height: 2300px; z-index: 4; }
+  #parede .vc { position: absolute; }
+  #topoEsc { position: absolute; left: 0; top: 0; width: 1080px; height: 640px; z-index: 5; background: linear-gradient(#07080B 45%, transparent); opacity: 0; }
+  .gl { position: absolute; inset: -6px; border-radius: 24px; border: 2px solid rgba(45, 107, 255, 0.75); box-shadow: 0 0 40px 6px rgba(45, 107, 255, 0.35), 0 0 90px 20px rgba(45, 107, 255, 0.15), inset 0 0 18px rgba(45, 107, 255, 0.18); opacity: 0; pointer-events: none; }
+  #leg { color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .9); }
+  #leg > div { background: rgba(7, 8, 11, .72); padding: 6px 24px 10px; border-radius: 22px; }
+  .cursor { position: absolute; left: 0; top: 0; }
+  /* abertura: o input numa linha só, a câmera acompanha o texto até o botão */
+  /* sets com câmera própria: o filtro (borrão de movimento) fica fora, a câmera (transform) fica dentro */
+  .camfx { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0; }
+  .camw { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+  .camw .caixa-entrada { position: absolute; left: 0; top: 0; }
+  #abBolha { position: absolute; left: 0; top: 0; white-space: nowrap; max-width: none; opacity: 0; }
+  #abOrbe { position: absolute; left: 0; top: 0; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; opacity: 0;
+            background: radial-gradient(circle closest-side, rgba(170, 196, 255, .95) 0%, rgba(45, 107, 255, .8) 14%, rgba(45, 107, 255, .48) 30%, rgba(45, 107, 255, .22) 50%, rgba(45, 107, 255, .07) 72%, rgba(45, 107, 255, 0) 100%); }
+  .raio2 { position: absolute; left: 0; top: 0; width: 2px; height: 22px; margin: -11px 0 0 -1px; border-radius: 1px; opacity: 0;
+           background: linear-gradient(rgba(120, 160, 255, .95), rgba(45, 107, 255, 0)); }
+  #abCard { position: absolute; left: 0; top: 0; width: 170px; height: 302px; margin: -151px 0 0 -85px; border-radius: 13px; overflow: hidden; opacity: 0;
+            border: 1px solid rgba(255, 255, 255, .16); box-shadow: 0 24px 60px rgba(0, 0, 0, .6), 0 0 50px rgba(45, 107, 255, .22); background: #111; }
+  #abCard img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .selo1 { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 7px; height: 30px; padding: 0 13px 0 5px; border-radius: 15px; font-size: 13px;
+           font-weight: 600; white-space: nowrap; background: rgba(38, 40, 48, .95); border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 10px 24px rgba(0, 0, 0, .5); opacity: 0; }
+  .selo1 .v { width: 20px; height: 20px; border-radius: 50%; background: #2EF2D0; display: grid; place-items: center; }
+  .selo1 .v svg { width: 12px; height: 12px; }
+  .camw .caixa-entrada { align-items: center; white-space: nowrap; }
+  #abreTxt, #fraseTxt { flex: none; white-space: pre; padding: 5px 0; line-height: 1.45; font-size: 13px; }
+  #bolha { width: auto !important; }
+  #bolhaTxt { white-space: nowrap; }
+  /* chat trabalhando (igual ao app): painel azul com bolinhas */
+  #direita .fundo-pensando { opacity: 0; }
+  #direita.trabalhando .spin { border-color: rgba(255, 255, 255, .25); border-top-color: #fff; }
+  /* cartões de número no estilo dos painéis do editor */
+  .stat2 { width: 900px; padding: 44px 48px; border-radius: 40px; background: rgba(22, 23, 28, .92); border: 2px solid rgba(255, 255, 255, .08);
+           box-shadow: inset 0 2px 0 rgba(255, 255, 255, .06), 0 40px 100px rgba(0, 0, 0, .6); font-family: 'UI'; letter-spacing: -0.01em; }
+  .cab2 { display: flex; align-items: center; gap: 26px; margin-bottom: 34px; }
+  .ico2 { width: 96px; height: 96px; border-radius: 28px; background: rgba(45, 107, 255, .16); display: grid; place-items: center; flex: none; }
+  .ico2 svg { width: 50px; height: 50px; fill: none; stroke: #5287FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .stat2 .t2 { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; white-space: nowrap; }
+  .stat2 .t1 { font-size: 28px; color: #6E7380; font-weight: 500; margin-top: 2px; }
+  .pill2 { margin-left: auto; display: flex; align-items: center; gap: 10px; height: 62px; padding: 0 26px 0 20px; border-radius: 31px; background: rgba(45, 107, 255, .16);
+           color: #7FA4FF; font-size: 28px; font-weight: 600; white-space: nowrap; }
+  .pill2 svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .barra2 { display: flex; align-items: center; gap: 22px; margin-top: 22px; }
+  .rot2 { width: 120px; font-size: 28px; color: #A6AAB4; font-weight: 500; }
+  .trilho { flex: 1; height: 34px; border-radius: 17px; background: rgba(255, 255, 255, .05); overflow: hidden; }
+  .trilho b { display: block; height: 100%; border-radius: 17px; background: #3A3E4A; transform-origin: 0 50%; }
+  .trilho b.az { background: linear-gradient(90deg, #2D6BFF, #5287FF); box-shadow: 0 0 24px rgba(45, 107, 255, .6); }
+  .val2 { width: 140px; text-align: right; font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .az2 { color: #7FA4FF; }
+  .graf2 { position: relative; }
+  .graf2 svg { display: block; width: 804px; height: 230px; overflow: visible; }
+  .eixo2 { display: flex; justify-content: space-between; margin-top: 14px; font-size: 24px; color: #6E7380; }
+  #timerTxt { font-size: 132px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<canvas id="bolinhas" width="1080" height="1920"></canvas>
+
+<!-- ═══ o editor, remontado com as classes do app ═══ -->
+<div id="camera"><div id="mundo">
+  <header id="topo">
+    <div class="topo-esq">
+      <button class="marca-btn"><img src="img/logo.png"><span>Blue Ocean <em>Studio</em></span></button>
+      <span class="barra-sep"></span>
+      <button class="seletor-projeto"><span>Lançamento SaaS</span><i data-i="chevron"></i></button>
+      <span class="salvo"><span>Salvo</span></span>
+    </div>
+    <div class="topo-meio"><div class="tarefa-topo" id="wTarefa" style="opacity:0"><span id="wTarefaTxt">Agente Editor editando…</span><span class="barrinha"><b id="wBarra"></b></span></div></div>
+    <div class="topo-dir">
+      <div class="segmentos modo-ui"><button>Padrão</button><button class="on">Avançada</button></div>
+      <span class="sep"></span>
+      <button class="icone-btn"><i data-i="undo"></i></button><button class="icone-btn"><i data-i="redo"></i></button>
+      <span class="sep"></span>
+      <button class="icone-btn"><i data-i="folder"></i></button><button class="icone-btn"><i data-i="settings"></i></button>
+      <button class="btn primario"><span>Exportar</span></button>
+    </div>
+  </header>
+  <main id="app">
+    <aside id="esquerda" class="painel">
+      <nav class="abas" id="wAbas"><button class="ativa" id="abaMidia">Mídia</button><button id="abaProc">Processos</button><button>Ajustes</button><span class="aba-indicador" id="wInd"></span></nav>
+      <section class="aba-corpo ativa" id="wMidia">
+        <div class="midia-acoes"><button class="btn suave"><i data-i="plus"></i>Importar</button><button class="btn suave"><i data-i="folder"></i>Pasta</button></div>
+        <div class="campo-link"><span class="ph" style="flex:1;font-size:12px">Link do YouTube, Instagram, Drive…</span><button class="icone-btn"><i data-i="download"></i></button></div>
+        <div class="segmentos"><button class="on">Vídeo e áudio</button><button>Só áudio</button></div>
+        <div class="lista-midia" id="wMidias"></div>
+      </section>
+      <section class="aba-corpo" id="wProc" style="opacity:0">
+        <p class="sub">Processos aprovados. Quando o pedido no chat bate com um deles, o Claude segue o processo.</p>
+        <div class="lista-receitas" id="wRecs" style="position:relative"></div>
+      </section>
+    </aside>
+
+    <section id="centro">
+      <div id="barraComps" class="barra-comps"></div>
+      <div id="palco">
+        <div id="moldura">
+          <div id="tela">
+            <img class="clip" id="pvA" data-c="a">
+            <div id="pvSplit"><img class="clip" data-c="d"><img class="clip" data-c="r"><i></i></div>
+            <div id="pvLeak"></div>
+            <div id="pvLeg"></div>
+          </div>
+          <div id="aoVivo"><i></i>AO VIVO</div>
+        </div>
+        <div class="aviso-externo" id="wAviso">Linha do tempo alterada pelo Claude</div>
+        <div class="palco-barra">
+          <div class="tempo-grupo"><span class="tempo" id="wTempo">0:00.00</span><span class="tempo fraco">/</span><span class="tempo fraco">0:32.40</span></div>
+          <div class="transporte">
+            <button class="icone-btn"><i data-i="skipback"></i></button><button class="icone-btn"><i data-i="stepback"></i></button>
+            <button class="play"><i data-i="pause"></i></button>
+            <button class="icone-btn"><i data-i="stepfwd"></i></button><button class="icone-btn"><i data-i="volume"></i></button>
+          </div>
+          <div class="palco-dir"><span class="etiqueta">9:16 · 1080×1920 · 30fps</span><button class="icone-btn"><i data-i="grid"></i></button></div>
+        </div>
+      </div>
+      <div id="divisor"></div>
+      <div id="linha">
+        <div class="linha-ferramentas">
+          <div class="grupo">
+            <button class="ferr" id="fDiv"><i data-i="scissors"></i><span>Dividir</span></button><button class="ferr"><i data-i="trash"></i><span>Apagar</span></button>
+            <span class="sep"></span>
+            <button class="ferr"><i data-i="type"></i><span>Headline</span></button><button class="ferr"><i data-i="faixa"></i><span>Qualificação</span></button>
+            <button class="ferr"><i data-i="sun"></i><span>Light leak</span></button><button class="ferr"><i data-i="layers"></i><span>Camada</span></button>
+            <span class="sep"></span>
+            <button class="ferr"><i data-i="captions"></i><span>Transcrição</span></button>
+          </div>
+          <div class="grupo"><button class="ferr alterna ativa"><i data-i="magnet"></i></button><span class="sep"></span>
+            <button class="icone-btn"><i data-i="minus"></i></button><span style="width:110px;height:4px;border-radius:4px;background:linear-gradient(90deg,#2D6BFF 45%,rgba(255,255,255,.1) 45%)"></span>
+            <button class="icone-btn"><i data-i="plus"></i></button><button class="icone-btn"><i data-i="expand"></i></button></div>
+        </div>
+        <div id="linhaCorpo">
+          <div id="rotulos">
+            <div class="rotulo fx"><i data-i="sparkle"></i>Efeitos</div>
+            <div class="rotulo legenda"><i data-i="captions"></i>Legenda</div>
+            <div class="rotulo"><i data-i="film"></i>Reação</div>
+            <div class="rotulo v1"><i data-i="film"></i>Podcast</div>
+            <div class="rotulo"><i data-i="music"></i>Voz</div>
+          </div>
+          <div id="rolagem"><div id="conteudoLinha">
+            <div id="regua"></div>
+            <div class="pista fx" id="pFx"></div>
+            <div class="pista legenda" id="pLeg"></div>
+            <div class="pista" id="pV2"></div>
+            <div class="pista v1" id="pV1"></div>
+            <div class="pista" id="pA1"></div>
+            <div id="agulha"><span></span><div class="tesoura" id="tesoura"></div></div>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="direita" class="painel"><canvas class="fundo-pensando" id="pensaCv" width="780" height="1892"></canvas>
+      <div class="chat-topo">
+        <div class="chat-id"><b>Agente Editor</b><span class="status" id="wStatus"></span></div>
+        <div class="chat-topo-acoes"><span class="etiqueta">opus-5-5</span><button class="icone-btn"><i data-i="newchat"></i></button></div>
+      </div>
+      <div id="mensagens"></div>
+      <div class="chat-rodape">
+        <div class="chips"><button class="chip"><i data-i="raio"></i>Gancho</button><button class="chip"><i data-i="estrela"></i>Banner</button><button class="chip"><i data-i="estrela"></i>Full Motion BlueOcean</button><button class="chip"><i data-i="estrela"></i>Legenda</button></div>
+        <div class="caixa-entrada" id="wCaixa"><div id="ent"><span class="ph">Descreva a edição</span></div>
+          <div class="entrada-acoes"><button class="icone-btn"><i data-i="paperclip"></i></button><button class="enviar" id="wEnv"><i data-i="send"></i></button></div></div>
+        <div class="contexto-chat"><span>Podcast · Corte 1</span><span>agulha 0.0s</span></div>
+      </div>
+    </aside>
+  </main>
+</div></div>
+
+<!-- ═══ 1. o pedido no input, o clique, a ideia sobe e volta como vídeo pronto ═══ -->
+<div id="inBig" class="p ui" style="left:540px;top:1000px;width:400px">
+  <div class="caixa-entrada" id="bigCaixa"><div id="bigTxt"><span class="ph">Descreva a edição</span></div>
+    <div class="entrada-acoes"><button class="icone-btn"><i data-i="paperclip"></i></button><button class="enviar" id="bigEnv"><i data-i="send"></i></button></div></div>
+</div>
+<svg width="0" height="0" style="position:absolute"><filter id="mbA" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="mbAg" stdDeviation="0 0"/></filter>
+  <filter id="mbF" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="mbFg" stdDeviation="0 0"/></filter></svg>
+<div id="abFx" class="camfx"><div id="abCam" class="camw ui">
+  <div class="caixa-entrada" id="abreCaixa"><div id="abreTxt"></div>
+    <div class="entrada-acoes"><button class="icone-btn"><i data-i="paperclip"></i></button><button class="enviar" id="abreEnv"><i data-i="send"></i></button></div></div>
+  <div class="msg-u" id="abBolha">Transforma esse podcast em 3 reels com gancho e legenda</div>
+  <div id="abOrbe"></div>
+  <div id="abRaios"></div>
+  <div id="abCard"><img class="clip" data-c="c"></div>
+  <div class="selo1" id="abSelo"><span class="v"><svg viewBox="0 0 24 24" fill="none" stroke="#062B26" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 L10 17 L19 7"/></svg></span>Pronto em 2 min</div>
+</div></div>
+<div id="frFx" class="camfx"><div id="frCam" class="camw ui">
+  <div class="caixa-entrada" id="frCaixa"><div id="fraseTxt"></div>
+    <div class="entrada-acoes"><button class="icone-btn"><i data-i="paperclip"></i></button><button class="enviar" id="fraseEnv"><i data-i="send"></i></button></div></div>
+</div></div>
+
+<!-- ═══ 2 e 8. logo e marca ═══ -->
+<div id="brilho" class="p" style="left:540px;top:820px"></div>
+<div id="logo" class="p" style="left:540px;top:820px"><img src="img/icone.png"></div>
+<div id="marca" class="p linha" style="left:540px;top:1080px">Blue Ocean <span class="st">Studio</span></div>
+
+<!-- ═══ 6. uma tarde inteira → minutos, com uma frase só ═══ -->
+<div id="l1" class="p h linha cz" style="left:540px;top:560px;font-size:66px">O que levava</div>
+<div id="l2" class="p h linha" style="left:540px;top:690px;font-size:120px;font-weight:700">uma tarde inteira<div class="risco2" id="risco"></div></div>
+<div id="l3" class="p h linha cz" style="left:540px;top:500px;font-size:66px">agora sai em</div>
+<div id="l4" class="p h linha tl" style="left:540px;top:650px;font-size:170px;font-weight:700">minutos.</div>
+<div id="tempo" class="p stat2" style="left:540px;top:1000px;width:820px">
+  <div class="cab2" style="margin-bottom:20px"><div class="ico2"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8.5"/><path d="M12 8.5 V13 L15 15 M9.5 2.5 H14.5"/></svg></div> <div class="t1" style="font-size:30px;color:#A6AAB4;margin:0">Tempo de edição</div>
+    <div class="pill2" id="tempoSt"><span id="tempoStTxt">manual</span></div></div>
+  <div id="timerTxt">4:00:00</div>
+  <div class="trilho" style="margin-top:30px;height:16px"><b id="tempoBar" class="az"></b></div>
+</div>
+
+
+<!-- ═══ 7. menos horas, menos custo; mais criativos, todos no padrão ═══ -->
+<div id="k1" class="p stat2" style="left:540px;top:620px">
+  <div class="cab2"><div class="ico2"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8.5"/><path d="M12 8.5 V13 L15 15 M9.5 2.5 H14.5"/></svg></div> <div><div class="t2">Horas editando</div> <div class="t1">por vídeo</div></div> <div class="pill2" id="k1p"><svg viewBox="0 0 24 24"><path d="M12 5 V19 M6 13 L12 19 L18 13"/></svg> menos</div></div>
+  <div class="barra2"><span class="rot2">Antes</span> <div class="trilho"><b id="bAntes"></b></div> <span class="val2" id="vAntes">4 h</span></div>
+  <div class="barra2"><span class="rot2">Agora</span> <div class="trilho"><b id="bAgora" class="az" style="width:7%"></b></div> <span class="val2 az2" id="vAgora">3 min</span></div>
+</div>
+<div id="k2" class="p stat2" style="left:540px;top:1080px">
+  <div class="cab2"><div class="ico2"><svg viewBox="0 0 24 24"><path d="M12 3 V21 M16.5 7.5 C16 5.5 14 5 12 5 C9.5 5 8 6.3 8 8 C8 12 16.5 10 16.5 15 C16.5 17 14.5 18.5 12 18.5 C9.5 18.5 7.8 17.5 7.4 15.5"/></svg></div> <div><div class="t2">Custo por vídeo</div> <div class="t1">a cada vídeo novo</div></div> <div class="pill2" id="k2p"><svg viewBox="0 0 24 24"><path d="M12 5 V19 M6 13 L12 19 L18 13"/></svg> menos</div></div>
+  <div class="graf2"><svg viewBox="0 0 804 230">
+    <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D6BFF" stop-opacity=".35"/><stop offset="1" stop-color="#2D6BFF" stop-opacity="0"/></linearGradient></defs>
+    <path d="M0 40 H804 M0 115 H804 M0 190 H804" stroke="rgba(255,255,255,.06)" stroke-width="2"/>
+    <path id="area2" d="M 0 40 C 140 50, 220 90, 330 120 S 560 175, 804 190 L 804 230 L 0 230 Z" fill="url(#g2)"/>
+    <path id="curva" d="M 0 40 C 140 50, 220 90, 330 120 S 560 175, 804 190" fill="none" stroke="#5287FF" stroke-width="8" stroke-linecap="round"/>
+    <circle id="ponto" r="13" fill="#fff" stroke="#2D6BFF" stroke-width="7"/></svg>
+    <div class="eixo2"><span>1º vídeo</span> <span>10º vídeo</span></div></div>
+</div>
+<div id="parede" class="p" style="left:540px;top:1180px"></div>
+<div id="topoEsc"></div>
+<div id="m1" class="p h linha" style="left:540px;top:250px;font-size:96px;font-weight:700">mais criativos no ar,</div>
+<div id="m2" class="p h linha tl" style="left:540px;top:370px;font-size:96px;font-weight:700">todos no padrão.</div>
+
+<!-- ═══ 9. frase da marca ═══ -->
+<div id="tag" class="p h linha cz" style="left:540px;top:1140px;font-size:62px;font-weight:500">Edição na velocidade da sua <span class="tl" style="font-weight:700">ideia.</span></div>
+
+<svg id="cursor" class="p cursor" viewBox="0 0 24 30" style="width:64px;height:80px;z-index:40;opacity:0"></svg>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="../../../../ui/icones.js"></script>
+<script src="studio-grupos.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM;
+window.DURACAO = 35.0;
+const CK = '<svg viewBox="0 0 24 24" fill="none" stroke="#062B26" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 L10 17 L19 7"/></svg>';
+$('#cursor').innerHTML = FM.CURSOR;
+const h = s => { const d = document.createElement('div'); d.innerHTML = s.trim(); return d.firstElementChild; };
+
+/* ── clipes (vídeos exportados no próprio editor + a reação do acervo, 3 s em loop) ── */
+const CLIPES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'r'];
+const fr = (c, i) => `clips/${c}/${String(i + 1).padStart(3, '0')}.jpg`;
+const cache = [];
+CLIPES.forEach(c => { for (let i = 0; i < 90; i++) { const im = new Image(); im.src = fr(c, i); cache.push(im); } });
+function vcard(pai, c) {
+  const d = document.createElement('div'); d.className = 'vc';
+  d.innerHTML = `<img class="clip" data-c="${c}"><div class="ok">${CK}</div>`;
+  pai.appendChild(d); return d;
+}
+
+/* ── montando o editor ── */
+// mídias
+const MID = [['m1', 'podcast-ep12.mp4', '42:18 · 1920×1080', 'e'], ['m2', 'surpreso.mov', '0:06 · 1080×1920', 'r'], ['m3', 'reels-pipeline.mp4', '0:58 · 1080×1920', 'a'],
+             ['m4', 'case-mateus.mp4', '0:55 · 1080×1920', 'c'], ['m5', 'saaspocalipse.mp4', '1:34 · 1080×1920', 'd'], ['m6', 'cta-mvp.mp4', '0:10 · 1080×1920', 'g']];
+const MCARDS = MID.map(([id, nome, meta, c]) => { const d = h(`<div class="card-midia"><div class="thumb" style="background-image:url(${fr(c, 20)})"></div>
+  <div class="info"><div class="nome">${nome}</div><div class="meta">${meta}</div></div><span class="id">${id}</span></div>`); $('#wMidias').appendChild(d); return d; });
+// processos (o que ele já aprendeu) + o novo, salvo na hora
+const RECS = [['raio', 'Gancho com reação e light leak', 'Tela dividida no começo (vídeo em cima, reação embaixo) e flash de luz azul na volta para a tela cheia.'],
+              ['captions', 'Legenda padrão Blue Ocean', 'Montserrat Bold branco, palavra a palavra, com a caixa azul #0137FF atrás da palavra falada.'],
+              ['scissors', 'Cortes de entrevista e podcast', 'Acha os melhores momentos de um vídeo longo e monta cortes verticais com legenda.'],
+              ['estrela', 'Full Motion BlueOcean', 'Vídeo 100% animado a partir só do áudio da fala, com SFX em cada movimento.']];
+const RCARDS = RECS.map(([ic, tit, txt]) => { const d = h(`<div class="card-receita"><div class="cab"><div class="ico"><i data-i="${ic}"></i></div><b>${tit}</b></div><p>${txt}</p>
+  <div class="acoes"><button class="btn primario"><i data-i="send"></i>Usar</button><button class="btn suave"><i data-i="book"></i>Ver o processo</button></div></div>`); $('#wRecs').appendChild(d); return d; });
+const RNOVA = h(`<div class="card-receita nova" style="position:absolute;left:0;right:0;top:0"><div class="cab"><div class="ico"><i data-i="sparkle"></i></div><b>O seu jeito de editar</b>
+  <span class="salvo2"><i data-i="check"></i>Salvo agora</span></div><p>Corte seco no fim da frase, gancho com reação nos 2 primeiros segundos e legenda com a caixa azul.</p></div>`);
+$('#wRecs').appendChild(RNOVA);
+// composições (um vídeo por aba)
+const COMPS = [['Corte 1 – gancho', '0:32'], ['Corte 2 – surpreso', '0:29'], ['Corte 3 – feliz', '0:35'], ['Corte 4 – CTA', '0:31'], ['Corte 5 – case', '0:40']];
+const ABAS = COMPS.map(([n, d], i) => { const b = h(`<button class="aba-comp${i ? '' : ' ativa'}"><span class="nome">${n}</span><span class="dur">${d}</span></button>`); $('#barraComps').appendChild(b); return b; });
+const ABAMAIS = h(`<button class="aba-mais"><i data-i="plus"></i></button>`); $('#barraComps').appendChild(ABAMAIS);
+const CINFO = h(`<span class="comps-info">1 vídeo</span>`); $('#barraComps').appendChild(CINFO);
+// régua
+for (let s = 0; s <= 45; s += 5) $('#regua').appendChild(h(`<span style="left:${10 + s * 20}px">${s}.0s</span>`));
+// linha do tempo: o podcast em pedaços (os cortes separam e o vão fecha)
+const SEG = [[10, 250, 0], [250, 330, 1], [330, 560, 0], [560, 620, 1], [620, 905, 0]];   // [de, até, sai?]
+const CORTES = [[250, 9.42], [330, 9.6], [560, 9.8], [620, 9.97]];
+const mkItem = (pai, cls, rot, ic, x0, x1) => { const d = h(`<div class="item ${cls}" style="left:${x0}px;width:${x1 - x0}px"><div class="rot"><i data-i="${ic}"></i>${rot}</div></div>`); pai.appendChild(d); return d; };
+const V1 = SEG.map(([a, b], k) => { const d = mkItem($('#pV1'), '', k ? '' : 'm1 · podcast-ep12.mp4', 'film', a, b);
+  d.insertAdjacentHTML('afterbegin', `<div class="thumbs" style="background-image:url(${fr('e', 40)})"></div>`); return d; });
+const A1 = SEG.map(([a, b], k) => { const d = mkItem($('#pA1'), 't-audio', k ? '' : 'm1 · voz', 'music', a, b); d.insertAdjacentHTML('afterbegin', '<div class="ondaV"></div>'); return d; });
+const V2 = mkItem($('#pV2'), '', 'm2 · surpreso.mov', 'film', 10, 118); V2.insertAdjacentHTML('afterbegin', `<div class="thumbs" style="background-image:url(${fr('r', 30)})"></div>`);
+const LK = mkItem($('#pFx'), 't-efeito', 'Light leak', 'sun', 108, 150);
+const LEGB = [[10, 70, 'esse é o'], [72, 140, 'segredo que'], [142, 200, 'ninguém te'], [202, 250, 'conta']].map(([a, b, tx]) => {
+  const d = h(`<div class="bloco" style="left:${a}px;width:${b - a}px">${tx}</div>`); $('#pLeg').appendChild(d); return d; });
+// chat: pedido, raciocínio, passos e resposta
+const MSGU = h(`<div class="msg-u">Faz o gancho com a reação surpresa, legenda no padrão e corta os melhores momentos</div>`);
+const PENSA = h(`<div class="pensando"><div class="rot"><i data-i="brain"></i><span>Pensando…</span></div></div>`);
+const PASSOS = [['file', 'Lendo a receita', 'receitas/1-gancho.md'], ['terminal', 'Achando os melhores momentos', 'bo texto m1 --palavras'],
+                ['edit', 'Editando a linha do tempo', 'composicoes/comp1.json'], ['captions', 'Ligando a legenda', 'Montserrat Bold · caixa azul'],
+                ['image', 'Renderizando um quadro', 'bo quadro 1.20']].map(([ic, tit, det]) =>
+  h(`<div class="passo"><div class="cab"><div class="ico"><i data-i="${ic}"></i></div><div class="tit"><b>${tit}</b><span>${det}</span></div><div class="est"><span class="spin"></span><i data-i="check"></i></div></div></div>`));
+const RESP = h(`<div class="msg-c"></div>`);
+const RESP_TXT = 'Pronto. O gancho abre com a tela dividida e a reação surpresa, o flash azul entra na volta e a legenda está no padrão. Montei 3 cortes no ritmo da fala.';
+[MSGU, PENSA, ...PASSOS, RESP].forEach(e => { e.style.display = 'none'; $('#mensagens').appendChild(e); });
+// cenas 7: parede de criativos
+const PAR = Array.from({ length: 12 }, (_, i) => { const d = vcard($('#parede'), CLIPES[(i * 3 + 1) % 7]); d.style.left = (i % 3) * 350 + 'px'; d.style.top = Math.floor(i / 3) * 580 + ((i % 3) === 1 ? -120 : 0) + 'px'; return d; });
+const curva = $('#curva'), curvaL = curva.getTotalLength();
+// raios de luz que saem da ideia
+const RAIOS = Array.from({ length: 16 }, () => { const d = document.createElement('div'); d.className = 'raio2'; $('#abRaios').appendChild(d); return d; });
+$('#tesoura').innerHTML = svgIcone('scissors');
+aplicarIcones();
+
+/* ── ajudas ── */
+const kf = (t, ks) => {
+  if (t <= ks[0][0]) return ks[0][1];
+  for (let i = 1; i < ks.length; i++) if (t < ks[i][0]) { const [a, va] = ks[i - 1], [b, vb] = ks[i]; return L(va, vb, E.cubicInOut(C((t - a) / (b - a)))); }
+  return ks[ks.length - 1][1];
+};
+/* grade de bolinhas da página inicial do editor (ui/pensando.js → criarBolinhas), desenhada no tempo do vídeo:
+   três ondas deslocam cada bolinha; azul nas cristas, azul-escuro nos vales. Um pouco maior que no app (é celular). */
+const bg = $('#bolinhas').getContext('2d'), NIV = 24, PASSO = 26, K = 1.3;
+const tons = (rgb, [a0, a1]) => Array.from({ length: NIV }, (_, i) => `rgba(${rgb.join(',')},${(a0 + (a1 - a0) * i / (NIV - 1)).toFixed(3)})`);
+const CLAROS = tons([82, 135, 255], [0.08, 0.75]), ESCUROS = tons([30, 60, 160], [0.04, 0.24]);
+function bolinhas(t) {
+  bg.clearRect(0, 0, 1080, 1920);
+  for (let y = -PASSO; y < 1920 + PASSO; y += PASSO) for (let x = -PASSO; x < 1080 + PASSO; x += PASSO) {
+    const X = x / K, Y = y / K;
+    const a = Math.sin(X * 0.011 + t * 0.7) + Math.sin(Y * 0.0085 - t * 0.5) + Math.sin((X - Y) * 0.0065 + t * 0.32), v = a / 3;
+    const dx = 5.5 * K * Math.sin(Y * 0.021 + t * 1.05 + a * 0.7), dy = 5.5 * K * Math.cos(X * 0.019 - t * 0.85 + a * 0.7);
+    const k = Math.min(NIV - 1, Math.floor(Math.abs(v) * NIV));
+    bg.fillStyle = v > 0 ? CLAROS[k] : ESCUROS[k];
+    bg.beginPath(); bg.arc(x + dx, y + dy, (1.15 + Math.abs(v) * 0.75) * K * 1.15, 0, 6.2832); bg.fill();
+  }
+}
+const pg = $('#pensaCv').getContext('2d');
+const PCLAROS = tons([255, 255, 255], [0.14, 0.92]), PESCUROS = tons([3, 14, 72], [0.18, 0.78]);
+const pgr = (() => { const g = pg.createLinearGradient(0, 0, 390 * 0.4, 946); g.addColorStop(0, '#1B4FF0'); g.addColorStop(0.55, '#0F3AD6'); g.addColorStop(1, '#0A2AA8'); return g; })();
+function pensaBolinhas(t) {
+  pg.setTransform(2, 0, 0, 2, 0, 0); pg.fillStyle = pgr; pg.fillRect(0, 0, 390, 946);
+  for (let y = -17; y < 946 + 17; y += 17) for (let x = -17; x < 390 + 17; x += 17) {
+    const a = Math.sin(x * 0.011 + t * 0.7) + Math.sin(y * 0.0085 - t * 0.5) + Math.sin((x - y) * 0.0065 + t * 0.32), v = a / 3;
+    const dx = 5.5 * Math.sin(y * 0.021 + t * 1.05 + a * 0.7), dy = 5.5 * Math.cos(x * 0.019 - t * 0.85 + a * 0.7);
+    const k = Math.min(NIV - 1, Math.floor(Math.abs(v) * NIV));
+    pg.fillStyle = v > 0 ? PCLAROS[k] : PESCUROS[k];
+    pg.beginPath(); pg.arc(x + dx, y + dy, 1.15 + Math.abs(v) * 0.75, 0, 6.2832); pg.fill();
+  }
+}
+/* abertura: largura do texto a cada letra (a câmera segue o cursor) */
+const PEDIDO = 'Transforma esse podcast em 3 reels com gancho e legenda';
+const FRASE = 'Monta 3 reels desse podcast no padrão';
+let LARG = null, LARG2 = null;
+const medeLarg = (el, txt) => { const w = []; for (let n = 0; n <= txt.length; n++) { el.textContent = txt.slice(0, n); w.push(el.offsetWidth); }
+  el.style.width = (w[w.length - 1] + 6) + 'px'; el.textContent = ''; return w; };
+/* posição do cursor do texto (px do input) com a digitação contínua */
+const caretEm = (larg, txt, t, a, b) => { const n = C((t - a) / (b - a)) * txt.length, i = Math.floor(n); return 14 + L(larg[i], larg[Math.min(i + 1, txt.length)], n - i); };
+/* corte invisível: borrão de movimento curto dos dois lados do corte */
+const pulso = (t, tc, forca = 34) => forca * Math.exp(-(((t - tc) / 0.045) ** 2));
+/* câmera de um set: transform dentro, borrão de movimento (pela velocidade + pulsos dos cortes) no filtro de fora */
+function aplicaCam(fx, cam, filtro, c, c0, opac) {
+  cam.style.transform = `translate(540px, ${c.sy ?? 960}px) scale(${c.S}) translate(${-c.fx}px, ${-c.fy}px)`;
+  const dx = (c0.fx - c.fx) * c.S, dy = (c0.fy - c.fy) * c.S, dz = Math.abs(Math.log(c.S / c0.S)) * 260;
+  const bx = Math.min(30, Math.min(7, Math.abs(dx) * 0.06 + dz * 0.08) + (c.bx || 0)), by = Math.min(30, Math.min(7, Math.abs(dy) * 0.06 + dz * 0.08) + (c.by || 0));
+  $('#' + filtro + 'g').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  fx.style.filter = bx + by > 0.4 ? `url(#${filtro})` : 'none';
+  fx.style.opacity = opac;
+}
+/* câmera da abertura: plano aberto da barra → corte → close seguindo o texto → corte → botão → sobe com a mensagem → criativo */
+function abreCam(t) {
+  const W = $('#abreCaixa').offsetWidth, H = $('#abreCaixa').offsetHeight, BW = $('#abBolha').offsetWidth, BH = $('#abBolha').offsetHeight;
+  const car = caretEm(LARG, PEDIDO, t, 0.05, 1.55), bot = W - 22;
+  const P = [W - BW / 2, -300];
+  if (t < 0.62) { const p = C((t + 0.4) / 1.02);   // plano aberto: a barra inteira, zoom leve indo para o lado
+    return { fx: W * 0.5 + L(-40, 40, p) + 90 * E.cubicIn(C((t - 0.5) / 0.12)) / 2.2, fy: H / 2, S: L(1.95, 2.3, E.cubicOut(p)), bx: pulso(t, 0.62) }; }
+  if (t < 1.58) { const p = C((t - 0.62) / 0.96), S = L(4.0, 4.4, p);   // close: o cursor do texto fica no mesmo lugar e o texto corre
+    return { fx: car - 80 / S - 90 * (1 - E.cubicOut(C((t - 0.62) / 0.14))) / S + 90 * E.cubicIn(C((t - 1.46) / 0.12)) / S, fy: H / 2 + Math.sin(t * 2.6) * 1.5,
+             S, bx: pulso(t, 0.62) + pulso(t, 1.58) }; }
+  if (t < 1.98) { const p = C((t - 1.58) / 0.4);   // botão de enviar; empurra no clique
+    return { fx: bot - 90 * (1 - E.cubicOut(C((t - 1.58) / 0.16))) / 4.2 - 6 * (1 - p), fy: H / 2, S: L(4.0, 4.35, p) + 0.7 * E.cubicOut(C((t - 1.9) / 0.12)), bx: pulso(t, 1.58) }; }
+  const sobe = E.cubicInOut(C((t - 1.98) / 0.44)), bolY = L(H / 2, P[1], sobe);
+  if (t < 2.42) {   // a mensagem sobe e a câmera vai junto, abrindo
+    const q = E.cubicInOut(C((t - 1.98) / 0.42));
+    return { fx: L(bot, P[0], q), fy: L(H / 2, L(H / 2, P[1], E.cubicInOut(C((t - 2.02) / 0.44))), 1), S: L(5.05, 2.6, q) };
+  }
+  if (t < 3.32) { const p = C((t - 2.42) / 0.9);   // vira luz e sai o criativo; empurra devagar
+    return { fx: P[0] + Math.sin(t * 2) * 3, fy: P[1] + L(14, 34, p), S: L(2.6, 2.95, E.cubicOut(p)), sy: L(960, 880, E.cubicInOut(p)) }; }
+  const w = E.cubicIn(C((t - 3.32) / 0.2));   // mergulha no criativo (vai para o logo)
+  return { fx: P[0], fy: P[1] + 34, S: 2.95 * L(1, 5, w), sy: 880 };
+}
+/* câmera da frase: barra inteira → corte → close no texto → corte → botão, clique → mergulho */
+function fraseCam(t) {
+  const W = $('#frCaixa').offsetWidth, H = $('#frCaixa').offsetHeight, car = caretEm(LARG2, FRASE, t, 22.55, 23.28), bot = W - 22;
+  if (t < 22.78) { const p = C((t - 22.42) / 0.36);
+    return { fx: W * 0.5 + L(-50, 30, p) + 90 * E.cubicIn(C((t - 22.68) / 0.1)) / 2.4, fy: H / 2, S: L(2.2, 2.55, E.cubicOut(p)), bx: pulso(t, 22.78) + pulso(t, 22.45, 26) }; }
+  if (t < 23.32) { const p = C((t - 22.78) / 0.54), S = L(4.1, 4.4, p);
+    return { fx: car - 80 / S - 90 * (1 - E.cubicOut(C((t - 22.78) / 0.14))) / S + 90 * E.cubicIn(C((t - 23.22) / 0.1)) / S, fy: H / 2, S, bx: pulso(t, 22.78) + pulso(t, 23.32) }; }
+  if (t < 24.08) { const p = C((t - 23.32) / 0.76);
+    return { fx: bot - 90 * (1 - E.cubicOut(C((t - 23.32) / 0.16))) / 4.2, fy: H / 2, S: L(4.0, 4.3, p) + 0.8 * E.cubicOut(C((t - 23.6) / 0.14)), bx: pulso(t, 23.32) }; }
+  const w = E.cubicIn(C((t - 24.08) / 0.22));
+  return { fx: bot, fy: H / 2, S: 5.1 * L(1, 4, w) };
+}
+const P3 = (rx, ry, rz = 0) => ` perspective(2400px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
+const pisca = t => Math.floor(t * 2.2) % 2 === 0;
+function digita(el, txt, t, a, b, ph = 'Descreva a edição') {
+  if (t < a) { el.innerHTML = `<span class="ph">${ph}</span>`; return; }
+  const n = Math.round(C((t - a) / (b - a)) * txt.length);
+  el.innerHTML = txt.slice(0, n) + (t < b + 0.25 || pisca(t) ? '<span class="car"></span>' : '');
+}
+function pop(el, t, t0, esc0 = 0.3) {
+  const p = M.prog(t, t0, 0.7, E.spring), pa = pr(t, t0, 0.15, E.cubicOut);
+  el.style.opacity = t < t0 ? 0 : pa; el.style.transform = `scale(${L(esc0, 1, p)})`; return p;
+}
+function brilho(el, t, t0, d = 1.2) { el.style.opacity = t < t0 ? 0 : Math.sin(C((t - t0) / d) * Math.PI) * 0.95; }
+/* peça do editor entrando no lugar dela (sem o translate(-50%) do .p) */
+function parte(el, t, a, b, o = {}) {
+  const { dx = 0, dy = 0, s0 = 0.96, desf = 12, din = 0.7 } = o;
+  if (t < a || (b != null && t > b + 0.4)) { el.style.opacity = 0; return 0; }
+  const p = pr(t, a, din), pa = pr(t, a, din * 0.45, E.cubicOut), po = b == null ? 0 : pr(t, b, 0.4, E.cubicIn);
+  el.style.opacity = pa * (1 - po);
+  el.style.transform = `translate(${(1 - p) * dx}px, ${(1 - p) * dy}px) scale(${L(s0, 1, p)})`;
+  const bl = (1 - p) * desf + po * desf; el.style.filter = bl > 0.3 ? `blur(${bl}px)` : 'none';
+  return pa * (1 - po);
+}
+const mostra = (el, t, a, b = 99) => { el.style.display = t >= a && t < b ? '' : 'none'; return t >= a && t < b; };
+const hhmmss = s => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 3600)}:${String(Math.floor(s / 60) % 60).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; };
+const fmt = s => `${Math.floor(s / 60)}:${(s % 60).toFixed(2).padStart(5, "0")}`;
+const centro = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+/* ── câmera: [t, foco x, foco y (no editor), escala, y na tela, inclinação x, inclinação y] ── */
+const CAM = [
+  [5.20, 860, 520, 0.58, 1060, 26, -18],
+  [5.48, 860, 500, 0.62, 1000, 10, -6],
+  [5.82, 1505, 905, 2.45, 980, 3, -4],
+  [6.52, 1512, 895, 2.55, 980, 2, -2],
+  [7.00, 808, 395, 2.00, 860, 4, -5],
+  [8.85, 808, 380, 2.08, 860, 3, 4],
+  [9.25, 640, 860, 1.9, 900, 12, 0],
+  [10.05, 1010, 860, 1.9, 900, 10, -2],
+  [10.40, 880, 860, 1.75, 900, 10, -2],
+  [10.80, 1532, 300, 2.25, 820, 4, -3],
+  [12.75, 1532, 345, 2.25, 820, 4, -2],
+  [13.30, 1192, 440, 1.00, 900, 8, -10],
+  [14.75, 1185, 440, 1.03, 900, 6, -7],
+  [15.15, 151, 300, 2.70, 820, 4, 7],
+  [16.80, 151, 330, 2.70, 820, 3, 4],
+  [17.25, 720, 260, 1.5, 760, 7, 0],
+  [18.45, 740, 270, 1.45, 760, 5, -3],
+];
+function camera(t) {
+  let a = CAM[0], b = CAM[0];
+  for (let i = 0; i < CAM.length; i++) { if (CAM[i][0] <= t) a = CAM[i]; if (CAM[i][0] > t) { b = CAM[i]; break; } b = CAM[i]; }
+  const p = a === b ? 1 : E.quintInOut(C((t - a[0]) / (b[0] - a[0])));
+  const v = a.map((x, k) => L(x, b[k], p));
+  const [, fx, fy, s, sy, rx, ry] = v;
+  $('#mundo').style.transform = `translate(540px, ${sy}px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${s}) translate(${-fx}px, ${-fy}px)`;
+}
+
+FM.iniciar({
+  grupos: GRUPOS, legendaFixa: true, legendaSoSemTexto: true,
+  estouros: [
+    { t0: 22.1, ps: FM.criaConfete(7, 80, 540, 1060, 860, 300) },
+    { t0: 29.40, ps: FM.criaConfete(9, 70, 540, 370, 800, 120, 0.8), cor: 'branco' },
+  ],
+});
+
+const PVLEG = ['esse', 'é', 'o', 'segredo', 'que', 'ninguém', 'te', 'conta', 'sobre', 'reels', 'que', 'vendem'];
+/* ── quadro ── */
+const pend = [];
+window.quadro = async function (t) {
+  FM.antes(t);
+  bolinhas(t);
+  let cur = null;   // cursor desta cena: [t0, de, alvo(elemento), tclique, tsai]
+
+  /* 1 ─ você escreve no input, clica, a ideia sobe e volta como vídeo pronto */
+  if (!LARG) LARG = medeLarg($('#abreTxt'), PEDIDO);
+  if (!LARG2) LARG2 = medeLarg($('#fraseTxt'), FRASE);
+  {
+    const c = abreCam(t), c0 = abreCam(t - 1 / 30);
+    aplicaCam($('#abFx'), $('#abCam'), 'mbA', c, c0, t > 3.6 ? 0 : 1 - pr(t, 3.42, 0.1, E.linear));
+    const W = $('#abreCaixa').offsetWidth, H = $('#abreCaixa').offsetHeight, BW = $('#abBolha').offsetWidth, BH = $('#abBolha').offsetHeight, P = [W - BW / 2, -300];
+    digita($('#abreTxt'), PEDIDO, t, 0.05, 1.55);
+    if (t > 1.97) $('#abreTxt').innerHTML = '<span class="ph">Descreva a edição</span>';
+    $('#abreCaixa').style.opacity = 1 - pr(t, 2.02, 0.16, E.linear);
+    { const k = Math.sin(C((t - 1.9) / 0.22) * Math.PI); $('#abreEnv').style.transform = `scale(${1 - 0.14 * k})`; $('#abreEnv').style.filter = k > 0 ? `brightness(${1 + k * 0.5})` : ''; }
+    // a mensagem sai do input e sobe; no alto é sugada para a luz
+    { const b = $('#abBolha'), sobe = E.cubicInOut(C((t - 1.98) / 0.44)), y = L(H / 2, P[1], sobe), su = E.cubicIn(C((t - 2.36) / 0.16));
+      b.style.opacity = t < 1.98 ? 0 : pr(t, 1.98, 0.06, E.linear) * (1 - su);
+      b.style.transform = `translate(${P[0] - BW / 2}px, ${y - BH / 2}px) scale(${L(1, 0.15, su)})`; b.style.transformOrigin = '50% 50%'; }
+    { const o = $('#abOrbe'), pin = pr(t, 2.34, 0.16, E.cubicOut), po = pr(t, 2.5, 0.4, E.cubicIn);
+      o.style.opacity = t < 2.34 ? 0 : pin * (1 - po); o.style.transform = `translate(${P[0]}px, ${P[1]}px) scale(${L(0.3, 1.2, pin) * L(1, 2.6, po)})`; }
+    RAIOS.forEach((r, i) => { const a = i / RAIOS.length * Math.PI * 2 + 0.2, p = pr(t, 2.48, 0.55, E.cubicOut), d = L(14, 150, p);
+      r.style.opacity = t < 2.48 || t > 3.1 ? 0 : (1 - p);
+      r.style.transform = `translate(${P[0] + Math.cos(a) * d}px, ${P[1] + Math.sin(a) * d}px) rotate(${a * 180 / Math.PI + 90}deg) scaleY(${L(0.4, 1.4, p)})`; });
+    // o criativo pronto nasce da luz, girando para a frente
+    { const k = $('#abCard'), sp = M.prog(t, 2.48, 0.9, E.spring), rot = E.cubicOut(C((t - 2.48) / 0.75));
+      k.style.opacity = t < 2.48 ? 0 : pr(t, 2.48, 0.12, E.linear);
+      k.style.transform = `translate(${P[0]}px, ${P[1] + 34}px) perspective(700px) rotateY(${L(65, 0, rot)}deg) rotateZ(${L(-8, 0, rot)}deg) scale(${L(0.2, 1, sp)})`;
+      k.style.filter = t < 2.75 ? `blur(${(1 - C((t - 2.48) / 0.27)) * 6}px)` : 'none'; }
+    { const e = $('#abSelo'), sp = M.prog(t, 2.98, 0.7, E.spring); e.style.opacity = t < 2.98 ? 0 : pr(t, 2.98, 0.12, E.linear);
+      e.style.transform = `translate(${P[0]}px, ${P[1] + 34 + 151 + 28}px) translate(-50%, -50%) scale(${L(0.5, 1, sp)})`; }
+  }
+  if (t > 1.5 && t < 2.2) cur = [1.6, [960, 1480], $('#abreEnv'), 1.92, 2.08];
+
+  /* 2 ─ a marca, depois o editor se monta peça por peça */
+  const subir = E.cubicInOut(C((t - 5.0) / 0.6));
+  FM.anim($('#brilho'), t, 3.45, 5.45, { y: L(0, -560, subir), de: 0.4, desf: 60, esc: L(1, 0.6, subir) * (1 + Math.sin(t * 2) * 0.03) });
+  FM.anim($('#logo'), t, 3.5, 5.45, { y: L(0, -590, subir), de: 0.5, rot: -12, esc: L(1, 0.5, subir) });
+  FM.linha('marca', t, [4.12, 4.34, 4.66], 5.45, { extra: ` translateY(${L(0, -740, subir)}px) scale(${L(1, 0.62, subir)})` });
+
+  const mundo = $('#mundo');
+  mundo.style.opacity = t < 5.15 || t > 18.85 ? 0 : pr(t, 5.15, 0.3, E.cubicOut) * (1 - pr(t, 18.45, 0.4, E.cubicIn));
+  mundo.style.filter = t > 18.45 ? `blur(${pr(t, 18.45, 0.4, E.cubicIn) * 20}px)` : 'none';
+  if (t >= 5.1 && t < 18.9) camera(t);
+  parte($('#topo'), t, 5.2, null, { dy: -60 });
+  parte($('#esquerda'), t, 5.3, null, { dx: -160 });
+  parte($('#barraComps'), t, 5.45, null, { dy: -30 });
+  parte($('#palco'), t, 5.4, null, { s0: 0.85 });
+  parte($('#linha'), t, 5.55, null, { dy: 160 });
+  parte($('#direita'), t, 5.62, null, { dx: 200 });
+  MCARDS.forEach((c, i) => parte(c, t, 5.5 + i * 0.06, null, { dy: 30, s0: 0.85 }));
+  [...V1, ...A1].forEach((c, i) => { if (t < 9.9) parte(c, t, 5.75 + (i % 5) * 0.05, null, { dx: -40 }); });
+  // o pedido digitado na caixa do chat e enviado
+  digita($('#ent'), 'Faz o gancho com a reação surpresa, legenda no padrão e corta os melhores momentos', t, 5.7, 6.36);
+  if (t > 6.55) $('#ent').innerHTML = '<span class="ph">Descreva a edição</span>';
+  { const k = Math.sin(C((t - 6.45) / 0.2) * Math.PI); $('#wEnv').style.transform = `scale(${1 - 0.12 * k})`; }
+  if (mostra(MSGU, t, 6.55)) parte(MSGU, t, 6.55, null, { dx: 30, dy: 10 });
+  // tarefa no topo e o status do agente
+  { const vis = t > 6.6 && t < 13.4; $('#wTarefa').style.opacity = vis ? pr(t, 6.6, 0.3) * (1 - pr(t, 13.1, 0.3)) : 0;
+    $('#wBarra').style.width = L(4, 100, C((t - 6.6) / 6.2)) + '%'; $('#wTarefaTxt').textContent = t < 12.8 ? 'Agente Editor editando…' : 'Pronto';
+    $('#wStatus').textContent = t > 6.6 && t < 12.8 ? 'trabalhando' : ''; }
+
+  { const op = t < 6.55 || t > 13.95 ? 0 : pr(t, 6.55, 0.5, E.cubicOut) * (1 - pr(t, 13.3, 0.6, E.cubicIn));
+    $('#direita').classList.toggle('trabalhando', t >= 6.6 && t < 13.55);
+    $('#pensaCv').style.opacity = op; if (op > 0) pensaBolinhas(t); }
+
+  /* 3 ─ gancho, legenda no padrão, cortes (dentro do preview e da linha do tempo) */
+  { const ab = pr(t, 7.06, 0.4, E.cubicInOut), fe = pr(t, 8.62, 0.15, E.linear), sp = $('#pvSplit');
+    sp.style.opacity = t < 7.06 ? 0 : 1 - fe;
+    sp.style.clipPath = `inset(0 0 ${(1 - ab) * 100}% 0)`;
+    $('#pvLeak').style.opacity = Math.sin(C((t - 8.5) / 0.6) * Math.PI) * 0.95;
+    $('#pvLeak').style.transform = `translateX(${L(-80, 80, C((t - 8.5) / 0.6))}px)`; }
+  parte(V2, t, 7.06, null, { dy: -10, s0: 0.7 });
+  parte(LK, t, 8.5, null, { dy: -10, s0: 0.7 });
+  LEGB.forEach((b, i) => parte(b, t, 7.74 + i * 0.12, null, { dy: -6, s0: 0.7 }));
+  { const el = $('#pvLeg'); el.style.opacity = t < 7.74 ? 0 : pr(t, 7.74, 0.2);
+    const idx = Math.max(0, Math.floor((t - 7.74) / 0.28)), g = Math.floor(idx / 3) % 4;
+    el.innerHTML = PVLEG.slice(g * 3, g * 3 + 3).map((w, k) => `<span class="${k === idx % 3 ? 'on' : ''}">${w.toUpperCase()}</span>`).join(' '); }
+  { const av = $('#wAviso'), txt = t < 7.7 ? 'Gancho com reação aplicado' : t < 9.0 ? 'Legenda no padrão ligada' : '3 cortes nos melhores momentos';
+    av.textContent = txt; const on = (a, b) => t >= a && t < b;
+    av.style.opacity = on(7.15, 8.9) ? 1 : 0; av.style.transform = 'translate(-50%, 0)'; }
+  // agulha corre e corta; os pedaços fracos saem e o vão fecha
+  const ag = $('#agulha'), xAg = t < 9.15 ? 10 : t < 10.05 ? L(10, 905, (t - 9.15) / 0.9) : L(905, 760, pr(t, 10.05, 0.4));
+  ag.style.left = (t < 7 ? 10 : xAg) + 'px';
+  { const tc = CORTES.find(([, tt]) => t >= tt && t < tt + 0.25); const ts = $('#tesoura');
+    ts.style.opacity = tc ? Math.sin(C((t - tc[1]) / 0.25) * Math.PI) : 0; ts.style.transform = `scale(${tc ? 1 + 0.3 * Math.sin(C((t - tc[1]) / 0.25) * Math.PI) : 1})`; }
+  const fecha = pr(t, 10.12, 0.35, E.cubicInOut);
+  const desloc = [0, 0, 80, 80, 140];
+  SEG.forEach(([a, b, sai], k) => [V1[k], A1[k]].forEach(el => {
+    const cortadoE = CORTES.some(([x, tt]) => x === a && t >= tt), cortadoD = CORTES.some(([x, tt]) => x === b && t >= tt);
+    el.style.borderTopLeftRadius = el.style.borderBottomLeftRadius = (k === 0 || cortadoE) ? '7px' : '0';
+    el.style.borderTopRightRadius = el.style.borderBottomRightRadius = (k === 4 || cortadoD) ? '7px' : '0';
+    el.style.borderLeftColor = (k === 0 || cortadoE) ? '' : 'transparent';
+    el.style.marginLeft = (cortadoE ? 2 : 0) + 'px';
+    if (t >= 10.0) {
+      if (sai) { const po = pr(t, 10.0, 0.25, E.cubicIn); el.style.opacity = 1 - po; el.style.transform = `translateY(${po * 14}px) scale(${1 - po * 0.1})`; el.style.filter = 'none'; }
+      else { el.style.transform = `translateX(${-desloc[k] * fecha}px)`; el.style.opacity = 1; el.style.filter = 'none'; }
+    }
+    if (sai && t >= 9.6 && t < 10.0) el.style.filter = 'saturate(.3) brightness(.7)';
+  }));
+
+  /* 4 ─ o agente executa (um passo por vez) e o preview ao vivo do lado */
+  if (mostra(PENSA, t, 10.5)) { parte(PENSA, t, 10.5, null, { dy: 10 }); PENSA.querySelector('span').textContent = t < 10.94 ? 'Pensando…' : 'Raciocínio';
+    PENSA.querySelector('span').style.opacity = t < 10.94 ? 0.55 + 0.45 * Math.sin(t * 9) : 1; }
+  const TP = [10.94, 11.24, 11.58, 12.0, 12.4, 12.78];
+  PASSOS.forEach((ps, i) => { if (!mostra(ps, t, TP[i])) return; parte(ps, t, TP[i], null, { dy: 14, desf: 8, din: 0.45 });
+    const feito = t >= TP[i + 1] - 0.05; ps.classList.toggle('rodando', !feito); ps.classList.toggle('feito', feito);
+    ps.querySelector('.spin').style.transform = `rotate(${t * 720}deg)`; });
+  if (mostra(RESP, t, 12.78)) { const n = Math.round(C((t - 12.78) / 0.75) * RESP_TXT.length); RESP.textContent = RESP_TXT.slice(0, n); }
+  pop($('#aoVivo'), t, 13.6, 0.5);
+  { const g = t < 14.15 ? 0 : pr(t, 14.15, 0.35, E.cubicOut); $('#direita').style.boxShadow = g ? `0 0 0 ${1.5 * g}px rgba(45,107,255,.7), 0 0 ${50 * g}px ${10 * g}px rgba(45,107,255,.28), 0 0 ${120 * g}px ${30 * g}px rgba(45,107,255,.12)` : ''; }
+  $('#wTempo').textContent = fmt(Math.max(0, t - 6.6) % 32.4);
+
+  /* 5 ─ aprende o seu jeito (processo salvo) e repete em cada vídeo */
+  if (t > 5.8 && t < 6.9) cur = [5.95, [880, 1560], $('#wEnv'), 6.45, 6.72];
+  if (t > 14.5 && t < 15.6) cur = [14.75, [700, 1500], $('#abaProc'), 15.12, 15.5];
+  const troca = pr(t, 15.12, 0.45, E.spring);
+  $('#wInd').style.transform = `translateX(${troca * 100}%)`;
+  $('#abaMidia').classList.toggle('ativa', t < 15.12); $('#abaProc').classList.toggle('ativa', t >= 15.12);
+  { const po = pr(t, 15.12, 0.25, E.cubicIn); $('#wMidia').style.opacity = 1 - po; $('#wMidia').style.transform = `translateX(${-po * 30}px)`;
+    $('#wProc').style.opacity = t < 15.2 ? 0 : 1; }
+  const empurra = pr(t, 16.24, 0.5, E.cubicInOut) * 152;
+  RCARDS.forEach((c, i) => { parte(c, t, [15.32, 15.5, 15.68, 15.9][i], null, { dy: 40, s0: 0.92 }); if (t > 16.2) c.style.transform += ` translateY(${empurra}px)`; });
+  parte(RNOVA, t, 16.3, null, { dy: -30, s0: 0.85 });
+  // um vídeo por aba: as abas vão sendo criadas e o preview troca
+  ABAS.forEach((b, i) => { if (i === 0) return; const a = 17.15 + (i - 1) * 0.22; b.style.display = t < a ? 'none' : '';
+    if (t >= a) parte(b, t, a, null, { dx: -20, s0: 0.6, desf: 6, din: 0.4 }); });
+  const atual = t < 17.15 ? 0 : Math.min(4, 1 + Math.floor((t - 17.15) / 0.22));
+  ABAS.forEach((b, i) => b.classList.toggle('ativa', i === atual)); ABAS.forEach((b, i) => b.classList.toggle('alterada', i > 0 && i < atual));
+  CINFO.textContent = `${atual + 1} ${atual ? 'vídeos' : 'vídeo'}`;
+  { const k = ABAS.findIndex((_, i) => i && Math.abs(t - (17.15 + (i - 1) * 0.22)) < 0.1); ABAMAIS.style.background = k > 0 ? '#2D6BFF' : ''; ABAMAIS.style.color = k > 0 ? '#fff' : ''; }
+  $('#pvA').dataset.c = ['a', 'c', 'b', 'g', 'd'][atual];
+  if (t >= 17.15) { $('#pvLeg').style.opacity = 0; }
+
+  /* 6 ─ uma tarde inteira → minutos, com uma frase só */
+  FM.linha('l1', t, [18.64, 18.96, 19.06], 21.05);
+  FM.linha('l2', t, [19.40, 19.56, 19.84], 21.05);
+  $('#risco').style.transform = `scaleX(${pr(t, 20.45, 0.45, E.cubicInOut)})`;
+  FM.linha('l3', t, [21.18, 21.54, 21.88], 22.3);
+  FM.linha('l4', t, [22.02], 22.3, { extra: ` scale(${1 + 0.05 * Math.exp(-(t - 22.02) * 5) * Math.sin((t - 22.02) * 20)})` });
+  // o cartão do tempo: entra embaixo, sobe e cresce quando o tempo começa a correr
+  { const sob = E.cubicInOut(C((t - 20.95) / 0.5));
+    FM.anim($('#tempo'), t, 19.84, 22.3, { de: 0.85, y: L(0, 60, sob) + Math.sin(t * 1.3) * 6, esc: L(1, 1.12, sob), dout: 0.15 }); }
+  { const p = pr(t, 21.3, 0.8, E.cubicInOut), vel = Math.sin(Math.PI * C((t - 21.3) / 0.8));
+    $('#timerTxt').textContent = hhmmss(L(4 * 3600, 180, p));
+    $('#timerTxt').style.color = p > 0.98 ? '#7FA4FF' : '#F1F2F5';
+    $('#timerTxt').style.filter = vel > 0.05 ? `blur(${vel * 3.5}px)` : 'none';
+    $('#timerTxt').style.transform = `translateY(${vel * 6}px)`;
+    $('#tempoBar').style.transform = `scaleX(${L(0.03, 1, p)})`;
+    $('#tempoStTxt').textContent = t < 21.3 ? 'manual' : p < 0.98 ? 'com o agente…' : 'pronto ✓';
+    const tranco = t > 22.1 ? Math.exp(-(t - 22.1) * 6) * Math.sin((t - 22.1) * 26) : 0;
+    if (t > 22.1) $('#tempo').style.transform += ` rotate(${-3 * tranco}deg) scale(${1 + 0.05 * Math.abs(tranco)})`; }
+  $("#confete").style.opacity = t > 22.44 && t < 24.4 ? 0 : 1;
+  if (t > 22.46) { ['#l3', '#l4', '#tempo'].forEach(q => { $(q).style.opacity = 0; }); }
+  // "com apenas uma frase": corte para o input, a câmera segue o texto, corta para o botão, clique e mergulha
+  {
+    const vis = t >= 22.45 && t < 24.32, c = vis ? fraseCam(t) : null, c0 = vis ? fraseCam(t - 1 / 30) : null;
+    if (vis) aplicaCam($('#frFx'), $('#frCam'), 'mbF', c, c0, pr(t, 22.45, 0.04, E.linear) * (1 - pr(t, 24.22, 0.08, E.linear)));
+    else $('#frFx').style.opacity = 0;
+    digita($('#fraseTxt'), FRASE, t, 22.55, 23.28);
+    const k = Math.sin(C((t - 23.56) / 0.22) * Math.PI), g = Math.sin(C((t - 23.6) / 0.6) * Math.PI);
+    $('#fraseEnv').style.transform = `scale(${1 - 0.14 * k})`;
+    $('#fraseEnv').style.boxShadow = g > 0 ? `0 0 0 ${4 * g}px rgba(45,107,255,.25), 0 0 ${16 * g}px ${4 * g}px rgba(45,107,255,.4)` : '';
+  }
+  if (t > 23.3 && t < 24.0) cur = [23.34, [960, 1480], $('#fraseEnv'), 23.6, 23.86];
+
+  /* 7 ─ menos horas, menos custo; mais criativos, todos no padrão */
+  FM.anim($('#k1'), t, 24.44, 27.1, { de: 0.85, y: L(220, 0, pr(t, 25.85, 0.5, E.cubicInOut)), extra: P3(5, -6) });
+  $('#bAntes').style.transform = `scaleX(${pr(t, 24.7, 0.7, E.cubicOut)})`;
+  $('#bAgora').style.transform = `scaleX(${M.prog(t, 25.15, 0.7, E.spring)})`;
+  $('#vAntes').style.opacity = pr(t, 24.9, 0.3); $('#vAgora').style.opacity = pr(t, 25.3, 0.3);
+  pop($('#k1p'), t, 25.4, 0.6);
+  FM.anim($('#k2'), t, 26.02, 27.15, { de: 0.85, extra: P3(5, 6) });
+  { const p = pr(t, 26.3, 0.85, E.cubicInOut), pt = curva.getPointAtLength(curvaL * p);
+    curva.setAttribute('stroke-dasharray', `${curvaL} ${curvaL}`); curva.setAttribute('stroke-dashoffset', L(curvaL, 0, p));
+    $('#area2').style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`;
+    $('#ponto').setAttribute('cx', pt.x); $('#ponto').setAttribute('cy', pt.y); $('#ponto').style.opacity = t < 26.3 ? 0 : 1; }
+  pop($('#k2p'), t, 26.95, 0.6);
+  FM.anim($('#parede'), t, 27.2, 29.95, { de: 0.75, y: -(t - 27.2) * 110, extra: P3(28, 0, -9) });
+  PAR.forEach((d, i) => { const a = 27.25 + i * 0.05, p = pr(t, a, 0.6), pa = pr(t, a, 0.25, E.cubicOut);
+    d.style.opacity = pa; d.style.transform = `translateY(${(1 - p) * 120}px) scale(${L(0.85, 1, p)})`; pop(d.querySelector('.ok'), t, 29.34 + i * 0.045); });
+  $('#topoEsc').style.opacity = t > 27.1 && t < 30.3 ? pr(t, 27.1, 0.4) * (1 - pr(t, 29.95, 0.35)) : 0;
+  FM.linha('m1', t, [27.50, 27.88, 28.40, 28.58], 29.95);
+  FM.linha('m2', t, [29.06, 29.34, 29.52], 29.95);
+
+  /* 8–9 ─ logo final + frase da marca + o input esperando a próxima ideia */
+  if (t > 29.9) {
+    FM.anim($('#brilho'), t, 29.95, null, { y: -60, de: 0.4, desf: 60, esc: 1 + Math.sin(t * 2) * 0.03 });
+    FM.anim($('#logo'), t, 30.0, null, { y: -60, de: 0.5, rot: -12 });
+    FM.linha('marca', t, [30.12, 30.48, 30.86], 99, { extra: ' translateY(-60px)' });
+  }
+  FM.linha('tag', t, [31.54, 32.10, 32.26, 32.76, 33.12, 33.44], 99);
+  if (t <= 33.85) $("#inBig").style.opacity = 0;
+  if (t > 33.85) {
+    FM.anim($("#inBig"), t, 33.85, null, { de: 0.9, y: 290, esc: 2.3 });
+    digita($('#bigTxt'), '', t, 99, 100);
+    const k = (Math.sin((t - 34.1) * 5) + 1) / 2; $('#bigEnv').style.boxShadow = `0 0 0 ${k * 8}px rgba(45,107,255,.25), 0 4px 12px rgba(45,107,255,.4)`;
+  }
+
+  /* cursor */
+  if (cur) { const [t0, de, alvo, tc, ts] = cur; FM.cursor($('#cursor'), t, t0, de, centro(alvo).map((v, k) => v + (k ? 4 : 0)), tc, ts); }
+  else $('#cursor').style.opacity = 0;
+
+  /* vídeos tocando: só os que estão na tela trocam de quadro */
+  pend.length = 0;
+  document.querySelectorAll('img.clip').forEach((im, k) => {
+    let el = im, vis = true;
+    while (el && el !== document.body) { if (el.style.opacity === '0' || el.style.display === 'none') { vis = false; break; } el = el.parentElement; }
+    if (!vis && im._s) return;
+    const i = Math.floor((t * 30 + k * 17) % 90), src = fr(im.dataset.c, i);
+    if (im._s !== src) { im._s = src; im.src = src; pend.push(im.decode().catch(() => {})); }
+  });
+  await Promise.all(pend);
+  FM.depois(t);
+  $('#leg').style.color = '#fff'; $('#leg').style.top = '1560px';
+};
+window.pronto = document.fonts.ready.then(() => Promise.all([...document.images, ...cache].map(i => i.decode().catch(() => {})))).then(() => FM.medirLegenda(window.DURACAO));
+</script>
+</body>
+</html>

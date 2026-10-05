@@ -1,0 +1,58 @@
+/* Full Motion BlueOcean — estilo base (receita 11). Cada vídeo é uma página em fullmotion/ que usa fm.css + fm.js. */
+@font-face { font-family: 'Inst'; font-weight: 400; src: url('../fontes/InstrumentSans-Regular.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 500; src: url('../fontes/InstrumentSans-Medium.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 600; src: url('../fontes/InstrumentSans-SemiBold.ttf'); }
+@font-face { font-family: 'Inst'; font-weight: 700; src: url('../fontes/InstrumentSans-Bold.ttf'); }
+:root { --azul: #0037FF; --navy: #0A1A5C; --verde: #00FFD4; --teal: #19E3C0; --tinta: #101218; --cinza: #9AA1B5; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { font-family: 'Inst', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; letter-spacing: -0.02em;
+       background: radial-gradient(ellipse at 50% 42%, #FAFAFB 0%, #EFEFF1 55%, #E6E6E9 100%); }
+.p { position: absolute; transform: translate(-50%, -50%); opacity: 0; will-change: transform, filter, opacity; z-index: 2; }
+.w { display: inline-block; opacity: 0; will-change: transform, filter, opacity; }
+.linha { white-space: nowrap; text-align: center; }
+b { font-weight: 700; }
+.az { color: var(--azul); }
+.verde { color: var(--verde); }
+.branco { color: #fff; }
+
+/* fundo azul chapado com arco branco (entra varrendo da esquerda) */
+#azul { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 40% 35%, #1A4BFF 0%, #0037FF 50%, #002BE0 100%); clip-path: inset(0 100% 0 0); }
+#azul svg { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+#confete { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+#leg { z-index: 60; top: 1390px; left: 540px; font-size: 46px; font-weight: 500; letter-spacing: -0.01em; }
+
+/* selos/pílulas */
+.chip { display: flex; align-items: center; gap: 18px; padding: 18px 30px 18px 18px; border-radius: 999px; font-size: 38px; font-weight: 600;
+        white-space: nowrap; box-shadow: 0 18px 50px rgba(10, 25, 80, .22); }
+.chip.claro { background: #fff; color: var(--tinta); }
+.chip.azulc { background: var(--azul); color: #fff; }
+.chip .tile { width: 64px; height: 64px; border-radius: 18px; background: var(--navy); display: grid; place-items: center; }
+.chip .tile img { width: 46px; }
+.chip .ok { width: 46px; height: 46px; border-radius: 50%; background: var(--verde); display: grid; place-items: center; }
+
+/* cartão branco genérico */
+.cartao { background: #fff; border-radius: 42px; box-shadow: 0 30px 70px rgba(10, 25, 80, .16); }
+
+/* ícones de app */
+.ic { position: absolute; left: 0; top: 0; z-index: 3; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: calc(var(--s) * .26);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; will-change: transform, filter, opacity;
+      box-shadow: 0 calc(var(--s) * .12) calc(var(--s) * .3) rgba(10, 30, 110, .22); }
+.ic svg { width: 46%; height: 46%; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ic span { font-size: calc(var(--s) * .2); font-weight: 700; letter-spacing: -0.01em; margin-top: calc(var(--s) * -.02); }
+.ic.com-txt svg { width: 40%; height: 40%; }
+.ic.az { background: linear-gradient(150deg, #1E50FF, #0033F0); } .ic.az svg { stroke: #fff; } .ic.az span { color: #fff; }
+.ic.nv { background: linear-gradient(150deg, #10287F, #0A1A5C); } .ic.nv svg { stroke: #fff; } .ic.nv span { color: #fff; }
+.ic.tl { background: linear-gradient(150deg, #2BF0CF, #12D6B4); } .ic.tl svg { stroke: #0A1A5C; } .ic.tl span { color: #0A1A5C; }
+.ic.br { background: #fff; } .ic.br svg { stroke: var(--azul); } .ic.br span { color: var(--azul); }
+.ic.cz { background: #fff; } .ic.cz svg { stroke: #B4BACB; }
+
+/* logo Blue Ocean em ícone de app */
+.logoTile { width: 240px; height: 240px; border-radius: 64px; background: linear-gradient(150deg, #12308F, #061A6B); display: grid; place-items: center;
+            box-shadow: 0 40px 80px rgba(0, 10, 80, .35), inset 0 2px 0 rgba(255, 255, 255, .15); }
+.logoTile img { width: 66%; }
+
+/* botão e cursor */
+.botao { height: 124px; padding: 0 56px; border-radius: 999px; background: #fff; color: var(--azul); display: flex; align-items: center; justify-content: center;
+         gap: 20px; font-size: 50px; font-weight: 700; box-shadow: 0 30px 60px rgba(0, 10, 80, .3); overflow: hidden; white-space: nowrap; }
+.cursor { width: 76px; height: 96px; z-index: 40; }

@@ -1,0 +1,41 @@
+/* Base visual dos banners Blue Ocean (SF Pro, tela 1080×1920, área segura do Reels: y 270–1248, x 65–1015) */
+@font-face { font-family: 'SFD'; font-weight: 400; src: local('SF Pro Display Regular'), url('file:///C:/Users/lpess/AppData/Local/Microsoft/Windows/Fonts/SFPRODISPLAYREGULAR.OTF'); }
+@font-face { font-family: 'SFD'; font-weight: 500; src: local('SF Pro Display Medium'), url('file:///C:/Users/lpess/AppData/Local/Microsoft/Windows/Fonts/SFPRODISPLAYMEDIUM.OTF'); }
+@font-face { font-family: 'SFD'; font-weight: 700; src: local('SF Pro Display Bold'), url('file:///C:/Users/lpess/AppData/Local/Microsoft/Windows/Fonts/SFPRODISPLAYBOLD.OTF'); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000A3A; }
+body { font-family: 'SFD', -apple-system, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+#fundo { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.palco { position: absolute; inset: 0; }
+.camada { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; text-align: center; will-change: transform; }
+
+/* texto */
+.w { display: inline-block; will-change: transform, filter, opacity; opacity: 0; }
+.titulo { font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+.sub { font-weight: 400; letter-spacing: -0.012em; line-height: 1.22; color: rgba(255, 255, 255, 0.78); }
+.olho { font-weight: 500; letter-spacing: -0.005em; color: rgba(255, 255, 255, 0.72); }
+/* palavra em degradê (o "destaque" Apple) */
+.grad { background: linear-gradient(100deg, #FFFFFF 0%, #A9D4FF 45%, #5CE1FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.08em; }
+
+/* vidro (cartões e pílulas) */
+.vidro {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 30px 60px rgba(0, 6, 40, 0.35);
+  backdrop-filter: blur(28px) saturate(140%); -webkit-backdrop-filter: blur(28px) saturate(140%);
+}
+
+/* botão de CTA */
+.cta {
+  position: relative; display: inline-flex; align-items: center; gap: 18px; overflow: hidden;
+  height: 112px; padding: 0 56px; border-radius: 56px; background: #fff; color: #0137FF;
+  font-weight: 700; font-size: 46px; letter-spacing: -0.02em;
+  box-shadow: 0 20px 50px rgba(0, 10, 60, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+.cta .seta { display: inline-block; font-weight: 500; }
+.cta .brilho { position: absolute; top: -20%; bottom: -20%; width: 140px; left: 0;
+  background: linear-gradient(100deg, transparent, rgba(1, 55, 255, 0.16), transparent); transform: skewX(-20deg); }
+.chevrons { display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 22px; }
+.chevrons svg { width: 54px; height: 26px; display: block; margin-top: -6px; }
+.logo-branco { filter: brightness(0) invert(1); }

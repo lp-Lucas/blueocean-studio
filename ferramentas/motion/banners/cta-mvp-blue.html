@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>CTA (linha Blue) — Programa MVP para SaaS</title>
+<link rel="stylesheet" href="../linha-blue.css">
+<style>
+  #olho { top: 400px; }
+  .selo { display: inline-flex; align-items: center; height: 64px; padding: 0 34px; font-size: 32px; font-weight: 600; opacity: 0; }
+  #titulo { top: 528px; font-size: 106px; line-height: 1.17; }
+  #caminho { top: 990px; }
+  #caminho svg { width: 860px; height: 159px; overflow: visible; }
+  #texto { top: 1222px; }
+  #texto .caixa { padding: 22px 56px; font-size: 38px; opacity: 0; }
+  #rodape { top: 1440px; }
+  #cab { top: 230px; }
+</style>
+</head>
+<body>
+<canvas id="fundo" width="1080" height="1920"></canvas>
+
+<div id="cab"><img class="nome" src="../img/LOGO-BLUE.svg"><div class="fio"></div><img class="simb" src="../img/simbolo-blueocean.png"></div>
+
+<div class="camada" id="olho"><div class="selo destaque" id="selo">Programa MVP para SaaS</div></div>
+<div class="camada titulo" id="titulo"><div id="tit">Se você quer lançar<br>seu SaaS, precisa de<br>um <span class="verde">caminho validado</span></div></div>
+
+<div class="camada" id="caminho">
+  <svg viewBox="0 0 920 170">
+    <defs>
+      <linearGradient id="gl" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="#2E5BFF" stop-opacity=".6"/><stop offset=".6" stop-color="#4C7DFF"/><stop offset="1" stop-color="#8FB0FF"/>
+      </linearGradient>
+      <filter id="luz" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+    </defs>
+    <path id="trilho" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="5" stroke-dasharray="3 13" stroke-linecap="round"/>
+    <path id="linhaLuz" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="#3D6BFF" stroke-width="16" stroke-linecap="round" filter="url(#luz)" opacity=".6"/>
+    <path id="linha" d="M 40 120 C 180 120, 210 50, 330 56 S 520 132, 620 98 S 790 30, 870 46" fill="none" stroke="url(#gl)" stroke-width="7" stroke-linecap="round"/>
+    <g id="nos"></g>
+    <g id="final">
+      <circle r="46" fill="#3D6BFF" opacity=".6" filter="url(#luz)"/>
+      <circle r="36" fill="#003BFF" stroke="#8FB0FF" stroke-width="3"/>
+      <path id="check" d="M -14 1 L -4 11 L 15 -10" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="cometa"><circle r="20" fill="#9FB8FF" opacity=".55" filter="url(#luz)"/><circle r="11" fill="#fff"/></g>
+  </svg>
+</div>
+
+<div class="camada texto" id="texto"><div class="caixa" id="caixaTxt"><div id="txt">Clica no link abaixo e veja<br>como funciona o <b>programa</b></div></div></div>
+
+<div class="camada" id="rodape">
+  <div class="cta destaque" id="cta"><span class="brilho"></span><span class="seta">→</span><span>Saiba mais</span></div>
+  <div class="chevrons" id="chev">
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 54 26"><path d="M6 5 L27 20 L48 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+
+<script src="../motion.js"></script>
+<script src="../linha-blue.js"></script>
+<script>
+  const M = Motion, E = M.ease, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  window.DURACAO = 10;
+  const desenhaFundo = M.fundoMarinho($('#fundo'));
+  const palTit = M.palavras($('#tit')), palTxt = M.palavras($('#txt'));
+  const linha = $('#linha'), luz = $('#linhaLuz'), trilho = $('#trilho'), L = linha.getTotalLength();
+  [linha, luz].forEach(p => p.style.strokeDasharray = `${L} ${L}`);
+  const PARADAS = [0, 0.34, 0.67];
+  const nos = PARADAS.map(f => {
+    const pt = linha.getPointAtLength(f * L);
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+    g.innerHTML = '<circle class="halo" r="22" fill="#6E92FF" opacity="0" filter="url(#luz)"/><circle class="aro" r="13" fill="#040A3E" stroke="rgba(255,255,255,.6)" stroke-width="3"/><circle class="miolo" r="7" fill="#fff" opacity="0"/>';
+    $('#nos').appendChild(g); return g;
+  });
+  const pf = linha.getPointAtLength(L);
+  const fin = $('#final'), chk = $('#check'), CL = chk.getTotalLength(); chk.style.strokeDasharray = CL;
+  window.pronto = Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+
+  window.quadro = function (t) {
+    desenhaFundo(t);
+    Blue.cabecalho(t, 0.1);                       // logo e nome primeiro
+    Blue.bloco($('#selo'), t, 0.75, { sobe: 30, esc: 0.9 });
+    M.entrar(palTit, t, 1.0, { atraso: 0.075, dur: 1.2, sobe: 0.32 });
+
+    // caminho (como na arte: linha azul com ponto brilhante, tracejado branco à frente)
+    trilho.style.opacity = M.prog(t, 2.5, 0.8, E.cubicOut);
+    const pl = M.prog(t, 2.8, 1.9, E.cubicInOut);
+    linha.style.strokeDashoffset = L * (1 - pl); luz.style.strokeDashoffset = L * (1 - pl);
+    nos.forEach((g, i) => {
+      g.querySelector('.aro').setAttribute('opacity', M.prog(t, 2.5 + i * 0.08, 0.6, E.cubicOut));
+      const aceso = M.clamp((pl - PARADAS[i]) / 0.06);
+      g.querySelector('.miolo').setAttribute('opacity', aceso);
+      g.querySelector('.halo').setAttribute('opacity', aceso * 0.7);
+      g.querySelector('.miolo').setAttribute('r', 7 * E.spring(aceso));
+    });
+    const cp = linha.getPointAtLength(L * pl), com = $('#cometa');
+    com.setAttribute('transform', `translate(${cp.x},${cp.y})`);
+    com.setAttribute('opacity', pl > 0 && pl < 1 ? M.prog(t, 2.8, 0.3, E.cubicOut) : 0);
+    const pfim = M.prog(t, 4.55, 0.9, E.spring);
+    fin.setAttribute('transform', `translate(${pf.x},${pf.y}) scale(${Math.max(0, pfim)})`);
+    fin.setAttribute('opacity', M.prog(t, 4.55, 0.3, E.cubicOut));
+    chk.style.strokeDashoffset = CL * (1 - M.prog(t, 4.85, 0.55, E.cubicInOut));
+
+    // chamada na caixa
+    Blue.bloco($('#caixaTxt'), t, 5.0, { sobe: 40, desf: 14, esc: 0.97 });
+    M.entrar(palTxt, t, 5.15, { atraso: 0.045, dur: 1.0, sobe: 0.5, desfoque: 14 });
+    Blue.cta(t, 5.9);
+  };
+  M.tocar();
+</script>
+</body>
+</html>
