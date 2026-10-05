@@ -1,0 +1,5 @@
+Blue Ocean Studio — idealizado e desenvolvido por Lucas (github.com/lp-Lucas, claudemaluco@gmail.com)
+Commit assinado: da549c27a85eceb047103a464edf831d56a9a2d8
+Árvore do código (tree): 9891238fcda0a448c114b4f84f131e3b9a08a153
+Tag: v1.0.0
+Data: 2026-10-05 17:12:16 -0300

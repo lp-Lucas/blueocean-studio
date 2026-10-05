@@ -18,4 +18,5 @@ Este arquivo e os avisos de autoria não devem ser removidos de cópias ou vers�
 ## Prova de data
 `AUTORIA-commit.txt` guarda o identificador (hash) do commit assinado com todo o código;
 `AUTORIA-commit.txt.ots` é o carimbo [OpenTimestamps](https://opentimestamps.org) dele, registrado na
-blockchain do Bitcoin: prova que esse código exatamente já existia nesta data. Para verificar: `ots verify AUTORIA-commit.txt.ots`.
+blockchain do Bitcoin: prova que esse código exatamente já existia nesta data. Para verificar: arraste os dois arquivos em https://opentimestamps.org (ou `ots verify AUTORIA-commit.txt.ots`).
+A confirmação na blockchain leva algumas horas depois do carimbo; `ots upgrade` incorpora a prova completa ao arquivo.
