@@ -3,7 +3,7 @@
   "productName": "Blue Ocean Studio",
   "version": "1.0.0",
   "description": "Editor de vídeo da Blue Ocean com chat do Claude",
-  "author": "Lucas (https://github.com/lp-Lucas)",
+  "author": "Lucas Pessoa Cordeiro (https://github.com/lp-Lucas)",
   "main": "main.js",
   "private": true,
   "scripts": {
