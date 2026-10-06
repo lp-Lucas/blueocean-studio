@@ -8,7 +8,10 @@ const http = require('http');
 const crypto = require('crypto');
 // instalado pelo .exe: projetos, configuração e receitas novas ficam em Documentos\Blue Ocean Studio
 // (a pasta do programa é trocada a cada atualização). Rodando do código-fonte, tudo fica na pasta do programa.
-if (app.isPackaged && !process.env.BO_DADOS) process.env.BO_DADOS = path.join(app.getPath('documents'), 'Blue Ocean Studio');
+// "instalado" = o código mora dentro de resources\app do executável. Não dá para usar app.isPackaged:
+// ele também dá verdadeiro rodando do código-fonte pelo electron renomeado para "Blue Ocean Studio.exe".
+const INSTALADO = path.relative(process.resourcesPath, __dirname).split(path.sep)[0] === 'app';
+if (INSTALADO && !process.env.BO_DADOS) process.env.BO_DADOS = path.join(app.getPath('documents'), 'Blue Ocean Studio');
 const U = require('./motor/util');
 const T = require('./motor/tarefas');
 const P = require('./motor/projeto');
@@ -652,9 +655,9 @@ trata('reiniciar', () => {
 });
 
 app.whenReady().then(async () => {
-  if (!app.isPackaged) vigiarAtualizacao();
+  if (!INSTALADO) vigiarAtualizacao();
   app.setAppUserModelId('com.blueocean.studio');
-  if (process.platform === 'win32' && !ISOLADO && !app.isPackaged && /Blue Ocean Studio.exe$/i.test(process.execPath)) {
+  if (process.platform === 'win32' && !ISOLADO && !INSTALADO && /Blue Ocean Studio.exe$/i.test(process.execPath)) {
     const opcoes = { target: process.execPath, args: `"${__dirname}"`, cwd: __dirname, icon: path.join(__dirname, 'assets', 'icone.ico'), iconIndex: 0,
       appUserModelId: 'com.blueocean.studio', description: 'Editor de vídeo da Blue Ocean com o Claude' };
     const atalho = path.join(app.getPath('appData'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Blue Ocean Studio.lnk');
