@@ -1,0 +1,35 @@
+  /* ── FS1 · 0 → 7,52: mesa de estudo ── */
+  {
+    // entrada: a folha do edital sobe de baixo e cobre a modelo (no "48º"); saída: a pilha desce e ela volta
+    const sobe = pr(t, 0.78, 0.62, E.cubicOut), desce = pr(t, 7.34, 0.5, E.cubicIn);
+    const yA = L(1990, 0, sobe);
+    $('#folhaA').style.transform = `translateY(${yA}px) rotate(${L(3.2, 0, sobe)}deg)`;
+    $('#mesa').style.transform = `translateY(${desce * 2080}px) rotate(${desce * 2.5}deg)`;
+    $('#mesa').style.display = t < 0.7 || t > 7.9 ? 'none' : 'block';
+    $('#vinheta').style.opacity = t < 0.7 || t > 7.9 ? 0 : Math.min(sobe, 1 - desce);
+    window.PAPEL_TOPO = Math.max(-20 + yA, desce * 2080 - 20);   // a legenda fica escura onde o papel está atrás dela
+    // câmera: aproxima do título; volta; aproxima da grade vazia; abre para o post-it
+    const a1 = pr(t, 1.4, 1.25, E.cubicInOut) * (1 - pr(t, 2.62, 0.6, E.cubicInOut));
+    const a2 = pr(t, 4.05, 1.2, E.cubicInOut) * (1 - pr(t, 5.55, 0.55, E.cubicInOut));
+    const [ox, oy] = t < 3.6 ? [540, 470] : [600, 760];
+    $('#cam').style.transformOrigin = `${ox}px ${oy}px`;
+    $('#cam').style.transform = `scale(${1 + 0.075 * a1 + 0.11 * a2})`;
+    // marca-texto: o título no "48º Exame", "torna pública…" no "já saiu"
+    $('#hl1').style.transform = `scaleX(${pr(t, 0.98, 0.55, E.cubicInOut)})`;
+    $('#hl2').style.transform = `scaleX(${pr(t, 2.08, 0.6, E.cubicInOut)})`;
+    // folha do planner desliza por cima no "e a pergunta que fica"
+    const pb = pr(t, 2.66, 0.6, E.cubicOut);
+    $('#folhaB').style.transform = `translateX(${L(1200, 0, pb)}px) rotate(${L(5, -1.4, pb)}deg)`;
+    $('#folhaB').style.visibility = t < 2.6 ? 'hidden' : 'visible';
+    // caneta vermelha desenha o "?" na semana vazia no "já existe?"
+    const tinta = (id, t0, d) => { const p = $('#' + id), Lp = p._L || (p._L = p.getTotalLength()); p.style.strokeDasharray = Lp; p.style.strokeDashoffset = Lp * (1 - pr(t, t0, d, E.cubicInOut)); };
+    tinta('interroga', 4.86, 0.5); tinta('sublinha', 5.3, 0.22);
+    // post-it bate na folha e vai sendo reescrito: amanhã → segunda → depois…
+    const pp = pr(t, 5.72, 0.32, E.cubicOut), slap = t > 6.04 ? Math.exp(-14 * (t - 6.04)) * Math.sin((t - 6.04) * 30) : 0;
+    $('#postit').style.opacity = t < 5.72 ? 0 : C(pp * 2);
+    $('#postit').style.transform = `translateY(${(1 - pp) * -70}px) rotate(${L(9, 3.5, pp) + slap * 1.2}deg) scale(${L(1.14, 1, pp)})`;
+    const escreve = (id, t0, d) => { $('#' + id).style.clipPath = `inset(-20px ${(1 - pr(t, t0, d, E.linear)) * 100}% -20px -10px)`; };
+    escreve('pt1', 6.04, 0.42); tinta('rs1', 6.5, 0.2);
+    escreve('pt2', 6.62, 0.3); tinta('rs2', 6.95, 0.16);
+    escreve('pt3', 7.0, 0.3);
+  }

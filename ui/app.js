@@ -350,6 +350,7 @@ async function boasVindas() {
   bv.innerHTML = `<div class="bv-caixa">
     <div class="bv-heroi"><div class="logo"><img src="../assets/logo.png" alt=""></div>
       <div><h1>Blue Ocean Studio</h1><p>${ps.length ? `${ps.length} projeto${ps.length > 1 ? 's' : ''} · o Claude edita com os processos aprovados da Blue Ocean` : 'Crie o primeiro projeto para começar a editar.'}</p></div>
+      <button class="btn suave" id="bvLotes"><i data-i="layers"></i>Edição em lotes</button>
       <button class="btn primario" id="bvNovo"><i data-i="plus"></i>Novo projeto</button></div>
     <section class="bv-secao"><h2>Projetos recentes</h2><div class="bv-grade">
       ${ps.map((p, i) => `<button class="bv-card" data-p="${esc(p.nome)}" style="animation-delay:${Math.min(i, 12) * 35}ms">
@@ -362,6 +363,7 @@ async function boasVindas() {
   bv.prepend(BOLINHAS_INICIO.canvas);   // o innerHTML apagou o canvas das bolinhas: devolve
   aplicarIcones(bv); bv.classList.remove('oculto');
   bv.querySelector('#bvNovo').onclick = novoProjeto;
+  bv.querySelector('#bvLotes').onclick = () => LOTES.abrir();
   bv.querySelector('#bvNovo2').onclick = novoProjeto;
   // o projeto que já está aberto só volta para ele, sem recarregar
   bv.querySelectorAll('[data-p]').forEach(b => b.onclick = () => b.dataset.p === S.nome ? fecharInicio() : APP.abrir(b.dataset.p));
@@ -483,6 +485,7 @@ $('#btnConfig').onclick = async () => {
 
 /* ── topo, transporte e ferramentas ── */
 $('#btnPasta').onclick = () => S.pasta && api.chamar('abrir', S.pasta);
+$('#btnLotes').onclick = () => LOTES.abrir();
 $('#btnDesfazer').onclick = desfazer;
 $('#btnRefazer').onclick = refazer;
 ouvir('historico', () => { $('#btnDesfazer').disabled = S.histI <= 0; $('#btnRefazer').disabled = S.histI >= S.hist.length - 1; });

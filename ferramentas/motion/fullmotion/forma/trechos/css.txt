@@ -1,0 +1,43 @@
+  /* FS1 · mesa de estudo: papel de verdade (grão, fibras, luz), tipografia de documento, marca-texto, caneta e post-it */
+  @font-face { font-family: 'Mao'; src: url('../../fontes/Caveat.ttf'); }
+  #mesa { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 7; pointer-events: none; }
+  #cam { position: absolute; inset: 0; }
+  .folha { position: absolute; overflow: hidden; }
+  .folha .grao { position: absolute; inset: 0; background: url('img/grao.png') 0 0 / 1200px 2000px; pointer-events: none; }
+  .folha .luz { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 38%, rgba(60,45,20,.07) 100%); pointer-events: none; }
+  #folhaA { left: -30px; top: -20px; width: 1140px; height: 1990px; background: #F5F1E7;
+            box-shadow: 0 -2px 4px rgba(0,0,0,.22), 0 -24px 60px rgba(0,0,0,.30); }
+  .docA { position: absolute; left: 120px; top: 190px; width: 900px; font: 400 27px/1.56 Georgia, 'Times New Roman', serif; color: #2A2723; text-align: justify; }
+  .docA .org { text-align: center; font: 700 23px Georgia, serif; letter-spacing: .16em; color: #2A2723; }
+  .docA .org2 { text-align: center; font: italic 400 24px Georgia, serif; color: #5A544A; margin-top: 6px; }
+  .docA .fio { height: 0; border-top: 1.5px solid #2A2723; margin: 30px 0 4px; } .docA .fio + .fio { margin-top: 0; border-top-width: 1px; }
+  .docA .tit { text-align: center; font: 700 47px/1.15 Georgia, serif; letter-spacing: .01em; margin-top: 30px; color: #1C1A17; }
+  .docA .sub { text-align: center; font: 400 27px Georgia, serif; letter-spacing: .34em; margin: 14px 0 30px; color: #3B362F; }
+  .docA p { margin: 0 0 22px; text-indent: 54px; }
+  .docA h4 { font: 700 25px Georgia, serif; letter-spacing: .06em; margin: 34px 0 14px; color: #1C1A17; }
+  .rodape { position: absolute; left: 0; right: 0; bottom: 140px; text-align: center; font: italic 22px Georgia, serif; color: #8A8276; }
+  .hl { position: relative; }
+  .hl i { position: absolute; left: -6px; right: -6px; top: 6%; bottom: 0%; background: #F7D046; mix-blend-mode: multiply; opacity: .78;
+          border-radius: 3px 9px 4px 7px / 6px 3px 8px 4px; transform-origin: 0 50%; transform: scaleX(0); }
+  #folhaB { left: 64px; top: 104px; width: 1110px; height: 1720px; background: #FBFAF5; transform-origin: 30% 60%;
+            box-shadow: 0 1px 2px rgba(0,0,0,.14), -14px 26px 60px rgba(40,30,10,.26); }
+  #folhaB .furo { position: absolute; left: 34px; width: 38px; height: 38px; border-radius: 50%; background: #D9D2C2; box-shadow: inset 2px 3px 5px rgba(0,0,0,.35); }
+  #folhaB .cab { position: absolute; left: 120px; top: 92px; right: 150px; display: flex; align-items: baseline; }
+  #folhaB .cab .k { font: 600 25px 'Pop'; letter-spacing: .24em; color: #1D6C67; }
+  #folhaB .cab .s { margin-left: auto; font: italic 25px Georgia, serif; color: #6B6458; }
+  #folhaB .cab .s u { display: inline-block; width: 190px; border-bottom: 1.5px solid #9C9486; margin-left: 10px; }
+  #grade { position: absolute; left: 120px; top: 190px; }
+  #grade line { stroke: #CFC8B8; stroke-width: 1.5; }
+  #grade text { font: 600 21px 'Pop'; letter-spacing: .14em; fill: #8B8373; }
+  #folhaB .metas { position: absolute; left: 120px; top: 1030px; font: 600 22px 'Pop'; letter-spacing: .2em; color: #1D6C67; }
+  #folhaB .pauta { position: absolute; left: 120px; right: 150px; height: 0; border-bottom: 1.5px solid #DDD6C7; }
+  .tinta { fill: none; stroke: #C9372A; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; opacity: .93; }
+  #postit { position: absolute; left: 470px; top: 880px; width: 480px; height: 480px; transform-origin: 50% 0; opacity: 0;
+            background: linear-gradient(170deg, #FFE98A 0%, #FDE070 55%, #F4D257 100%);
+            box-shadow: 0 1px 1px rgba(0,0,0,.08), 4px 22px 26px -14px rgba(60,40,0,.45), 0 30px 40px -30px rgba(60,40,0,.35); }
+  #postit::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 64px; background: linear-gradient(180deg, rgba(160,120,0,.10), rgba(160,120,0,0)); }
+  #postit .ln { position: absolute; left: 52px; font: 400 76px/1 'Mao'; color: #1F2A55; white-space: nowrap; }
+  #postit svg { position: absolute; inset: 0; overflow: visible; }
+  #postit .tinta { stroke-width: 9; }
+  #vinheta { position: absolute; inset: 0; z-index: 8; pointer-events: none; opacity: 0;
+             background: radial-gradient(ellipse 85% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(35,25,10,.16) 100%); }

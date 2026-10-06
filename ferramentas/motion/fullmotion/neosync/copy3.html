@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Neosync — Copy 3 (ROI real · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* janela de navegador (abertura) */
+  #win { height: 790px; }
+  #win .abas { height: 84px; display: flex; align-items: flex-end; gap: 6px; padding: 0 22px; background: #E9EBEE; position: relative; z-index: 2; }
+  #win .aba { width: 290px; height: 64px; border-radius: 14px 14px 0 0; display: flex; align-items: center; gap: 12px; padding: 0 20px; font: 500 23px 'Inter'; color: #5B6370; white-space: nowrap; overflow: hidden; }
+  #win .aba i { width: 26px; height: 26px; border-radius: 7px; flex: none; }
+  #win .aba.on { background: #fff; color: var(--tinta); font-weight: 600; }
+  #carrega { position: absolute; left: 0; top: 84px; height: 4px; background: var(--azul); width: 0; z-index: 3; }
+  #win .corpo { height: 706px; }
+  .vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+  .kpis { display: flex; gap: 16px; margin-top: 22px; }
+  .kpi { flex: 1; border: 1.5px solid var(--linha); border-radius: 16px; padding: 18px 22px; }
+  .kpi .v { font: 750 44px 'Inter'; letter-spacing: -0.03em; margin-top: 6px; } .kpi.ruim { border-color: #F2C4BE; background: var(--vermc); } .kpi.ruim .v { color: var(--verm); }
+  .ped { display: flex; align-items: center; gap: 18px; height: 78px; border-bottom: 1.5px solid var(--linha); font: 500 26px 'Inter'; opacity: 0; }
+  .ped .n { color: var(--cinza); width: 220px; } .ped b { margin-left: auto; font-weight: 650; }
+  .ped .ok { font: 600 21px 'Inter'; color: var(--verde); background: var(--verdec); border-radius: 999px; padding: 6px 14px; }
+  .cl { display: flex; align-items: center; height: 84px; border-bottom: 1.5px solid var(--linha); font: 500 29px 'Inter'; color: #3F4652; opacity: 0; }
+  .cl b { margin-left: auto; font: 650 31px 'Inter'; color: var(--tinta); } .cl.neg b { color: var(--verm); }
+  #sobra { display: flex; align-items: center; margin-top: 24px; height: 116px; padding: 0 30px; border-radius: 18px; background: var(--vermc); border: 3px solid transparent; font: 650 31px 'Inter'; opacity: 0; }
+  #sobra b { margin-left: auto; font: 800 56px 'Inter'; color: var(--verm); letter-spacing: .04em; }
+
+  .cabI { display: flex; align-items: center; gap: 14px; font: 700 32px 'Inter'; letter-spacing: -0.02em; }
+  .cabI .pill { margin-left: auto; }
+  #logoCard { display: flex; align-items: center; justify-content: center; }
+  #amz { width: 960px; padding: 24px 32px 18px; }
+  .li { display: flex; align-items: center; height: 64px; border-top: 1.5px solid var(--linha); font: 500 27px 'Inter'; color: #3F4652; opacity: 0; }
+  .li:first-of-type { margin-top: 12px; } .li b { margin-left: auto; font: 650 28px 'Inter'; color: var(--verm); }
+  .li.tot { color: var(--tinta); font-weight: 650; } .li.tot b { font-size: 32px; }
+
+  /* plataforma (tela cheia 2) */
+  #app3 { height: 920px; }
+  #app3 .corpo { height: 816px; }
+  .campo { margin-top: 20px; } .campo .k { margin-bottom: 8px; }
+  .campo .cx { height: 74px; border: 1.5px solid var(--linha); border-radius: 12px; display: flex; align-items: center; padding: 0 22px; font: 500 29px 'Inter'; }
+  .campo .cx .vl { font-weight: 600; } .campo .cx .cur { width: 3px; height: 34px; background: var(--tinta); margin-left: 3px; }
+  #salvar { position: absolute; left: 34px; right: 34px; bottom: 34px; height: 90px; justify-content: center; font-size: 31px; }
+  #aplicado { margin-top: 22px; opacity: 0; }
+  #venda { display: flex; align-items: center; gap: 18px; height: 96px; padding: 0 24px; border-radius: 16px; background: var(--claro); font: 500 26px 'Inter'; margin-top: 22px; opacity: 0; }
+  #venda b { font-weight: 650; } #venda .ag { margin-left: auto; font: 600 21px 'Inter'; color: var(--verde); background: var(--verdec); border-radius: 999px; padding: 6px 14px; }
+  .lados { display: flex; gap: 16px; margin-top: 18px; }
+  .lado { flex: 1; border: 1.5px solid var(--linha); border-radius: 16px; padding: 18px 20px; opacity: 0; }
+  .lado .k { margin-bottom: 8px; } .lado .r { display: flex; justify-content: space-between; font: 500 23px 'Inter'; color: #3F4652; height: 40px; align-items: center; }
+  .lado .t { display: flex; justify-content: space-between; font: 700 27px 'Inter'; border-top: 1.5px solid var(--linha); margin-top: 8px; padding-top: 10px; color: var(--verm); }
+  #res { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding: 22px 26px; border-radius: 16px; background: var(--tinta); color: #fff; opacity: 0; }
+  #res .k { color: rgba(255,255,255,.6); } #res .vv { font: 800 46px 'Inter'; letter-spacing: -0.03em; margin-top: 4px; }
+  #res .roi { text-align: right; } #res .roi .vv { color: #7EE2A0; }
+  #semPl { position: absolute; right: 34px; bottom: 34px; opacity: 0; }
+
+  #cta { width: 990px; padding: 34px 36px; display: flex; align-items: center; gap: 30px; }
+  #cta .lg { width: 150px; height: 150px; border-radius: 26px; background: var(--claro); display: grid; place-items: center; flex: none; } #cta .lg img { width: 104px; }
+  #cta .t { font: 700 38px/1.15 'Inter'; letter-spacing: -0.03em; } #cta .t span { color: var(--cinza); font-weight: 500; font-size: 28px; display: block; margin-bottom: 4px; letter-spacing: -0.01em; }
+  #btnCta { margin-top: 18px; height: 80px; font-size: 32px; } #btnCta svg { width: 28px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,5 → 15,15): vendas que não dizem quanto sobra · a conta que nunca fecha ═════ -->
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="abas"><div class="aba"><i style="background:#FF9900"></i>Seller Central</div><div class="aba"><i style="background:#1E8E3E"></i>Cálculo de lucro</div></div>
+  <div id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vVend">
+      <h3>Vendas · setembro</h3><p>Loja Casa Prática</p>
+      <div class="kpis"><div class="kpi"><div class="k">Vendas</div><div class="v num" id="kV">R$ 0</div></div><div class="kpi"><div class="k">Pedidos</div><div class="v num" id="kP">0</div></div>
+        <div class="kpi" id="kLu"><div class="k">Lucro</div><div class="v" id="kL">—</div></div></div>
+      <div id="peds" style="margin-top:14px"></div>
+    </div>
+    <div class="vista" id="vCalc" style="opacity:0">
+      <h3>Fone BT · quanto sobra?</h3><p>Uma venda de R$ 129,90</p>
+      <div style="margin-top:14px">
+        <div class="cl neg"><span>Taxa da Amazon</span><b class="num">− R$ 19,49</b></div>
+        <div class="cl neg"><span>Custo do produto</span><b class="num">− R$ 48,00</b></div>
+        <div class="cl neg"><span>Frete</span><b class="num">− R$ 12,90</b></div>
+        <div class="cl neg"><span>Embalagem</span><b class="num">− R$ 3,50</b></div>
+      </div>
+      <div id="sobra">Sobra para a operação<b>???</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÕES (15,2 → 29,4) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo.png">Neosync</div></div>
+<div class="p card" id="amz" style="left:540px;top:300px">
+  <div class="cabI">Custos da Amazon<span class="pill vivo" id="puxou" style="opacity:0"><i></i>Puxado automaticamente</span></div>
+  <div class="li"><span>Taxa de referência (15%)</span><b class="num">− R$ 19,49</b></div>
+  <div class="li"><span>Fulfillment (FBA)</span><b class="num">− R$ 18,40</b></div>
+  <div class="li"><span>Publicidade</span><b class="num">− R$ 6,20</b></div>
+  <div class="li tot"><span>Sai antes do seu bolso</span><b class="num">− R$ 44,09</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (29,45 → 50,55): cadastra a operação uma vez → cada venda sai com o ROI real ═════ -->
+<div class="p card app fs" id="app3" style="left:540px;top:820px">
+  <div class="bar"><img src="img/logo.png"><span class="nm">Neosync</span><div class="nav"><span>Campanhas</span><b>ROI real</b><span>Regras</span></div><div class="av">VC</div></div>
+  <div class="corpo">
+    <div class="vista" id="vOp">
+      <h3>Custos da sua operação</h3><p>Cadastre uma vez. Vale para todas as vendas.</p>
+      <div class="campo"><div class="k">Custo do produto</div><div class="cx" id="c1"></div></div>
+      <div class="campo"><div class="k">Frete</div><div class="cx" id="c2"></div></div>
+      <div class="campo"><div class="k">Embalagem</div><div class="cx" id="c3"></div></div>
+      <div class="campo"><div class="k">Custo fixo (% da venda)</div><div class="cx" id="c4"></div></div>
+      <span class="pill vivo" id="aplicado"><i></i>Salvo · aplicado em todo cálculo daqui pra frente</span>
+    </div>
+    <div class="vista" id="vRoi" style="opacity:0">
+      <h3>Venda nova</h3><p>A Neosync cruza os dois lados sozinha</p>
+      <div id="venda"><span class="num" style="color:var(--cinza)">#702-4419</span><b>Fone BT · R$ 129,90</b><span class="ag">agora</span></div>
+      <div class="lados">
+        <div class="lado" id="ladoA"><div class="k">Custo da Amazon</div><div class="r"><span>Taxa de referência</span><span>R$ 19,49</span></div><div class="r"><span>Fulfillment</span><span>R$ 18,40</span></div><div class="r"><span>Publicidade</span><span>R$ 6,20</span></div><div class="t"><span>Total</span><span class="num">− R$ 44,09</span></div></div>
+        <div class="lado" id="ladoB"><div class="k">Custo da operação</div><div class="r"><span>Produto</span><span>R$ 48,00</span></div><div class="r"><span>Frete + embalagem</span><span>R$ 16,40</span></div><div class="r"><span>Custo fixo (8%)</span><span>R$ 10,39</span></div><div class="t"><span>Total</span><span class="num">− R$ 74,79</span></div></div>
+      </div>
+      <div id="res"><div><div class="k">Lucro desta venda</div><div class="vv num" id="lucV">R$ 0,00</div></div><div class="roi"><div class="k">ROI real</div><div class="vv num" id="roiV">0,0%</div></div></div>
+    </div>
+  </div>
+  <div class="btn" id="salvar"><span id="salvarT">Salvar custos</span></div>
+  <span class="chipI" id="semPl" style="height:72px;font-size:28px;box-shadow:none;border:1.5px solid var(--linha)"><div class="bol" style="background:var(--vermc);width:48px;height:48px" id="semPlX"></div><span style="position:relative" id="semPlT">Planilha</span></span>
+</div>
+
+<!-- ═════ CTA (50,7 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:320px">
+  <div class="lg"><img src="img/logo.png"></div>
+  <div><div class="t"><span>Quer ver o ROI real da sua operação?</span>Fale com a gente agora</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Falar com a Neosync <span id="btnCtaI"></span></div></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 54.18;
+const ROSTO = [590, 800];
+const FS = [[3.1, 15.15, false], [29.45, 50.55, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 47.75, ps: FM.criaConfete(9, 60, 540, 1120, 800, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#semPlX').innerHTML = S('x', '#C9372A', 3); const rPl = riscar('semPlT');
+const abas = [...document.querySelectorAll('#win .aba')], calcs = [...document.querySelectorAll('#vCalc .cl')], lis = [...document.querySelectorAll('#amz .li')];
+const PEDS = [['#702-4388', 'Garrafa Térmica', 89.9], ['#702-4391', 'Fone BT', 129.9], ['#702-4396', 'Kit Facas', 159.9], ['#702-4402', 'Organizador', 69.9], ['#702-4405', 'Luminária LED', 99.9], ['#702-4411', 'Fone BT', 129.9]];
+const peds = PEDS.map(([n, p, v]) => { const e = document.createElement('div'); e.className = 'ped';
+  e.innerHTML = `<span class="n num">${n}</span><span>${p}</span><b class="num">${brl(v)}</b><span class="ok">Enviado</span>`; $('#peds').prepend(e); return e; }).reverse();
+const digita = (id, t, t0, txt) => { const el = $('#' + id), n = Math.round(C((t - t0) / 0.35) * txt.length), s = t < t0 ? '' : txt.slice(0, n);
+  if (el.dataset.v !== s + (t >= t0 && t < t0 + 0.6)) { el.innerHTML = `<span class="vl">${s}</span>` + (t >= t0 && t < t0 + 0.6 ? '<i class="cur"></i>' : ''); el.dataset.v = s + (t >= t0 && t < t0 + 0.6); }
+  el.style.borderColor = t >= t0 && t < t0 + 0.6 ? '#0B121C' : ''; };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'amazon', 2.1);
+
+  /* ── FS1 · 1,5 → 15,15 ── */
+  A($('#win'), t, 3.15, 15.05, { de: 0.88, dy: 120, dout: 0.2 });
+  window.PAPEL_TOPO = (t > 3.2 && t < 15.4) || (t > 29.8 && t < 51.0) ? 0 : 9999;
+  // "lucrando na Amazon? ou só girando estoque": vendas e pedidos entrando; "sem saber quanto sobra?": lucro = ???
+  { const pv = pr(t, 3.1, 1.6, E.cubicInOut); $('#kV').textContent = 'R$ ' + Math.round(48920 * pv).toLocaleString('pt-BR'); $('#kP').textContent = Math.round(412 * pv);
+    peds.forEach((e, k) => { const a = 3.25 + k * 0.2; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -24}px)`; });
+    const lu = t >= 4.5; $('#kL').textContent = lu ? '???' : '—'; $('#kLu').classList.toggle('ruim', lu); if (lu) $('#kL').style.transform = `scale(${1 + 0.15 * Math.sin(C((t - 4.5) / 0.35) * Math.PI)})`; }
+  // "vender muito não é o mesmo que lucrar muito": vendas acendem verde, lucro pulsa
+  $('#kV').style.color = t >= 5.6 ? 'var(--verde)' : '';
+  // "entre a taxa da Amazon…": abre a conta, um custo por palavra
+  const TROCAS = [[7.55, 1]]; let ativa = 0, ult = -9; for (const [tt, a] of TROCAS) if (t >= tt) { ativa = a; ult = tt; }
+  abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+  $('#carrega').style.width = (t - ult < 0.5 ? pr(t, ult, 0.35, E.cubicOut) * 100 : 0) + '%';
+  $('#vVend').style.opacity = ativa === 0 ? 1 : 0; $('#vCalc').style.opacity = ativa === 1 ? pr(t, 7.6, 0.2, E.cubicOut) : 0;
+  { const cl = cursor($('#cur1'), t, 7.0, [1000, 1500], [520, 410], 7.5, 8.0); }
+  calcs.forEach((e, k) => { const a = [8.12, 9.3, 10.42, 10.98][k]; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 40}px)`; });
+  { pop($('#sobra'), t, 12.7); const pu = Math.sin(C((t - 14.0) / 0.5) * Math.PI); $('#sobra').style.borderColor = t >= 14.0 ? 'var(--verm)' : 'transparent';
+    if (t >= 14.0) $('#sobra').style.transform = `scale(${1 + 0.04 * pu})` + tranco(t, 14.0); }
+
+  /* ── inserções · 15,2 → 29,4 ── */
+  A($('#logoCard'), t, 15.3, 17.8, { de: 0.82, dy: -60 });
+  A($('#amz'), t, 19.98, 29.35, { de: 0.86, dy: -60 }); pop($('#puxou'), t, 20.65);
+  lis.forEach((e, k) => { const a = [20.75, 20.95, 21.15, 28.2][k]; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 30}px)`;
+    const f = k < 3 ? [23.68, 24.58, 25.48][k] : 0, fl = f ? Math.sin(C((t - f) / 0.7) * Math.PI) : 0;   // acende quando ela fala o custo
+    e.style.background = fl > 0.01 ? `rgba(201,55,42,${0.1 * fl})` : ''; e.style.margin = '0 -14px'; e.style.padding = '0 14px'; e.style.borderRadius = '10px'; });
+
+  /* ── FS2 · 29,45 → 50,55 ── */
+  A($('#app3'), t, 29.75, 50.45, { de: 0.88, dy: 120, dout: 0.2 });
+  digita('c1', t, 32.25, 'R$ 48,00'); digita('c2', t, 33.3, 'R$ 12,90'); digita('c3', t, 33.85, 'R$ 3,50'); digita('c4', t, 34.6, '8%');
+  { const cl = cursor($('#cur2'), t, 36.6, [1000, 1500], [560, 1200], 37.35, 38.0); const ok = t >= 37.4;
+    $('#salvar').style.transform = `scale(${1 - 0.04 * cl})`; $('#salvar').style.background = ok ? '#15803D' : '#0B121C'; $('#salvarT').textContent = ok ? 'Custos salvos ✓' : 'Salvar custos';
+    pop($('#aplicado'), t, 38.0); }
+  { const tr = pr(t, 39.85, 0.4, E.cubicInOut); $('#vOp').style.opacity = 1 - tr; $('#salvar').style.opacity = 1 - tr; $('#vRoi').style.opacity = tr; $('#vRoi').style.transform = `translateY(${(1 - tr) * 30}px)`;
+    pop($('#venda'), t, 40.45); $('#venda').querySelector('.ag').style.transform = `scale(${1 + 0.2 * Math.sin(C((t - 41.7) / 0.4) * Math.PI)})`;
+    [['ladoA', 42.85, 44.76], ['ladoB', 43.1, 45.79]].forEach(([id, a, f]) => { const e = $('#' + id), fl = Math.sin(C((t - f) / 0.8) * Math.PI);
+      e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * 24}px)`;
+      e.style.borderColor = fl > 0.05 ? '#0B121C' : ''; e.style.background = fl > 0.05 ? `rgba(11,18,28,${0.04 * fl})` : ''; });
+    const pres = pr(t, 47.5, 0.3, E.cubicOut), pv = pr(t, 47.55, 0.9, E.quintOut); $('#res').style.opacity = pres; $('#res').style.transform = `translateY(${(1 - pres) * 20}px)`;
+    $('#lucV').textContent = brl(11.02 * pv); $('#roiV').textContent = (9.3 * pv).toFixed(1).replace('.', ',') + '%';
+    $('#semPl').style.opacity = pr(t, 49.4, 0.25, E.cubicOut); rPl(t, 49.75); }
+
+  /* ── CTA · 50,7 → fim ── */
+  A($('#cta'), t, 50.7, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 52.4, [1020, 700], [520, 400], 52.9, 54.5); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 53.1) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 53.1 ? -200 : L(-200, 600, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -290,5 +290,5 @@ const CHAT = (() => {
     printando = false;
     document.querySelectorAll('.btn-print').forEach(b => b.classList.remove('carregando'));
   }
-  return { renderTudo, estado, chips, usarPedido, anexar, mostrarContexto, printar };
+  return { renderTudo, estado, chips, usarPedido, anexar, mostrarContexto, printar, descrever };
 })();

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>SmartRota — Copy 2 (60 entregas espalhadas · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 900px; } #win .corpo { height: 816px; position: relative; background: #fff; }
+  #logoCard { display: flex; align-items: center; justify-content: center; padding: 40px 64px; } #logoCard img { height: 84px; }
+  #imp { width: 960px; padding: 28px 34px; }
+  #imp .cab img { height: 44px; } #imp .cab .tit { font-weight: 700; font-size: 32px; margin-left: 14px; }
+  .arq { display: flex; align-items: center; gap: 20px; height: 96px; border-top: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 12px; }
+  .arq:first-of-type { margin-top: 14px; }
+  .arq .ic { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font: 800 17px 'Manrope'; color: #fff; flex: none; } .arq .ic svg { width: 30px; }
+  .arq .tx { font: 700 27px 'Manrope'; line-height: 1.15; } .arq .tx span { display: block; font: 500 22px 'Manrope'; color: var(--cinza); }
+  .arq .st { margin-left: auto; display: flex; align-items: center; }
+  .arq .barra { width: 170px; height: 10px; border-radius: 99px; background: #D8E3EC; overflow: hidden; } .arq .barra i { display: block; height: 100%; width: 0; background: var(--azul); }
+  #app { height: 964px; } #app .corpo { height: 860px; }
+  #app .mapa { margin-top: 18px; }
+  .hor { display: inline-block; padding: 2px 10px; margin: 0 -10px; border-radius: 8px; }
+  #conf { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 86px; justify-content: center; font-size: 31px; }
+  #cta { width: 960px; padding: 40px 36px 38px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #cta img { height: 64px; }
+  #cta .tit { font-weight: 700; font-size: 42px; margin-top: 22px; }
+  #btnCta { margin-top: 24px; height: 82px; padding: 0 44px; font-size: 32px; } #btnCta svg { width: 28px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,4 → 12,45): 60 entregas · endereço espalhado · tempo perdido · qual primeiro, qual depois, o que falta ═════ -->
+<div class="p card app fs win" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba"><i id="icPl" style="background:#1E8E3E"></i>Entregas</div><div class="aba"><i id="icMp" style="background:#EA4335"></i>Mapa</div></div>
+  <div class="carrega" id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vLista">
+      <div class="cab"><h3>Entregas do dia</h3><span class="pill azul num" id="qtd">0 entregas</span></div><p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px">Segunda, 06/10 · ordem não definida</p>
+      <div class="th"><span class="k">Ordem</span><span class="k">Endereço</span><span class="k" style="margin-left:auto">Bairro</span></div>
+      <div id="ends"></div>
+    </div>
+    <div class="vista" id="vMapa" style="opacity:0">
+      <div class="cab"><h3>Mapa · 60 entregas</h3><span class="pill cinza" id="qtd2">60 entregas</span></div><p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px">Zona Sul · São Paulo</p>
+      <svg class="mapa" id="mapa1" width="892" height="440" viewBox="0 0 892 440" style="margin-top:18px"></svg>
+      <div class="alerta" id="tempo" style="margin-top:18px">Montando a rota há<b class="num" id="tempoV">0 min</b></div>
+      <div class="alerta" id="falta1" style="margin-top:14px">O que ainda falta<b>???</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÕES (12,55 → 18,0): SmartRota → entregas num só lugar → uma rota ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png"></div>
+<div class="p card" id="imp" style="left:540px;top:300px">
+  <div class="cab"><img src="img/simbolo.png"><span class="tit">Nova rota</span><span class="pill cinza">Importação com IA</span></div>
+  <div class="arq" id="a1"><div class="ic" style="background:#1E8E3E">XLS</div><div class="tx">entregas-segunda.xlsx<span>60 endereços</span></div><div class="st" id="s1"></div></div>
+  <div class="arq" id="a2"><div class="ic" style="background:var(--azul)" id="icRota"></div><div class="tx">Rota otimizada<span>60 paradas · 38,2 km</span></div><div class="st" id="s2"></div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (18,15 → 24,55): acompanha o que falta · registra o entregue · do começo ao fim ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">SmartRota</span><div class="nav"><b>Rotas</b><span>Entregadores</span></div><div class="av">RO</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Rota Zona Sul</h3><span class="pill azul"><i></i>Em rota</span></div>
+    <p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px"><span class="hor" id="hIni">Início 07:00</span> · <span class="hor" id="hFim">Término previsto 12:10</span> · 60 paradas</p>
+    <svg class="mapa" id="mapa2" width="892" height="280" viewBox="0 0 892 280"></svg>
+    <div style="margin-top:14px" id="pars"></div>
+    <div class="prog" id="prog" style="margin-top:16px"><span id="falta">Faltam 42</span><div class="tr"><i id="progI"></i></div><span class="q num" id="progQ">18 de 60</span></div>
+  </div>
+  <div class="btn" id="conf"><span id="confTx">Confirmar entrega</span></div>
+</div>
+
+<!-- ═════ CTA (24,65 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img src="img/logo.png" id="ctaLogo">
+  <div class="tit">Coloque suas entregas em ordem</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Ver planos <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 28.48;
+const ROSTO = [540, 830];
+const FS = [[0.4, 12.45, true], [18.15, 24.55, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 20.75, ps: FM.criaConfete(13, 50, 540, 1250, 700, 60, 0.7), rgb: [12, 164, 124] }];
+</script>
+<script src="base.js"></script>
+<script src="smartrota.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#icPl').innerHTML = S('grade', '#fff', 2.6); $('#icMp').innerHTML = S('pin', '#fff', 2.6); $('#icRota').innerHTML = S('pin', '#fff', 2.4);
+const abas = [...document.querySelectorAll('#win .aba')];
+
+const ENDS = [['R. Bela Cintra, 210', 'Consolação'], ['Av. Faria Lima, 1811', 'Jd. Paulistano'], ['R. Gomes de Carvalho, 1306', 'Vila Olímpia'], ['Av. Ibirapuera, 3103', 'Moema'],
+  ['R. Domingos de Morais, 2564', 'Vila Mariana'], ['Av. Santo Amaro, 4120', 'Brooklin'], ['R. Joaquim Floriano, 466', 'Itaim Bibi'], ['Av. Jabaquara, 1200', 'Saúde']];
+const ends = ENDS.map(([a, b]) => { const e = document.createElement('div'); e.className = 'end'; e.innerHTML = `<span class="o">—</span><span>${a}</span><span class="b">${b}</span>`; $('#ends').appendChild(e); return e; });
+
+/* mapa 1: 60 pontos espalhados + 2 tentativas de "qual primeiro / qual depois" */
+let P1; { const R = FM.rng(21); let s = mapaFundo(892, 440, 7) + '<path id="rabisco" fill="none" stroke="#8794A3" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" d=""/>';
+  P1 = []; let tent = 0; while (P1.length < 60 && tent++ < 5000) { const x = 30 + R() * 832, y = 28 + R() * 384; if (P1.every(([a, b]) => Math.hypot(a - x, b - y) > 40)) P1.push([x, y]); }
+  P1.forEach(([x, y], k) => s += pino(x.toFixed(0), y.toFixed(0), '', 'pt', 'p1_' + k));
+  [['q1', 0, '1º?'], ['q2', 1, '2º?']].forEach(([id, k, tx]) => { const [x, y] = P1[[17, 42][k]];
+    s += `<g id="${id}" class="pino" data-x="${x.toFixed(0)}" data-y="${y.toFixed(0)}"><circle r="24" fill="none" stroke="#C9372A" stroke-width="5"/>
+      <rect x="-40" y="-82" width="80" height="44" rx="22" fill="#C9372A"/><text text-anchor="middle" y="-52" font-size="24" fill="#fff">${tx}</text></g>`; });
+  $('#mapa1').innerHTML = s;
+  const ord = [5, 33, 12, 48, 17, 2, 40, 27, 42, 9]; $('#rabisco').setAttribute('d', 'M' + ord.map(k => P1[k].map(v => v.toFixed(0)).join(' ')).join(' L')); }
+const pinos1 = [...document.querySelectorAll('#mapa1 .pino[id^="p1_"]')];
+
+/* mapa 2: rota em andamento (16–18 entregues, 19 agora) com o entregador andando */
+const P2 = [[60, 200], [150, 140], [250, 180], [350, 110], [460, 150], [560, 80], [660, 130], [760, 200], [840, 120]];
+{ let s = mapaFundo(892, 280, 4) + `<path id="rota" fill="none" stroke="#0CA47C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M${P2.map(p => p.join(' ')).join(' L')}"/>`;
+  s += `<circle id="aqui" r="20" fill="none" stroke="#1674E8" stroke-width="5"/>`;
+  P2.forEach(([x, y], k) => s += pino(x, y, k < 3 ? '✓' : 16 + k, k < 3 ? 'ok' : 'num', 'p2_' + k)); s += pino(P2[3][0], P2[3][1], '✓', 'ok', 'p2ok');
+  s += `<path id="trecho" d="M${P2[2].join(' ')} L${P2[3].join(' ')}" fill="none" stroke="none"/><circle id="moto" r="13" fill="#1674E8" stroke="#fff" stroke-width="5"/>`;
+  $('#mapa2').innerHTML = s; }
+const pinos2 = [...document.querySelectorAll('#mapa2 .pino[id^="p2_"]')];
+const PARS = [['R. Bela Cintra, 210', 'Consolação', 18], ['Av. Faria Lima, 1811', 'Jd. Paulistano', 19], ['R. Gomes de Carvalho, 1306', 'Vila Olímpia', 20]];
+const pars = PARS.map(([a, b, n]) => { const e = document.createElement('div'); e.className = 'par';
+  e.innerHTML = `<div class="n">${n}</div><div class="tx">${a}<span>${b}</span></div><div class="d num"></div>`; $('#pars').appendChild(e); return e; });
+const dEl = pars.map(e => e.querySelector('.d'));
+const setD = (k, html) => { if (dEl[k]._v !== html) { dEl[k].innerHTML = html; dEl[k]._v = html; } };
+const ENT = '<span class="pill vivo"><i></i>Entregue</span>', AGR = '<span class="pill azul"><i></i>Agora</span>';
+const setH = (el, html) => { if (el._v !== html) { el.innerHTML = html; el._v = html; } };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 0.75 && t < 12.8) || (t > 18.5 && t < 24.9) ? 0 : 9999;
+
+  /* ── FS1 · 0,4 → 12,45 ── */
+  A($('#win'), t, 0.45, 12.35, { de: 0.88, dy: 120, dout: 0.2 });
+  // "60 entregas": contador e linhas entrando
+  { const pv = pr(t, 0.56, 0.95, E.cubicOut); $('#qtd').textContent = Math.round(60 * pv) + ' entregas'; $('#qtd').style.transform = `scale(${1 + 0.12 * pulso(t, 1.5, 0.4)})`; }
+  ends.forEach((e, k) => { const a = 0.6 + k * 0.1; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -20}px)`; });
+  // "um monte de endereço espalhado": clique no Mapa, 60 pontos espalhados
+  { const tc = 2.55; cursor($('#cur1'), t, 2.0, [980, 1450], alvo(abas[1], 20, 6), tc, 3.0);
+    const ativa = t >= tc + 0.05 ? 1 : 0; abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+    $('#carrega').style.width = (ativa && t - tc < 0.55 ? pr(t, tc + 0.05, 0.35, E.cubicOut) * 100 : 0) + '%';
+    $('#vLista').style.opacity = 1 - ativa; $('#vMapa').style.opacity = ativa ? pr(t, tc + 0.08, 0.2, E.cubicOut) : 0; }
+  pinos1.forEach((g, k) => popSvg(g, t, 2.65 + k * 0.011));
+  // "não é ter muita entrega": a quantidade acende
+  { const f = pulso(t, 5.5, 0.6); $('#qtd2').className = 'pill ' + (t >= 5.45 && t < 6.3 ? 'azul' : 'cinza'); $('#qtd2').style.transform = `scale(${1 + 0.12 * f})`; }
+  // "perder tempo tentando descobrir": tempo montando a rota sobe, rabisco tentando ligar os pontos
+  // as duas linhas já entram com o mapa (neutras) e ficam vermelhas na fala
+  [$('#tempo'), $('#falta1')].forEach((e, k) => { const a = 2.75 + k * 0.12; e.style.opacity = pr(t, a, 0.25, E.cubicOut); if (t < 6.35 || k) e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * 20}px)`; });
+  { const ruim = t >= 6.35; $('#tempo').style.background = ruim ? '' : 'var(--claro)'; $('#tempoV').style.color = ruim ? '' : 'var(--cinza)';
+    $('#tempoV').textContent = Math.round(L(12, 47, pr(t, 6.45, 0.9, E.cubicOut))) + ' min'; if (ruim) $('#tempo').style.transform = `scale(${1 + 0.03 * pulso(t, 6.4, 0.5)})`; }
+  traco($('#rabisco'), t, 7.25, 0.9);
+  // "qual primeiro" / "qual vem depois"
+  popSvg($('#q1'), t, 9.7); popSvg($('#q2'), t, 10.78);
+  // "o que ainda falta": problema em vermelho
+  { const ruim = t >= 11.55; $('#falta1').style.background = ruim ? '' : 'var(--claro)'; $('#falta1').querySelector('b').textContent = ruim ? '???' : '—';
+    $('#falta1').querySelector('b').style.color = ruim ? '' : 'var(--cinza)'; $('#falta1').style.borderColor = t >= 12.0 ? 'var(--verm)' : 'transparent';
+    if (t >= 12.0) $('#falta1').style.transform = `scale(${1 + 0.04 * pulso(t, 12.0, 0.5)})` + tranco(t, 12.0); }
+
+  /* ── inserções · 12,55 → 18,0 ── */
+  A($('#logoCard'), t, 12.6, 13.45, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#imp'), t, 13.6, 17.95, { de: 0.86, dy: -60 });
+  { // "coloca suas entregas em um só lugar": planilha importando → importado
+    const p1 = pr(t, 13.85, 1.55, E.cubicInOut), ok1 = t >= 15.45;
+    setH($('#s1'), ok1 ? '<span class="pill vivo"><i></i>60 importadas</span>' : '<div class="barra"><i></i></div>');
+    if (!ok1) $('#s1').querySelector('i').style.width = p1 * 100 + '%';
+    $('#s1').style.transform = `scale(${1 + 0.12 * pulso(t, 15.45, 0.4)})`;
+    $('#a1').style.background = pulso(t, 15.45, 0.8) > 0.01 ? `rgba(12,164,124,${0.08 * pulso(t, 15.45, 0.8)})` : '';
+    // "organiza tudo em uma rota": otimização → rota pronta
+    const p2 = pr(t, 16.25, 1.3, E.cubicInOut), ok2 = t >= 17.57, rod = t >= 16.25;
+    setH($('#s2'), ok2 ? '<span class="pill vivo"><i></i>Rota pronta</span>' : rod ? '<div class="barra"><i></i></div>' : '<span class="pill cinza">Aguardando</span>');
+    if (rod && !ok2) $('#s2').querySelector('i').style.width = p2 * 100 + '%';
+    $('#s2').style.transform = `scale(${1 + 0.12 * pulso(t, 17.57, 0.4)})`;
+    $('#a2').style.background = t >= 16.25 && t < 17.95 ? 'rgba(22,116,232,.07)' : ''; }
+
+  /* ── FS2 · 18,15 → 24,55 ── */
+  A($('#app'), t, 18.2, 24.45, { de: 0.88, dy: 120, dout: 0.2 });
+  const ent = t >= 20.75;   // "registra o que já entregou": clique em Confirmar entrega
+  setD(0, ENT); setD(1, ent ? ENT : AGR); setD(2, ent ? AGR : '10:42<span>1,9 km</span>');
+  pars[1].style.background = !ent ? 'rgba(22,116,232,.07)' : ''; pars[2].style.background = ent ? 'rgba(22,116,232,.07)' : '';
+  pars.forEach((e, k) => { const n = e.querySelector('.n'), feito = k === 0 || (k === 1 && ent); n.className = 'n' + (feito ? ' cinza' : ''); n.textContent = feito ? '✓' : PARS[k][2]; });
+  dEl[1].style.transform = `scale(${1 + 0.12 * pulso(t, 21.38, 0.45)})`;
+  // "durante o percurso": o entregador anda até a parada 19
+  { const tr = $('#trecho'), Lt = tr._L || (tr._L = tr.getTotalLength()), pt = tr.getPointAtLength(Lt * pr(t, 18.6, 2.0, E.cubicInOut) * 0.92);
+    $('#moto').setAttribute('cx', pt.x); $('#moto').setAttribute('cy', pt.y);
+    const alvoP = ent ? P2[4] : P2[3], ciclo = (t * 1.2) % 1; $('#aqui').setAttribute('cx', alvoP[0]); $('#aqui').setAttribute('cy', alvoP[1]);
+    $('#aqui').setAttribute('r', 20 + 12 * ciclo); $('#aqui').style.opacity = 1 - ciclo; }
+  $('#p2ok').style.opacity = ent ? 1 : 0;
+  // "acompanha o que falta": progresso acende
+  { const f = pulso(t, 19.95, 0.9); $('#prog').style.borderColor = f > 0.02 ? `rgba(22,116,232,${f})` : 'transparent';
+    $('#falta').textContent = ent ? 'Faltam 41' : 'Faltam 42'; $('#progQ').textContent = ent ? '19 de 60' : '18 de 60';
+    $('#progI').style.width = L(18, 19, pr(t, 20.8, 0.5, E.cubicOut)) * 100 / 60 + '%'; }
+  { const cl = cursor($('#cur2'), t, 20.1, [1000, 1520], alvo($('#conf'), 60, 4), 20.7, 21.35);
+    $('#conf').style.transform = `scale(${1 - 0.04 * cl})`; $('#conf').style.background = ent ? '#0CA47C' : ''; $('#confTx').textContent = ent ? 'Entregue ✓' : 'Confirmar entrega'; }
+  // "do começo ao fim da rota": início e término acendem; a rota percorre do começo ao fim
+  [['hIni', 22.98], ['hFim', 23.8]].forEach(([id, a]) => { const on = t >= a && t < 24.6; $('#' + id).style.background = on ? '#E5F0FD' : ''; $('#' + id).style.color = on ? 'var(--azul)' : '';
+    $('#' + id).style.fontWeight = on ? 700 : ''; });
+  traco($('#rota'), t, t < 22.9 ? 18.4 : 22.95, t < 22.9 ? 0.9 : 1.05);
+  pinos2.forEach((g, k) => { const x = g.dataset.x, y = g.dataset.y, s = 1 + 0.25 * pulso(t, 23.0 + k * 0.1, 0.4); g.setAttribute('transform', `translate(${x} ${y}) scale(${s})`); });
+
+  /* ── CTA · 24,65 → fim ── */
+  A($('#cta'), t, 24.65, null, { de: 0.86, dy: -60 });
+  $('#ctaLogo').style.transform = `scale(${1 + 0.08 * pulso(t, 26.75, 0.5)})`;
+  { const cl = cursor($('#cur3'), t, 26.45, [1020, 760], alvo($('#btnCta'), 40, 6), 27.2, 28.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.35) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.35 ? -200 : L(-200, 600, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

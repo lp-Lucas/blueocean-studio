@@ -21,6 +21,7 @@ const C = require('./motor/claude');
 const M = require('./motor/modelo');
 const Fo = require('./motor/fontes');
 const Pr = require('./motor/preparar');
+const L = require('./motor/lotes');
 Pr.ajustarAmbiente();   // ffmpeg, yt-dlp, Claude e Git instalados pela tela Preparar entram no PATH
 
 // BO_ISOLADO (testes): roda ao lado do programa aberto, com dados e porta do "bo" separados
@@ -226,6 +227,7 @@ async function enviarMensagem(nome, texto, contexto = {}) {
     if (!ev.chave && ev.tipo !== 'inicio') ev.chave = ev.tipo + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     if (ev.tipo === 'inicio') { chat.sessao = ev.sessao; chat.modelo = ev.modelo; }
     mesclar(chat.mensagens, ev);
+    L.aoEvento(nome, ev);
     agendarSalvar();
     enviar('chat-evento', { projeto: nome, ev });
   };
@@ -381,7 +383,8 @@ trata('transcrever', async (nome, ids) => { for (const id of ids) await F.transc
 trata('transcricao:salvar', (nome, id, palavras) => { U.gravar(path.join(P.dir(nome), 'transcricoes', id + '.json'), palavras); return true; });
 trata('exportar', (nome, op) => exportarProjeto(nome, op));
 trata('chat:enviar', (nome, texto, ctx) => { enviarMensagem(nome, texto, ctx); return true; });
-trata('chat:parar', nome => { const c = conversas.get(nome); if (c) { c.cancelado = true; try { require('child_process').spawnSync('taskkill', ['/pid', String(c.processo.pid), '/t', '/f'], { windowsHide: true }); } catch {} } return true; });
+function pararChat(nome) { const c = conversas.get(nome); if (c) { c.cancelado = true; try { require('child_process').spawnSync('taskkill', ['/pid', String(c.processo.pid), '/t', '/f'], { windowsHide: true }); } catch {} } return true; }
+trata('chat:parar', pararChat);
 trata('chat:nova', nome => { const chat = U.ler(arqChat(nome), { mensagens: [] }); chat.sessao = null; chat.mensagens.push({ tipo: 'divisor', chave: 'd' + Date.now(), texto: 'Nova conversa', quando: Date.now() }); U.gravar(arqChat(nome), chat); return chat; });
 trata('tarefas:listar', () => T.todas());
 trata('tarefas:cancelar', id => T.cancelar(id));
@@ -391,6 +394,15 @@ trata('receitas:ler', id => fs.readFileSync(arquivosReceitas().get(path.basename
 trata('config:ler', () => { let claude = ''; try { claude = C.acharClaude(); } catch {} return { ...U.cfg(), claudeAchado: claude }; });
 trata('config:gravar', c => U.gravarCfg(c));
 trata('preparar:verificar', () => Pr.verificar());
+/* lotes: vários clientes de uma vez, cada um vira um projeto que o Claude edita sozinho seguindo a receita */
+L.iniciar({ enviar, enviarMensagem, receitas: () => listarReceitas(), pararChat });
+trata('lotes:listar', () => L.listar());
+trata('lotes:novo', dados => L.novo(dados));
+trata('lotes:salvar', (id, campos) => L.salvar(id, campos));
+trata('lotes:apagar', id => L.apagar(id));
+trata('lotes:gerar', ids => L.gerar(ids));
+trata('lotes:parar', id => L.parar(id));
+trata('lotes:simultaneos', n => L.simultaneos(n));
 trata('preparar:instalar', ids => Pr.instalar(ids, ev => enviar('preparar', ev)));
 trata('preparar:entrar', () => Pr.entrar());
 trata('abrir', alvo => { if (fs.existsSync(alvo) && fs.statSync(alvo).isFile()) shell.showItemInFolder(alvo); else shell.openPath(alvo); return true; });
@@ -667,6 +679,7 @@ app.whenReady().then(async () => {
   criarJanela();
 });
 app.on('window-all-closed', () => {
+  L.gravarJa();
   for (const c of conversas.values()) { try { require('child_process').spawnSync('taskkill', ['/pid', String(c.processo.pid), '/t', '/f'], { windowsHide: true }); } catch {} }
   try { fs.unlinkSync(ARQ_CONTROLE); } catch {}
   app.quit();

@@ -1,0 +1,553 @@
+{
+ "cores": [
+  [
+   "bg rgba(0, 0, 0, 0)",
+   40133533.94604397
+  ],
+  [
+   "bg rgb(255, 255, 255)",
+   5298244.7734375
+  ],
+  [
+   "bg rgb(0, 0, 0)",
+   2592000
+  ],
+  [
+   "bg rgb(245, 250, 248)",
+   1672734.0234375
+  ],
+  [
+   "bg rgb(29, 108, 103)",
+   618750
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.65)",
+   221328
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.35)",
+   34438.4765625
+  ],
+  [
+   "bg rgba(8, 20, 18, 0.38)",
+   25024
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.12)",
+   23957.064697265625
+  ],
+  [
+   "bg rgba(44, 122, 117, 0.08)",
+   14080.078125
+  ],
+  [
+   "bg rgba(44, 122, 117, 0.1)",
+   13829.15625
+  ],
+  [
+   "bg rgb(25, 135, 84)",
+   7200
+  ],
+  [
+   "bg rgba(44, 122, 117, 0.12)",
+   4900
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.07)",
+   4800
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.7)",
+   3872
+  ],
+  [
+   "bg rgb(37, 211, 102)",
+   3600
+  ],
+  [
+   "bg rgb(224, 100, 72)",
+   100
+  ],
+  [
+   "tx rgba(15, 23, 42, 0.55)",
+   40
+  ],
+  [
+   "tx rgb(255, 255, 255)",
+   38
+  ],
+  [
+   "tx rgba(15, 23, 42, 0.92)",
+   21
+  ],
+  [
+   "tx rgb(15, 23, 42)",
+   20
+  ],
+  [
+   "tx rgb(67, 93, 102)",
+   20
+  ],
+  [
+   "tx rgb(33, 37, 41)",
+   10
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.82)",
+   9
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.92)",
+   7
+  ],
+  [
+   "tx rgba(15, 23, 42, 0.78)",
+   7
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.72)",
+   7
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.74)",
+   7
+  ],
+  [
+   "tx rgba(15, 23, 42, 0.85)",
+   6
+  ],
+  [
+   "tx rgba(15, 23, 42, 0.88)",
+   6
+  ]
+ ],
+ "fontes": [
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 400",
+   94
+  ],
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 800",
+   37
+  ],
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 700",
+   32
+  ],
+  [
+   "Inter, sans-serif 400",
+   20
+  ],
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 600",
+   18
+  ],
+  [
+   "Poppins, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 800",
+   7
+  ],
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 500",
+   4
+  ],
+  [
+   "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 900",
+   4
+  ],
+  [
+   "Poppins, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif 700",
+   3
+  ]
+ ],
+ "imgs": [
+  [
+   "https://www.formadeestudos.com.br/vendor/whatsapp.webp",
+   "",
+   35
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17680696871.jpg",
+   "Forma de Estudos",
+   165
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/ChatGPT-Image-16-de-ago.-de-2026,-17_49_191786913415.png",
+   "Estude com método, texto objetivo e prática real de prova",
+   624
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17800163061.png",
+   "Material Inteligente",
+   44
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696449821.jpg",
+   "Revisões Estratégicas",
+   44
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696449991.jpg",
+   "Pouca prática",
+   44
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696450791.jpg",
+   "Falta de constância",
+   44
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696455391.png",
+   "Mais de 300 atividades práticas",
+   56
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696460761.png",
+   "Mais de 1.000 questões no modelo da OAB",
+   56
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696461221.png",
+   "Simulados estratégicos e acompanhamento",
+   56
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696461621.png",
+   " Revisão personalizada por desempenho",
+   56
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696461731.png",
+   "Orientações claras para estudar melhor",
+   56
+  ],
+  [
+   "https://www.formadeestudos.com.br/midias/imagens/17696462061.png",
+   "Materiais organizados e fáceis de seguir",
+   56
+  ]
+ ],
+ "btn": [
+  [
+   "Espaço do Aluno",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "30px",
+   "Poppins, system-ui, -apple-sys",
+   "700"
+  ],
+  [
+   "Home",
+   "rgba(44, 122, 117, 0.1)",
+   "rgb(44, 122, 117)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Quem somos",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Sobre Nós",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Nossa Missão",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Nossa Metodologia",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Cursos",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Exame da OAB",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "FORMAção de Base",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Simulados",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "E-books",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Mentorias",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Individuais",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Em Grupo",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Gratuitos",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Suporte",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.78)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Dúvidas Frequentes",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Fale Conosco",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Contatos",
+   "rgba(0, 0, 0, 0)",
+   "rgb(33, 37, 41)",
+   "12px",
+   "Inter, system-ui, -apple-syste",
+   "600"
+  ],
+  [
+   "Espaço do Aluno",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "30px",
+   "Poppins, system-ui, -apple-sys",
+   "700"
+  ],
+  [
+   "Conheça nossos cursos e simulados",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "999px",
+   "Inter, system-ui, -apple-syste",
+   "700"
+  ],
+  [
+   "Quero estudar com direcionamento!",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "999px",
+   "Inter, system-ui, -apple-syste",
+   "700"
+  ],
+  [
+   "Aproveitar esses benefícios no Curso OAB",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "30px",
+   "Poppins, system-ui, -apple-sys",
+   "700"
+  ],
+  [
+   "Esse formato realmente funciona para pas",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Como eu estudo se tenho pouco tempo por ",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Me sinto desmotivado. O Curso Forma de E",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Eu já tenho materiais. Ainda vale a pena",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Como funciona o acesso e a entrega do co",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Se eu tiver dúvidas, como falo com a equ",
+   "rgba(0, 0, 0, 0)",
+   "rgba(15, 23, 42, 0.88)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "800"
+  ],
+  [
+   "Quero aproveitar o Curso Forma de Estudo",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "999px",
+   "Inter, system-ui, -apple-syste",
+   "700"
+  ],
+  [
+   "Saiba mais",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "999px",
+   "Inter, system-ui, -apple-syste",
+   "700"
+  ],
+  [
+   "Entendi",
+   "rgb(25, 135, 84)",
+   "rgb(255, 255, 255)",
+   "14px",
+   "Inter, system-ui, -apple-syste",
+   "700"
+  ],
+  [
+   "Home",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "Quem somos",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "Nossa Missão",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "Simulados",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "Mentorias",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "Suporte",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.74)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "contato@formadeestudos.com.br",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.82)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ],
+  [
+   "(21) 99928-4321",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.82)",
+   "0px",
+   "Inter, system-ui, -apple-syste",
+   "400"
+  ]
+ ],
+ "txt": "Sua jornada jurídica reunida em uma plataforma única. Esta é sua nova FORMA DE ESTUDOS.\nEspaço do Aluno\nHome\nQuem somos \nCursos \nSimulados\nE-books\nMentorias \nGratuitos\nSuporte \nCURSO COMPLETO PARA O EXAME DA OAB 2026\nPrepare-se para a OAB com direção, método e materiais feitos para você estudar o que realmente importa\n\nTenha acesso a uma preparação objetiva, organizada e 100% online, com conteúdos direcionados, revisões estratégicas e questões no formato da prova. Um curso pensado para quem quer parar de estudar no improviso e seguir um caminho claro até o Exame da Ordem.\n\n Conheça nossos cursos e simulados\nAcesso imediato - estude no seu ritmo\nMateriais objetivos - foco no que mais cai\nQuestões práticas - treino no padrão da OAB\nVocê não precisa de mais conteúdo; precisa de DIREÇÃO.\n\nA reprovação na OAB quase sempre vem de 3 pontos: desorganização, estudo passivo e falta de prática.\n\nMaterial Inteligente\n\nVocê estuda o que é cobrado pela Banca!\n\nRevisões Estratégicas\n\nO conteúdo vira memória; o aprendizado se torna natural!\n\nQuestões Práticas\n\nVocê treina o formato real da prova!\n\nOrganização e Planejamento\n\nOs pilares do seu sucesso!\n\nQuem passa na OAB não estuda mais. Estuda melhor.\n\n Quero estudar com direcionamento!\nDiferenciais do Curso Forma de Estudos\n\nAqui você encontra tudo o que precisa para evoluir com clareza. Em vez de acumular conteúdo, você segue um plano que te coloca em movimento, reduz erros e aumenta sua segurança até o dia da prova.\n\nMais de 300 atividades práticas\nExercícios direcionados para você aplicar o conteúdo na hora, fixar o que estudou e evitar a sensação de “ler e esquecer”. Ideal para transformar estudo em resultado.\nMais de 1.000 questões no modelo da OAB\nQuestões selecionadas para treinar interpretação, pegadinhas e o padrão real da prova. Você aprende a responder com estratégia, ganha velocidade e aumenta a confiança.\nMétodo eficiente\nVocê deixa de estudar “no escuro” e passa a evoluir com direção.\nRevisões sistemáticas\nVocê reforça exatamente o que precisa, reduz erros recorrentes e consolida os temas com mais eficiência.\nOrientações claras para estudar melhor\nVocê sabe o que estudar primeiro, como revisar e quando praticar. Um caminho objetivo para manter a constância, mesmo com rotina corrida e pouco tempo por dia.\nMateriais organizados e fáceis de seguir\nTextos e PDFs estruturados por disciplina, tema e prioridade. Você não perde tempo procurando material ou montando planilhas — só abre e estuda com foco.\n Aproveitar esses benefícios no Curso OAB\nFala, Aprovado! Quem já fez da nossa FORMA...\n\nResultados reais com estudo organizado, constância e direção.\n\nMV\nM. S. V.\n46º Exame da OAB\nPrivado\n\nGeeeente, eu ainda não tô acreditando!!! ?????? Passou o turbilhão da segunda fase e agora que a ficha tá caindo. Só queria agradecer demais à equipe do Forma de Estudos. O cronograma de vocês foi meu norte, papo reto. Eu trabalhava o dia todo e achava que não ia dar tempo de ver tudo, mas a organização da plataforma salvou minha vida. Nome na lista oficial!! Obrigada por tudo! ?????\n\nLD\nL. H. G. D.\n45º Exame da OAB\nPrivado\n\nBom dia, galera do suporte! Cara, que alívio. Demorei pra mandar mensagem pq tava comemorando ontem kkkkk. Queria deixar registrado q o método de revisão espaçada de vcs é bizarro de bom. Eu pecava muito em Ética e Constitucional por esquecer os detalhes dos prazos, e as revisões do curso fixaram o conteúdo de um jeito q na hora da prova parecia que eu tava lendo o material de vcs. Carteirinha da ordem tá vindo!\n\nAC\nA. S. C.\n45º Exame da OAB\nPrivado\n\nOi, tudo bem? Queria deixar meu depoimento... Esse foi meu terceiro exame. Nos outros dois estudei por cursinhos tradicionais, daqueles com 4 horas de videoaula por dia, e ficava super frustrada pq não rendia. O Forma de Estudos me ensinou a estudar de verdade, com foco em questões e preenchendo as minhas lacunas. Minha evolução foi nítida. Obrigada por não nos tratarem só como mais um número. Nota 10! CC e CPC devidamente superados!\n\nLD\nL. D. F.\n46º Exame da OAB\nPrivado\n\nOi gente, tudo bem? Tô mandando mensagem pq ainda tô meio em choque, mas deu certo! Doutores, o método Forma de Estudos funciona mesmo. Eu odiava fazer cronograma, me perdia toda, e o aplicativo de vcs mastigou tudo o que eu precisava fazer dia pós dia. Não precisei largar meu estágio pra passar. Obrigada mesmo, vcs fazem parte dessa vitória!\n\nBR\nB. R. C. R.\n45º Exame da OAB\nPrivado\n\nEu achava que era impossível passar na OAB estudando apenas duas horas por dia e conciliando com o TCC e o estágio. Os cursinhos tradicionais queriam me empurrar 4 horas de videoaulas por dia. No Forma de Estudos, a plataforma organizou minhas metas e eu ia direto ao ponto, no meu ritmo. Estudei só o que realmente caía, treinei com as questões embutidas e o resultado veio: 44 pontos de primeira! Indico de olhos fechados.\n\nDS\nD. P. S.\n46º Exame da OAB\nPrivado\n\nO maior diferencial desse curso é que ele tira todo o peso de planejar o que estudar. A plataforma é super amigável e limpa. Eu acordava, abria o sistema e a minha trilha de tarefas estava lá: a leitura pedagógica certa, a revisão do dia e as questões da banca. O caderno de questões comentadas que vem de bônus foi meu companheiro de metrô. Recomendo muito!!!\n\nWG\nW. T. G.\n46º Exame da OAB\nPrivado\n\nBoa tarde! Passando para agradecer imensamente pelo suporte. Conferi o gabarito oficial e obtive a aprovação na 1ª fase com 43 pontos! O edital da FGV é enorme, mas a organização da plataforma foi o diferencial para que eu mantivesse o foco nas matérias certas.\n\nGA\nG. V. A.\n45º Exame da OAB\nPrivado\n\nO material de leitura e o caderno de questões comentadas foram fundamentais para os meus estudos diários. Esse direcionamento certeiro me poupou centenas de horas de aulas teóricas desnecessárias. Aprovado com 42 pontos!\n\nFL\nF. R. V. L\n44º Exame da OAB\nPrivado\n\nOs simulados da Forma de Estudos refletiram perfeitamente o cenário real do exame, o que me conferiu a tranquilidade indispensável no dia da prova",
+ "title": "Forma de Estudos | Curso Preparatório para OAB Online"
+}

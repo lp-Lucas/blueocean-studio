@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Forma de Estudos — Copy 3 (tela cheia + inserções + CTA)</title>
+<link rel="stylesheet" href="../fm.css">
+<style>
+  /* identidade do cliente (formadeestudos.com.br): verde-petróleo, coral e mostarda do logo; Poppins nos títulos, Inter no texto */
+  @font-face { font-family: 'Pop'; font-weight: 600; src: url('../../fontes/Poppins-SemiBold.ttf'); }
+  @font-face { font-family: 'Pop'; font-weight: 700; src: url('../../fontes/Poppins-Bold.ttf'); }
+  @font-face { font-family: 'Pop'; font-weight: 800; src: url('../../fontes/Poppins-ExtraBold.ttf'); }
+  @font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../fontes/Inter.ttf'); }
+  @font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+  :root { --teal: #1D6C67; --teal2: #2C7A75; --tealc: #E6F1EF; --coral: #E06448; --mostarda: #E3A64A; --tinta: #0F172A; --cinza: #64748B; --fundo: #F5FAF8; }
+  html, body { background: transparent !important; }
+  body { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; color: var(--tinta); }
+  #azul, #leg { display: none !important; }
+  .pop { font-family: 'Pop'; letter-spacing: -0.02em; }
+  .card { background: #fff; border-radius: 34px; box-shadow: 0 28px 70px rgba(5, 40, 36, .30); }
+  .sh { color: #fff; text-shadow: 0 4px 24px rgba(0, 0, 0, .45); }
+
+  /* ── telas cheias: fundo verde-petróleo com brilho e grade de pontos, furo para a pessoa ── */
+  #tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+  .fs { z-index: 6; }
+
+  /* FS1 · mesa de estudo: papel de verdade (grão, fibras, luz), tipografia de documento, marca-texto, caneta e post-it */
+  @font-face { font-family: 'Mao'; src: url('../../fontes/Caveat.ttf'); }
+  #mesa { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 7; pointer-events: none; }
+  #cam { position: absolute; inset: 0; }
+  .folha { position: absolute; overflow: hidden; }
+  .folha .grao { position: absolute; inset: 0; background: url('img/grao.png') 0 0 / 1200px 2000px; pointer-events: none; }
+  .folha .luz { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 38%, rgba(60,45,20,.07) 100%); pointer-events: none; }
+  #folhaA { left: -30px; top: -20px; width: 1140px; height: 1990px; background: #F5F1E7;
+            box-shadow: 0 -2px 4px rgba(0,0,0,.22), 0 -24px 60px rgba(0,0,0,.30); }
+  .docA { position: absolute; left: 130px; top: 200px; width: 880px; font: 400 33px/1.55 Georgia, 'Times New Roman', serif; color: #2A2723; text-align: justify; }
+  .docA .org { text-align: center; font: 700 27px Georgia, serif; letter-spacing: .16em; color: #2A2723; }
+  .docA .org2 { text-align: center; font: italic 400 28px Georgia, serif; color: #5A544A; margin-top: 6px; }
+  .docA .fio { height: 0; border-top: 1.5px solid #2A2723; margin: 30px 0 4px; } .docA .fio + .fio { margin-top: 0; border-top-width: 1px; }
+  .docA .tit { text-align: center; font: 700 64px/1.18 Georgia, serif; letter-spacing: .01em; margin-top: 30px; color: #1C1A17; }
+  .docA .sub { text-align: center; font: 400 31px Georgia, serif; letter-spacing: .34em; margin: 14px 0 30px; color: #3B362F; }
+  .docA p { margin: 0 0 24px; text-indent: 60px; }
+  .docA h4 { font: 700 30px Georgia, serif; letter-spacing: .06em; margin: 34px 0 14px; color: #1C1A17; }
+  .rodape { position: absolute; left: 0; right: 0; bottom: 140px; text-align: center; font: italic 22px Georgia, serif; color: #8A8276; }
+  /* marca-texto: fundo da própria palavra, linha por linha (box-decoration-break), crescendo da esquerda */
+  .hl { background: linear-gradient(100deg, rgba(247,208,70,.82), rgba(245,201,60,.78)) no-repeat 0 62% / 0% 78%; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+        padding: 0 6px; margin: 0 -6px; border-radius: 4px 10px 5px 8px; }
+  #folhaB { left: 64px; top: 104px; width: 1110px; height: 1720px; background: #FBFAF5; transform-origin: 30% 60%;
+            box-shadow: 0 1px 2px rgba(0,0,0,.14), -14px 26px 60px rgba(40,30,10,.26); }
+  #folhaB .furo { position: absolute; left: 34px; width: 38px; height: 38px; border-radius: 50%; background: #D9D2C2; box-shadow: inset 2px 3px 5px rgba(0,0,0,.35); }
+  #folhaB .cab { position: absolute; left: 120px; top: 92px; right: 150px; display: flex; align-items: baseline; }
+  #folhaB .cab .k { font: 600 25px 'Pop'; letter-spacing: .24em; color: #1D6C67; }
+  #folhaB .cab .s { margin-left: auto; font: italic 25px Georgia, serif; color: #6B6458; }
+  #folhaB .cab .s u { display: inline-block; width: 190px; border-bottom: 1.5px solid #9C9486; margin-left: 10px; }
+  #grade { position: absolute; left: 120px; top: 190px; }
+  #grade line { stroke: #CFC8B8; stroke-width: 1.5; }
+  #grade text { font: 600 21px 'Pop'; letter-spacing: .14em; fill: #8B8373; }
+  #folhaB .metas { position: absolute; left: 120px; top: 1030px; font: 600 22px 'Pop'; letter-spacing: .2em; color: #1D6C67; }
+  #folhaB .pauta { position: absolute; left: 120px; right: 150px; height: 0; border-bottom: 1.5px solid #DDD6C7; }
+  .tinta { fill: none; stroke: #C9372A; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; opacity: .93; }
+  #postit { position: absolute; left: 470px; top: 880px; width: 480px; height: 480px; transform-origin: 50% 0; opacity: 0;
+            background: linear-gradient(170deg, #FFE98A 0%, #FDE070 55%, #F4D257 100%);
+            box-shadow: 0 1px 1px rgba(0,0,0,.08), 4px 22px 26px -14px rgba(60,40,0,.45), 0 30px 40px -30px rgba(60,40,0,.35); }
+  #postit::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 64px; background: linear-gradient(180deg, rgba(160,120,0,.10), rgba(160,120,0,0)); }
+  #postit .ln { position: absolute; left: 52px; font: 400 76px/1 'Mao'; color: #1F2A55; white-space: nowrap; }
+  #postit svg { position: absolute; inset: 0; overflow: visible; }
+  #postit .tinta { stroke-width: 9; }
+  #vinheta { position: absolute; inset: 0; z-index: 8; pointer-events: none; opacity: 0;
+             background: radial-gradient(ellipse 85% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(35,25,10,.16) 100%); }
+
+  /* ── Copy 1 ── abertura plana */
+  #k1 { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 7; pointer-events: none; display: none; }
+  #k1 .fundo { position: absolute; left: -20px; top: -20px; width: 1120px; height: 1990px; background: #F5FAF8; box-shadow: 0 -16px 40px rgba(0,0,0,.28); }
+  .k1rot { position: absolute; font: 600 24px 'Pop'; letter-spacing: .22em; color: #1D6C67; }
+  #k1A, #k1B, #k1C { position: absolute; inset: 0; }
+  #k1num { position: absolute; left: 80px; top: 330px; font: 800 400px/1 'Pop'; color: #1D6C67; letter-spacing: -0.06em; }
+  #k1ex { position: absolute; left: 92px; top: 760px; font: 700 76px 'Pop'; color: #0F172A; letter-spacing: -0.02em; }
+  #k1pausa { position: absolute; left: 820px; top: 400px; width: 170px; height: 170px; border-radius: 50%; background: #E06448; display: flex; gap: 22px; align-items: center; justify-content: center; opacity: 0; }
+  #k1pausa i { width: 26px; height: 74px; border-radius: 6px; background: #fff; }
+  #k1rel { position: absolute; left: 90px; top: 960px; width: 900px; display: flex; align-items: center; gap: 30px; opacity: 0; }
+  #k1rel svg { width: 190px; height: 190px; flex: none; }
+  #k1rel .n { font: 800 84px 'Pop'; color: #0F172A; font-variant-numeric: tabular-nums; }
+  #k1rel .l { font: 600 28px 'Inter'; color: #64748B; }
+  #k1cal { position: absolute; left: 90px; top: 360px; width: 900px; background: #fff; border: 1.5px solid #E2E8E6; border-radius: 26px; overflow: hidden; }
+  #k1cal .cab { height: 96px; background: #1D6C67; color: #fff; display: flex; align-items: center; padding: 0 34px; font: 700 40px 'Pop'; letter-spacing: .06em; }
+  #k1cal .cab small { margin-left: auto; font: 600 24px 'Inter'; letter-spacing: 0; opacity: .8; }
+  #k1cal .g { display: grid; grid-template-columns: repeat(7, 1fr); padding: 18px 26px 26px; gap: 8px; }
+  #k1cal .g div { height: 84px; display: grid; place-items: center; font: 600 32px 'Inter'; color: #334155; border-radius: 14px; position: relative; }
+  #k1cal .g .s { font: 700 20px 'Inter'; color: #94A3B8; height: 40px; letter-spacing: .1em; }
+  #k1pub { position: absolute; left: 90px; top: 268px; height: 62px; padding: 0 22px 0 14px; border-radius: 999px; background: #E6F1EF; color: #1D6C67; font: 700 26px 'Inter'; display: flex; align-items: center; gap: 10px; opacity: 0; }
+  #k1pub svg { width: 26px; }
+  .k1circ { fill: none; stroke: #E06448; stroke-width: 7; stroke-linecap: round; }
+  #k1gente { position: absolute; left: 90px; top: 1060px; width: 900px; display: grid; grid-template-columns: repeat(10, 1fr); gap: 18px 0; justify-items: center; }
+  #k1gente i { width: 58px; height: 58px; border-radius: 50%; background: #CBD5D2; opacity: 0; position: relative; }
+  #k1gente i::after { content: ''; position: absolute; left: 50%; top: 13px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: rgba(255,255,255,.75); }
+
+  /* ── Copy 1 ── inserções (faixa acima da cabeça) */
+  .k1chip { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Pop';
+            white-space: nowrap; box-shadow: 0 16px 40px rgba(0,0,0,.28); color: #0F172A; }
+  .k1chip .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; }
+  .k1chip .bol svg { width: 32px; }
+  .k1card { width: 960px; padding: 26px 32px; border-radius: 30px; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+  .k1card .t { display: flex; align-items: center; font: 700 32px 'Pop'; color: #0F172A; }
+  .k1card .t small { margin-left: auto; font: 600 24px 'Inter'; color: #64748B; }
+  #k1mats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; height: 112px; overflow: hidden; }
+  #k1mats span { height: 50px; padding: 0 18px; border-radius: 999px; background: #F1F5F4; font: 600 23px 'Inter'; color: #334155; display: flex; align-items: center; opacity: 0; }
+  .k1bar { margin-top: 18px; }
+  .k1bar .r { display: flex; justify-content: space-between; font: 600 25px 'Inter'; color: #334155; }
+  .k1bar .r b { font: 800 28px 'Pop'; }
+  .k1bar .tr { height: 26px; border-radius: 13px; background: #EEF2F1; margin-top: 8px; overflow: hidden; }
+  .k1bar .tr i { display: block; height: 100%; border-radius: 13px; }
+  .k1risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 7px; border-radius: 4px; background: #E06448; transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* ── Copy 1 ── plataforma: plano pelo peso da FGV */
+  #k1app { width: 940px; height: 980px; overflow: hidden; }
+  #k1app .top { height: 118px; background: #1D6C67; display: flex; align-items: center; gap: 22px; padding: 0 34px; color: #fff; }
+  #k1app .top .lg { height: 78px; padding: 6px 16px; border-radius: 16px; background: #fff; display: grid; place-items: center; }
+  #k1app .top .lg img { height: 66px; }
+  #k1app .top .nm { font: 700 34px 'Pop'; }
+  #k1app .top .av { margin-left: auto; width: 62px; height: 62px; border-radius: 50%; background: #E3A64A; color: #fff; display: grid; place-items: center; font: 700 26px 'Inter'; }
+  #k1app .abas { display: flex; gap: 12px; padding: 22px 34px 0; }
+  #k1app .aba { height: 62px; padding: 0 26px; border-radius: 14px; display: flex; align-items: center; font: 600 28px 'Inter'; color: rgba(15,23,42,.6); }
+  #k1app .aba.on { background: rgba(44,122,117,.1); color: #2C7A75; }
+  #k1app .corpo { position: absolute; left: 34px; right: 34px; top: 220px; }
+  #k1app h3 { font: 700 38px 'Pop'; color: #0F172A; } #k1app h3 + p { font: 500 25px 'Inter'; color: #64748B; margin-top: 4px; }
+  #k1app .rot { font: 700 21px 'Inter'; letter-spacing: .16em; color: #94A3B8; margin: 30px 0 10px; }
+  .k1lin { display: flex; align-items: center; gap: 18px; height: 60px; font: 600 27px 'Inter'; color: #1E293B; opacity: 0; }
+  .k1lin .nm { width: 300px; } .k1lin .tr { flex: 1; height: 22px; border-radius: 11px; background: #EEF2F1; overflow: hidden; }
+  .k1lin .tr i { display: block; height: 100%; width: 0; border-radius: 11px; background: #1D6C67; }
+  .k1lin .v { width: 34px; text-align: right; font: 700 26px 'Inter'; color: #64748B; }
+  .k1lin .ok { width: 38px; height: 38px; border-radius: 50%; background: #198754; display: grid; place-items: center; opacity: 0; }
+  .k1lin .ok svg { width: 22px; }
+  #k1lista, #k1linha { position: absolute; left: 0; right: 0; top: 110px; }
+  #k1gerar { position: absolute; left: 34px; right: 34px; top: 840px; height: 86px; border-radius: 999px; background: #1D6C67; color: #fff; font: 700 32px 'Inter'; display: flex; align-items: center; justify-content: center; gap: 12px; }
+  #k1trilho { position: relative; height: 30px; border-radius: 15px; background: #EEF2F1; margin-top: 70px; }
+  #k1trilho i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 15px; background: #1D6C67; }
+  #k1trilho .sem { position: absolute; top: -2px; bottom: -2px; width: 3px; background: #fff; }
+  #k1flag { position: absolute; right: -6px; top: -78px; height: 56px; padding: 0 18px; border-radius: 12px; background: #E06448; color: #fff; font: 700 25px 'Inter'; display: flex; align-items: center; white-space: nowrap; opacity: 0; }
+  #k1hoje { position: absolute; left: 0; top: -60px; font: 700 25px 'Inter'; color: #1D6C67; }
+  #k1fases { display: flex; justify-content: space-between; margin-top: 26px; font: 600 24px 'Inter'; color: #64748B; }
+  #k1fases span { opacity: 0; }
+  /* FS2 · Espaço do Aluno (questões no padrão FGV) */
+  #app { width: 940px; height: 990px; overflow: hidden; }
+  #app .top { height: 118px; background: var(--teal); display: flex; align-items: center; gap: 22px; padding: 0 34px; color: #fff; position: relative; z-index: 2; }
+  #app .top .lg { height: 78px; padding: 6px 16px; border-radius: 16px; background: #fff; display: grid; place-items: center; }
+  #app .top .lg img { height: 66px; }
+  #app .top .nm { font: 700 34px 'Pop'; }
+  #app .top .av { margin-left: auto; width: 62px; height: 62px; border-radius: 50%; background: var(--mostarda); color: #fff; display: grid; place-items: center; font: 700 26px 'Inter'; }
+  #app .abas { display: flex; gap: 12px; padding: 22px 34px 0; position: relative; z-index: 2; background: #fff; }
+  #app .aba { height: 62px; padding: 0 26px; border-radius: 14px; display: flex; align-items: center; font: 600 28px 'Inter'; color: rgba(15, 23, 42, .6); }
+  #app .aba.on { background: rgba(44, 122, 117, .1); color: var(--teal2); }
+  #rolo { position: absolute; left: 0; right: 0; top: 214px; padding: 22px 34px; }
+  #app .meta { display: flex; align-items: center; gap: 12px; }
+  #app .tag { height: 50px; padding: 0 20px; border-radius: 999px; display: flex; align-items: center; gap: 8px; font: 700 24px 'Inter'; white-space: nowrap; }
+  #app .tag.t { background: var(--tealc); color: var(--teal); }
+  #app .tag.c { background: #FDECE7; color: var(--coral); }
+  #app .qn { margin-left: auto; font: 600 24px 'Inter'; color: var(--cinza); }
+  #app .enun { font: 600 32px/1.35 'Inter'; margin: 24px 0 22px; }
+  .alt { position: relative; display: flex; align-items: center; gap: 20px; min-height: 104px; padding: 16px 22px; border-radius: 22px; border: 3px solid #E3EAE8; margin-bottom: 14px;
+         font: 500 27px/1.3 'Inter'; color: #1E293B; background: #fff; }
+  .alt .le { width: 54px; height: 54px; border-radius: 50%; flex: none; display: grid; place-items: center; font: 700 26px 'Inter'; background: #F1F5F4; color: var(--tinta); }
+  .alt .res { position: absolute; right: -12px; top: -14px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; opacity: 0; }
+  .alt .res svg { width: 26px; height: 26px; }
+  #expl { border-radius: 22px; background: var(--fundo); border-left: 8px solid var(--teal); padding: 0 28px; overflow: hidden; height: 0; }
+  #expl .h { display: flex; align-items: center; gap: 12px; font: 700 30px 'Pop'; color: var(--teal); margin-top: 22px; }
+  #expl .h svg { width: 34px; }
+  #expl .tx { font: 500 27px/1.42 'Inter'; color: #1E293B; margin-top: 10px; }
+  #expl .tx mark { background: rgba(227, 166, 74, .35); color: inherit; border-radius: 6px; padding: 0 4px; }
+  #acerto { position: absolute; right: 34px; top: 236px; height: 54px; padding: 0 22px; border-radius: 999px; background: #198754; color: #fff; font: 700 26px 'Inter';
+            display: flex; align-items: center; gap: 10px; opacity: 0; z-index: 3; }
+  .chipF { display: flex; align-items: center; gap: 18px; height: 104px; padding: 0 40px 0 22px; border-radius: 999px; font: 700 44px 'Pop'; white-space: nowrap;
+           box-shadow: 0 24px 60px rgba(0, 25, 22, .4); }
+  .chipF .bol { width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; }
+  .chipF .bol svg { width: 36px; }
+  .risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 8px; border-radius: 4px; background: var(--coral); transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* ── inserções ── */
+  #logoCard { width: 560px; height: 230px; display: grid; place-items: center; }
+  #logoCard img { height: 180px; }
+  .chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Pop';
+           white-space: nowrap; box-shadow: 0 20px 50px rgba(0, 0, 0, .35); color: var(--tinta); }
+  .chipI .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; }
+  .chipI .bol svg { width: 32px; }
+  .chipI.teal { background: var(--teal); color: #fff; }
+  #cal { width: 760px; padding: 26px 30px; display: flex; align-items: center; gap: 26px; }
+  #cal .tile, .tileT { width: 104px; height: 104px; border-radius: 28px; background: linear-gradient(150deg, #2C7A75, #1D6C67); display: grid; place-items: center; flex: none; }
+  #cal .tile svg, .tileT svg { width: 56px; }
+  #cal .t1 { font: 700 36px 'Pop'; } #cal .t1 b { color: var(--coral); }
+  #cal .dias { display: flex; gap: 8px; margin-top: 12px; }
+  #cal .d { position: relative; width: 58px; height: 58px; border-radius: 14px; background: #F1F5F4; display: grid; place-items: center; font: 700 22px 'Inter'; color: var(--cinza); }
+  #cal .d.prova { width: 116px; background: #FDECE7; color: var(--coral); border: 3px solid var(--coral); }
+  #cal .d .x { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; }
+  #cal .d .x svg { width: 34px; }
+
+  #crono { width: 990px; padding: 0 0 20px; overflow: hidden; }
+  #crono .cab { height: 76px; display: flex; align-items: center; gap: 16px; padding: 0 26px; background: var(--teal); color: #fff; font: 700 31px 'Pop'; }
+  #crono .cab .pronto { margin-left: auto; height: 46px; padding: 0 18px; border-radius: 999px; background: #fff; color: var(--teal); font: 700 23px 'Inter'; display: flex; align-items: center; gap: 8px; opacity: 0; }
+  #crono .cab .pronto svg { width: 24px; }
+  #cronoCols { display: flex; gap: 12px; padding: 16px 20px 0; }
+  #crono .r { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; height: 186px; padding: 14px 16px; border-radius: 18px; background: var(--fundo); font: 700 26px/1.15 'Inter'; opacity: 0; }
+  #crono .dia { width: 78px; height: 40px; border-radius: 11px; background: #E3EAE8; display: grid; place-items: center; font: 800 20px 'Inter'; color: var(--cinza); letter-spacing: .06em; }
+  #crono .cor { width: 100%; height: 6px; border-radius: 3px; }
+  #crono .mat { height: 38px; padding: 0 14px; border-radius: 999px; display: flex; align-items: center; font: 700 19px 'Inter'; margin-top: auto; opacity: 0; }
+  #crono .h { display: none; }
+
+  #hoje { width: 860px; padding: 26px 28px; display: flex; align-items: center; gap: 24px; }
+  #hoje .k { font: 800 22px 'Inter'; letter-spacing: .12em; color: var(--coral); }
+  #hoje .t { font: 700 34px/1.15 'Pop'; margin-top: 4px; }
+  #hoje .s { font: 500 25px 'Inter'; color: var(--cinza); margin-top: 4px; }
+  #btnHoje { margin-left: auto; height: 82px; padding: 0 30px; border-radius: 999px; background: var(--teal); color: #fff; font: 700 30px 'Inter'; display: flex; align-items: center; gap: 12px; flex: none; position: relative; white-space: nowrap; }
+  #btnHoje svg { width: 28px; }
+
+  #mentor { width: 880px; padding: 24px 28px; display: flex; align-items: center; gap: 24px; border-radius: 40px; }
+  #mentor .av { width: 104px; height: 104px; border-radius: 50%; background: linear-gradient(150deg, #E3A64A, #D18A2C); color: #fff; font: 700 38px 'Pop'; display: grid; place-items: center; flex: none; position: relative; }
+  #mentor .av i { position: absolute; right: 2px; bottom: 4px; width: 24px; height: 24px; border-radius: 50%; background: #22C55E; border: 4px solid #fff; }
+  #mentor .t1 { font: 700 34px 'Pop'; display: flex; gap: 14px; align-items: center; }
+  #mentor .t1 small { font: 600 22px 'Inter'; color: var(--cinza); }
+  #mentor .t2 { font: 500 27px 'Inter'; color: #334155; margin-top: 4px; }
+  #mentor .esp { height: 46px; padding: 0 16px; border-radius: 999px; background: var(--tealc); color: var(--teal); font: 700 22px 'Inter'; display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; opacity: 0; }
+  #mentor .esp svg { width: 22px; }
+
+  #ritmo { width: 920px; height: 330px; padding: 26px 34px; }
+  #ritmo .cab { display: flex; align-items: center; gap: 16px; font: 700 34px 'Pop'; }
+  #ritmo .cab small { margin-left: auto; font: 600 24px 'Inter'; color: var(--cinza); }
+  #barras { position: absolute; left: 34px; right: 34px; top: 86px; height: 170px; display: flex; align-items: flex-end; gap: 22px; }
+  #barras .b { flex: 1; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, #2C7A75, #1D6C67); height: 0; position: relative; }
+  #barras .b span { position: absolute; bottom: -36px; left: 0; right: 0; text-align: center; font: 700 22px 'Inter'; color: var(--cinza); }
+  #rumo { position: absolute; left: 34px; right: 34px; top: 90px; opacity: 0; }
+  #rumo .lin { display: flex; align-items: baseline; font: 700 30px 'Inter'; color: #334155; }
+  #rumo .pct { margin-left: auto; font: 800 56px 'Pop'; color: var(--teal); font-variant-numeric: tabular-nums; }
+  #rumo .tri { position: relative; height: 34px; border-radius: 17px; background: #E8EFED; margin-top: 12px; overflow: hidden; }
+  #rumo .enche { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 17px; background: linear-gradient(90deg, #2C7A75, #1D6C67); }
+  #rumo .falta { display: flex; gap: 12px; margin-top: 18px; align-items: center; font: 600 26px 'Inter'; color: var(--cinza); }
+  #rumo .falta .tag { height: 50px; padding: 0 18px; border-radius: 999px; background: #FDECE7; color: var(--coral); font: 700 24px 'Inter'; display: flex; align-items: center; opacity: 0; }
+  #aprov { position: absolute; right: 30px; top: 26px; height: 56px; padding: 0 22px; border-radius: 999px; background: #198754; color: #fff; font: 700 26px 'Inter'; display: flex; align-items: center; gap: 10px; opacity: 0; }
+  #aprov svg { width: 26px; }
+
+  #cta { width: 990px; padding: 30px 34px; display: flex; align-items: center; gap: 30px; text-align: left; }
+  #cta img { height: 128px; flex: none; }
+  #cta .t { font: 700 33px/1.18 'Pop'; } #cta .t b { color: var(--teal); font-weight: 800; }
+  #btnCta { position: relative; margin: 18px 0 0; height: 84px; width: 510px; border-radius: 999px; background: linear-gradient(180deg, #2C7A75, #1D6C67); color: #fff;
+            font: 700 40px 'Pop'; display: flex; align-items: center; justify-content: center; gap: 16px; overflow: hidden; box-shadow: 0 16px 34px rgba(29, 108, 103, .45); }
+  #btnCta svg { width: 40px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent); transform: skewX(-20deg); left: -200px; }
+  #setas { display: none !important; flex-direction: column; align-items: center; gap: 0; }
+  #setas svg { width: 70px; height: 40px; }
+
+  .cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+
+  /* legenda branca sem fundo (Montserrat Bold, palavra a palavra) */
+  #legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+             text-shadow: 0 3px 4px rgba(0, 0, 0, .55), 0 6px 26px rgba(0, 0, 0, .5); white-space: nowrap; }
+  #legenda span { display: inline-block; margin: 0 9px; }
+  #confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<!-- ═════ TELA CHEIA 1 (0 → 7,52): o edital saiu · plano de estudos · empurrando para depois ═════ -->
+<svg id="tela" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="verde" cx="50%" cy="38%" r="80%"><stop offset="0" stop-color="#25807A"/><stop offset=".5" stop-color="#17605B"/><stop offset="1" stop-color="#0B3B37"/></radialGradient>
+    <pattern id="pontos" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2.2" fill="#fff" fill-opacity=".07"/></pattern>
+    <radialGradient id="brilhoC" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#E06448" stop-opacity=".22"/><stop offset=".35" stop-color="#E06448" stop-opacity=".1"/><stop offset=".7" stop-color="#E06448" stop-opacity=".03"/><stop offset="1" stop-color="#E06448" stop-opacity="0"/></radialGradient>
+    <filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#021412" flood-opacity=".45"/></filter>
+    <mask id="furoM"><rect x="-60" y="-60" width="1200" height="2040" fill="#fff"/><path id="furoP" fill="#000" d=""/></mask>
+  </defs>
+  <g mask="url(#furoM)" id="telaG">
+    <rect x="-60" y="-60" width="1200" height="2040" fill="url(#verde)"/>
+  </g>
+  <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
+  <path id="telaArco" fill="none" stroke="#E3A64A" stroke-width="26" stroke-linecap="round" d=""/>
+</svg>
+
+<div id="mesa"><div id="cam">
+  <div class="folha" id="folhaA">
+    <div class="docA">
+      <div class="org">ORDEM DOS ADVOGADOS DO BRASIL</div>
+      <div class="org2">Conselho Federal</div>
+      <div class="fio"></div><div class="fio"></div>
+      <div class="tit"><span class="hl" id="hl1a">48º EXAME DE ORDEM</span><br><span class="hl" id="hl1b">UNIFICADO</span></div>
+      <div class="sub">EDITAL DE ABERTURA</div>
+      <p>O Conselho Federal da Ordem dos Advogados do Brasil, no uso das atribuições que lhe confere a Lei nº 8.906, de 4 de julho de 1994, <span class="hl" id="hl2">torna pública a realização do 48º Exame de Ordem Unificado</span>, nos termos deste edital e de seus anexos.</p>
+      <h4>1. DAS DISPOSIÇÕES PRELIMINARES</h4>
+      <p>1.1. O Exame de Ordem será realizado em duas etapas — prova objetiva e prova prático-profissional —, ambas de caráter eliminatório.</p>
+      <p>1.2. A prova objetiva será aplicada no dia <span class="hl" id="hl3">10 de janeiro</span>, em todo o território nacional.</p>
+      <p>1.3. A prova objetiva conterá 80 questões de múltipla escolha, sendo exigido o mínimo de 50% de acertos para a habilitação à etapa seguinte.</p>
+    </div>
+    <div class="rodape">Página 1 de 34</div>
+    <div class="grao"></div><div class="luz"></div>
+  </div>
+  <div class="folha" id="folhaB">
+    <div class="furo" style="top:330px"></div><div class="furo" style="top:840px"></div><div class="furo" style="top:1350px"></div>
+    <div class="cab"><span class="k">PLANO DE ESTUDOS</span><span class="s">Semana<u></u></span></div>
+    <svg id="grade" width="840" height="830"></svg>
+    <div class="metas">METAS DA SEMANA</div>
+    <div class="pauta" style="top:1110px"></div><div class="pauta" style="top:1190px"></div><div class="pauta" style="top:1270px"></div>
+    <svg style="position:absolute;left:0;top:0;overflow:visible" width="1110" height="1720"><path class="tinta" id="interroga" d="M 455 470 C 448 380, 545 330, 610 360 C 690 395, 680 480, 618 520 C 572 550, 552 575, 556 640 M 557 735 L 559 741"/>
+      <path class="tinta" id="sublinha" d="M 400 812 C 480 800, 620 798, 720 806"/></svg>
+    <div class="grao"></div><div class="luz"></div>
+  </div>
+  <div id="postit">
+    <div class="ln" id="pt1" style="top:110px;font-size:96px">para tudo!</div>
+    <div class="ln" id="pt2" style="top:260px;color:#C9372A">presta atenção</div>
+    
+    <svg width="480" height="480"><path class="tinta" id="rs1" d="M 46 112 C 150 104, 300 118, 432 100"/><path class="tinta" id="rs2" d="M 46 232 C 120 226, 220 238, 300 224"/></svg>
+    <div style="position:absolute;inset:0;background:url('img/grao.png') 0 0/1200px 2000px;opacity:.6"></div>
+  </div>
+</div></div>
+<div id="vinheta"></div>
+<div class="p k1chip" id="k1sem" style="left:540px;top:330px"><div class="bol" style="background:#FDECE7" id="k1semX"></div><span style="position:relative" id="k1semT">Estudar sem plano</span></div>
+<div class="p k1card" id="k1fac" style="left:540px;top:320px"><div class="t">Revisar toda a faculdade<small id="k1facN">0 matérias</small></div><div id="k1mats"></div></div>
+<div class="p k1card" id="k1conf" style="left:540px;top:320px"><div class="t">Chegando perto da prova<small>semana da prova</small></div>
+  <div class="k1bar"><div class="r">Confiança<b id="k1confV" style="color:#E06448">80%</b></div><div class="tr"><i id="k1confB" style="background:#E06448;width:80%"></i></div></div>
+  <div class="k1bar"><div class="r">Energia<b id="k1enV" style="color:#E06448">75%</b></div><div class="tr"><i id="k1enB" style="background:#E3A64A;width:75%"></i></div></div></div>
+<div class="p k1card" id="k1cai" style="left:540px;top:320px"><div class="t">O que você estudou<small>× o que cai</small></div>
+  <div class="k1bar"><div class="r">Não cai no exame<b id="k1nV" style="color:#94A3B8">0%</b></div><div class="tr"><i id="k1nB" style="background:#B8C4C1;width:0"></i></div></div>
+  <div class="k1bar"><div class="r">Cai no exame<b id="k1cV" style="color:#1D6C67">0%</b></div><div class="tr"><i id="k1cB" style="background:#1D6C67;width:0"></i></div></div></div>
+<div class="p k1chip" id="k1esf" style="left:540px;top:330px"><div class="bol" style="background:#FDECE7" id="k1esfX"></div><span style="position:relative" id="k1esfT">Falta de esforço</span></div>
+<div class="p k1chip" id="k1dir" style="left:540px;top:330px;background:#1D6C67;color:#fff"><div class="bol" style="background:#fff" id="k1dirOk"></div>Falta de direção</div>
+
+<div class="p card fs" id="k1app" style="left:540px;top:800px">
+  <div class="top"><div class="lg"><img src="img/logo.png"></div><div class="nm">Espaço do Aluno</div><div class="av">VC</div></div>
+  <div class="abas"><div class="aba on">Cronograma</div><div class="aba">Questões</div><div class="aba">Mentoria</div><div class="aba">Simulados</div></div>
+  <div class="corpo"><h3>Seu plano · 48º Exame</h3><p>Montado pelo que a FGV mais cobra</p>
+    <div id="k1lista"><div class="rot">PESO NA PROVA (QUESTÕES)</div></div>
+    <div id="k1linha" style="opacity:0"><div class="rot">ATÉ A PROVA</div>
+      <div id="k1trilho"><div id="k1hoje">Hoje</div><i id="k1fill"></i><div id="k1flag">10 de janeiro · Prova</div></div>
+      <div id="k1fases"><span>Base</span><span>Questões FGV</span><span>Revisão</span><span>Simulados</span></div></div>
+  </div>
+  <div id="k1gerar"><span id="k1gerarT">Gerar meu cronograma</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (30,22 → 38,6): a plataforma em uso — questão no padrão FGV com explicação ═════ -->
+<div class="p card fs" id="app" style="left:540px;top:790px">
+  <div class="top"><div class="lg"><img src="img/logo.png"></div><div class="nm">Espaço do Aluno</div><div class="av">VC</div></div>
+  <div class="abas"><div class="aba">Cronograma</div><div class="aba on" id="abaQ">Questões</div><div class="aba">Mentoria</div><div class="aba">Simulados</div></div>
+  <div id="rolo">
+    <div class="meta"><div class="tag t">Ética Profissional</div><div class="tag c" id="tagFGV">Padrão FGV</div><div class="qn">Questão 12 de 80</div></div>
+    <div class="enun">Segundo o Estatuto da Advocacia (Lei 8.906/94), constitui infração disciplinar:</div>
+    <div class="alt" id="aA"><div class="le">A</div>Divulgar os serviços com discrição e moderação.<div class="res"></div></div>
+    <div class="alt" id="aB"><div class="le">B</div>Recusar-se, injustificadamente, a prestar contas ao cliente de quantias recebidas.<div class="res"></div></div>
+    <div class="alt" id="aC"><div class="le">C</div>Renunciar ao mandato, comunicando o cliente.<div class="res"></div></div>
+    <div class="alt" id="aD"><div class="le">D</div>Recusar o patrocínio de causa que considere imoral.<div class="res"></div></div>
+    <div id="expl"><div class="h" id="explH"></div>
+      <div class="tx">Correta: <b>B</b>. O <mark>art. 34, XXI, do EOAB</mark> define como infração recusar-se, sem justificativa, a prestar contas ao cliente. As demais condutas são permitidas ao advogado.</div></div>
+  </div>
+  <div id="acerto"></div>
+</div>
+<div class="p chipF fs" id="decoreba" style="left:540px;top:1400px;background:#fff;color:#0F172A"><div class="bol" style="background:#FDECE7" id="decX"></div><span style="position:relative" id="decT">Decoreba</span></div>
+<div class="p chipF fs" id="entend" style="left:540px;top:1400px;background:#E3A64A;color:#0F172A"><div class="bol" style="background:#fff" id="entOk"></div>Entendimento real</div>
+
+<!-- ═════ INSERÇÕES (7,52 → 30,22) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png"></div>
+<div class="p chipI teal" id="logoChip" style="left:540px;top:455px"><div class="bol" style="background:rgba(255,255,255,.18)" id="logoChipI"></div>Curso para o Exame da OAB</div>
+
+<div class="p chipI" id="improv" style="left:540px;top:330px"><div class="bol" style="background:#FDECE7" id="improvX"></div><span style="position:relative" id="improvT">Estudar no improviso</span></div>
+<div class="p card" id="cal" style="left:540px;top:330px">
+  <div class="tile" id="calIco"></div>
+  <div><div class="t1">A prova está <b>perto</b></div>
+    <div class="dias"><div class="d">S</div><div class="d">T</div><div class="d">Q</div><div class="d">Q</div><div class="d">S</div><div class="d">S</div><div class="d prova">PROVA</div></div></div>
+</div>
+
+<div class="p card" id="crono" style="left:540px;top:318px">
+  <div class="cab"><div class="tileT" style="width:54px;height:54px;border-radius:18px;background:rgba(255,255,255,.16)" id="cronoIco"></div>Cronograma · Semana 1<div class="pronto" id="pronto"></div></div>
+  <div id="cronoCols"></div>
+</div>
+
+<div class="p card" id="hoje" style="left:540px;top:330px">
+  <div class="tileT" id="hojeIco"></div>
+  <div style="min-width:0"><div class="k">HOJE</div><div class="t">Direito Constitucional</div><div class="s">Aula 3 · Controle de constitucionalidade</div></div>
+  <div id="btnHoje"><span id="btnHojeI"></span><span id="btnHojeT">Começar</span></div>
+</div>
+
+<div class="p card" id="mentor" style="left:540px;top:320px">
+  <div class="av">MR<i></i></div>
+  <div><div class="t1">Mentoria <small>agora</small></div><div class="t2">“Vamos ajustar o seu plano desta semana?”</div>
+    <div class="esp" id="esp"></div></div>
+</div>
+
+<div class="p card" id="ritmo" style="left:540px;top:322px">
+  <div class="cab" id="ritmoCab"><span id="ritmoT">Seu ritmo de estudo</span><small id="ritmoS">esta semana</small></div>
+  <div id="barras"></div>
+  <div id="rumo">
+    <div class="lin">Rumo à aprovação<span class="pct" id="rumoPct">0%</span></div>
+    <div class="tri"><div class="enche" id="rumoBar" style="width:0"></div></div>
+    <div class="falta">Ainda falta:<div class="tag" id="f1">Processo Penal</div><div class="tag" id="f2">Tributário</div></div>
+  </div>
+  <div id="aprov"></div>
+</div>
+
+<!-- ═════ CTA (43,4 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:322px">
+  <img src="img/logo.png">
+  <div><div class="t">Fale com a nossa equipe<br><b>48º Exame da OAB</b></div>
+  <div id="btnCta"><div id="brilho"></div>Preencher formulário <span id="btnCtaI"></span></div></div>
+</div>
+<div class="p" id="setas" style="left:540px;top:1395px"></div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+const { M, E, C, L, $, pr } = FM, A = FM.anim;
+window.DURACAO = 41.0;
+const ANC = [[0, 7.0], [37.0, 7.0], [37.001, 43.2], [37.28, 43.3], [37.8, 43.98], [41.0, 47.4]];
+const WARP = x => { for (let i = 1; i < ANC.length; i++) if (x <= ANC[i][0]) { const [a0, b0] = ANC[i - 1], [a1, b1] = ANC[i]; return b0 + (b1 - b0) * C((x - a0) / Math.max(1e-6, a1 - a0)); } return ANC[ANC.length - 1][1]; };
+const S = (g, cor, w = 2.6) => FM.svg(g, cor, w);
+const G2 = { livro: 'M4 5 C7 4 10 4.5 12 6 C14 4.5 17 4 20 5 V19 C17 18 14 18.5 12 20 C10 18.5 7 18 4 19 Z M12 6 V20', play: 'M8 5 L19 12 L8 19 Z',
+             seta2: 'M6 9 L12 15 L18 9', lampada: 'M9 18 H15 M10 21 H14 M12 3 A6 6 0 0 0 8 13.5 C9 14.5 9 15.5 9 16 H15 C15 15.5 15 14.5 16 13.5 A6 6 0 0 0 12 3 Z' };
+Object.assign(FM.GLIFO, G2);
+$('#cronoIco').innerHTML = S('agenda', '#fff'); $('#calIco').innerHTML = S('agenda', '#fff');
+$('#hojeIco').innerHTML = S('livro', '#fff'); $('#logoChipI').innerHTML = S('check', '#fff', 3);
+$('#improvX').innerHTML = S('x', '#E06448', 3); $('#decX').innerHTML = S('x', '#E06448', 3); $('#entOk').innerHTML = S('check', '#1D6C67', 3.2);
+$('#btnHojeI').innerHTML = S('play', '#fff', 2.4); $('#btnHojeI').firstChild.style.width = '28px';
+$('#pronto').innerHTML = S('check', '#1D6C67', 3) + 'Pronto';
+$('#esp').innerHTML = S('check', '#1D6C67', 3) + 'Especialista em OAB';
+$('#aprov').innerHTML = S('check', '#fff', 3) + 'Aprovação';
+$('#acerto').innerHTML = S('check', '#fff', 3).replace('<svg', '<svg style="width:26px"') + 'Você acertou!';
+$('#explH').innerHTML = S('lampada', '#1D6C67', 2.4) + 'Explicação';
+$('#btnCtaI').innerHTML = S('seta', '#fff', 3); $('#btnCtaI').firstChild.style.width = '40px';
+$('#setas').innerHTML = [0, 1, 2].map(() => `<svg viewBox="0 0 24 14"><path d="M3 2 L12 11 L21 2" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`).join('');
+for (const c of document.querySelectorAll('.cursor')) c.innerHTML = FM.CURSOR;
+// resultado em cada alternativa
+for (const id of ['aA', 'aB', 'aC', 'aD']) { const r = $('#' + id + ' .res'), ok = id === 'aB';
+  r.style.background = ok ? '#198754' : '#E06448'; r.innerHTML = S(ok ? 'check' : 'x', '#fff', 3.4); }
+
+// cronograma (o conteúdo do curso no site: material por disciplina, revisões, questões)
+const CRONO = [['SEG', 'Ética', '#1D6C67', 'Teoria'], ['TER', 'Civil', '#E06448', 'Teoria'], ['QUA', 'Tributário', '#E3A64A', 'Questões'],
+               ['QUI', 'Penal', '#5B7FD6', 'Teoria'], ['SEX', 'Revisão', '#8B5CF6', 'Simulado']];
+const linhasCrono = CRONO.map(([d, m, cor, tipo]) => { const r = document.createElement('div'); r.className = 'r';
+  r.innerHTML = `<div class="dia">${d}</div><div class="cor" style="background:${cor}"></div><div>${m}</div><div class="mat" style="background:${cor}22;color:${cor}">${tipo}</div><div class="h">2h</div>`;
+  $('#cronoCols').appendChild(r); return r; });
+const BAR = [58, 72, 46, 84, 66, 90, 78], DIAS = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+const barras = BAR.map((v, k) => { const b = document.createElement('div'); b.className = 'b'; b.innerHTML = `<span>${DIAS[k]}</span>`; $('#barras').appendChild(b); return [b, v]; });
+
+FM.iniciar({});
+
+/* furo: círculo ou quadrado arredondado em (cx, cy) */
+const circulo = (cx, cy, r) => `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
+const retang = (cx, cy, w, h, rr) => { const x = cx - w / 2, y = cy - h / 2; rr = Math.min(rr, w / 2, h / 2);
+  return `M${x + rr} ${y} H${x + w - rr} A${rr} ${rr} 0 0 1 ${x + w} ${y + rr} V${y + h - rr} A${rr} ${rr} 0 0 1 ${x + w - rr} ${y + h} H${x + rr} A${rr} ${rr} 0 0 1 ${x} ${y + h - rr} V${y + rr} A${rr} ${rr} 0 0 1 ${x + rr} ${y} Z`; };
+const tranco = (t, t0) => { if (t < t0) return ''; const s = t - t0, k = Math.exp(-6 * s) * Math.sin(s * 18); return ` rotate(${-5 * k}deg) scale(${1 + 0.04 * k})`; };
+const ROSTO = [540, 720];
+// telas cheias: [entra, sai, entrada com círculo?]
+const FS = [[27.7, 37.25, true]];
+function tela(t) {
+  let furo = '', borda = '', vis = false, arcoT = null;
+  for (const [TI, TO, circ] of FS) {
+    if (t < TI || t > TO + 0.6) continue;
+    vis = true;
+    if (t < TO) {
+      if (circ) { const r = L(1250, 300, pr(t, TI, 0.42, E.expoOut)) * (1 - pr(t, TI + 0.36, 0.3, E.cubicIn));
+        if (r > 1) { furo = circulo(ROSTO[0], ROSTO[1], r); if (r < 1100) borda = furo; } }
+    } else {
+      const p1 = M.prog(t, TO, 0.32, E.spring), p2 = pr(t, TO + 0.2, 0.36, E.cubicInOut);
+      const w = L(L(0, 430, p1), 1320, p2), h = L(L(0, 560, p1), 2400, p2);
+      furo = retang(ROSTO[0], ROSTO[1], Math.max(1, w), Math.max(1, h), L(70, 0, p2)); if (p2 < 0.97) borda = furo;
+      if (t >= TO + 0.02 && t < TO + 0.55) arcoT = (t - TO - 0.02) / 0.5;
+      if (t >= TO + 0.56) vis = false;
+    }
+  }
+  $('#tela').style.opacity = vis ? 1 : 0;
+  $('#furoP').setAttribute('d', furo); $('#telaBorda').setAttribute('d', borda);
+  const ar = $('#telaArco');
+  if (arcoT != null) {
+    ar.setAttribute('d', 'M 180 1250 C 360 1470, 820 1410, 930 950 C 990 710, 900 510, 760 420');
+    const L0 = ar.getTotalLength(), q = E.cubicInOut(C(arcoT)), seg = L0 * 0.45;
+    ar.setAttribute('stroke-dasharray', `${seg} ${L0 * 2}`); ar.setAttribute('stroke-dashoffset', L(seg, -L0, q)); ar.style.opacity = 1;
+  } else ar.style.opacity = 0;
+}
+function cursor(el, t, t0, de, para, tc, tsai) {
+  if (t < t0 || t > tsai + 0.5) { el.style.opacity = 0; return 0; }
+  return FM.cursor(el, t, t0, de, para, tc, tsai);
+}
+const riscar = (id, cor) => { const r = document.createElement('div'); r.className = 'risca'; if (cor) r.style.background = cor; $('#' + id).appendChild(r);
+  return (t, t0) => { r.style.transform = `scaleX(${pr(t, t0, 0.4, E.cubicInOut)})`; }; };
+const riscoImp = riscar('improvT'), riscoDec = riscar('decT');
+// grade da semana do planner (vazia)
+{ const g = $('#grade'), NS = 'http://www.w3.org/2000/svg', el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); g.appendChild(e); return e; };
+  const X0 = 90, CW = 125, Y0 = 70, RH = 125;
+  ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'].forEach((d, i) => { el('text', { x: X0 + CW * i + CW / 2, y: 44, 'text-anchor': 'middle' }).textContent = d; });
+  ['8h', '10h', '14h', '16h', '19h', '21h'].forEach((h, i) => { el('text', { x: 0, y: Y0 + RH * i + 40 }).textContent = h; });
+  for (let i = 0; i <= 6; i++) el('line', { x1: X0 + CW * i, y1: Y0 - 10, x2: X0 + CW * i, y2: Y0 + RH * 6 });
+  for (let j = 0; j <= 6; j++) el('line', { x1: 0, y1: Y0 + RH * j, x2: X0 + CW * 6, y2: Y0 + RH * j }); }
+// ── Copy 1: montagem dos elementos
+$('#k1semX').innerHTML = S('x', '#E06448', 3); $('#k1esfX').innerHTML = S('x', '#E06448', 3); $('#k1dirOk').innerHTML = S('check', '#1D6C67', 3.2);
+const rk1sem = riscar('k1semT'), rk1esf = riscar('k1esfT');
+const K1MATS = ['Civil', 'Penal', 'Trabalho', 'Tributário', 'Empresarial', 'Ambiental', 'Consumidor', 'Administrativo', 'Constitucional', 'ECA', 'Internacional',
+  'Previdenciário', 'Processo Civil', 'Processo Penal', 'Direitos Humanos', 'Filosofia', 'Eleitoral', 'Financeiro'];
+const k1mats = K1MATS.map(n => { const e = document.createElement('span'); e.textContent = n; $('#k1mats').appendChild(e); return e; });
+const K1PESO = [['Ética Profissional', 8], ['Direito Civil', 7], ['Constitucional', 6], ['Direito Penal', 6], ['Processo Civil', 6], ['Administrativo', 5], ['Trabalho', 5]];
+const k1lin = K1PESO.map(([n, v], k) => { const e = document.createElement('div'); e.className = 'k1lin';
+  e.innerHTML = `<div class="nm">${n}</div><div class="tr"><i></i></div><div class="v">${v}</div><div class="ok">${S('check', '#fff', 3.4)}</div>`; $('#k1lista').appendChild(e); return [e, v, k]; });
+{ const tr = $('#k1trilho'); for (let i = 1; i < 12; i++) { const e = document.createElement('div'); e.className = 'sem'; e.style.left = (i / 12 * 100) + '%'; tr.appendChild(e); } }
+
+
+/* confete nas cores do cliente (uma cor por estouro) */
+const cv = $('#confT').getContext('2d');
+const ESTOUROS = [{ t0: 29.62, ps: FM.criaConfete(7, 60, 540, 300, 860, 260, 0.55), rgb: [29, 108, 103] }];
+function confete(t) {
+  cv.clearRect(0, 0, 1080, 1920);
+  for (const { t0, ps, rgb } of ESTOUROS) for (const q of ps) {
+    const s = t - t0 - q.atraso; if (s < 0 || s > q.vida) continue;
+    const k = 3.4, e = (1 - Math.exp(-k * s)) / k, x = q.x0 + q.vx * e, y = q.y0 + q.vy * e + (1500 / k) * (s - e);
+    const vira = Math.cos(q.flip + q.vf * s), luz = Math.abs(vira);
+    cv.save(); cv.translate(x, y); cv.rotate(q.rot + q.vr * s); cv.scale(1, Math.max(0.12, luz) * Math.sign(vira || 1));
+    cv.globalAlpha = Math.min(1, s / 0.04) * (1 - C((s / q.vida - 0.65) / 0.35));
+    cv.fillStyle = `rgb(${rgb.map(c => Math.round(L(c * 0.7, Math.min(255, c * 1.5 + 30), luz))).join(',')})`;
+    cv.fillRect(-q.w / 2, -q.h / 2, q.w, q.h); cv.restore();
+  }
+}
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  tela(T);
+
+  /* ── Copy 1 · abertura (0 → 12,9): mesa de estudo — edital, post-it "para tudo", 10 de janeiro, planner vazio ── */
+  {
+    const sobe = pr(T, 0.98, 0.62, E.cubicOut), desce = pr(T, 12.4, 0.5, E.cubicIn);
+    const yA = L(1990, 0, sobe);
+    $('#folhaA').style.transform = `translateY(${yA}px) rotate(${L(3.2, 0, sobe)}deg)`;
+    $('#mesa').style.transform = `translateY(${desce * 2080}px) rotate(${desce * 2.5}deg)`;
+    $('#mesa').style.display = T < 0.9 || T > 13.0 ? 'none' : 'block';
+    $('#vinheta').style.opacity = T < 0.9 || T > 13.0 ? 0 : Math.min(sobe, 1 - desce);
+    window.PAPEL_TOPO = Math.max(-20 + yA, desce * 2080 - 20);
+    // câmera: quadros-chave [t, escala, foco y] — título → parágrafo do "torna pública" → item do 10 de janeiro → abre
+    const KF = [[1.5, 1, 420], [2.8, 1.12, 420], [5.9, 1.12, 420], [6.6, 1.1, 660], [7.9, 1.1, 660], [8.4, 1.1, 1160], [9.2, 1.1, 1160], [9.8, 1, 900]];
+    let cs = KF[0][1], cy = KF[0][2];
+    for (let i = 1; i < KF.length; i++) { const p = pr(T, KF[i - 1][0], KF[i][0] - KF[i - 1][0], E.cubicInOut); if (T >= KF[i - 1][0]) { cs = L(KF[i - 1][1], KF[i][1], p); cy = L(KF[i - 1][2], KF[i][2], p); } }
+    $('#cam').style.transformOrigin = `540px ${cy}px`; $('#cam').style.transform = `scale(${cs})`;
+    const mt = (id, t0, d) => { $('#' + id).style.backgroundSize = `${pr(T, t0, d, E.cubicInOut) * 100}% 78%`; };
+    mt('hl1a', 1.72, 0.55); mt('hl1b', 2.3, 0.35); mt('hl2', 7.2, 0.6); mt('hl3', 8.62, 0.4);
+    // post-it "para tudo!" bate no "para tudo"; sai descolando antes do "edital"
+    const pp = pr(T, 3.5, 0.3, E.cubicOut), slap = T > 3.8 ? Math.exp(-14 * (T - 3.8)) * Math.sin((T - 3.8) * 30) : 0, sai = pr(T, 5.95, 0.4, E.cubicIn);
+    $('#postit').style.opacity = T < 3.5 ? 0 : C(pp * 2) * (1 - sai);
+    $('#postit').style.transform = `translate(${sai * 260}px, ${(1 - pp) * -70 - sai * 220}px) rotate(${L(9, 3.5, pp) + slap * 1.2 + sai * 14}deg) scale(${L(1.14, 1, pp)})`;
+    const escreve = (id, t0, d) => { $('#' + id).style.clipPath = `inset(-30px calc(${(1 - pr(T, t0, d, E.linear)) * 100}% - 40px) -30px -20px)`; };
+    escreve('pt1', 3.8, 0.4); escreve('pt2', 4.6, 0.55);
+    const tinta = (id, t0, d) => { const p = $('#' + id), Lp = p._L || (p._L = p.getTotalLength()); p.style.strokeDasharray = Lp; p.style.strokeDashoffset = Lp * (1 - pr(T, t0, d, E.cubicInOut)); };
+    tinta('rs1', 99, 0.1); tinta('rs2', 99, 0.1);
+    // planner vazio desliza por cima no "nesse momento"; a caneta desenha o "?" no "mesmo erro"
+    const pb = pr(T, 9.3, 0.6, E.cubicOut);
+    $('#folhaB').style.transform = `translateX(${L(1200, 0, pb)}px) rotate(${L(5, -1.4, pb)}deg)`;
+    $('#folhaB').style.visibility = T < 9.25 ? 'hidden' : 'visible';
+    tinta('interroga', 11.6, 0.5); tinta('sublinha', 12.05, 0.22);
+  }
+  /* ── Copy 1 · inserções (topo) ── */
+  A($('#k1sem'), T, 13.3, 14.45, { de: 0.82, dy: -50 }); rk1sem(T, 13.75);
+  A($('#k1fac'), T, 14.5, 16.75, { de: 0.86, dy: -60 });
+  { let n = 0; k1mats.forEach((e, k) => { const a = 14.75 + k * 0.08, p = pr(T, a, 0.25, E.cubicOut); e.style.opacity = p; e.style.transform = `scale(${L(0.6, 1, p)})`; if (T >= a) n++; });
+    $('#k1facN').textContent = n + (n === 1 ? ' matéria' : ' matérias'); }
+  A($('#k1conf'), T, 17.75, 20.65, { de: 0.86, dy: -60 });
+  { const p = pr(T, 18.9, 1.4, E.cubicInOut), c = L(80, 18, p), en = L(75, 22, pr(T, 18.9, 1.2, E.cubicInOut));
+    $('#k1confB').style.width = c + '%'; $('#k1confV').textContent = Math.round(c) + '%'; $('#k1enB').style.width = en + '%'; $('#k1enV').textContent = Math.round(en) + '%'; }
+  A($('#k1cai'), T, 20.75, 25.15, { de: 0.86, dy: -60 });
+  { const n = pr(T, 22.43, 1.0, E.quintOut) * 78, c = pr(T, 23.53, 1.0, E.quintOut) * 22;
+    $('#k1nB').style.width = n + '%'; $('#k1nV').textContent = Math.round(n) + '%'; $('#k1cB').style.width = c + '%'; $('#k1cV').textContent = Math.round(c) + '%'; }
+  A($('#k1esf'), T, 25.22, 26.6, { de: 0.82, dy: -50 }); rk1esf(T, 26.07);
+  A($('#k1dir'), T, 26.68, 27.6, { de: 0.8, dy: -50, extra: tranco(T, 27.19) });
+  /* ── Copy 1 · plataforma (27,7 → 37,25): plano pelo peso da FGV → caminho até 10 de janeiro ── */
+  A($('#k1app'), T, 28.0, 37.15, { de: 0.88, dy: 120, dout: 0.2 });
+  k1lin.forEach(([e, v, k]) => { const a = 29.3 + k * 0.1; e.style.opacity = pr(T, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(T, a, 0.5)) * 20}px)`;
+    e.querySelector('.tr i').style.width = (pr(T, 31.0 + k * 0.08, 0.8, E.quintOut) * v / 8 * 100) + '%';
+    const ok = e.querySelector('.ok'), po = k < 5 ? pr(T, 32.0 + k * 0.08, 0.3, E.cubicOut) : 0; ok.style.opacity = po; ok.style.transform = `scale(${L(0.4, 1, M.prog(T, 32.0 + k * 0.08, 0.6, E.spring))})`;
+    if (k >= 5) e.style.opacity = parseFloat(e.style.opacity) * (1 - 0.55 * pr(T, 32.2, 0.4)); });
+  { const cl = cursor($('#cur2'), T, 32.3, [1020, 1500], [600, 1268], 32.8, 33.3); $('#k1gerar').style.transform = `scale(${1 - 0.04 * cl})`;
+    $('#k1gerarT').textContent = T < 32.85 ? 'Gerar meu cronograma' : 'Cronograma gerado ✓'; $('#k1gerar').style.background = T < 32.85 ? '#1D6C67' : '#198754';
+    const tr = pr(T, 33.0, 0.5, E.cubicInOut); $('#k1lista').style.opacity = 1 - tr; $('#k1linha').style.opacity = tr; $('#k1linha').style.transform = `translateY(${(1 - tr) * 30}px)`;
+    $('#k1fill').style.width = (pr(T, 35.0, 1.4, E.cubicInOut) * 100) + '%';
+    [...$('#k1fases').children].forEach((e, k) => { e.style.opacity = pr(T, 33.6 + k * 0.25, 0.3, E.cubicOut); });
+    const fl = M.prog(T, 36.29, 0.6, E.spring); $('#k1flag').style.opacity = pr(T, 36.29, 0.2, E.cubicOut); $('#k1flag').style.transform = `scale(${L(0.5, 1, fl)})`; $('#k1flag').style.transformOrigin = '100% 100%'; }
+
+  /* ── inserções · 7,52 → 30,22 ── */
+  // "o curso Forma de Estudos"
+  A($('#logoCard'), t, 9.72, 11.0, { de: 0.82, dy: -60 });
+  A($('#logoChip'), t, 10.0, 11.0, { de: 0.8 });
+  // "estudar no improviso" (riscado) → "com a prova tão perto"
+  A($('#improv'), t, 12.6, 13.5, { de: 0.82, dy: -50 }); riscoImp(t, 12.98);
+  A($('#cal'), t, 13.5, 14.62, { de: 0.84, dy: -50 });
+  [...document.querySelectorAll('#cal .d')].forEach((d, k) => { if (k === 6) { d.style.transform = `scale(${1 + 0.08 * Math.sin(C((t - 14.2) / 0.4) * Math.PI)})`; return; }
+    let x = d.querySelector('.x'); if (!x) { x = document.createElement('div'); x.className = 'x'; x.innerHTML = S('x', '#E06448', 3.4); d.appendChild(x); }
+    const p = pr(t, 13.72 + k * 0.08, 0.25, E.cubicOut); x.style.opacity = p; x.style.transform = `scale(${L(1.6, 1, p)})`; d.style.opacity = 1 - p * 0.35; });
+  // cronograma pronto, por matéria, dia a dia
+  A($('#crono'), t, 14.8, 18.45, { de: 0.86, dy: -60 });
+  { const p = pr(t, 15.83, 0.5, E.cubicOut); $('#pronto').style.opacity = p; $('#pronto').style.transform = `scale(${L(0.6, 1, M.prog(t, 15.83, 0.6, E.spring))})`; }
+  linhasCrono.forEach((r, k) => { const a = 15.15 + k * 0.12, p = pr(t, a, 0.6), pa = pr(t, a, 0.25, E.cubicOut);
+    r.style.opacity = pa; r.style.transform = `translateY(${(1 - p) * 26}px)`; r.style.filter = p < 0.99 ? `blur(${(1 - p) * 10}px)` : 'none';
+    const m = r.querySelector('.mat'), pm = pr(t, 16.6 + k * 0.14, 0.4, E.cubicOut); m.style.opacity = pm; m.style.transform = `scale(${L(0.6, 1, M.prog(t, 16.6 + k * 0.14, 0.6, E.spring))})`;
+    const dia = r.querySelector('.dia'), pd = C((t - (17.77 + k * 0.1)) / 0.15); dia.style.background = pd > 0 ? '#1D6C67' : '#E3EAE8'; dia.style.color = pd > 0 ? '#fff' : ''; });
+  // "você não perde tempo decidindo por onde começar" → a aula de hoje, clique no Começar
+  A($('#hoje'), t, 18.5, 21.12, { de: 0.84, dy: -50 });
+  { const cl = cursor($('#cur1'), t, 19.75, [1000, 560], [905, 360], 20.62, 21.0);
+    const feito = t >= 20.7;
+    $('#btnHoje').style.transform = `scale(${1 - 0.07 * cl})`; $('#btnHoje').style.background = feito ? '#198754' : '#1D6C67';
+    $('#btnHojeT').textContent = feito ? 'Estudando' : 'Começar'; }
+  // mentoria com profissionais capacitados
+  A($('#mentor'), t, 21.85, 24.3, { de: 0.86, dy: -70 });
+  { const p = pr(t, 23.34, 0.4, E.cubicOut); $('#esp').style.opacity = p; $('#esp').style.transform = `scale(${L(0.6, 1, M.prog(t, 23.34, 0.6, E.spring))})`; }
+  // acompanham o ritmo de perto → mostram o que falta → aprovação
+  A($('#ritmo'), t, 24.3, 30.12, { de: 0.86, dy: -60, extra: tranco(t, 29.6) });
+  const troca = pr(t, 26.5, 0.5, E.cubicInOut);
+  barras.forEach(([b, v], k) => { const p = pr(t, 24.6 + k * 0.1, 0.9, E.quintOut); b.style.height = (v * 1.55 * p) + 'px'; });
+  $('#barras').style.opacity = 1 - troca; $('#barras').style.transform = `translateY(${-troca * 30}px)`;
+  $('#rumo').style.opacity = troca; $('#rumo').style.transform = `translateY(${(1 - troca) * 30}px)`;
+  $('#ritmoT').textContent = t < 26.75 ? 'Seu ritmo de estudo' : 'Seu progresso'; $('#ritmoS').style.opacity = 1 - troca;
+  { const v = pr(t, 26.9, 1.4, E.quintOut) * 78 + pr(t, 29.0, 0.6, E.cubicInOut) * 22;
+    $('#rumoBar').style.width = v + '%'; $('#rumoPct').textContent = Math.round(v) + '%';
+    $('#f1').style.opacity = pr(t, 27.88, 0.3, E.cubicOut) * (1 - pr(t, 29.0, 0.3)); $('#f2').style.opacity = pr(t, 28.12, 0.3, E.cubicOut) * (1 - pr(t, 29.1, 0.3));
+    const pa = pr(t, 29.56, 0.4, E.cubicOut); $('#aprov').style.opacity = pa; $('#aprov').style.transform = `scale(${L(0.5, 1, M.prog(t, 29.56, 0.6, E.spring))})`; }
+
+  /* ── FS2 · 30,22 → 38,6: Espaço do Aluno em uso ── */
+  A($('#app'), t, 30.5, 38.5, { de: 0.88, dy: 120, dout: 0.2 });
+  { const pf = Math.sin(C((t - 32.84) / 0.5) * Math.PI); $('#tagFGV').style.transform = `scale(${1 + 0.14 * pf})`;
+    $('#tagFGV').style.boxShadow = pf > 0.01 ? `0 0 0 ${6 * pf}px rgba(224,100,72,.25)` : 'none'; }
+  ['aA', 'aB', 'aC', 'aD'].forEach((id, k) => { const el = $('#' + id), a = 30.9 + k * 0.1, p = pr(t, a, 0.6);
+    el.style.opacity = pr(t, a, 0.25, E.cubicOut); el.style.transform = `translateY(${(1 - p) * 24}px)`;
+    const certo = id === 'aB', sel = t >= 33.3;
+    el.style.borderColor = sel && certo ? '#198754' : (t >= 34.82 && !certo ? '#F3C9BD' : '#E3EAE8');
+    el.style.background = sel && certo ? '#E8F5EE' : '#fff';
+    el.querySelector('.le').style.background = sel && certo ? '#198754' : '#F1F5F4'; el.querySelector('.le').style.color = sel && certo ? '#fff' : '';
+    const hov = certo && t >= 33.0 && t < 33.3; if (hov) el.style.borderColor = '#2C7A75';
+    const r = el.querySelector('.res'), tr = certo ? 33.32 : 34.82 + [0, 0, 0.12, 0.24][k] - (k > 1 ? 0 : 0);
+    const pres = pr(t, tr, 0.3, E.cubicOut); r.style.opacity = pres; r.style.transform = `scale(${L(0.4, 1, M.prog(t, tr, 0.6, E.spring))})`; });
+  { const cl = cursor($('#cur2'), t, 32.6, [1020, 1500], [300, 905], 33.28, 33.9); $('#aB').style.transform += ` scale(${1 - 0.02 * cl})`; }
+  { const p = pr(t, 33.35, 0.4, E.cubicOut); $('#acerto').style.opacity = p * (1 - pr(t, 35.3, 0.3)); $('#acerto').style.transform = `scale(${L(0.6, 1, M.prog(t, 33.35, 0.6, E.spring))})`; }
+  // "com explicação de cada resposta": a explicação abre e a tela rola até ela
+  { const p = pr(t, 33.7, 0.8, E.cubicInOut); $('#expl').style.height = (p * 262) + 'px'; $('#expl').style.marginTop = (p * 4) + 'px';
+    $('#rolo').style.transform = `translateY(${-pr(t, 33.75, 0.9, E.cubicInOut) * 250}px)`; }
+  // não é decoreba → entendimento real
+  A($('#decoreba'), t, 35.5, 36.6, { de: 0.82, dy: 60 }); riscoDec(t, 36.0);
+  A($('#entend'), t, 36.72, 38.22, { de: 0.8, dy: 60, extra: tranco(t, 37.34) });
+
+  /* ── CTA · 43,4 → fim ── */
+  A($('#cta'), t, 43.3, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 43.6, [1020, 640], [600, 372], 43.98, 45.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 44.4) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 44.4 ? -200 : L(-200, 720, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+  { const vis = A($('#setas'), t, 44.55, null, { de: 0.7, dy: -30 });
+    [...$('#setas').children].forEach((s, k) => { s.style.opacity = 0.35 + 0.65 * Math.max(0, Math.sin(t * 5 - k * 0.9)); s.style.transform = `translateY(${4 * Math.sin(t * 5 - k * 0.9)}px)`; }); }
+
+  confete(t);
+  legenda(T);
+};
+
+/* ── legenda branca sem fundo: blocos de até 3 palavras, quebrando na pontuação e nas pausas ── */
+const OCULTA = [[1.0, 1.5]];   // tela cheia 1 (o texto da tela já é a fala) e "decoreba / entendimento real"
+const GR = [];
+{ let g = [];
+  PAL.forEach((w, i) => { g.push(w); const prox = PAL[i + 1];
+    if (g.length >= 3 || /[.,?!…]$/.test(w[2]) || !prox || prox[0] - w[1] > 0.35) { GR.push(g); g = []; } }); }
+const legEl = $('#legenda');
+GR.forEach(g => { const d = document.createElement('div'); d.style.position = 'absolute'; d.style.left = '0'; d.style.right = '0';
+  d.innerHTML = g.map(w => `<span>${w[2].replace(/\.\.\.$|…$/, '')}</span>`).join(''); legEl.appendChild(d); g.el = d; g.ws = [...d.children]; });
+function legenda(t) {
+  const oc = OCULTA.some(([a, b]) => t >= a && t < b);
+  const papel = (window.PAPEL_TOPO ?? 9999) < 1460;   // no papel: tinta escura, sem sombra
+  legEl.style.color = papel ? '#1C1A17' : '#fff'; legEl.style.textShadow = papel ? 'none' : '';
+  GR.forEach((g, k) => { const ini = g[0][0] - 0.05, fim = Math.min(GR[k + 1] ? GR[k + 1][0][0] - 0.05 : 99, g[g.length - 1][1] + 0.6);
+    if (oc || t < ini || t >= fim) { g.el.style.opacity = 0; return; }
+    g.el.style.opacity = 1;
+    g.ws.forEach((s, i) => { const t0 = g[i][0] - 0.04, p = M.prog(t, t0, 0.35, E.spring), pa = pr(t, t0, 0.12, E.cubicOut);
+      s.style.opacity = pa; s.style.transform = `scale(${L(0.82, 1, p)}) translateY(${(1 - pr(t, t0, 0.3)) * 12}px)`; }); });
+}
+
+if (!window.RENDER) { const t0 = performance.now(); const loop = () => { window.quadro(((performance.now() - t0) / 1000) % window.DURACAO); requestAnimationFrame(loop); }; loop(); }
+</script>
+</body>
+</html>

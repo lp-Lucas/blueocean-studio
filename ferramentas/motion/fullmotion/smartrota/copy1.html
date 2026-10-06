@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>SmartRota — Copy 1 (entregador produtivo · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 900px; } #win .corpo { height: 816px; position: relative; background: #fff; }
+  #seq { width: 960px; padding: 28px 34px; }
+  #seq .cab img { height: 44px; }
+  #seq .lista { position: relative; height: 216px; margin-top: 14px; }
+  #seq .par { position: absolute; left: 14px; right: 14px; height: 72px; }
+  #seq .par .d { opacity: 0; }
+  #app { height: 964px; } #app .corpo { height: 860px; }
+  #app .mapa { margin-top: 18px; }
+  #conf { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 86px; justify-content: center; font-size: 31px; }
+  #cta { width: 960px; padding: 40px 36px 38px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #cta img { height: 64px; }
+  #cta .tit { font-weight: 700; font-size: 42px; margin-top: 22px; }
+  #btnCta { margin-top: 24px; height: 82px; padding: 0 44px; font-size: 32px; } #btnCta svg { width: 28px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,85 → 10,85): começo do dia montando rota na mão · endereço por endereço · qual vem primeiro? ═════ -->
+<div class="p card app fs win" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba"><i id="icPl" style="background:#1E8E3E"></i>Entregas de hoje</div><div class="aba"><i id="icMp" style="background:#EA4335"></i>Mapa</div></div>
+  <div class="carrega" id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vLista">
+      <div class="cab"><h3>Entregas de hoje</h3><span class="pill cinza" id="qtd">18 entregas</span></div><p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px">Segunda, 06/10 · ordem não definida</p>
+      <div class="th"><span class="k">Ordem</span><span class="k">Endereço</span><span class="k" style="margin-left:auto">Bairro</span></div>
+      <div id="ends"></div>
+    </div>
+    <div class="vista" id="vMapa" style="opacity:0">
+      <div class="cab"><h3>Mapa · 18 paradas</h3><span class="pill cinza">Sem rota</span></div><p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px">Centro · São Paulo</p>
+      <svg class="mapa" id="mapa1" width="892" height="500" viewBox="0 0 892 500" style="margin-top:18px"></svg>
+      <div class="alerta" id="prim" style="margin-top:20px">Primeira parada<b>???</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (11,0 → 17,0): paradas na SmartRota → sequência organizada ═════ -->
+<div class="p card" id="seq" style="left:540px;top:300px">
+  <div class="cab"><img src="img/logo.png" id="seqLogo"><span class="pill cinza" id="seqP">3 paradas</span></div>
+  <div class="lista" id="seqL"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (17,25 → 24,15): onde ir agora · o que falta · confirmar entrega · rota organizada ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">SmartRota</span><div class="nav"><b>Rotas</b><span>Entregadores</span></div><div class="av">CH</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Rota Centro</h3><span class="pill vivo"><i></i>Ativa</span></div><p style="font:500 24px Manrope;color:var(--cinza);margin-top:6px">Carlos · Moto · 18 paradas · 24,6 km</p>
+    <svg class="mapa" id="mapa2" width="892" height="280" viewBox="0 0 892 280"></svg>
+    <div style="margin-top:14px" id="pars"></div>
+    <div class="prog" id="prog" style="margin-top:16px"><span id="falta">Faltam 18</span><div class="tr"><i id="progI"></i></div><span class="q num" id="progQ">0 de 18</span></div>
+  </div>
+  <div class="btn" id="conf"><span id="confTx">Confirmar entrega</span></div>
+</div>
+
+<!-- ═════ CTA (24,3 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img src="img/logo.png" id="ctaLogo">
+  <div class="tit">Organize sua próxima rota</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Ver planos <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 27.24;
+const ROSTO = [540, 850];
+const FS = [[0.85, 10.85, true], [16.39, 23.29, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 20.99, ps: FM.criaConfete(7, 50, 540, 1250, 700, 60, 0.7), rgb: [12, 164, 124] }];
+</script>
+<script src="base.js"></script>
+<script src="smartrota.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#icPl').innerHTML = S('grade', '#fff', 2.6); $('#icMp').innerHTML = S('pin', '#fff', 2.6);
+const abas = [...document.querySelectorAll('#win .aba')];
+
+/* lista sem ordem */
+const ENDS = [['R. Augusta, 1200', 'Consolação'], ['Av. Paulista, 900', 'Bela Vista'], ['R. Oscar Freire, 455', 'Jardins'], ['R. Vergueiro, 2016', 'Vila Mariana'],
+  ['Av. Rebouças, 3970', 'Pinheiros'], ['R. Teodoro Sampaio, 744', 'Pinheiros'], ['Al. Santos, 1500', 'Cerq. César'], ['R. da Consolação, 2302', 'Consolação']];
+const ends = ENDS.map(([a, b]) => { const e = document.createElement('div'); e.className = 'end'; e.innerHTML = `<span class="o">—</span><span>${a}</span><span class="b">${b}</span>`; $('#ends').appendChild(e); return e; });
+
+/* mapa 1: 18 paradas soltas, sem ordem */
+{ const R = FM.rng(11); let s = mapaFundo(892, 500, 5) + '<path id="rabisco" fill="none" stroke="#8794A3" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" d=""/>';
+  const P = []; while (P.length < 18) { const x = 50 + R() * 792, y = 45 + R() * 410; if (P.every(([a, b]) => Math.hypot(a - x, b - y) > 70)) P.push([x, y]); }
+  P.forEach(([x, y], k) => s += pino(x.toFixed(0), y.toFixed(0), '?', 'cinza', 'p1_' + k));
+  $('#mapa1').innerHTML = s;
+  const ord = [3, 11, 0, 15, 7, 2, 13, 9]; $('#rabisco').setAttribute('d', 'M' + ord.map(k => P[k].map(v => v.toFixed(0)).join(' ')).join(' L')); }
+const pinos1 = [...document.querySelectorAll('#mapa1 .pino')];
+
+/* inserção: 3 paradas que se reorganizam */
+const SEQ = [['R. Oscar Freire, 455', 'Jardins', '08:31'], ['Av. Paulista, 900', 'Bela Vista', '08:00'], ['R. Augusta, 1200', 'Consolação', '08:14']];
+const DEST = [2, 0, 1];   // posição final de cada linha (Paulista 1º, Augusta 2º, Oscar Freire 3º)
+const seq = SEQ.map(([a, b, h]) => { const e = document.createElement('div'); e.className = 'par';
+  e.innerHTML = `<div class="n cinza">—</div><div class="tx">${a}<span>${b}</span></div><div class="d num">${h}</div>`; $('#seqL').appendChild(e); return e; });
+
+/* mapa 2: rota em ordem */
+{ const P = [[90, 210], [190, 150], [300, 190], [400, 105], [520, 150], [610, 70], [720, 130], [810, 210]];
+  let s = mapaFundo(892, 280, 9) + `<path id="rota" fill="none" stroke="#0CA47C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M${P.map(p => p.join(' ')).join(' L')}"/>`;
+  s += `<circle id="aqui" cx="${P[0][0]}" cy="${P[0][1]}" r="20" fill="none" stroke="#1674E8" stroke-width="5"/>`;
+  P.forEach(([x, y], k) => s += pino(x, y, k + 1, 'num', 'p2_' + k)); s += pino(P[0][0], P[0][1], '✓', 'ok', 'p2ok');
+  $('#mapa2').innerHTML = s; }
+const pinos2 = [...document.querySelectorAll('#mapa2 .pino[id^="p2_"]')];
+const PARS = [['R. Augusta, 1200', 'Consolação', '08:00', '1,2 km'], ['Av. Paulista, 900', 'Bela Vista', '08:14', '2,1 km'], ['Al. Santos, 1500', 'Cerqueira César', '08:31', '1,8 km']];
+const pars = PARS.map(([a, b, h, km], k) => { const e = document.createElement('div'); e.className = 'par';
+  e.innerHTML = `<div class="n">${k + 1}</div><div class="tx">${a}<span>${b}</span></div><div class="d num">${h}<span>${km}</span></div>`; $('#pars').appendChild(e); return e; });
+const dEl = pars.map(e => e.querySelector('.d')), dHTML = dEl.map(e => e.innerHTML);
+const setD = (k, html) => { if (dEl[k]._v !== html) { dEl[k].innerHTML = html; dEl[k]._v = html; } };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 1.2 && t < 11.2) || (t > 16.74 && t < 23.64) ? 0 : 9999;
+
+  /* ── FS1 · 0,85 → 10,85 ── */
+  A($('#win'), t, 0.9, 10.75, { de: 0.88, dy: 120, dout: 0.2 });
+  ends.forEach((e, k) => { const a = 1.05 + k * 0.1; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -20}px)`;
+    // "tentando montar rota": a coluna de ordem vira "?" vermelho, linha a linha
+    const o = e.querySelector('.o'), q = t >= 3.1 + k * 0.06; o.textContent = q ? '?' : '—'; o.style.color = q ? 'var(--verm)' : '';
+    // "endereço por endereço": acende a 1ª e a 2ª linha na palavra
+    const f = k === 0 ? pulso(t, 7.44, 0.9) : k === 1 ? pulso(t, 8.16, 0.9) : 0;
+    e.style.background = f > 0.01 ? `rgba(22,116,232,${0.1 * f})` : ''; e.style.boxShadow = f > 0.01 ? `inset 0 0 0 2px rgba(22,116,232,${f})` : ''; });
+  // "várias entregas": a quantidade acende
+  { const on = t >= 5.0; $('#qtd').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#qtd').style.transform = `scale(${1 + 0.12 * pulso(t, 5.0, 0.4)})`; }
+  // "decidindo sozinho": clique na aba Mapa
+  { const tc = 9.0; cursor($('#cur1'), t, 8.45, [980, 1450], alvo(abas[1], 20, 6), tc, 9.5);
+    const ativa = t >= tc + 0.05 ? 1 : 0; abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+    $('#carrega').style.width = (ativa && t - tc < 0.55 ? pr(t, tc + 0.05, 0.35, E.cubicOut) * 100 : 0) + '%';
+    $('#vLista').style.opacity = 1 - ativa; $('#vMapa').style.opacity = ativa ? pr(t, tc + 0.08, 0.2, E.cubicOut) : 0; }
+  pinos1.forEach((g, k) => popSvg(g, t, 9.1 + k * 0.03));
+  traco($('#rabisco'), t, 9.45, 0.75);
+  // "qual vem primeiro?": problema em vermelho
+  { pop($('#prim'), t, 10.0); $('#prim').style.borderColor = t >= 10.55 ? 'var(--verm)' : 'transparent';
+    if (t >= 10.55) $('#prim').style.transform = `scale(${1 + 0.04 * pulso(t, 10.55, 0.5)})` + tranco(t, 10.55); }
+
+  /* ── inserção · 11,0 → 17,0 ── */
+  A($('#seq'), t, 11.02, 16.04, { de: 0.86, dy: -60 });
+  { const ord = pr(t, 14.36, 0.6, E.cubicInOut);
+    seq.forEach((e, k) => { const y0 = k * 72, y1 = DEST[k] * 72; e.style.top = L(y0, y1, ord) + 'px'; e.style.zIndex = 2 - DEST[k] + (DEST[k] === 0 ? 1 : 0); const mov = ord > 0 && ord < 1;
+      e.style.boxShadow = mov && DEST[k] === 0 ? `0 10px 24px rgba(16,32,57,${0.18 * Math.sin(ord * Math.PI)})` : '';
+      const f = pulso(t, 11.8 + k * 0.12, 0.7);   // "paradas": cada uma acende ao entrar na SmartRota
+      e.style.background = f > 0.01 ? `color-mix(in srgb, #1674E8 ${9 * f}%, #fff)` : '#fff';
+      const n = e.querySelector('.n'), num = t >= 14.99 + DEST[k] * 0.12; n.className = 'n' + (num ? '' : ' cinza'); n.textContent = num ? DEST[k] + 1 : '—';
+      n.style.transform = `scale(${num ? L(0.6, 1, M.prog(t, 14.99 + DEST[k] * 0.12, 0.5, E.spring)) : 1})`;
+      e.querySelector('.d').style.opacity = pr(t, 15.09 + DEST[k] * 0.12, 0.25, E.cubicOut); }); }
+  $('#seqLogo').style.transform = `scale(${1 + 0.1 * pulso(t, 12.6, 0.5)})`;
+  { const ok = t >= 15.34; $('#seqP').className = 'pill ' + (ok ? 'vivo' : 'cinza'); $('#seqP').innerHTML = ok ? '<i></i>Sequência organizada' : '3 paradas';
+    $('#seqP').style.transform = `scale(${1 + 0.12 * pulso(t, 15.34, 0.4)})`; }
+
+  /* ── FS2 · 17,25 → 24,15 ── */
+  A($('#app'), t, 16.44, 23.19, { de: 0.88, dy: 120, dout: 0.2 });
+  const ent = t >= 20.99;   // "entregar": clique em Confirmar entrega
+  // "onde ir agora": 1ª parada ganha "Agora"; depois da entrega, passa para a 2ª
+  setD(0, ent ? '<span class="pill vivo"><i></i>Entregue</span>' : t >= 17.49 ? '<span class="pill azul"><i></i>Agora</span>' : dHTML[0]);
+  setD(1, ent ? '<span class="pill azul"><i></i>Agora</span>' : dHTML[1]);
+  pars[0].style.background = !ent && t >= 17.49 ? 'rgba(22,116,232,.07)' : ''; pars[1].style.background = ent ? 'rgba(22,116,232,.07)' : '';
+  pars[0].querySelector('.n').className = 'n' + (ent ? ' cinza' : ''); pars[0].querySelector('.n').textContent = ent ? '✓' : '1';
+  { const a = pulso(t, 17.49, 0.6); $('#aqui').setAttribute('r', 20 + 12 * ((t * 1.2) % 1)); $('#aqui').style.opacity = t >= 17.49 && !ent ? 1 - ((t * 1.2) % 1) : 0;
+    dEl[0].style.transform = `scale(${1 + 0.12 * a})`; }
+  $('#p2ok').style.opacity = ent ? 1 : 0;
+  // "o que ainda falta fazer": progresso acende
+  { const f = pulso(t, 18.54, 0.9); $('#prog').style.borderColor = f > 0.02 ? `rgba(22,116,232,${f})` : 'transparent';
+    $('#falta').textContent = ent ? 'Faltam 17' : 'Faltam 18'; $('#progQ').textContent = ent ? '1 de 18' : '0 de 18';
+    $('#progI').style.width = (pr(t, 21.04, 0.5, E.cubicOut) * 100 / 18) + '%'; }
+  { const cl = cursor($('#cur2'), t, 20.24, [1000, 1520], alvo($('#conf'), 60, 4), 20.94, 21.64);
+    $('#conf').style.transform = `scale(${1 - 0.04 * cl})`; $('#conf').style.background = ent ? '#0CA47C' : ''; $('#confTx').textContent = ent ? 'Entregue ✓' : 'Confirmar entrega'; }
+  // "a rota fica organizada": rota redesenha e as paradas pulsam em ordem
+  traco($('#rota'), t, t < 21.64 ? 16.64 : 21.64, t < 21.64 ? 0.9 : 0.85);
+  pinos2.forEach((g, k) => { const x = g.dataset.x, y = g.dataset.y, s = 1 + 0.25 * pulso(t, 21.69 + k * 0.1, 0.4); g.setAttribute('transform', `translate(${x} ${y}) scale(${s})`); });
+
+  /* ── CTA · 24,3 → fim ── */
+  A($('#cta'), t, 23.44, null, { de: 0.86, dy: -60 });
+  $('#ctaLogo').style.transform = `scale(${1 + 0.08 * pulso(t, 25.59, 0.5)})`;
+  { const cl = cursor($('#cur3'), t, 25.14, [1020, 760], alvo($('#btnCta'), 40, 6), 25.89, 26.74); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 26.04) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 26.04 ? -200 : L(-200, 600, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

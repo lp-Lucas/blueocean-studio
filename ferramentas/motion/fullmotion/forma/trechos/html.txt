@@ -1,0 +1,37 @@
+<div id="mesa"><div id="cam">
+  <div class="folha" id="folhaA">
+    <div class="docA">
+      <div class="org">ORDEM DOS ADVOGADOS DO BRASIL</div>
+      <div class="org2">Conselho Federal</div>
+      <div class="fio"></div><div class="fio"></div>
+      <div class="tit"><span class="hl"><i id="hl1"></i>48º EXAME DE ORDEM UNIFICADO</span></div>
+      <div class="sub">EDITAL DE ABERTURA</div>
+      <p>O Conselho Federal da Ordem dos Advogados do Brasil, no uso das atribuições que lhe confere a Lei nº 8.906, de 4 de julho de 1994, <span class="hl"><i id="hl2"></i>torna pública a realização do 48º Exame de Ordem Unificado</span>, nos termos deste edital e de seus anexos.</p>
+      <h4>1. DAS DISPOSIÇÕES PRELIMINARES</h4>
+      <p>1.1. O Exame de Ordem será realizado em duas etapas — prova objetiva e prova prático-profissional —, ambas de caráter eliminatório.</p>
+      <p>1.2. A prova objetiva conterá 80 questões de múltipla escolha, sendo exigido o mínimo de 50% de acertos para a habilitação à etapa seguinte.</p>
+      <h4>2. DAS INSCRIÇÕES</h4>
+      <p>2.1. As inscrições serão realizadas exclusivamente via internet, no período indicado no cronograma constante do Anexo I.</p>
+    </div>
+    <div class="rodape">Página 1 de 34</div>
+    <div class="grao"></div><div class="luz"></div>
+  </div>
+  <div class="folha" id="folhaB">
+    <div class="furo" style="top:330px"></div><div class="furo" style="top:840px"></div><div class="furo" style="top:1350px"></div>
+    <div class="cab"><span class="k">PLANO DE ESTUDOS</span><span class="s">Semana<u></u></span></div>
+    <svg id="grade" width="840" height="830"></svg>
+    <div class="metas">METAS DA SEMANA</div>
+    <div class="pauta" style="top:1110px"></div><div class="pauta" style="top:1190px"></div><div class="pauta" style="top:1270px"></div>
+    <svg style="position:absolute;left:0;top:0;overflow:visible" width="1110" height="1720"><path class="tinta" id="interroga" d="M 455 470 C 448 380, 545 330, 610 360 C 690 395, 680 480, 618 520 C 572 550, 552 575, 556 640 M 557 735 L 559 741"/>
+      <path class="tinta" id="sublinha" d="M 400 812 C 480 800, 620 798, 720 806"/></svg>
+    <div class="grao"></div><div class="luz"></div>
+  </div>
+  <div id="postit">
+    <div class="ln" id="pt1" style="top:70px">começo amanhã</div>
+    <div class="ln" id="pt2" style="top:190px">segunda</div>
+    <div class="ln" id="pt3" style="top:310px;color:#C9372A">depois...</div>
+    <svg width="480" height="480"><path class="tinta" id="rs1" d="M 46 112 C 150 104, 300 118, 432 100"/><path class="tinta" id="rs2" d="M 46 232 C 120 226, 220 238, 300 224"/></svg>
+    <div style="position:absolute;inset:0;background:url('img/grao.png') 0 0/1200px 2000px;opacity:.6"></div>
+  </div>
+</div></div>
+<div id="vinheta"></div>

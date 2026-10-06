@@ -25,6 +25,16 @@ Numa máquina nova: rode `INSTALAR.bat` uma vez.
   formato), exportar, apagar. Ponto azul na aba = o Claude mexeu nela.
 - Exportar → **Todas** sai um arquivo por composição. No chat: “faça um vídeo para cada copy”, “aplica isso em todas”.
 
+## Vários clientes: edição em lotes
+Botão de camadas no topo (ou **Edição em lotes** na página inicial). Uma aba por cliente:
+1. **Material**: nome do cliente, o bruto (link da pasta do Drive / vídeos, ou solte os arquivos) e o site do cliente.
+2. **Receita**: já vem a de motion na identidade do cliente; dá para trocar e deixar observações. **Gerar**.
+- Cada lote vira um projeto com o nome do cliente; o Claude faz tudo sozinho, sem parar para perguntar, e no fim lista
+  as decisões que tomou. **Gerar todos** manda todas as abas prontas para a fila; "Ao mesmo tempo" diz quantas rodam juntas
+  (cada uma usa a placa de vídeo — 2 é o recomendado).
+- A aba mostra o passo atual, o tempo e o custo. Pronto: **Abrir no editor** e ajuste pelo chat como qualquer projeto.
+- Se o programa fechar no meio, o lote fica "Parado": **Continuar de onde parou**.
+
 ## Versão nova do vídeo (motion refeito no After): Substituir
 Botão direito na mídia (ou no clipe) → **Substituir…** → escolha o arquivo novo. Tudo que usa a mídia continua no lugar.
 - **Só substituir o vídeo**: quando só o visual mudou.
