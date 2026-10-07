@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Newmo — Copy 3 (tarefas manuais no WhatsApp → réguas automáticas → API oficial da Meta)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .bolWa { width: 44px; height: 44px; border-radius: 50%; background: var(--wa); display: grid; place-items: center; flex: none; } .bolWa svg { width: 26px; }
+  /* tela cheia 1: tarefas manuais da equipe */
+  #tar { height: 760px; } #tar .corpo { height: 660px; }
+  .th { display: flex; align-items: center; height: 46px; margin-top: 18px; border-bottom: 1.5px solid var(--linha); }
+  .th .k:nth-child(1) { width: 470px; } .th .k:nth-child(2) { width: 180px; text-align: right; } .th .k:nth-child(3) { margin-left: auto; }
+  .tf { display: flex; align-items: center; gap: 16px; height: 92px; border-bottom: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 12px; }
+  .tf .nm { width: 394px; font: 600 26px 'Inter'; line-height: 1.2; } .tf .nm span { display: block; font: 500 20px 'Inter'; color: var(--cinza); }
+  .tf .vol { width: 180px; text-align: right; font: 700 26px 'Inter'; } .tf .vol span { display: block; font: 500 19px 'Inter'; color: var(--cinza); }
+  .tf .avs { margin-left: auto; display: flex; align-items: center; gap: 10px; } .tf .avs .av2 { width: 46px; height: 46px; font-size: 18px; }
+  .tf .pill { height: 38px; font-size: 19px; padding: 0 12px; }
+  #dia { margin-top: 24px; } #dia .k { display: flex; } #dia .k span { margin-left: auto; }
+  #barra { display: flex; height: 54px; border-radius: 12px; overflow: hidden; margin-top: 10px; background: #1E2423; }
+  #barra i { display: flex; align-items: center; padding: 0 18px; font: 700 22px 'Inter'; font-style: normal; white-space: nowrap; overflow: hidden; }
+  #bM { background: var(--verm); color: #fff; width: 0; } #bV { flex: 1; color: var(--cinza); border: 3px solid transparent; border-radius: 0 12px 12px 0; }
+  /* inserção: automações */
+  #auto { width: 960px; padding: 24px 34px 26px; }
+  #grade { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; margin-top: 16px; }
+  .tg { display: flex; align-items: center; gap: 14px; height: 70px; padding: 0 18px; border-radius: 14px; background: var(--claro); font: 600 25px 'Inter'; }
+  .sw { margin-left: auto; width: 64px; height: 36px; border-radius: 18px; background: #3A4442; position: relative; flex: none; } .sw i { position: absolute; top: 4px; left: 4px; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  /* tela cheia 2: régua de mensagens */
+  #app { height: 820px; } #app .corpo { height: 720px; }
+  .rg { display: flex; align-items: center; gap: 18px; height: 98px; border-bottom: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 12px; }
+  .rg .d { width: 92px; height: 44px; border-radius: 999px; background: var(--claro); display: grid; place-items: center; font: 700 21px 'Inter'; flex: none; }
+  .rg .tx { flex: 1; min-width: 0; font: 600 25px 'Inter'; } .rg .tx span { display: block; font: 500 21px 'Inter'; color: var(--cinza); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: 6px; padding: 2px 6px; margin: 2px -6px 0; }
+  .rg .pill { height: 38px; font-size: 19px; padding: 0 12px; }
+  #tgR { display: flex; align-items: center; gap: 12px; margin-left: auto; font: 600 23px 'Inter'; } #tgR .sw { margin-left: 0; }
+  #okM { position: absolute; left: 34px; right: 34px; bottom: 32px; height: 92px; }
+  /* tela cheia 3: API oficial */
+  #api { height: 610px; } #api .corpo { height: 510px; }
+  .cn { display: flex; align-items: center; gap: 18px; height: 108px; border-bottom: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 12px; }
+  .cn .ico { width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; flex: none; } .cn .ico svg { width: 34px; }
+  .cn .tx { font: 600 26px 'Inter'; } .cn .tx span { display: block; font: 500 21px 'Inter'; color: var(--cinza); } .cn .pill { margin-left: auto; }
+  #selo { display: flex; justify-content: center; margin-top: 28px; } #selo img { height: 112px; border-radius: 12px; box-shadow: 0 0 0 1.5px var(--linha); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,3 → 10,55): o que a equipe faz à mão no WhatsApp ═════ -->
+<div class="p card app fs" id="tar" style="left:540px;top:800px">
+  <div class="bar"><span class="nm">Tarefas da equipe</span><div class="nav"><span class="on">Hoje</span><span>Semana</span></div><div class="av">EQ</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Rotina no WhatsApp</h3><span class="pill cinza">Equipe comercial</span></div>
+    <div class="th"><span class="k">Tarefa</span><span class="k">Volume</span><span class="k">Quem faz</span></div>
+    <div id="tfs"></div>
+    <div id="dia"><div class="k">Dia da equipe<span id="diaH">8 h</span></div><div id="barra"><i id="bM">Tarefas manuais</i><i id="bV">Vender e atender</i></div></div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÕES (10,8 → 13,4): Newmo · automações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:250px"><img src="img/logo-claro.svg"></div>
+<div class="p card" id="auto" style="left:540px;top:250px">
+  <div class="cabI"><img src="img/simbolo.svg">Automações<span class="pill cinza" id="autoP">0 ativas</span></div>
+  <div id="grade"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (13,5 → 19,45): régua de mensagens funcionando sozinha ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:800px">
+  <div class="bar"><img src="img/simbolo.svg"><span class="nm">Newmo</span><div class="nav"><span class="on">Réguas</span><span>Atendimentos</span></div><span class="pill cinza" id="hora" style="margin-left:auto;opacity:0">Sábado · 03:12</span><div class="av" style="margin-left:16px">CS</div></div>
+  <div class="corpo">
+    <div class="cab"><div><h3>Régua de cobrança</h3><p>Mensalidade · 214 clientes</p></div><div id="tgR"><span id="tgT">Desativada</span><div class="sw" id="swR"><i></i></div></div></div>
+    <div id="rgs" style="margin-top:16px"></div>
+    <div class="alerta" id="okM">Tarefas manuais da equipe<b class="num" id="okV">120 / semana</b></div>
+  </div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (20,95 → 23,3): WhatsApp conectado à API oficial da Meta ═════ -->
+<div class="p card app fs" id="api" style="left:540px;top:800px">
+  <div class="bar"><img src="img/simbolo.svg"><span class="nm">Newmo</span><div class="nav"><span class="on">Canais</span><span>Réguas</span></div><div class="av">CS</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Canais conectados</h3><span class="pill vivo"><i></i>Online</span></div>
+    <div class="cn" id="cn1" style="margin-top:14px"><div class="ico" style="background:var(--wa)" id="icW"></div><div class="tx">WhatsApp Business<span>(11) 4002-8922 · Comercial</span></div><span class="pill vivo"><i></i>Conectado</span></div>
+    <div class="cn" id="cn2"><div class="ico" style="background:#0467DF" id="icM"></div><div class="tx">API oficial da Meta<span>WhatsApp Business Platform</span></div><span class="pill vivo" id="apiP"><i></i>Verificada</span></div>
+    <div id="selo"><img src="img/meta-stamp.svg" id="seloI"></div>
+  </div>
+</div>
+
+<!-- ═════ CTA (23,4 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:252px">
+  <img src="img/logo-claro.svg">
+  <div class="tit">Veja o que dá para automatizar</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agendar demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 27.58;
+const WARP = T => T;   // começa na 1ª palavra (pedido da pessoa: o vídeo começa quando ela começa a falar)
+const ROSTO = [580, 720];
+const FS = [[0.3, 10.55, true], [13.5, 19.45, true], [20.95, 23.3, false]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('seta2', '#0B1210', 3);
+$('#icW').innerHTML = WA_SVG('#fff'); $('#icM').innerHTML = MARCAS.meta.svg;
+
+/* tarefas: [nome, detalhe, volume, unidade, quem, acende em] */
+const TF = [['Follow-up', 'orçamentos sem resposta', '23', 'contatos', ['AN', 'BR'], 0.35], ['Cobrança', 'mensalidades em aberto', '14', 'clientes', ['CA'], 0.88],
+  ['Lembrete', 'consultas de amanhã', '31', 'pacientes', ['AN'], 1.54], ['Respostas recorrentes', 'preço, horário, endereço', '52', 'mensagens', ['BR', 'CA'], 2.14]];
+const CORA = { AN: '#1F3A2C', BR: '#2E2940', CA: '#3A2C22' };
+const tfs = TF.map(([n, d, v, u, q]) => { const e = document.createElement('div'); e.className = 'tf';
+  e.innerHTML = `<div class="bolWa">${WA_SVG('#fff')}</div><div class="nm">${n}<span>${d}</span></div><div class="vol num">${v}<span>${u}</span></div><div class="avs">${q.map(a => `<div class="av2" style="background:${CORA[a]};color:#C5CFC6">${a}</div>`).join('')}<span class="pill cinza">Manual</span></div>`;
+  $('#tfs').appendChild(e); e._w = e.querySelector('.bolWa'); e._p = e.querySelector('.pill'); e._a = [...e.querySelectorAll('.av2')]; return e; });
+
+/* automações */
+const AU = [['Follow-up', 11.7], ['Cobrança', 11.85], ['Lembretes', 12.0], ['Respostas', 12.15]];
+const tgs = AU.map(([n]) => { const e = document.createElement('div'); e.className = 'tg'; e.innerHTML = `${n}<div class="sw"><i></i></div>`; $('#grade').appendChild(e); e._s = e.querySelector('.sw'); return e; });
+const chave = (sw, p) => { sw.style.background = p > 0.5 ? 'var(--dest)' : '#3A4442'; sw.firstChild.style.transform = `translateX(${28 * p}px)`; };
+
+/* régua: [dia, título, mensagem, enviada em] */
+const RG = [['D-3', 'Lembrete de vencimento', '“Oi, Marina! Sua mensalidade vence na sexta.”', 17.35], ['D0', 'Link de pagamento', '“Seu Pix está aqui, é só copiar e colar.”', 17.6],
+  ['D+2', 'Follow-up', '“Conseguiu pagar? Posso ajudar em algo?”', 17.85], ['D+5', 'Cobrança', '“Ainda está em aberto. Quer parcelar?”', 18.1]];
+const rgs = RG.map(([d, n, m]) => { const e = document.createElement('div'); e.className = 'rg';
+  e.innerHTML = `<span class="d">${d}</span><div class="bolWa">${WA_SVG('#fff')}</div><div class="tx">${n}<span>${m}</span></div><span class="pill cinza">Agendada</span>`;
+  $('#rgs').appendChild(e); e._m = e.querySelector('.tx span'); e._p = e.querySelector('.pill'); return e; });
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'whatsapp', 19.95);
+  window.PAPEL_TOPO = (t > 0.45 && t < 10.9) || (t > 13.65 && t < 19.8) || (t > 21.0 && t < 23.65) ? 0 : 9999;
+
+  /* ── FS1 · tarefas manuais · 0,3 → 10,55 ── */
+  A($('#tar'), t, 0.35, 10.45, { de: 0.88, dy: 120, dout: 0.2 });
+  // follow-up · cobrança · lembrete · respostas recorrentes: cada linha acende na palavra
+  tfs.forEach((e, k) => { const a = TF[k][5], b = TF[k + 1] ? TF[k + 1][5] : 3.5; acende(e, t, a, b, '0,199,103', 0.1);
+    // "sua equipe": quem faz · "manualmente": selo vermelho · "pelo WhatsApp": ícone pula
+    e._a.forEach(v => v.style.boxShadow = t >= 4.04 && t < 5.2 ? '0 0 0 3px var(--dest)' : '');
+    const man = t >= 5.7 + k * 0.08; if (e._man !== man) { e._p.className = 'pill ' + (man ? 'verm' : 'cinza'); e._man = man; }
+    e._p.style.transform = `scale(${1 + 0.15 * pulso(t, 5.7 + k * 0.08, 0.4)})`;
+    e._w.style.transform = `scale(${1 + 0.25 * pulso(t, 6.4 + k * 0.06, 0.45)})`; });
+  // "está gastando tempo" → a barra vermelha cresce · "vender e atender melhor" → o que sobra acende
+  { const p = pr(t, 7.13, 0.9, E.cubicInOut); $('#bM').style.width = L(0, 58, p) + '%'; $('#bM').style.padding = p > 0.05 ? '0 18px' : '0'; $('#bM').textContent = p > 0.35 ? `Tarefas manuais · ${(4.6 * p).toFixed(1).replace('.', ',')} h` : '';
+    $('#bV').style.borderColor = t >= 9.07 ? 'var(--verm)' : 'transparent'; $('#bV').style.color = t >= 9.07 ? 'var(--verm)' : '';
+    $('#bV').textContent = 'Vender e atender' + (t >= 9.07 ? ' · ???' : '');
+    if (t >= 9.07) $('#bV').style.transform = tranco(t, 9.1).replace(/rotate\([^)]*\)/, ''); }
+
+  /* ── inserções · 10,8 → 13,4 ── */
+  A($('#logoCard'), t, 10.8, 11.45, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#auto'), t, 11.6, 13.3, { de: 0.86, dy: -60, dout: 0.3 });
+  { let n = 0; tgs.forEach((e, k) => { const p = pr(t, AU[k][1] + 0.2, 0.25, E.cubicInOut); chave(e._s, p); if (p > 0.5) n++; acende(e, t, AU[k][1] + 0.2, null, '0,199,103', 0.12); });
+    $('#autoP').className = 'pill ' + (n ? 'vivo' : 'cinza'); $('#autoP').innerHTML = (n ? '<i></i>' : '') + n + (n === 1 ? ' ativa' : ' ativas'); }
+
+  /* ── FS2 · régua · 13,5 → 19,45 ── */
+  A($('#app'), t, 13.55, 19.35, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(rgs, t, 13.65, 0.12);
+  // "de mensagens": a prévia de cada mensagem acende
+  rgs.forEach((e, k) => { const f = pulso(t, 14.34 + k * 0.15, 0.7); e._m.style.background = f > 0.02 ? `rgba(0,199,103,${0.14 * f})` : ''; e._m.style.color = f > 0.3 ? 'var(--tinta)' : '';
+    const env = t >= RG[k][3]; if (e._env !== env) { e._p.className = 'pill ' + (env ? 'vivo' : 'cinza'); e._p.innerHTML = env ? '<i></i>Enviada' : 'Agendada'; e._env = env; }
+    e._p.style.transform = `scale(${1 + 0.14 * pulso(t, RG[k][3], 0.4)})`; acende(e, t, RG[k][3], RG[k][3] + 0.6); });
+  // "e mantém sua operação funcionando": clique para ativar a régua
+  { const tc = 15.45, cl = cursor($('#cur1'), t, 14.9, [1000, 1450], alvo($('#swR')), tc, 16.1), on = t >= tc + 0.05;
+    chave($('#swR'), pr(t, tc + 0.03, 0.2, E.cubicInOut)); $('#swR').style.transform = `scale(${1 - 0.08 * cl})`;
+    $('#tgT').textContent = on ? 'Ativa' : 'Desativada'; $('#tgT').style.color = on ? 'var(--verde)' : 'var(--cinza)'; }
+  // "mesmo quando ninguém está": madrugada de sábado
+  pop($('#hora'), t, 16.95);
+  // "executando cada tarefa manualmente"
+  { $('#okM').style.opacity = 1; const p = pr(t, 18.55, 0.6, E.quintOut), ok = t >= 19.0; $('#okM').classList.toggle('ok', ok);
+    $('#okV').textContent = Math.round(120 * (1 - p)) + ' / semana'; $('#okM').style.borderColor = ok ? 'var(--verde)' : 'transparent';
+    $('#okM').style.transform = `scale(${1 + 0.03 * pulso(t, 19.0, 0.5)})`; }
+
+  /* ── FS3 · API oficial da Meta · 20,95 → 23,3 ── */
+  A($('#api'), t, 21.0, 23.2, { de: 0.88, dy: 120, dout: 0.2 });
+  acende($('#cn1'), t, 21.0, 21.65); acende($('#cn2'), t, 21.71, null);
+  $('#apiP').style.transform = `scale(${1 + 0.14 * pulso(t, 21.99, 0.45)})`;
+  { const f = pulso(t, 22.8, 0.6); $('#seloI').style.transform = `scale(${1 + 0.12 * f})`; $('#seloI').style.boxShadow = t >= 22.8 ? '0 0 0 3px var(--dest)' : ''; }
+
+  /* ── CTA · 23,4 → fim ── */
+  A($('#cta'), t, 23.4, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur2'), t, 24.2, [1000, 1250], alvo($('#btnCta'), 70, 8), 24.9, 25.8); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 25.05) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 25.05 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>LOGAMA — Copy 2 (quanto custa a rota que se repete · cotação por rota real · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="comum.css">
+<style>
+  #win { height: 700px; }
+  #win .corpo { height: 616px; }
+  .mes { display: flex; align-items: center; gap: 18px; height: 78px; border-bottom: 1.5px solid var(--linha); font: 500 27px 'Inter'; opacity: 0; padding: 0 14px; margin: 0 -14px; border-radius: 10px; }
+  .mes .tr { color: var(--cinza); font-size: 24px; } .mes b { margin-left: auto; font-weight: 650; }
+  .msg { display: flex; align-items: center; gap: 20px; height: 104px; border-bottom: 1.5px solid var(--linha); padding: 0 16px; margin: 0 -16px; border-radius: 12px; }
+  .msg .ico { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; flex: none; } .msg .ico svg { width: 32px; height: 32px; }
+  .msg .nm { font: 600 25px 'Inter'; } .msg .tx { font: 400 24px 'Inter'; color: var(--cinza); margin-top: 4px; } .msg .tx b { color: var(--tinta); font-weight: 650; }
+  .msg .dt { margin-left: auto; font: 500 21px 'Inter'; color: var(--cinza); align-self: flex-start; margin-top: 22px; }
+  .cmp { display: flex; align-items: center; height: 104px; border-bottom: 1.5px solid var(--linha); padding: 0 16px; margin: 0 -16px; border-radius: 12px; }
+  .cmp .nm { font: 600 27px 'Inter'; } .cmp .sb { font: 400 22px 'Inter'; color: var(--cinza); margin-top: 4px; } .cmp b { margin-left: auto; font: 650 30px 'Inter'; }
+  #envia { width: 960px; padding: 26px 34px 20px; }
+  #app2 { height: 880px; }
+  #app2 .corpo { height: 776px; }
+  #vVal .cl { height: 76px; font-size: 27px; } #vVal .cl b { font-size: 28px; }
+  #vVal .cl.ref { color: var(--tinta); font-weight: 650; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,6 → 17,55): a rota de todo mês · valor perdido em conversas, e-mails e cotações · sem referência ═════ -->
+<div class="p card app fs" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba"><i style="background:var(--tinta)"></i>BH → Uberlândia</div><div class="aba"><i style="background:#25D366"></i>Mensagens</div><div class="aba"><i style="background:var(--azul)"></i>Comparar</div></div>
+  <div id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vRota">
+      <div class="cabV"><div><h3>BH → Uberlândia</h3><p>Rota que se repete todo mês</p></div><span class="pill cinza" id="pMes">Mensal</span></div>
+      <div id="meses" style="margin-top:14px"></div>
+      <div class="alerta" id="paga">Quanto você paga de verdade?<b>—</b></div>
+    </div>
+    <div class="vista" id="vMsg" style="opacity:0">
+      <h3>Mensagens</h3><p>Onde ficou o valor da rota?</p>
+      <div style="margin-top:10px">
+        <div class="msg"><div class="ico" style="background:#25D366" id="icWa"></div><div><div class="nm">Transportadora A · WhatsApp</div><div class="tx">“Fica <b>R$ 4.800</b> essa rota, pode ser?”</div></div><span class="dt">12/07</span></div>
+        <div class="msg"><div class="ico" style="background:#EA4335" id="icMail"></div><div><div class="nm">Transportadora B · E-mail</div><div class="tx">Proposta BH–UDI: <b>R$ 5.350</b></div></div><span class="dt">03/08</span></div>
+        <div class="msg"><div class="ico" style="background:#25D366" id="icWa2"></div><div><div class="nm">Transportadora B · WhatsApp</div><div class="tx">“Faço <b>R$ 5.100</b> se fechar hoje”</div></div><span class="dt">04/08</span></div>
+        <div class="msg"><div class="ico" style="background:var(--tinta)" id="icDoc"></div><div><div class="nm">Cotação_v3.pdf · Transportadora C</div><div class="tx"><b>R$ 6.100</b> + pedágio</div></div><span class="dt">02/09</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vCmp" style="opacity:0">
+      <h3>Comparar custo da rota</h3><p>BH → Uberlândia · 3 transportadoras</p>
+      <div style="margin-top:10px">
+        <div class="cmp"><div><div class="nm">Transportadora A</div><div class="sb">WhatsApp · julho</div></div><b class="num">R$ 4.800</b></div>
+        <div class="cmp"><div><div class="nm">Transportadora B</div><div class="sb">E-mail · agosto</div></div><b class="num">R$ 5.350</b></div>
+        <div class="cmp"><div><div class="nm">Transportadora C</div><div class="sb">PDF · setembro · sem pedágio</div></div><b class="num">R$ 6.100</b></div>
+      </div>
+      <div class="alerta" id="refe">Referência clara para a rota<b>—</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÕES (17,7 → 24,1) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png" style="width:520px;display:block"></div>
+<div class="p card" id="envia" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/simbolo.png" style="height:40px">Cotação por rota real</div>
+  <div class="li"><span>Sua rota</span><b>Contagem → Uberlândia</b></div>
+  <div class="li"><span>Sua operação</span><b>Paletizada · 12 t</b></div>
+  <div class="li"><span>Cotação de frete</span><b><span class="pill cinza" id="pCot">aguardando</span></b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (24,25 → 34,95): plataforma Logama · cotar frete → valor antes de contratar → referência ═════ -->
+<div class="p card app fs" id="app2" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Logama</span><div class="nav"><b>Cotar frete</b><span>Operações</span><span>Rastreio</span></div><div class="av">VC</div></div>
+  <div class="corpo">
+    <div class="vista" id="vCot">
+      <h3>Cotar frete</h3><p>Cotação automatizada da sua rota</p>
+      <div class="campo"><div class="k">Origem</div><div class="cx" id="c1"></div></div>
+      <div class="campo"><div class="k">Destino</div><div class="cx" id="c2"></div></div>
+      <div class="campo"><div class="k">Carga</div><div class="cx" id="c3"></div></div>
+      <div class="campo"><div class="k">Veículo</div><div class="cx" id="c4"></div></div>
+    </div>
+    <div class="vista" id="vVal" style="opacity:0">
+      <div class="cabV"><div><h3>Valor da operação</h3><p>Contagem → Uberlândia · Truck</p></div><span class="pill vivo" id="pAntes" style="opacity:0"><i></i>Antes de contratar</span></div>
+      <div class="res" id="res2" style="margin-top:20px"><div><div class="k">Valor do frete</div><div class="vv num" id="valV">R$ 0,00</div></div><div style="text-align:right"><div class="k">Prazo</div><div class="vv">1 dia</div></div></div>
+      <div class="k" style="margin-top:26px" id="kRef">O que você pagou nessa rota</div>
+      <div style="margin-top:6px" id="refs">
+        <div class="cl ref"><span>Referência Logama</span><b class="num">R$ 5.120</b></div>
+        <div class="cl"><span>Transportadora A · julho</span><b class="num">R$ 4.800</b></div>
+        <div class="cl"><span>Transportadora B · agosto</span><b class="num">R$ 5.350</b></div>
+        <div class="cl"><span>Transportadora C · setembro</span><b class="num">R$ 6.100</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="btn grande" id="salvar"><span id="salvarT">Ver valor da operação</span></div>
+</div>
+
+<!-- ═════ CTA (35,1 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <div class="lg"><img src="img/simbolo.png"></div>
+  <div><div class="t"><span>Envie uma rota real da sua operação</span>Solicite uma cotação</div>
+  <div class="btn verm" id="btnCta"><div id="brilho"></div>Solicitar cotação <span id="btnCtaI"></span></div></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 39.10;
+const ROSTO = [610, 860];
+const FS = [[1.6, 17.55, true], [24.25, 34.95, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 29.15, ps: FM.criaConfete(9, 60, 540, 1130, 800, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const IC = d => `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+$('#icWa').innerHTML = $('#icWa2').innerHTML = IC('M4 20 L5.3 16.2 A8 8 0 1 1 8 18.8 Z M9 9.5 C9 12 11.5 14.8 14.5 15');
+$('#icMail').innerHTML = IC('M3 6 H21 V18 H3 Z M3 6 L12 13 L21 6');
+$('#icDoc').innerHTML = IC('M6 3 H14 L19 8 V21 H6 Z M14 3 V8 H19 M9 13 H16 M9 17 H14');
+const abas = [...document.querySelectorAll('#win .aba')], msgs = [...document.querySelectorAll('#vMsg .msg')], cmps = [...document.querySelectorAll('#vCmp .cmp')];
+const enviaL = [...document.querySelectorAll('#envia .li')], refs = [...document.querySelectorAll('#refs .cl')];
+const MESES = [['Julho', 'Transportadora A', 'R$ 4.800'], ['Agosto', 'Transportadora B', 'R$ 5.350'], ['Setembro', 'Transportadora C', 'R$ 6.100'], ['Outubro', 'a cotar', '—']];
+const meses = MESES.map(([m, tr, v]) => { const e = document.createElement('div'); e.className = 'mes';
+  e.innerHTML = `<span style="width:150px">${m}</span><span class="tr">${tr}</span><b class="num">${v}</b>`; $('#meses').appendChild(e); return e; });
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 1.9 && t < 17.7) || (t > 24.6 && t < 35.1) ? 0 : 9999;
+
+  /* ── FS1 · 1,6 → 17,55 ── */
+  A($('#win'), t, 1.65, 17.45, { de: 0.88, dy: 120, dout: 0.2 });
+  meses.forEach((e, k) => { const a = 1.85 + k * 0.16; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -24}px)`;
+    if (k < 3) acende(e, t, 5.0 + k * 0.2, 'tinta'); });
+  $('#paga').style.opacity = pr(t, 2.4, 0.3, E.cubicOut); acendeAlerta($('#paga'), t, 2.99);
+  pop($('#pMes'), t, 4.95); $('#pMes').classList.toggle('foco', t >= 4.95);
+  const TROCAS = [[7.6, 1], [12.0, 2]]; let ativa = 0, ult = -9; for (const [tt, a] of TROCAS) if (t >= tt) { ativa = a; ult = tt; }
+  abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+  $('#carrega').style.width = (t - ult < 0.5 ? pr(t, ult, 0.35, E.cubicOut) * 100 : 0) + '%';
+  $('#vRota').style.opacity = ativa === 0 ? 1 : 0; $('#vMsg').style.opacity = ativa === 1 ? pr(t, 7.65, 0.2, E.cubicOut) : 0; $('#vCmp').style.opacity = ativa === 2 ? pr(t, 12.05, 0.2, E.cubicOut) : 0;
+  cursor($('#cur1'), t, 7.0, [1000, 1500], [523, 512], 7.45, 7.9);
+  cursor($('#cur2'), t, 11.4, [1000, 1500], [819, 512], 11.85, 12.3);
+  msgs.forEach((e, k) => acende(e, t, [8.1, 9.0, 9.84, 10.38][k], 'tinta'));
+  cmps.forEach((e, k) => acende(e, t, 15.1 + k * 0.18, 'tinta'));
+  $('#refe').style.opacity = 1; acendeAlerta($('#refe'), t, 13.9);
+  if (t >= 16.5) $('#refe').style.transform = tranco(t, 16.5);
+
+  /* ── inserções · 17,7 → 24,1 ── */
+  A($('#logoCard'), t, 17.75, 19.25, { de: 0.82, dy: -60 });
+  A($('#envia'), t, 19.35, 24.1, { de: 0.86, dy: -60 });
+  enviaL.forEach((e, k) => { const a = 19.5 + k * 0.15; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 30}px)`;
+    if (k < 2) acende(e, t, [19.52, 20.48][k], 'tinta'); });
+  { const ok = t >= 22.05, p = $('#pCot'); p.className = 'pill ' + (ok ? 'vivo' : 'cinza'); p.textContent = ok ? 'Recebida ✓' : 'aguardando';
+    if (ok) p.style.transform = `scale(${L(0.6, 1, M.prog(t, 22.05, 0.6, E.spring))})`; }
+
+  /* ── FS2 · 24,25 → 34,95 ── */
+  A($('#app2'), t, 24.3, 34.85, { de: 0.88, dy: 120, dout: 0.2 });
+  digita('c1', t, 25.15, 'Contagem, MG'); digita('c2', t, 25.85, 'Uberlândia, MG'); digita('c3', t, 26.45, 'Paletizada · 12 t'); digita('c4', t, 26.95, 'Caminhão Truck');
+  { const cl = cursor($('#cur3'), t, 26.95, [1000, 1500], [560, 1181], 27.55, 28.2); const ok = t >= 27.6;
+    $('#salvar').style.transform = `scale(${1 - 0.04 * cl})`; $('#salvar').style.background = ok ? 'var(--verde)' : 'var(--tinta)'; $('#salvarT').textContent = ok ? 'Calculando ✓' : 'Ver valor da operação'; }
+  { const tr = pr(t, 27.95, 0.4, E.cubicInOut); $('#vCot').style.opacity = 1 - tr; $('#salvar').style.opacity = 1 - tr; $('#vVal').style.opacity = tr; $('#vVal').style.transform = `translateY(${(1 - tr) * 30}px)`;
+    const pres = pr(t, 28.0, 0.3, E.cubicOut), pv = pr(t, 28.1, 1.0, E.quintOut); $('#res2').style.opacity = pres; $('#valV').textContent = brl(5120 * pv);
+    pop($('#pAntes'), t, 30.0);
+    $('#kRef').style.opacity = pr(t, 28.6, 0.3, E.cubicOut);
+    refs.forEach((e, k) => { const a = 28.7 + k * 0.14; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 30}px)`; });
+    { const r = refs[0], p = pr(t, 33.9, 0.3, E.cubicOut), fl = Math.sin(C((t - 33.9) / 0.5) * Math.PI);
+      r.style.background = `rgba(21,128,61,${0.08 * p})`; r.style.boxShadow = p > 0.01 ? `inset 0 0 0 ${2 + 1.5 * fl}px rgba(21,128,61,${0.7 * p})` : ''; r.querySelector('b').style.color = p > 0.5 ? 'var(--verde)' : ''; } }
+
+  /* ── CTA · 35,1 → fim ── */
+  A($('#cta'), t, 35.15, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur4'), t, 37.45, [1020, 700], [420, 395], 38.0, 39.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 38.15) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 38.15 ? -200 : L(-200, 600, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

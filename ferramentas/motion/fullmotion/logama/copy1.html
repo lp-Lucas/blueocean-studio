@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>LOGAMA — Copy 1 (frete em Minas com quem conhece Minas · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="comum.css">
+<style>
+  #win { height: 760px; }
+  #win .corpo { height: 676px; }
+  .rota { display: flex; align-items: center; gap: 18px; height: 78px; border-bottom: 1.5px solid var(--linha); font: 500 27px 'Inter'; opacity: 0; }
+  .rota .vei { color: var(--cinza); font-size: 23px; margin-left: auto; margin-right: 6px; }
+  .reg { display: flex; align-items: center; height: 104px; border-bottom: 1.5px solid var(--linha); padding: 0 16px; margin: 0 -16px; border-radius: 12px; }
+  .reg .nm { font: 650 29px 'Inter'; } .reg .sb { font: 400 22px 'Inter'; color: var(--cinza); margin-top: 4px; }
+  .reg .pill { margin-left: auto; opacity: 0; }
+  #mgCard, #acoes { width: 960px; padding: 26px 34px 20px; }
+  #app1 { height: 880px; }
+  #app1 .corpo { height: 776px; }
+  #res1 .vv { font-size: 40px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,6 → 16,95): fretes em Minas com transportadora de fora · quem conhece as rotas? ═════ -->
+<div class="p card app fs" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba"><i style="background:var(--tinta)"></i>Fretes em Minas</div><div class="aba"><i style="background:var(--azul)"></i>Operação BH</div></div>
+  <div id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vFretes">
+      <div class="cabV"><div><h3>Fretes da semana</h3><p>Transportadora de fora do estado</p></div><span class="pill cinza" id="pMG">MG · 5 fretes</span></div>
+      <div id="rotas" style="margin-top:14px"></div>
+      <div class="alerta" id="conhece">Conhece as rotas de Minas?<b>???</b></div>
+    </div>
+    <div class="vista" id="vBH" style="opacity:0">
+      <h3>Operação em Minas</h3><p>O que a sua carga precisa</p>
+      <div style="margin-top:14px">
+        <div class="reg"><div><div class="nm">Belo Horizonte</div><div class="sb">Capital · coleta e entrega no dia</div></div><span class="pill ruim">sem base local</span></div>
+        <div class="reg"><div><div class="nm">Região metropolitana</div><div class="sb">Contagem · Betim · Nova Lima</div></div><span class="pill ruim">sem base local</span></div>
+        <div class="reg"><div><div class="nm">Principais rotas de Minas</div><div class="sb">Juiz de Fora · Uberlândia · Montes Claros</div></div><span class="pill ruim">não conhece</span></div>
+      </div>
+      <div class="alerta" id="agil">Agilidade quando precisa<b>???</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÕES (17,1 → 31,4) ═════ -->
+<div class="p card" id="acoes" style="left:540px;top:300px">
+  <div class="cabI">Transportadora de fora<span class="pill ruim" style="opacity:1">aguardando retorno</span></div>
+  <div class="li"><span>Contratar um veículo</span><b class="num">2 dias</b></div>
+  <div class="li"><span>Ajustar a operação</span><b class="num">sem resposta</b></div>
+  <div class="li"><span>Resolver um imprevisto</span><b class="num">???</b></div>
+</div>
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png" style="width:520px;display:block"></div>
+<div class="p card" id="mgCard" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/simbolo.png" style="height:40px">Especializada em Minas Gerais</div>
+  <div class="li ok"><span>Suporte local em BH</span><b class="ck"></b></div>
+  <div class="li ok"><span>Veículo homologado</span><b class="ck"></b></div>
+  <div class="li ok"><span>Previsibilidade na operação</span><b class="ck"></b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (31,55 → 40,6): plataforma Logama · nova operação → confirmada ═════ -->
+<div class="p card app fs" id="app1" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Logama</span><div class="nav"><span>Cotações</span><b>Nova operação</b><span>Rastreio</span></div><div class="av">VC</div></div>
+  <div class="corpo">
+    <div class="vista" id="vNova">
+      <h3>Nova operação</h3><p>Cobertura estadual em Minas Gerais</p>
+      <div class="campo"><div class="k">Origem</div><div class="cx" id="c1"></div></div>
+      <div class="campo"><div class="k">Destino</div><div class="cx" id="c2"></div></div>
+      <div class="campo"><div class="k">Veículo</div><div class="cx" id="c3"></div></div>
+      <div class="campo"><div class="k">Coleta</div><div class="cx" id="c4"></div></div>
+    </div>
+    <div class="vista" id="vOk" style="opacity:0">
+      <div class="cabV"><div><h3>Operação confirmada</h3><p>BH → Ipatinga · Caminhão Truck</p></div><span class="pill vivo"><i></i>Confirmada</span></div>
+      <div style="margin-top:14px">
+        <div class="cl"><span>Base em Belo Horizonte</span><b class="ck"></b></div>
+        <div class="cl"><span>Suporte local dedicado</span><b class="ck"></b></div>
+        <div class="cl"><span>Frota homologada</span><b class="ck"></b></div>
+        <div class="cl"><span>Seguro de carga incluso</span><b class="ck"></b></div>
+      </div>
+      <div class="res" id="res1"><div><div class="k">Coleta</div><div class="vv">Amanhã · 08:00</div></div><div style="text-align:right"><div class="k">Cobertura em MG</div><div class="vv num verdeC" id="munV">0 cidades</div></div></div>
+      <div class="etapas" id="etp"><span class="e on"><i></i>Agendada</span><span class="tr"><b></b></span><span class="e"><i></i>Coleta</span><span class="tr"><b></b></span><span class="e"><i></i>Entrega</span></div>
+    </div>
+  </div>
+  <div class="btn grande" id="salvar"><span id="salvarT">Solicitar operação</span></div>
+</div>
+
+<!-- ═════ CTA (40,76 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <div class="lg"><img src="img/simbolo.png"></div>
+  <div><div class="t"><span>Frete em Minas com quem conhece Minas</span>Veja como funciona a operação</div>
+  <div class="btn verm" id="btnCta"><div id="brilho"></div>Ver como funciona <span id="btnCtaI"></span></div></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 43.84;
+const ROSTO = [610, 860];
+const FS = [[1.6, 16.95, true], [31.55, 40.6, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 39.8, ps: FM.criaConfete(9, 60, 540, 1130, 800, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const abas = [...document.querySelectorAll('#win .aba')], regs = [...document.querySelectorAll('#vBH .reg')];
+const acoes = [...document.querySelectorAll('#acoes .li')], mgs = [...document.querySelectorAll('#mgCard .li')], oks = [...document.querySelectorAll('#vOk .cl')];
+const ROTAS = [['BH → Ipatinga', 'Truck', 'Em rota', 'cinza'], ['Contagem → Uberlândia', 'Carreta', 'Atrasado', 'ruim'], ['Betim → Montes Claros', 'Toco', 'Sem retorno', 'ruim'],
+  ['BH → Juiz de Fora', 'VUC', 'Em rota', 'cinza'], ['Sete Lagoas → Ouro Preto', '3/4', 'Remarcado', 'ruim']];
+const rotas = ROTAS.map(([r, v, s, c]) => { const e = document.createElement('div'); e.className = 'rota';
+  e.innerHTML = `<span>${r}</span><span class="vei">${v}</span><span class="pill ${c}">${s}</span>`; $('#rotas').appendChild(e); return e; });
+
+window.quadro = function (T) {
+  const T2 = T < 36.46 ? T : T + 0.72, t = T2 < 10.84 ? T2 : T2 + 0.40;   // WARP: cortes do "de" (0,40 s em 10,84) e do "pode" repetido (0,72 s em 36,46); animação no tempo antigo, legenda no novo
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 1.9 && t < 17.1) || (t > 31.9 && t < 40.8) ? 0 : 9999;
+
+  /* ── FS1 · 1,6 → 16,95 ── */
+  A($('#win'), t, 1.65, 16.85, { de: 0.88, dy: 120, dout: 0.2 });
+  rotas.forEach((e, k) => { const a = 1.85 + k * 0.16; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -24}px)`; });
+  pop($('#pMG'), t, 3.4); $('#pMG').classList.toggle('foco', t >= 3.4);
+  { $('#conhece').style.opacity = pr(t, 2.7, 0.3, E.cubicOut); acendeAlerta($('#conhece'), t, 5.4); }
+  const ativa = t >= 9.3 ? 1 : 0; abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+  $('#carrega').style.width = (t >= 9.3 && t < 9.8 ? pr(t, 9.3, 0.35, E.cubicOut) * 100 : 0) + '%';
+  $('#vFretes').style.opacity = ativa ? 0 : 1; $('#vBH').style.opacity = ativa ? pr(t, 9.35, 0.2, E.cubicOut) : 0;
+  cursor($('#cur1'), t, 8.55, [1000, 1500], [523, 482], 9.15, 9.8);
+  regs.forEach((e, k) => { const a = [10.95, 12.5, 14.05][k]; acende(e, t, a, 'tinta'); pop(e.querySelector('.pill'), t, a + 0.25); });
+  acendeAlerta($('#agil'), t, 16.3); $('#agil').style.opacity = 1;
+
+  /* ── inserções · 17,1 → 31,4 ── */
+  A($('#acoes'), t, 17.1, 21.6, { de: 0.86, dy: -60 });
+  acoes.forEach((e, k) => { const a = [17.25, 17.4, 17.55][k]; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 30}px)`;
+    acende(e, t, [18.35, 19.33, 20.7][k], 'verm'); });
+  A($('#logoCard'), t, 21.85, 23.85, { de: 0.82, dy: -60 });
+  A($('#mgCard'), t, 24.0, 31.35, { de: 0.86, dy: -60 });
+  mgs.forEach((e, k) => { const a = 24.15 + k * 0.15; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 30}px)`;
+    marcaOk(e, t, [26.6, 27.68, 29.72][k]); });
+
+  /* ── FS2 · 31,55 → 40,6 ── */
+  A($('#app1'), t, 31.6, 40.5, { de: 0.88, dy: 120, dout: 0.2 });
+  digita('c1', t, 32.6, 'Belo Horizonte, MG'); digita('c2', t, 33.3, 'Ipatinga, MG'); digita('c3', t, 34.6, 'Caminhão Truck'); digita('c4', t, 35.2, 'Amanhã, 08:00');
+  { const cl = cursor($('#cur2'), t, 35.6, [1000, 1500], [560, 1205], 36.2, 36.9); const ok = t >= 36.25;
+    $('#salvar').style.transform = `scale(${1 - 0.04 * cl})`; $('#salvar').style.background = ok ? 'var(--verde)' : 'var(--tinta)'; $('#salvarT').textContent = ok ? 'Operação solicitada ✓' : 'Solicitar operação'; }
+  { const tr = pr(t, 37.6, 0.35, E.cubicInOut); $('#vNova').style.opacity = 1 - tr; $('#salvar').style.opacity = 1 - tr; $('#vOk').style.opacity = tr; $('#vOk').style.transform = `translateY(${(1 - tr) * 30}px)`;
+    oks.forEach((e, k) => { const a = [37.75, 38.6, 39.3, 39.6][k]; e.style.opacity = pr(t, 37.65 + k * 0.1, 0.25, E.cubicOut); marcaOk(e, t, a); });
+    const pres = pr(t, 38.0, 0.3, E.cubicOut), pv = pr(t, 39.75, 0.9, E.quintOut);
+    const etp = [...document.querySelectorAll('#etp .e')], trs = [...document.querySelectorAll('#etp .tr b')]; trs[0].style.transform = `scaleX(${pr(t, 39.8, 0.6, E.cubicInOut)})`; etp[1].classList.toggle('on', t >= 40.35);
+    $('#etp').style.opacity = pres; $('#res1').style.opacity = pres; $('#res1').style.transform = `translateY(${(1 - pres) * 20}px)`;
+    $('#munV').textContent = Math.round(853 * pv) + ' cidades'; }
+
+  /* ── CTA · 40,76 → fim ── */
+  A($('#cta'), t, 40.8, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 43.0, [1020, 700], [450, 395], 43.55, 45.5); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 43.7) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 43.7 ? -200 : L(-200, 600, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

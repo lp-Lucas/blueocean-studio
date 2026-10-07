@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from fmsfx import *
 
 copia = sys.argv[1]
-m = nova({'1': 27.24, '2': 28.48}[copia])
+m = nova({'1': 27.24, '2': 28.48, '3': 41.18}[copia])
 
 def papel(t, dur=0.6, ganho=0.22, pan=(0, 0)):
     m.add(max(0, t), whoosh(dur, 500, 2400, pico=0.45, q=0.7, pan=pan), ganho, nome='papel desliza')
@@ -93,5 +93,37 @@ elif copia == '2':
     entra(m, 24.65, 560, 0.24); m.add(26.75, pop(1000, 0.2, 0.5), 0.08, nome='logo')
     clique(m, 27.2); m.add(27.22, baque(0.5, 60), 0.12, nome='botão: grave')
     m.add(27.35, vidro(C7, 0.9, 0.6), 0.05, nome='brilho no botão')
+
+elif copia == '3':
+    # gancho: prejuízo no financeiro → WhatsApp
+    entra(m, 1.25, 560, 0.2); m.add(1.9, pop(700, 0.25, 0.7), 0.13, nome='sem cobrança'); impacto(m, 1.95, A6); sai(m, 4.15)
+    marca_expande(4.55); entra(m, 5.6, 520, 0.18)
+    for t0 in (5.76, 6.62, 9.58): m.add(t0, pop(1300, 0.18, 0.5), 0.12, nome='mensagem chega')
+    for t0 in (8.28, 10.28): m.add(t0, whoosh(0.25, 1800, 3600, pico=0.3, q=1.4), 0.1, nome='mensagem enviada')
+    m.add(11.9, pop(1100, 0.2, 0.5), 0.13, nome='comprovante')
+    for k, t0 in enumerate((12.35, 12.5, 12.62, 12.75, 12.88, 13.0)): m.add(t0, pop(1200 + 60 * k, 0.12, 0.4), 0.07, nome='enxurrada')
+    m.add(13.6, pop(700, 0.25, 0.7), 0.14, nome='cobrança não enviada'); impacto(m, 15.0, A6)
+    fs_sai(15.45)
+    # inserções
+    entra(m, 15.65, 620, 0.22); sai(m, 16.65)
+    entra(m, 16.85, 560, 0.2); check(m, 17.8, E6, ganho=0.1)
+    for k, t0 in enumerate((18.6, 18.78, 18.95, 19.14)): m.add(t0, pop(900 + 150 * k, 0.15, 0.45), 0.09, nome='passo')
+    check(m, 19.16, G6, ganho=0.12); sai(m, 19.55)
+    # plataforma
+    fs_entra(19.75); entra(m, 19.8, 520, 0.2)
+    for k in range(7): m.add(20.0 + k * 0.08, tick(1700 + 110 * k, 0.03), 0.06, nome='corrida entra')
+    for t0 in (20.5, 21.35, 22.0, 22.58, 24.05): m.add(t0, whoosh(0.3, 900, 2600, pico=0.5, q=1.2), 0.09, nome='coluna acende')
+    clique(m, 24.85); m.add(24.9, whoosh(0.35, 900, 2600, pico=0.5, q=1.2), 0.1, nome='troca para financeiro')
+    m.add(26.0, pop(900, 0.2, 0.5), 0.1, nome='realizadas')
+    m.add(27.4, pop(700, 0.2, 0.6), 0.1, nome='pendente'); m.add(27.55, pop(650, 0.2, 0.6), 0.1, nome='pendente')
+    contador(m, 28.55, 1.3, quintOut, 10, ganho=0.045)
+    m.add(30.42, pop(1000, 0.2, 0.5), 0.08, nome='conversas'); m.add(30.55, pop(1100, 0.2, 0.5), 0.08, nome='planilhas')
+    m.add(31.0, whoosh(0.4, 1800, 4200, pico=0.3, q=1.6), 0.13, nome='risca conversas'); m.add(31.84, whoosh(0.4, 1800, 4200, pico=0.3, q=1.6), 0.13, nome='risca planilhas')
+    fs_sai(32.95)
+    # custo e CTA
+    entra(m, 33.1, 560, 0.2); m.add(34.62, whoosh(0.9, 2600, 900, pico=0.4, q=1.0), 0.1, nome='barra encolhe')
+    contador(m, 34.62, 0.9, cubicInOut, 9, ganho=0.04, f0=3400, f1=2400); check(m, 34.7, E6, ganho=0.12); sai(m, 36.8)
+    entra(m, 37.0, 560, 0.24); clique(m, 39.4); m.add(39.42, baque(0.5, 60), 0.12, nome='botão: grave')
+    for t0 in (39.55, 41.0): m.add(t0, vidro(C7, 0.9, 0.6), 0.05, nome='brilho no botão')
 
 salvar(m, sys.argv[2])

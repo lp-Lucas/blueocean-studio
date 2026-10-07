@@ -1,0 +1,88 @@
+/* identidade Newmo (newmo.com.br) — TEMA ESCURO como o site (pedido da pessoa, 06/10/2026: "preto predominante, verde e branco em alguns pontos"):
+   fundo preto #000, cartões grafite #111614 (cards do site: rgba(30,36,35,.6) sobre preto) com borda #2A3230, títulos no verde-claro #DEFFDC,
+   texto branco, secundário #8C958D, destaque/CTA verde #00C767 com texto escuro; Poppins nos títulos, Inter no corpo; WhatsApp no modo escuro.
+   A versão clara anterior está em base-claro.css. Base copiada da SmartRota (receita 15). */
+@font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../fontes/Inter.ttf'); }
+@font-face { font-family: 'Poppins'; font-weight: 600; src: url('../../fontes/Poppins-SemiBold.ttf'); }
+@font-face { font-family: 'Poppins'; font-weight: 700; src: url('../../fontes/Poppins-Bold.ttf'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --tinta: #F3F8F3; --titulo: #DEFFDC; --cinza: #8C958D; --linha: #2A3230; --claro: #1E2423; --card: #111614; --dest: #00C767; --destE: #00A956;
+        --destc: rgba(0,199,103,.16); --verde: #33D285; --verdec: rgba(0,199,103,.16); --verm: #E5483A; --vermt: #FF7A6E; --vermc: rgba(229,72,58,.18); --wa: #25D366; }
+html, body { background: transparent !important; }
+body { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; color: var(--tinta); }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border-radius: 22px; box-shadow: inset 0 0 0 1.5px var(--linha), 0 18px 44px rgba(0,0,0,.45); }
+.fld { background: #0A0E0D; }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes */
+.chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: var(--card); font: 600 33px 'Inter';
+         white-space: nowrap; box-shadow: 0 18px 44px rgba(0,0,0,.3); color: var(--tinta); letter-spacing: -0.02em; }
+.chipI .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.chipI .bol svg { width: 32px; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 6px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+#logoCard { padding: 42px 64px; border-radius: 26px; }
+#logoCard img { height: 92px; display: block; }
+.btn { display: inline-flex; align-items: center; gap: 14px; height: 84px; padding: 0 40px; border-radius: 999px; background: var(--dest); color: #0B1210;
+       font: 700 30px 'Inter'; letter-spacing: -0.01em; white-space: nowrap; position: relative; overflow: hidden; }
+.btn svg { width: 28px; }
+.btn.esc { background: var(--tinta); color: #fff; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'Inter'; white-space: nowrap; }
+.pill.vivo { background: var(--verdec); color: var(--verde); } .pill.vivo i { width: 12px; height: 12px; border-radius: 50%; background: var(--dest); }
+.pill.cinza { background: var(--claro); color: #B8C2BA; }
+.pill.verm { background: var(--vermc); color: var(--vermt); }
+.pill.ia { background: var(--titulo); color: #0B1210; } .pill.ia svg { width: 22px; }
+.k { font: 600 20px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.cabI { display: flex; align-items: center; gap: 14px; color: var(--titulo); font: 600 31px 'Poppins'; letter-spacing: -0.02em; } .cabI .pill { margin-left: auto; } .cabI img { height: 42px; }
+
+/* janela do app Newmo */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 100px; display: flex; align-items: center; gap: 16px; padding: 0 32px; border-bottom: 1.5px solid var(--linha); background: var(--card); position: relative; z-index: 2; }
+.app .bar img { height: 44px; } .app .bar .nm { color: var(--titulo); font: 600 30px 'Poppins'; letter-spacing: -0.02em; }
+.app .bar .nav { display: flex; gap: 26px; margin-left: 30px; font: 500 23px 'Inter'; color: var(--cinza); }
+.app .bar .nav span { position: relative; padding: 8px 0; } .app .bar .nav span.on { color: var(--tinta); font-weight: 600; }
+.app .bar .nav span.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; background: var(--dest); border-radius: 2px; }
+.app .bar .av { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--claro); border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 21px 'Inter'; color: #B8C2BA; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: var(--card); }
+.app h3 { color: var(--titulo); font: 600 36px 'Poppins'; letter-spacing: -0.025em; } .app h3 + p { font: 500 23px 'Inter'; color: var(--cinza); margin-top: 4px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+.cab { display: flex; align-items: center; } .cab .pill { margin-left: auto; }
+.av2 { width: 60px; height: 60px; border-radius: 50%; background: var(--claro); color: var(--titulo); display: grid; place-items: center; font: 700 23px 'Inter'; flex: none; }
+.av2.ia { background: #000; } .av2.ia img { width: 34px; }
+
+/* WhatsApp */
+.wa { width: 960px; overflow: hidden; border-radius: 22px; }
+.wa .hd { height: 108px; background: #202C33; display: flex; align-items: center; gap: 20px; padding: 0 30px; color: #fff; position: relative; z-index: 2; }
+.wa .hd .nm { font: 600 30px 'Inter'; letter-spacing: -0.01em; } .wa .hd .nm span { display: block; font: 500 21px 'Inter'; opacity: .85; }
+.wa .chat { position: absolute; top: 108px; left: 0; right: 0; bottom: 0; background: #0B141A; overflow: hidden; }
+.msgs { position: absolute; left: 28px; right: 28px; bottom: 26px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 660px; padding: 14px 20px 32px; border-radius: 16px; font: 500 27px/1.32 'Inter'; color: #E9EDEF; position: relative; box-shadow: 0 1px 1.5px rgba(0,0,0,.3); letter-spacing: -0.01em; }
+.msg.dia { align-self: center; background: #182229; padding: 6px 18px; font: 600 20px 'Inter'; color: #8696A0; border-radius: 10px; }
+.msg.sis { align-self: center; background: #182229; padding: 8px 20px; font: 600 22px 'Inter'; color: #FFD279; border-radius: 10px; }
+.msg.in { align-self: flex-start; background: #202C33; border-top-left-radius: 4px; } .msg.out { align-self: flex-end; background: #005C4B; border-top-right-radius: 4px; }
+.msg .quem { display: block; font: 700 21px 'Inter'; color: #06CF9C; margin-bottom: 2px; }
+.msg .h { position: absolute; right: 14px; bottom: 7px; font: 500 18px 'Inter'; color: #8696A0; } .msg .h i { color: #53BDEB; font-style: normal; margin-left: 4px; }
+.alerta { display: flex; align-items: center; height: 96px; padding: 0 28px; border-radius: 18px; background: var(--vermc); border: 3px solid transparent; font: 600 28px 'Inter'; color: var(--tinta); opacity: 0; }
+.alerta b { margin-left: auto; font: 800 40px 'Inter'; color: var(--vermt); letter-spacing: .02em; }
+.alerta { background: #2B1614; } .alerta.ok { background: #0F2A1C; } .alerta.ok b { color: var(--verde); }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+
+/* ícone de marca famosa que expande e vira a tela cheia */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }
+
+/* CTA */
+#cta { width: 960px; padding: 28px 36px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta img { height: 58px; } #cta .tit { color: var(--titulo); font: 600 38px/1.2 'Poppins'; letter-spacing: -0.025em; margin-top: 14px; }
+#btnCta { margin-top: 20px; height: 80px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); left: -200px; }

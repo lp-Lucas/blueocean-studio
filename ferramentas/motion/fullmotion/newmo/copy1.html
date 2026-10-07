@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Newmo — Copy 1 (oportunidades no WhatsApp → IA qualifica → vendedor entra com contexto)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* inserção 0: oportunidades chegando */
+  #novas { width: 960px; padding: 26px 34px 28px; }
+  #novas .bolWa { width: 50px; height: 50px; border-radius: 50%; background: var(--wa); display: grid; place-items: center; flex: none; } #novas .bolWa svg { width: 30px; }
+  .li { display: flex; align-items: center; gap: 16px; height: 66px; border-top: 1.5px solid var(--linha); font: 500 26px 'Inter'; color: #C5CFC6; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .li:first-of-type { margin-top: 14px; } .li b { margin-left: auto; font: 700 26px 'Inter'; color: var(--tinta); }
+  /* tela cheia 1: lista de conversas do WhatsApp Business */
+  #wa1 { height: 940px; }
+  #wa1 .hd { height: 100px; } #wa1 .hd .nm { font-size: 31px; }
+  #wa1 .abasW { position: absolute; top: 100px; left: 0; right: 0; height: 66px; background: #202C33; display: flex; padding: 0 30px; gap: 40px; z-index: 2; }
+  #wa1 .abasW span { font: 600 23px 'Inter'; color: #8696A0; display: flex; align-items: center; gap: 10px; position: relative; }
+  #wa1 .abasW span.on { color: #00A884; } #wa1 .abasW span.on::after { content: ''; position: absolute; left: -8px; right: -8px; bottom: 0; height: 5px; background: #00A884; border-radius: 3px 3px 0 0; }
+  #wa1 .abasW em { font-style: normal; background: #00A884; color: #111B21; border-radius: 99px; padding: 2px 12px; font: 700 20px 'Inter'; }
+  #lista { position: absolute; top: 166px; left: 0; right: 0; bottom: 0; background: #111B21; overflow: hidden; }
+  #rows { position: absolute; left: 0; right: 0; top: 0; }
+  .ct { display: flex; align-items: center; gap: 20px; height: 104px; padding: 0 30px; border-bottom: 1.5px solid #222D34; background: #111B21; }
+  .ct .tx { flex: 1; min-width: 0; } .ct .tx b { display: block; font: 600 27px 'Inter'; color: #E9EDEF; } .ct .tx span { display: block; font: 400 23px 'Inter'; color: #8696A0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ct .dir { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; width: 230px; flex: none; }
+  .ct .hr { font: 500 19px 'Inter'; color: #00A884; } .ct .bd { min-width: 34px; height: 34px; border-radius: 17px; background: #00A884; color: #111B21; font: 700 19px 'Inter'; display: grid; place-items: center; padding: 0 8px; }
+  .ct .pill { height: 36px; font-size: 19px; padding: 0 12px; }
+  #alert1 { position: absolute; left: 26px; right: 26px; bottom: 24px; }
+  /* inserções: IA atende */
+  #ia { width: 960px; padding: 24px 34px 26px; }
+  #ia .msg { font-size: 25px; padding: 12px 18px 12px; box-shadow: none; } #ia .msg.in { background: var(--claro); } #ia .msg.out { background: var(--destc); }
+  #iaMs { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  /* tela cheia 2: plataforma Newmo */
+  #app { height: 860px; } #app .corpo { height: 760px; }
+  .fld { height: 74px; border: 2px solid var(--linha); border-radius: 14px; display: flex; align-items: center; padding: 0 22px; font: 500 27px 'Inter'; margin-top: 10px; }
+  .fld.foco { border-color: var(--dest); box-shadow: 0 0 0 4px rgba(0,199,103,.15); }
+  .dig::after { content: ''; display: inline-block; width: 3px; height: 32px; background: var(--tinta); margin-left: 3px; vertical-align: middle; }
+  .sec { margin-top: 24px; } .sec .k { margin-bottom: 2px; }
+  .inf { display: flex; align-items: center; height: 70px; border-bottom: 1.5px solid var(--linha); font: 500 26px 'Inter'; color: #C5CFC6; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .inf b { margin-left: auto; font: 600 26px 'Inter'; color: var(--tinta); } .inf i { width: 30px; margin-left: 14px; display: grid; place-items: center; } .inf i svg { width: 28px; }
+  #rodape1 { position: absolute; left: 34px; right: 34px; bottom: 34px; display: flex; align-items: center; justify-content: space-between; }
+  #btnEnc { height: 80px; font-size: 28px; padding: 0 34px; } #btnEnc svg { width: 26px; }
+  #conv { position: relative; margin-top: 18px; height: 372px; border-radius: 16px; background: #0B141A; overflow: hidden; }
+  #conv .msgs { left: 20px; right: 20px; bottom: 18px; } #conv .msg { font-size: 25px; max-width: 640px; }
+  #resumo { padding: 20px 24px; border-radius: 16px; background: var(--claro); border: 2.5px solid transparent; margin-top: 18px; }
+  #resumo .k { display: flex; align-items: center; gap: 10px; } #resumo .k svg { width: 24px; }
+  #resumo p { font: 500 26px/1.4 'Inter'; color: var(--tinta); margin-top: 6px; }
+  #sem { position: absolute; left: 34px; right: 34px; bottom: 30px; display: flex; justify-content: center; gap: 18px; }
+  #sem .chipI { height: 70px; font-size: 26px; box-shadow: none; border: 1.5px solid var(--linha); opacity: 0; padding: 0 32px; }
+  /* resultado */
+  #res { width: 960px; padding: 24px 34px 26px; }
+  #res .li .pill { margin-left: auto; height: 46px; font-size: 23px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ INSERÇÃO 0 (0,35 → 1,95): oportunidades chegando no WhatsApp ═════ -->
+<div class="p card" id="novas" style="left:540px;top:250px">
+  <div class="cabI"><div class="bolWa" id="waI"></div>WhatsApp · hoje<span class="pill vivo"><i></i><span class="num" id="nNovas">0</span>&nbsp;novas oportunidades</span></div>
+  <div class="li"><span>“Oi! Quanto custa o plano de vocês?”</span><b style="font-weight:500;color:var(--cinza);font-size:22px">agora</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (WhatsApp, 3,05 → 7,45) ═════ -->
+<div class="p card wa fs" id="wa1" style="left:540px;top:800px">
+  <div class="hd"><div class="nm">WhatsApp Business<span>Comercial · (11) 4002-8922</span></div></div>
+  <div class="abasW"><span class="on">Conversas <em class="num" id="nLid">48</em></span><span>Status</span><span>Ligações</span></div>
+  <div id="lista"><div id="rows"></div></div>
+  <div class="alerta" id="alert1">Prontas para o vendedor<b>???</b></div>
+</div>
+
+<!-- ═════ INSERÇÕES (7,65 → 10,15): Newmo · a IA faz o primeiro atendimento ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:250px"><img src="img/logo-claro.svg"></div>
+<div class="p card" id="ia" style="left:540px;top:250px">
+  <div class="cabI"><img src="img/simbolo.svg">Agente de IA<span class="pill vivo" id="iaP"><i></i>Atendendo</span></div>
+  <div id="iaMs"><div class="msg in" id="ia1">Oi! Quanto custa o plano de vocês?</div><div class="msg out" id="ia2">Olá, Ana! Já te ajudo. Quantas pessoas atendem no seu WhatsApp?</div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (10,3 → 22,3): plataforma Newmo ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:800px">
+  <div class="bar"><img src="img/simbolo.svg"><span class="nm">Newmo</span><div class="nav"><span id="nLead" class="on">Ficha do lead</span><span id="nConv">Conversa</span></div><div class="av">CS</div></div>
+  <div class="corpo">
+    <div class="vista" id="vLead">
+      <div class="cab"><div class="av2" style="margin-right:18px">AR</div><div><h3>Ana Ribeiro</h3><p>Clínica Sorriso · via WhatsApp</p></div><span class="pill ia" id="quemP"></span></div>
+      <div class="sec"><div class="k">Interesse</div><div class="fld" id="fInt"><span id="tInt"></span></div></div>
+      <div class="sec"><div class="k">Informações coletadas pela IA</div><div id="infs"></div></div>
+    </div>
+    <div class="vista" id="vConv" style="opacity:0">
+      <div class="cab"><div class="av2" style="margin-right:18px">AR</div><div><h3>Ana Ribeiro</h3><p>Clínica Sorriso · via WhatsApp</p></div><span class="pill vivo"><i></i>Carlos · Comercial</span></div>
+      <div id="resumo"><div class="k" id="resK"></div><p>Clínica com 6 atendentes no WhatsApp, quer o plano para começar este mês. Hoje usa planilha.</p></div>
+      <div id="conv"><div class="msgs" id="cMs"></div></div>
+    </div>
+    <div id="rodape1"><span class="pill cinza" id="qualP">Qualificação em andamento</span><div class="btn" id="btnEnc"><span id="encT">Encaminhar ao Comercial</span><span id="encI"></span></div></div>
+    <div id="sem"><span class="chipI" id="sem1"><span style="position:relative" id="sem1t">Repetir as perguntas</span></span><span class="chipI" id="sem2"><span style="position:relative" id="sem2t">Copiar dados na planilha</span></span></div>
+  </div>
+</div>
+
+<!-- ═════ RESULTADO (22,45 → 25,6) e CTA (25,75 → fim) ═════ -->
+<div class="p card" id="res" style="left:540px;top:250px">
+  <div class="cabI"><img src="img/simbolo.svg">Com a Newmo</div>
+  <div class="li" id="r1"><span>Primeira resposta ao lead</span><span class="pill" id="r1p"></span></div>
+  <div class="li" id="r2"><span>O vendedor recebe</span><span class="pill" id="r2p"></span></div>
+</div>
+<div class="p card" id="cta" style="left:540px;top:252px">
+  <img src="img/logo-claro.svg">
+  <div class="tit">Venda mais pelo WhatsApp</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agendar demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 28.80;
+// corte do "A" (começo de "atende", 0,08 s em 10,08): a animação roda no tempo antigo (WARP), a legenda no novo
+const WARP = T => T < 10.08 ? T : T + 0.08;
+const ROSTO = [580, 720];
+const FS = [[3.05, 7.45, false], [10.3, 22.3, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+$('#waI').innerHTML = WA_SVG('#fff');
+$('#btnCtaI').innerHTML = S('seta2', '#0B1210', 3); $('#encI').innerHTML = S('seta2', '#0B1210', 3);
+$('#resK').innerHTML = S('robo', '#5C685D', 2.2) + 'Resumo da IA';
+const rS1 = riscar('sem1t'), rS2 = riscar('sem2t');
+
+/* lista de conversas: [entra em, iniciais, nome, prévia, hora, não lidas] — as 3 primeiras chegam durante a fala */
+const CT = [[4.05, 'PH', 'Pedro Henrique', 'Oi', '09:42', 1], [3.7, 'JL', 'Juliana Lima', 'Bom dia! Queria um orçamento', '09:41', 2],
+  [3.35, 'RM', 'Rafael Mendes', 'Vocês integram com o meu sistema?', '09:40', 1], [-1, 'AR', 'Ana Ribeiro', 'Oi! Quanto custa o plano de vocês?', '09:38', 3], [-1, 'MS', 'Marcos Silva', 'Atendem aos sábados?', '09:31', 1],
+  [-1, 'CF', 'Carla Freitas', 'Pode me mandar a proposta?', '09:25', 2], [-1, 'TB', 'Thiago Barros', 'Tenho interesse, me chama', '09:12', 1], [-1, 'LV', 'Loja Vida', 'Qual o prazo de implantação?', '08:57', 4]];
+const CORES = ['#1F3A2C', '#2E2940', '#3A2C22', '#1F2E3D', '#3A2329', '#2E3524', '#38321E', '#1D3634'];
+const cts = CT.map(([a, ini, n, pv, h, u], k) => { const e = document.createElement('div'); e.className = 'ct';
+  e.innerHTML = `<div class="av2" style="background:${CORES[k]};color:#C5CFC6">${ini}</div><div class="tx"><b>${n}</b><span>${pv}</span></div><div class="dir"><span class="hr">${h}</span><span class="bd">${u}</span></div>`;
+  $('#rows').appendChild(e); e._d = e.querySelector('.dir'); return e; });
+const H_CT = 105.5;
+
+/* informações coletadas */
+const INF = [['Empresa', 'Clínica Sorriso', 11.98], ['Atendentes no WhatsApp', '6 pessoas', 12.3], ['Hoje usa', 'Planilha', 12.62], ['Quer começar', 'Este mês', 12.98]];
+const infs = INF.map(([l, v]) => { const e = document.createElement('div'); e.className = 'inf'; e.innerHTML = `<span>${l}</span><b>${v}</b><i></i>`; $('#infs').appendChild(e); e._b = e.querySelector('b'); e._i = e.querySelector('i'); return e; });
+
+/* conversa na plataforma */
+const CV = conversa('#cMs', [[-1, 'in', 'Oi! Quanto custa o plano de vocês?', '09:38'], [-1, 'out', '<span class="quem">IA Newmo</span>Olá, Ana! Quantas pessoas atendem no seu WhatsApp?', '09:38'],
+  [-1, 'in', 'Somos 6. Queremos começar este mês', '09:39'], [17.45, 'sis', 'Carlos (Comercial) entrou na conversa', ''],
+  [19.4, 'out', '<span class="quem" style="color:#FFD279">Carlos</span>Ana, já preparei a proposta para os 6 atendentes. Começamos na segunda?', '09:41']]);
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'whatsapp', 2.05);
+  window.PAPEL_TOPO = (t > 3.1 && t < 7.8) || (t > 10.6 && t < 22.65) ? 0 : 9999;
+
+  /* ── inserção 0 · 0,35 → 1,95 ── */
+  A($('#novas'), t, 0.35, 1.8, { de: 0.86, dy: -60, dout: 0.25 });
+  $('#nNovas').textContent = Math.round(48 * pr(t, 0.6, 1.0, E.cubicOut));
+
+  /* ── FS1 · WhatsApp · 3,05 → 7,45 ── */
+  A($('#wa1'), t, 3.1, 7.35, { de: 0.88, dy: 120, dout: 0.2 });
+  { let desce = 0; cts.forEach((e, k) => { const p = CT[k][0] < 0 ? 1 : pr(t, CT[k][0], 0.35, E.cubicOut); e.style.opacity = p; desce += H_CT * (1 - p); });
+    const sobe = 120 * pr(t, 6.45, 0.35, E.cubicOut);
+    $('#rows').style.transform = `translateY(${-desce - sobe}px)`;
+    $('#nLid').textContent = 48 + cts.filter((e, k) => CT[k][0] > 0 && t >= CT[k][0]).length * 5;
+    // "já qualificadas": cada conversa mostra que ninguém qualificou
+    cts.forEach((e, k) => { const a = 5.5 + k * 0.07, q = t >= a; if (e._q !== q) { e._d.innerHTML = q ? '<span class="pill cinza">Não qualificado</span>' : `<span class="hr">${CT[k][4]}</span><span class="bd">${CT[k][5]}</span>`; e._q = q; }
+      if (q) e._d.firstChild.style.transform = `scale(${L(0.7, 1, M.prog(t, a, 0.5, E.spring))})`; }); }
+  { pop($('#alert1'), t, 6.45); const f = t >= 7.0; $('#alert1').style.borderColor = f ? 'var(--verm)' : 'transparent';
+    if (f) $('#alert1').style.transform = `scale(${1 + 0.04 * pulso(t, 7.0, 0.5)})` + tranco(t, 7.0); }
+
+  /* ── inserções · 7,65 → 10,15 ── */
+  A($('#logoCard'), t, 7.65, 8.4, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#ia'), t, 8.55, 10.0, { de: 0.86, dy: -60, dout: 0.3 });
+  pop($('#ia1'), t, 8.75); pop($('#ia2'), t, 9.3);
+
+  /* ── FS2 · plataforma · 10,3 → 22,3 ── */
+  A($('#app'), t, 10.35, 22.2, { de: 0.88, dy: 120, dout: 0.2 });
+  // "entende o interesse": o campo é preenchido pela IA
+  { $('#fInt').classList.toggle('foco', t >= 10.45 && t < 11.9); digita($('#tInt'), 'Plano para 6 atendentes no WhatsApp', t, 10.5, 34); }
+  // ícone de "quem atende": IA → Carlos
+  { const enc = t >= 14.62; const q = enc ? 'enc' : 'ia'; if ($('#quemP')._q !== q) { $('#quemP').className = 'pill ' + (enc ? 'vivo' : 'ia'); $('#quemP').innerHTML = enc ? '<i></i>Carlos · Comercial' : S('robo', '#0B1210', 2.2) + 'IA atendendo'; $('#quemP')._q = q; }
+    $('#quemP').style.transform = `scale(${1 + 0.12 * pulso(t, 14.62, 0.4)})`; }
+  // "coleta as informações necessárias": cada linha recebe o valor e um ✓
+  infs.forEach((e, k) => { const a = INF[k][2], on = t >= a; e._b.style.opacity = pr(t, a, 0.2, E.cubicOut); e._b.style.transform = `translateX(${(1 - pr(t, a, 0.35, E.cubicOut)) * 24}px)`;
+    if (e._on !== on) { e._i.innerHTML = on ? S('ok', '#33D285', 3) : ''; e._on = on; } acende(e, t, a, a + 0.7); });
+  { const q = t >= 13.2; $('#qualP').className = 'pill ' + (q ? 'vivo' : 'cinza'); $('#qualP').innerHTML = q ? '<i></i>Lead qualificado' : 'Qualificação em andamento'; $('#qualP').style.transform = `scale(${1 + 0.12 * pulso(t, 13.2, 0.4)})`; }
+  // "direciona as oportunidades para o seu time comercial": clique em Encaminhar
+  { const tc = 14.55, cl = cursor($('#cur1'), t, 13.95, [1010, 1500], alvo($('#btnEnc')), tc, 15.3); const ok = t >= tc + 0.05;
+    $('#btnEnc').style.transform = `scale(${1 - 0.06 * cl})`; $('#btnEnc').style.background = ok ? 'var(--verdec)' : ''; $('#btnEnc').style.color = ok ? 'var(--verde)' : '';
+    if ($('#encT')._ok !== ok) { $('#encT').textContent = ok ? 'Encaminhado ao Comercial' : 'Encaminhar ao Comercial'; $('#encI').innerHTML = S(ok ? 'ok' : 'seta2', ok ? '#33D285' : '#0B1210', 3); $('#encT')._ok = ok; } }
+  // "seu vendedor entra na conversa": aba Conversa
+  { const tc = 16.95; cursor($('#cur2'), t, 16.45, [960, 1400], alvo($('#nConv')), tc, 17.5); const cv = t >= tc + 0.05;
+    $('#nLead').classList.toggle('on', !cv); $('#nConv').classList.toggle('on', cv);
+    $('#vLead').style.opacity = cv ? 0 : 1; $('#vConv').style.opacity = cv ? pr(t, tc + 0.08, 0.2, E.cubicOut) : 0;
+    $('#rodape1').style.opacity = cv ? 0 : 1; }
+  CV.anima(t);
+  // "com contexto": o resumo da IA acende
+  { const f = pulso(t, 19.4, 1.4); $('#resumo').style.borderColor = t >= 19.4 && t < 21.0 ? 'var(--dest)' : 'transparent'; $('#resumo').style.background = f > 0.02 ? `rgba(0,199,103,${0.08 * f})` : ''; }
+  // "sem perder tempo com tarefas repetitivas"
+  { const e1 = pr(t, 20.3, 0.25, E.cubicOut), e2 = pr(t, 20.45, 0.25, E.cubicOut); $('#sem1').style.opacity = e1; $('#sem2').style.opacity = e2;
+    $('#sem1').style.transform = `translateY(${(1 - e1) * 20}px)`; $('#sem2').style.transform = `translateY(${(1 - e2) * 20}px)`; rS1(t, 21.0); rS2(t, 21.45); }
+
+  /* ── resultado · 22,45 → 25,6 ── */
+  A($('#res'), t, 22.45, 25.5, { de: 0.86, dy: -60, dout: 0.3 });
+  { const a = t >= 23.0; if ($('#r1p')._a !== a) { $('#r1p').className = 'pill ' + (a ? 'vivo' : 'verm'); $('#r1p').innerHTML = a ? '<i></i>Em segundos' : 'Horas depois'; $('#r1p')._a = a; }
+    $('#r1p').style.transform = `scale(${1 + 0.12 * pulso(t, 23.0, 0.4)})`; acende($('#r1'), t, 23.0, 24.3);
+    const b = t >= 24.55; if ($('#r2p')._b !== b) { $('#r2p').className = 'pill ' + (b ? 'vivo' : 'cinza'); $('#r2p').innerHTML = b ? '<i></i>Só leads qualificados' : 'Todos os contatos'; $('#r2p')._b = b; }
+    $('#r2p').style.transform = `scale(${1 + 0.12 * pulso(t, 24.55, 0.4)})`; acende($('#r2'), t, 24.55, null); }
+
+  /* ── CTA · 25,75 → fim ── */
+  A($('#cta'), t, 25.75, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 26.6, [1000, 1250], alvo($('#btnCta'), 70, 8), 27.3, 28.2); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.45) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.45 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

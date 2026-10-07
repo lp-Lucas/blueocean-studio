@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>RH Digital — Copy 2 (WhatsApp e planilhas · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 30.06;
+const ROSTO = [540, 850];
+const FS = [[2.35, 10.7, false], [16.42, 22.35, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 21.95, ps: FM.criaConfete(22, 50, 540, 600, 700, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="rhdigital.js"></script>
+<script>
+/* tela cheia 1 (2,35 → 10,7): ícone do WhatsApp expande → busca "assinou" → planilha → procura de novo → confere linha a linha */
+const O1 = { primeira: 'wa', busca: [2.5, 3.2], abas: [[3.55, 'pl'], [7.54, 'wa'], [9.08, 'pl']], pend: 4.13, contaT: 5.48, contaN: [9], confere: 9.45 };
+const F1 = montaFS1(O1);
+/* inserção (10,85 → 15,95): cobrar manualmente e recomeçar no próximo documento */
+const CB = [['BA', 'Bruno Alves'], ['DR', 'Diego Rocha'], ['JS', 'João Pedro Silva']];
+cartao('cb', '<span id="cbT">Holerite · setembro</span><span class="pill verm num" id="cbP"><i></i>9 pendentes</span>',
+  CB.map(([a, n], k) => `<div class="av2" style="width:46px;height:46px;font-size:17px;background:var(--claro);color:#4A505C">${a}</div><span class="tx">${n}</span><span class="pill verm" id="cbS${k}"><i></i>Pendente</span>`));
+/* tela cheia 2 (16,42 → 22,35): documentos e status centralizados, cobrança automática */
+const O2 = { inicio: 'docs', docsLuz: 17.24, centraliza: 18.54, abre: 19.0, auto: 19.95, assina: [21.28, 0.15] };
+const F2 = montaFS2(O2);
+/* inserção (22,49 → 25,85): menos procura, menos cobrança, mais controle */
+cartao('gn', '<img src="img/logo.png">Com o RH Digital', [
+  '<span class="tx" id="gnT0">Procurar em conversas e planilhas</span>',
+  '<span class="tx" id="gnT1">Cobrar um por um</span>',
+  '<span class="tx">Status das assinaturas</span><span class="pill cinza num" id="gnP">em tempo real</span>']);
+const r0 = riscar('gnT0'), r1 = riscar('gnT1');
+const cur = montaCTA('Centralize essa rotina');
+
+window.quadro = function (t) {
+  FM.antes(t); tela(t);
+  marcaExpande(t, 'whatsapp', 1.35);
+  window.PAPEL_TOPO = (t > 2.45 && t < 11.05) || (t > 16.72 && t < 22.7) ? 0 : 9999;
+
+  /* ── tela cheia 1 ── */
+  fs1(t, F1, O1, 2.35, 10.7);
+
+  /* ── inserção: cobrar manualmente · recomeça ── */
+  A($('#cb'), t, 10.85, 15.9, { de: 0.86, dy: -60, dout: 0.3 });
+  { const rec = t >= 14.49;
+    $('#cbT').textContent = rec ? 'Aviso de férias · outubro' : 'Holerite · setembro';
+    $('#cbP').innerHTML = `<i></i>${rec ? 12 : 9} pendentes`; $('#cbP').style.transform = rec ? `scale(${1 + 0.1 * pulso(t, 14.49, 0.45)})` + tranco(t, 14.55) : '';
+    CB.forEach((_, k) => { const a = 12.31 + k * 0.4, e = $('#cbS' + k), cob = t >= a && !rec;
+      e.className = 'pill ' + (cob ? 'lar' : 'verm'); e.innerHTML = '<i></i>' + (cob ? 'Cobrado à mão' : 'Pendente');
+      const tq = rec ? 14.49 + k * 0.08 : a; e.style.transform = t >= a ? `scale(${L(0.8, 1, M.prog(t, tq, 0.5, E.spring))})` : '';
+      $('#cbL' + k).style.background = cob ? `rgba(255,85,0,${0.08 * pulso(t, a, 0.6)})` : rec ? `rgba(201,55,42,${0.08 * pulso(t, tq, 0.7)})` : ''; }); }
+
+  /* ── tela cheia 2 ── */
+  fs2(t, F2, O2, 16.42, 22.35);
+
+  /* ── inserção: ganho ── */
+  A($('#gn'), t, 22.49, 25.8, { de: 0.86, dy: -60, dout: 0.3 });
+  r0(t, 22.85); r1(t, 23.65);
+  [0, 1].forEach(k => { $('#gnL' + k).style.color = t >= [22.85, 23.65][k] + 0.3 ? '#9AA0AC' : ''; });
+  { const on = t >= 25.03; $('#gnP').className = 'pill num ' + (on ? 'vivo' : 'cinza'); $('#gnP').innerHTML = on ? '<i></i>48 de 48 · em tempo real' : 'em tempo real';
+    acende($('#gnL2'), t, 25.03, '21,128,61', 0.06); $('#gnP').style.transform = `scale(${1 + 0.1 * pulso(t, 25.03, 0.45)})`; }
+
+  /* ── CTA ── */
+  cta(t, cur, 25.94, 27.85);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>RH Digital — Copy 1 (cobrança manual · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 29.28;
+const ROSTO = [540, 850];
+const FS = [[4.85, 9.6, true], [15.15, 21.7, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 21.15, ps: FM.criaConfete(21, 50, 540, 600, 700, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="rhdigital.js"></script>
+<script>
+/* gancho (0,35 → 4,7): cuidar de pessoas × passar o dia cobrando assinatura */
+cartao('ag', 'Agenda do RH · hoje<span class="pill cinza">3 tarefas</span>', [
+  '<span class="hr num">09:00</span><span class="tx">Integração dos novos colaboradores</span>',
+  '<span class="hr num">11:00</span><span class="tx">Feedback com a equipe</span>',
+  '<span class="hr num">14:00</span><span class="tx">Cobrar assinaturas</span><span class="pill cinza num" id="agC">23 pendentes</span>']);
+/* tela cheia 1 (4,85 → 9,6): planilha → WhatsApp, cobrando um por um */
+const O1 = { primeira: 'pl', pend: 5.6, col: 7.04, contaT: 7.7, contaN: [9], abas: [[8.42, 'wa']], cobra: [8.8, 4, 0.18] };
+const F1 = montaFS1(O1);
+/* inserção (9,75 → 14,85): a cada novo documento, mais cobrança */
+cartao('dc', 'Pendências · setembro<span class="pill cinza num" id="dcP">0 cobranças manuais</span>', [
+  `<span class="tx">${FM.svg('doc', 'var(--cinza)', 2).replace('<svg', '<svg style="width:28px;vertical-align:-5px;margin-right:12px"')}Holerite</span>${P_('verm', '9 pendentes')}`,
+  `<span class="tx">${FM.svg('doc', 'var(--cinza)', 2).replace('<svg', '<svg style="width:28px;vertical-align:-5px;margin-right:12px"')}Aviso de férias</span>${P_('verm', '6 pendentes')}`,
+  `<span class="tx">${FM.svg('doc', 'var(--cinza)', 2).replace('<svg', '<svg style="width:28px;vertical-align:-5px;margin-right:12px"')}Termo de LGPD</span>${P_('verm', '14 pendentes')}`]);
+/* tela cheia 2 (15,15 → 21,7): envia, acompanha, cobra automaticamente */
+const O2 = { inicio: 'docs', envia: 16.27, abre: 17.25, status: 17.6, auto: 19.09, assina: [20.55, 0.16] };
+const F2 = montaFS2(O2);
+/* inserção (21,85 → 24,9): menos trabalho manual, mais tempo */
+const g = mk('div', 'p card ins'); g.id = 'gn'; Object.assign(g.style, { left: '540px', top: '300px' });
+g.innerHTML = `<div class="cabI"><img src="img/logo.png">Rotina do RH · outubro</div>
+  <div class="bx" id="gn0"><span class="lb">Cobrança manual</span><div class="tr"><i id="gnB0" style="background:#B9BEC9"></i></div><span class="v num" id="gnV0">29</span></div>
+  <div class="bx" id="gn1"><span class="lb">Tempo com pessoas</span><div class="tr"><i id="gnB1" style="background:var(--verde)"></i></div><span class="v num" id="gnV1" style="color:var(--verde)">+0 h</span></div>`;
+const cur = montaCTA('Tire a cobrança da rotina');
+
+window.quadro = function (t) {
+  FM.antes(t); tela(t);
+  window.PAPEL_TOPO = (t > 5.15 && t < 9.95) || (t > 15.45 && t < 22.05) ? 0 : 9999;
+
+  /* ── gancho ── */
+  A($('#ag'), t, 0.35, 4.6, { de: 0.86, dy: -60, dout: 0.3 });
+  [0, 1].forEach(k => { const e = $('#agL' + k); acende(e, t, 1.66 + k * 0.2, '255,85,0', 0.07); e.style.opacity = t >= 3.76 ? L(1, 0.45, pr(t, 3.76, 0.3)) : 1; if (t >= 3.76) e.style.background = ''; });
+  { const e = $('#agL2'), on = t >= 3.76; acende(e, t, 3.76); e.style.transform = on ? `scale(${1 + 0.03 * pulso(t, 3.76, 0.5)})` + tranco(t, 3.8) : '';
+    $('#agC').className = 'pill num ' + (on ? 'verm' : 'cinza'); $('#agC').style.fontWeight = on ? 700 : 600; }
+
+  /* ── tela cheia 1 ── */
+  fs1(t, F1, O1, 4.85, 9.6);
+
+  /* ── inserção: cada novo documento ── */
+  A($('#dc'), t, 9.75, 14.8, { de: 0.86, dy: -60, dout: 0.3 });
+  [0, 1, 2].forEach(k => { const a = 10.76 + k * 0.2, e = $('#dcL' + k); e.style.background = `rgba(201,55,42,${0.08 * pulso(t, a, 0.9)})`; e.querySelector('.pill').style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; });
+  { const on = t >= 11.82, n = conta(t, 11.82, 1.6, 0, 29); $('#dcP').className = 'pill num ' + (on ? 'verm' : 'cinza');
+    $('#dcP').innerHTML = (on ? '<i></i>' : '') + `${n} cobranças manuais`; $('#dcP').style.transform = `scale(${1 + 0.08 * pulso(t, 13.97, 0.45)})` + tranco(t, 14.0); }
+
+  /* ── tela cheia 2 ── */
+  fs2(t, F2, O2, 15.15, 21.7);
+
+  /* ── inserção: ganho ── */
+  A($('#gn'), t, 21.85, 24.85, { de: 0.86, dy: -60, dout: 0.3 });
+  { const p0 = pr(t, 22.2, 0.9, E.cubicInOut), p1 = pr(t, 23.14, 0.9, E.cubicInOut);
+    $('#gnB0').style.width = L(100, 0, p0) + '%'; $('#gnV0').textContent = Math.round(L(29, 0, p0)); acende($('#gn0'), t, 22.2, '21,128,61', 0.0);
+    $('#gnB1').style.width = L(25, 100, p1) + '%'; $('#gnV1').textContent = `+${Math.round(L(0, 12, p1))} h`;
+    $('#gn1').style.background = `rgba(21,128,61,${0.08 * pulso(t, 23.14, 1.2)})`; }
+
+  /* ── CTA ── */
+  cta(t, cur, 25.0, 27.15);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

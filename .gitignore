@@ -9,6 +9,7 @@ projetos/
 cache/
 config.json
 .controle*.json
+lotes.json
 *.lnk
 
 # mídia pesada gerada pelas ferramentas de motion

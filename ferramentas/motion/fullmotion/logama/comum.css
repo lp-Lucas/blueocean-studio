@@ -1,0 +1,47 @@
+/* componentes comuns das 3 copies LOGAMA (janela com abas, linhas que acendem, alerta "???", formulário, CTA) */
+.fs .abas { height: 84px; display: flex; align-items: flex-end; gap: 6px; padding: 0 22px; background: #E8E5E2; position: relative; z-index: 2; }
+.fs .aba { width: 290px; height: 64px; border-radius: 14px 14px 0 0; display: flex; align-items: center; gap: 12px; padding: 0 20px; font: 500 23px 'Inter'; color: #5E6166; white-space: nowrap; overflow: hidden; }
+.fs .aba i { width: 26px; height: 26px; border-radius: 7px; flex: none; }
+.fs .aba.on { background: #fff; color: var(--tinta); font-weight: 600; }
+#carrega { position: absolute; left: 0; top: 84px; height: 4px; background: var(--azul); width: 0; z-index: 3; }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+.cabV { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.cabV .pill { margin-top: 6px; }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.cinza.foco, .pill.foco { background: var(--tinta); color: #fff; }
+.alerta { display: flex; align-items: center; margin-top: 24px; height: 112px; padding: 0 30px; border-radius: 18px; background: var(--vermc); border: 3px solid transparent;
+          font: 650 30px 'Inter'; color: var(--tinta); opacity: 0; }
+.alerta b { margin-left: auto; font: 700 54px 'Space'; color: var(--verm); letter-spacing: .04em; }
+
+/* cartões das inserções */
+.cabI { display: flex; align-items: center; gap: 14px; font: 700 32px 'Space'; letter-spacing: -0.02em; height: 48px; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; height: 64px; border-top: 1.5px solid var(--linha); font: 500 27px 'Inter'; color: #3B3E42; padding: 0 14px; margin: 0 -14px; border-radius: 10px; }
+.li:first-of-type { margin-top: 12px; }
+.li b { margin-left: auto; font: 650 27px 'Inter'; color: var(--tinta); }
+.cl { display: flex; align-items: center; height: 84px; border-bottom: 1.5px solid var(--linha); font: 500 29px 'Inter'; color: #3B3E42; padding: 0 16px; margin: 0 -16px; border-radius: 12px; }
+.cl b { margin-left: auto; font: 650 30px 'Inter'; color: var(--tinta); }
+.ck { width: 40px; height: 40px; border-radius: 50%; background: var(--claro); display: grid !important; place-items: center; flex: none; }
+.ck svg { width: 24px; }
+
+/* formulário da plataforma */
+.campo { margin-top: 20px; } .campo .k { margin-bottom: 8px; }
+.campo .cx { height: 74px; border: 1.5px solid var(--linha); border-radius: 12px; display: flex; align-items: center; padding: 0 22px; font: 500 29px 'Inter'; }
+.campo .cx .vl { font-weight: 600; } .campo .cx .cur { width: 3px; height: 34px; background: var(--tinta); margin-left: 3px; }
+.btn.grande { position: absolute; left: 34px; right: 34px; bottom: 34px; height: 90px; justify-content: center; font-size: 31px; }
+.btn.verm { background: var(--azul); }
+.res { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding: 22px 26px; border-radius: 16px; background: var(--tinta); color: #fff; opacity: 0; }
+.res .k { color: rgba(255,255,255,.6); } .res .vv { font: 700 46px 'Space'; letter-spacing: -0.02em; margin-top: 4px; }
+.verdeC { color: #7EE2A0; }
+
+/* CTA */
+#cta { width: 960px; padding: 34px 36px; display: flex; align-items: center; gap: 30px; }
+#cta .lg { width: 150px; height: 150px; border-radius: 26px; background: var(--claro); display: grid; place-items: center; flex: none; } #cta .lg img { width: 104px; }
+#cta .t { font: 700 38px/1.15 'Space'; letter-spacing: -0.02em; } #cta .t span { color: var(--cinza); font: 500 26px 'Inter'; display: block; margin-bottom: 6px; letter-spacing: -0.01em; }
+#btnCta { margin-top: 18px; height: 80px; font-size: 32px; } #btnCta svg { width: 28px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+#logoCard { padding: 44px 60px; }
+.etapas { display: flex; align-items: center; gap: 14px; margin-top: 22px; font: 600 23px 'Inter'; color: var(--cinza); }
+.etapas .e { display: flex; align-items: center; gap: 10px; white-space: nowrap; } .etapas .e i { width: 18px; height: 18px; border-radius: 50%; border: 3px solid #C9C6C3; }
+.etapas .e.on { color: var(--verde); } .etapas .e.on i { background: var(--verde); border-color: var(--verde); }
+.etapas .tr { flex: 1; height: 3px; background: var(--linha); border-radius: 2px; position: relative; overflow: hidden; } .etapas .tr b { position: absolute; inset: 0; background: var(--verde); transform-origin: 0 50%; transform: scaleX(0); }

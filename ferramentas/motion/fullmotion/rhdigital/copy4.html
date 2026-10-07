@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>RH Digital — Copy 4 (controle das pendências · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy4/palavras.js"></script>
+<script>
+window.DURACAO = 26.64;
+const ROSTO = [540, 850];
+const FS = [[5.18, 9.35, true], [14.0, 19.15, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 18.8, ps: FM.criaConfete(24, 50, 540, 600, 700, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="rhdigital.js"></script>
+<script>
+/* gancho (0,3 → 4,95): quem já assinou × quem precisa ser cobrado */
+cartao('lb', 'Holerite · setembro<span class="pill cinza">48 colaboradores</span>', [
+  `<span class="tx">Já assinaram</span><span class="pill cinza" id="lbP0">conferir na planilha</span>`,
+  `<span class="tx">Precisam ser cobrados</span><span class="pill cinza" id="lbP1">conferir na planilha</span>`]);
+/* tela cheia 1 (5,18 → 9,35): controle manual, cada documento vira mais pendência */
+const O1 = { primeira: 'pl', pend: 5.63, contaT: 6.13, contaN: [9, 23, 38], docAbas: [[7.05, 1], [8.1, 2]] };
+const F1 = montaFS1(O1);
+/* inserção (9,5 → 13,7): mais funcionários, mais cobranças, mais coisa para lembrar */
+cartao('mt', 'Assinaturas · por mês<span class="pill cinza" id="mtP">equipe de 20</span>', [
+  '<span class="tx">Funcionários</span><span class="v num" id="mtV0">20</span>',
+  '<span class="tx">Cobranças</span><span class="v num" id="mtV1">60</span>',
+  '<span class="tx">Pendências para lembrar</span><span class="v num" id="mtV2">12</span>']);
+/* tela cheia 2 (14,0 → 19,15): mostra o status e cobra automaticamente */
+const O2 = { inicio: 'status', status: 15.34, auto: 16.64, assina: [18.1, 0.15] };
+const F2 = montaFS2(O2);
+/* inserção (19,28 → 22,2): menos controle manual, mais previsibilidade */
+cartao('gn', '<img src="img/logo.png">Holerite · setembro', [
+  '<span class="tx" id="gnT0">Controle manual</span>',
+  '<span class="tx">Assinaturas</span><span class="pill vivo num"><i></i>48 de 48</span>',
+  '<span class="tx">Conclusão prevista</span><span class="pill cinza num" id="gnP">—</span>']);
+const r0 = riscar('gnT0');
+const cur = montaCTA('Simplifique essa rotina');
+
+window.quadro = function (t) {
+  FM.antes(t); tela(t);
+  window.PAPEL_TOPO = (t > 5.48 && t < 9.7) || (t > 14.3 && t < 19.5) ? 0 : 9999;
+
+  /* ── gancho ── */
+  A($('#lb'), t, 0.3, 4.9, { de: 0.86, dy: -60, dout: 0.3 });
+  [[2.78, 'vivo', '39 colaboradores', '21,128,61'], [4.56, 'verm', '9 colaboradores', '201,55,42']].forEach(([a, c, tx, cor], k) => {
+    const p = $('#lbP' + k), on = t >= a; p.className = 'pill num ' + (on ? c : 'cinza'); p.innerHTML = on ? `<i></i>${tx}` : 'conferir na planilha';
+    p.style.transform = on ? `scale(${L(0.8, 1, M.prog(t, a, 0.5, E.spring))})` + (k ? tranco(t, a + 0.05) : '') : ''; acende($('#lbL' + k), t, a, cor, 0.06); });
+
+  /* ── tela cheia 1 ── */
+  fs1(t, F1, O1, 5.18, 9.35);
+
+  /* ── inserção: quanto mais funcionários ── */
+  A($('#mt'), t, 9.5, 13.65, { de: 0.86, dy: -60, dout: 0.3 });
+  [[10.01, 20, 80], [11.23, 60, 240], [12.53, 12, 48]].forEach(([a, de, ate], k) => { $('#mtV' + k).textContent = conta(t, a, 0.7, de, ate);
+    acende($('#mtL' + k), t, a, k === 2 ? '201,55,42' : '255,85,0', 0.06); if (k === 2) $('#mtV2').style.color = t >= a ? 'var(--verm)' : '';
+    $('#mtV' + k).style.transform = `scale(${1 + 0.12 * pulso(t, a + 0.6, 0.4)})`; });
+  $('#mtP').textContent = t >= 10.01 ? 'equipe de 80' : 'equipe de 20';
+
+  /* ── tela cheia 2 ── */
+  fs2(t, F2, O2, 14.0, 19.15);
+
+  /* ── inserção: previsibilidade ── */
+  A($('#gn'), t, 19.28, 22.15, { de: 0.86, dy: -60, dout: 0.3 });
+  r0(t, 19.64); $('#gnL0').style.color = t >= 19.95 ? '#9AA0AC' : '';
+  { const on = t >= 20.9; $('#gnP').className = 'pill num ' + (on ? 'vivo' : 'cinza'); $('#gnP').innerHTML = on ? '<i></i>em 2 dias' : '—';
+    acende($('#gnL2'), t, 20.9, '21,128,61', 0.06); $('#gnP').style.transform = on ? `scale(${L(0.8, 1, M.prog(t, 20.9, 0.5, E.spring))})` : ''; }
+
+  /* ── CTA ── */
+  cta(t, cur, 22.28, 24.4);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

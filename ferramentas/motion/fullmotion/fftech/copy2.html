@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FF Tech — Copy 2 MOFU (CISO · evidência antes da auditoria)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 700px; }
+  #win .corpo { height: 622px; }
+  .row .h { width: 110px; }
+  #prova { display: flex; align-items: center; margin-top: 20px; height: 100px; padding: 0 28px; border-radius: 16px; background: rgba(255,255,255,.04); border: 2px solid var(--linha2); font: 600 29px 'AtypT'; }
+  #prova b { margin-left: auto; font: 700 48px 'GMono'; color: var(--verm); letter-spacing: .06em; }
+  .msg { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--linha2); border-radius: 10px; margin: 0 -14px; padding-left: 14px; padding-right: 14px; }
+  .msg .av { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,.07); display: grid; place-items: center; font: 600 19px 'GMono'; color: #B8BDCB; flex: none; }
+  .msg .tx { font: 400 26px/1.3 'AtypT'; color: #D5D8E2; } .msg .tx b { display: block; font: 600 22px 'AtypT'; color: var(--tinta); margin-bottom: 2px; } .msg .tx b span { font: 400 19px 'GMono'; color: var(--cinza); margin-left: 8px; }
+
+  #fw .li span:first-child { font: 600 28px 'AtypT'; color: var(--tinta); width: 220px; }
+  #fw .li .mono { font: 400 23px 'GMono'; color: var(--cinza); }
+
+  #app2 { height: 770px; }
+  #app2 .corpo { height: 600px; }
+  .row b { font: 400 22px 'GMono'; color: var(--cinza); }
+  #exp { margin-top: 22px; width: 100%; height: 82px; font-size: 29px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 9,1): o auditor pede evidência · o time caça print no chat · a execução ninguém prova ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="abas"><div class="aba">Auditoria ISO 27001</div><div class="aba">Chat · #infra</div></div>
+  <div class="carrega" id="carrega1" style="top:74px"></div>
+  <div class="corpo">
+    <div class="vista" id="vAud">
+      <h3>Pedido do auditor</h3><p>Evidências de controle · entrega amanhã</p>
+      <div style="margin-top:12px">
+        <div class="row a"><span class="h">pol.</span>Política de segurança v3<span class="pill cinza" id="pPol">Documento</span></div>
+        <div class="row a"><span class="h">a.8.15</span>Logs de acesso<span class="pill ruim">Sem evidência</span></div>
+        <div class="row a"><span class="h">a.8.8</span>Vulnerabilidades<span class="pill ruim">Sem evidência</span></div>
+        <div class="row a"><span class="h">a.5.18</span>Direitos de acesso<span class="pill ruim">Sem evidência</span></div>
+      </div>
+      <div id="prova">Execução comprovada<b id="provaB">—</b></div>
+    </div>
+    <div class="vista" id="vChat" style="opacity:0">
+      <h3>#infra</h3><p>4 pessoas procurando evidência</p>
+      <div style="margin-top:8px">
+        <div class="msg m"><div class="av">AS</div><div class="tx"><b>Ana<span>09:12</span></b>Alguém tem print do log de março?</div></div>
+        <div class="msg m"><div class="av">BR</div><div class="tx"><b>Bruno<span>09:15</span></b>Procura no drive “auditoria-2025”</div></div>
+        <div class="msg m"><div class="av">CM</div><div class="tx"><b>Caio<span>09:31</span></b>Acho que tá no e-mail do Pedro</div></div>
+        <div class="msg m"><div class="av">AS</div><div class="tx"><b>Ana<span>10:02</span></b>Achei 2 de 3. O de acesso sumiu</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÕES (9,2 → 14,3) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo-branco.png" style="height:58px"></div></div>
+<div class="p card ins" id="fw" style="left:540px;top:300px">
+  <div class="cabI">Frameworks no dia a dia<span class="pill cinza" id="fwP">3 de 3</span></div>
+  <div class="li"><span>PCI DSS</span><span class="mono">dados de pagamento</span></div>
+  <div class="li"><span>LGPD</span><span class="mono">dados pessoais</span></div>
+  <div class="li"><span>ISO 27001</span><span class="mono">gestão de segurança</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (14,35 → 25,4): controle rodando com evidência · CVE com prazo · pentest + retest · trilha pronta ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img class="lg" src="img/logo-fftech.png"><span class="tt">// SEC · Compliance</span><span class="pill vivo"><i></i>Live</span></div>
+  <div class="abas"><div class="aba">Controles</div><div class="aba">Vulnerabilidades</div><div class="aba">Acessos</div></div>
+  <div class="carrega" id="carrega2" style="top:166px"></div>
+  <div class="corpo">
+    <div class="vista" id="vCtl">
+      <h3>Controles em execução</h3><p>Evidência gerada pela própria operação</p>
+      <div style="margin-top:12px">
+        <div class="row c"><span class="h">a.8.15</span>Log centralizado<b>siem · 1,2 M/dia</b><span class="pill cinza">Configurado</span></div>
+        <div class="row c"><span class="h">a.8.8</span>Gestão de vulnerab.<b>scan diário</b><span class="pill cinza">Configurado</span></div>
+        <div class="row c"><span class="h">a.5.18</span>Revisão de acessos<b>sso · mfa</b><span class="pill cinza">Configurado</span></div>
+        <div class="row c"><span class="h">a.8.13</span>Backup + restore<b>teste mensal</b><span class="pill cinza">Configurado</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vVul" style="opacity:0">
+      <h3>Vulnerabilidades · prazo</h3><p>Cada achado com CVE, dono e SLA</p>
+      <div style="margin-top:12px">
+        <div class="row v"><span class="h">crít.</span>CVE-2024-3094<b>prazo 48 h</b><span class="pill vivo">Tratada</span></div>
+        <div class="row v"><span class="h">alta</span>CVE-2023-44487<b>prazo 7 d</b><span class="pill vivo">Tratada</span></div>
+        <div class="row v"><span class="h">alta</span>CVE-2024-6387<b>prazo 7 d</b><span class="pill vivo">Tratada</span></div>
+        <div class="row v" id="pent"><span class="h">pentest</span>Pentest Q3 · /api<b>8 achados</b><span class="pill cinza" id="pRet">Retest</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vAce" style="opacity:0">
+      <h3>Trilha de acesso</h3><p>Quem acessou o quê, quando e com qual aprovação</p>
+      <div style="margin-top:8px">
+        <div class="log t"><span class="h">08:14</span><span class="o">ana.s</span><span>login prod-db · sso</span><span class="pill vivo">mfa</span></div>
+        <div class="log t"><span class="h">08:21</span><span class="o">caio.m</span><span>sudo eks-prod</span><span class="pill ciano">aprovado</span></div>
+        <div class="log t"><span class="h">09:03</span><span class="o">deploy-bot</span><span>apply infra v2.4</span><span class="pill vivo">ok</span></div>
+        <div class="log t"><span class="h">09:40</span><span class="o">bruno.r</span><span>acesso revogado</span><span class="pill cinza">revisão</span></div>
+      </div>
+      <div class="btn" id="exp"><span id="expT">Exportar trilha para o auditor</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (25,5 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-branco.png" style="height:40px;margin-bottom:22px">
+  <div class="t"><span>// Evidências · antes da auditoria</span>Veja a trilha que montamos antes</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Ver a trilha de evidências <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur5" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur6" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 29.96;
+const ROSTO = [555, 860];
+const FS = [[0.9, 9.12, true], [14.35, 25.4, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 24.45, ps: FM.criaConfete(7, 60, 540, 1060, 760, 60, 0.7), rgb: [74, 222, 128] }];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#07091A', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const Q = s => [...document.querySelectorAll(s)];
+const vira = (el, t, t0, txt, cls) => { if (el._b == null) { el._b = el.innerHTML; el._c = el.className; }
+  const on = t >= t0, h = on ? txt : el._b; if (el.innerHTML !== h) el.innerHTML = h; if (cls != null) el.className = on ? 'pill ' + cls : el._c; if (on) pulsa(el, t, t0, 0.1); else el.style.transform = ''; };
+const aud = Q('#vAud .row'), msgs = Q('#vChat .msg'), fw = Q('#fw .li'), ctl = Q('#vCtl .row'), vul = Q('#vVul .row'), ace = Q('#vAce .log');
+const abas1 = Q('#win .aba'), abas2 = Q('#app2 .aba');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  // câmera (receita 13, linear e suave): sempre andando, zoom sem cortar informação
+  camera(t, '#cam1', [[0.95, [540, 800], 0.92, 3, -4], [2.2, [aud[1], aud[3]], 1.08, 2, -2], [3.4, '#vChat', 1.06, 2, 2, 0, -60], [4.8, '#vChat', 1.12, 1, 1, 0, -30],
+    [5.8, aud[0], 1.1, 1, -2, 0, 80], [7.2, '#prova', 1.08, 1, 2, 0, -60], [8.7, '#prova', 1.16, 0, 0], [9.1, '#prova', 1.2, 0, 0]]);
+  camera(t, '#cam2', [[14.4, [540, 810], 0.92, 3, 4], [15.6, '#vCtl', 1.06, 2, 2, 0, -40], [17.8, '#vCtl', 1.14, 1, -1], [19.3, ['#app2 .abas', '#vVul'], 1.04, 2, -2],
+    [21.9, '#vVul', 1.14, 1, 2, 0, 30], [23.2, ['#app2 .abas', '#vAce'], 1.04, 2, -2], [24.6, ['#vAce .log', '#exp'], 1.12, 1, 1], [25.35, '#exp', 1.18, 0, 0]]);
+
+  /* ── FS1 · 0,9 → 9,1 ── */
+  A($('#win'), t, 0.95, 9.0, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas1, [$('#vAud'), $('#vChat')], [[3.42, 1], [5.2, 0]], $('#carrega1'));
+  cascata(aud, t, 1.15, 0.08);
+  // "pediu evidência de controle": os controles pedidos acendem
+  aud.forEach((e, k) => k && acende(e, t, 1.82 + (k - 1) * 0.2, '255,59,59', 0.1));
+  // "seu time saiu caçando print no chat": clica no chat, as mensagens já estão lá; a do print acende
+  { const c = cursor($('#cur1'), t, 2.85, [1000, 1500], t > 2.85 ? centro(abas1[1]) : [0, 0], 3.35, 3.7); }
+  cascata(msgs, t, 3.45, 0.08); acende(msgs[0], t, 4.19); acende(msgs[3], t, 4.69, '255,59,59', 0.1);
+  // "a política existe": volta para o pedido, política fica verde
+  { const c = cursor($('#cur2'), t, 4.75, centro(abas1[1]), t > 4.75 ? centro(abas1[0]) : [0, 0], 5.15, 5.5); }
+  acende(aud[0], t, 5.63, '74,222,128'); vira($('#pPol'), t, 5.63, '✓ Existe', 'vivo');
+  // "mas a execução ninguém consegue provar no dia da checagem"
+  cascata([$('#prova')], t, 1.5); acende($('#prova'), t, 6.41, '255,59,59', 0.12);
+  { const r = t >= 7.65; $('#provaB').textContent = r ? '???' : '—'; $('#provaB').style.color = r ? 'var(--verm)' : 'var(--cinza)'; $('#prova').style.borderColor = r ? 'var(--verm)' : ''; }
+  if (t >= 8.57) $('#prova').style.transform = `scale(${1 + 0.04 * Math.sin(C((t - 8.57) / 0.5) * Math.PI)})` + tranco(t, 8.57);
+
+  /* ── inserções · 9,2 → 14,3 ── */
+  A($('#logoCard'), t, 9.2, 10.1, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#fw'), t, 10.1, 14.3, { de: 0.86, dy: -60 });
+  cascata(fw, t, 10.1, 0.06, 12);
+  fw.forEach((e, k) => acende(e, t, [10.3, 11.66, 12.9][k]));
+  vira($('#fwP'), t, 13.12, '<i></i>3 de 3', 'vivo');
+
+  /* ── FS2 · 14,35 → 25,4 ── */
+  A($('#app2'), t, 14.4, 25.3, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, [$('#vCtl'), $('#vVul'), $('#vAce')], [[18.95, 1], [22.95, 2]], $('#carrega2'));
+  cascata(ctl, t, 14.6, 0.08);
+  // "viram controle rodando": todos passam a rodar; "evidência gerada": cada um com evidência do dia
+  ctl.forEach((e, k) => { vira(e.querySelector('.pill'), t, 15.12 + k * 0.12, '<i></i>Rodando', 'vivo');
+    vira(e.querySelector('b'), t, 16.18 + k * 0.1, 'evidência 08:14', null); e.querySelector('b').style.color = t >= 16.18 + k * 0.1 ? 'var(--ciano)' : ''; });
+  acende(ctl[0], t, 17.68);   // "log centralizado"
+  { const c = cursor($('#cur3'), t, 18.4, [1000, 1500], t > 18.4 ? centro(abas2[1]) : [0, 0], 18.9, 19.25); }
+  cascata(vul, t, 19.0, 0.1);
+  acende(vul[0], t, 20.25); vul.slice(0, 3).forEach((e, k) => { const b = e.querySelector('b'); b.style.color = t >= 21.05 ? 'var(--tinta)' : ''; });
+  acende($('#pent'), t, 21.63); vira($('#pRet'), t, 22.35, '✓ Retest ok', 'vivo');
+  { const c = cursor($('#cur4'), t, 22.5, centro(abas2[1]), t > 22.5 ? centro(abas2[2]) : [0, 0], 22.9, 23.2); }
+  cascata(ace, t, 23.0, 0.1); acende(ace[0], t, 23.53);
+  // "pronta antes do auditor pedir": exporta, botão fica verde
+  { const cl = cursor($('#cur5'), t, 23.7, [980, 1450], t > 23.7 ? centro('#exp') : [0, 0], 24.3, 24.9); const ok = t >= 24.35;
+    $('#exp').style.transform = `scale(${1 - 0.04 * cl})`; $('#exp').classList.toggle('ok', ok); vira($('#expT'), t, 24.35, 'Trilha pronta ✓', null); }
+
+  /* ── CTA · 25,5 → fim ── */
+  A($('#cta'), t, 25.5, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur6'), t, 27.0, [1020, 760], t > 27.0 ? centro('#btnCta') : [0, 0], 27.7, 29.2); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.85) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.85 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

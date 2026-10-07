@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Geodocs — Copy 3 (Você gerencia 30 locais. Ou 30 grupos?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 734px; } #win .corpo { height: 650px; }
+  .vfull { position: absolute; inset: 0; }
+  .wl { position: absolute; inset: 0; background: #fff; }
+  .wl .hd { height: 96px; background: #008069; display: flex; align-items: center; padding: 0 30px; color: #fff; font: 700 30px 'Inter'; }
+  .wl .hd .pill { margin-left: auto; background: rgba(255,255,255,.18); color: #fff; }
+  .gr { display: flex; align-items: center; gap: 18px; height: 92px; padding: 0 30px; border-bottom: 1.5px solid #E9EDEF; }
+  .gr .av2 { width: 60px; height: 60px; background: #DFE5E7; color: #54656F; }
+  .gr .tx { font: 700 26px 'Inter'; color: #111B21; line-height: 1.25; } .gr .tx span { display: block; font: 500 22px 'Inter'; color: #667781; }
+  .gr .dir { margin-left: auto; text-align: right; font: 500 20px 'Inter'; color: #1FA855; }
+  .gr .dir i { display: block; margin: 6px 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: #25D366; color: #fff; font: 700 19px/34px 'Inter'; font-style: normal; text-align: center; }
+  .sh { margin-top: 16px; border: 1.5px solid var(--linha); border-radius: 12px; overflow: hidden; }
+  .sh .r { display: flex; height: 62px; border-top: 1.5px solid var(--linha); font: 500 23px 'Inter'; } .sh .r:first-child { border-top: none; background: var(--claro); font: 600 20px 'Inter'; color: var(--cinza); }
+  .sh .r > span { display: flex; align-items: center; padding: 0 14px; border-left: 1.5px solid var(--linha); } .sh .r > span:first-child { border-left: none; }
+  .sh .c0 { width: 54px; justify-content: center; color: var(--cinza); background: var(--claro); } .sh .c1 { width: 330px; } .sh .c2 { width: 210px; } .sh .c3 { flex: 1; }
+  .wc { position: absolute; inset: 0; background: #EFEAE2; overflow: hidden; }
+  .wc .hd { height: 96px; background: #008069; display: flex; align-items: center; gap: 18px; padding: 0 28px; color: #fff; position: relative; z-index: 2; }
+  .wc .hd .av2 { background: #DFE5E7; color: #54656F; width: 58px; height: 58px; } .wc .hd .nm { font: 700 28px 'Inter'; } .wc .hd .nm span { display: block; font: 500 20px 'Inter'; opacity: .85; }
+  .wc .msgs { bottom: 112px; }
+  .barra { position: absolute; left: 20px; right: 20px; bottom: 18px; height: 76px; border-radius: 38px; background: #fff; display: flex; align-items: center; padding: 0 28px; font: 500 26px 'Inter'; color: #111B21; z-index: 3; }
+  #cob { position: absolute; left: 26px; right: 26px; bottom: 112px; z-index: 4; }
+  #app { height: 822px; } #app .corpo { padding: 26px 34px; }
+  .lays { display: flex; gap: 14px; margin-top: 16px; }
+  #mw { position: relative; margin-top: 16px; }
+  #pop { position: absolute; left: 340px; top: 40px; width: 420px; padding: 22px 26px; opacity: 0; }
+  #pop .t { font: 700 27px 'Inter'; display: flex; align-items: center; } #pop .t .pill { margin-left: auto; }
+  #pop .l { display: flex; justify-content: space-between; font: 500 23px 'Inter'; color: var(--cinza); margin-top: 12px; } #pop .l b { color: var(--tinta); font-weight: 600; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ INSERÇÃO (0,2 → 3,75): quem a fala qualifica ═════ -->
+<div class="p card ins" id="eqp" style="left:540px;top:300px">
+  <div class="cabI">Regional Sul · Operações<span class="pill cinza">Gestão</span></div>
+  <div class="eq" id="eq0"><div class="av2">AV</div>Gerente de operações<span class="pill cinza">André Vieira</span></div>
+  <div class="eq" id="eq1"><div class="av2">JC</div>Coordenador de manutenção<span class="pill cinza">Júlia Costa</span></div>
+  <div class="eq" id="eq2"><div class="av2">RP</div>Gestor de obras<span class="pill cinza">Renato Pires</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (3,95 → 5,6): 30 locais ═════ -->
+<div class="p card ins" id="loc" style="left:540px;top:300px">
+  <div class="cabI">Locais em operação<span class="pill cinza" id="loc30">30 locais</span></div>
+  <div class="li"><span class="ico" id="l0"></span>Obra Centro · Curitiba<b style="font:500 22px Inter;color:var(--cinza)">Obra</b></div>
+  <div class="li"><span class="ico" id="l1"></span>Subestação Leste · Joinville<b style="font:500 22px Inter;color:var(--cinza)">Manutenção</b></div>
+  <div class="li"><span class="ico" id="l2"></span>+ 28 locais<b style="font:500 22px Inter;color:var(--cinza)">PR · SC · RS</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (WhatsApp expande 5,9 → tela 6,9 → 16,05): 30 grupos · planilha · e-mails · perguntar ═════ -->
+<div class="p card app fs win" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba on"><i style="background:#25D366" id="icW"></i>WhatsApp</div><div class="aba"><i style="background:#1E8E3E" id="icP"></i>Planilha</div><div class="aba"><i style="background:#64748B" id="icM"></i>E-mail</div></div>
+  <div class="carrega" id="carrega"></div>
+  <div class="corpo">
+    <div class="vfull" id="vWl"><div class="wl"><div class="hd">Conversas<span class="pill" id="g30">30 grupos</span></div><div id="grs"></div></div></div>
+    <div class="vista" id="vPl" style="opacity:0">
+      <div class="cab"><h3>controle_operacoes_v7.xlsx</h3><span class="pill cinza" id="plP">editado há 9 dias</span></div>
+      <div class="sh" id="sh"></div>
+    </div>
+    <div class="vista" id="vMl" style="opacity:0">
+      <div class="cab"><h3>Caixa de entrada</h3><span class="pill cinza">14 não lidos</span></div>
+      <div id="mls" style="margin-top:6px"></div>
+    </div>
+    <div class="vfull" id="vWc" style="opacity:0"><div class="wc"><div class="hd"><div class="av2">OC</div><div class="nm">Obra Centro · Equipe<span>11 participantes</span></div></div>
+      <div class="msgs" id="msgs"></div>
+      <div class="alerta" id="cob">Sem resposta<b>29 grupos</b></div>
+      <div class="barra" id="barra"></div></div></div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (16,2 → 17,0): Geodocs ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px;padding:40px 64px"><img src="img/logo.png" style="height:74px;display:block"></div>
+
+<!-- ═════ TELA CHEIA 2 (17,05 → 21,45): projetos, tarefas e registros de campo no mapa ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Geodocs</span><div class="nav"><b>Mapa</b><span>Projetos</span><span>Equipe</span></div><div class="av">AV</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Operações · Regional Sul</h3><span class="pill cinza" id="tudo">30 locais</span></div>
+    <div class="lays"><span class="lay" id="ly0"><i></i>Projetos</span><span class="lay" id="ly1"><i></i>Tarefas</span><span class="lay" id="ly2"><i></i>Registros de campo</span></div>
+    <div id="mw"><svg class="mapa" id="mapa2" width="892" height="520" viewBox="0 0 892 520"></svg>
+      <div class="card" id="pop"><div class="t">Obra Centro<span class="pill vivo"><i></i>Em dia</span></div>
+        <div class="l">Tarefas abertas<b>4</b></div><div class="l">Registros hoje<b>12</b></div><div class="l">Última atualização<b>14:32</b></div></div></div>
+  </div>
+</div>
+
+<!-- ═════ CTA (21,6 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:305px">
+  <img src="img/logo.png">
+  <div class="tit">Sua operação está espalhada.<br>Sua gestão não precisa estar.</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Criar conta <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur5" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 26.02;
+// corte depois do motion pronto: sílaba solta antes de "você gerencia" (−0,18 s). Animação no tempo antigo (WARP), legenda no novo.
+const WA = [[0, 0], [3.85, 3.85], [4.36, 4.56], [4.88, 5.06], [40, 40.18]];
+const WARP = x => { for (let k = 1; k < WA.length; k++) if (x <= WA[k][0]) { const [a, A0] = WA[k - 1], [b, B0] = WA[k]; return A0 + (B0 - A0) * (x - a) / (b - a); } return x + 0.18; };
+const ROSTO = [640, 660];
+const FS = [[6.9, 16.05, false], [17.05, 21.45, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="geodocs.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#icW').innerHTML = S('chat', '#fff', 2.6); $('#icP').innerHTML = S('grade', '#fff', 2.6); $('#icM').innerHTML = S('mail', '#fff', 2.6);
+['l0', 'l1', 'l2'].forEach(id => $('#' + id).innerHTML = S('pin', '#64748B', 2.2));
+const abas = [...document.querySelectorAll('#win .aba')];
+
+/* lista de grupos */
+const GRP = [['OC', 'Obra Centro · Equipe', 'Marcos: 📷 Foto', '17:52', 12, 1], ['SL', 'Subestação Leste', 'Ana: 📷 Foto', '17:40', 5, 1], ['GN', 'Galpão Norte · Manutenção', 'Paulo: amanhã eu vejo', '17:12', 3, 0],
+  ['OB', 'Obra Batel', 'Rita: 📷 Foto', '16:55', 8, 1], ['MJ', 'Manutenção Joinville', 'Lucas: áudio 0:47', '16:20', 2, 0], ['AV', 'Loja Água Verde', 'Caio: ok', '15:03', 1, 0]];
+const grs = GRP.map(([a, n, s, h, u]) => { const e = document.createElement('div'); e.className = 'gr';
+  e.innerHTML = `<div class="av2">${a}</div><div class="tx">${n}<span>${s}</span></div><div class="dir">${h}<i>${u}</i></div>`; $('#grs').appendChild(e); return e; });
+
+/* planilha */
+const PL = [['', 'Local', 'Status', 'Atualizado'], ['2', 'Obra Centro', 'Em andamento', '27/09'], ['3', 'Subestação Leste', '?', '19/09'], ['4', 'Galpão Norte', 'Parado?', '22/09'],
+  ['5', 'Obra Batel', 'Em andamento', '25/09'], ['6', 'Manutenção Joinville', '?', '12/09'], ['7', 'Loja Água Verde', 'Concluído', '30/09'], ['8', 'Obra Portão', '—', '—']];
+const pls = PL.map(([a, b, c, d]) => { const e = document.createElement('div'); e.className = 'r';
+  e.innerHTML = `<span class="c0">${a || ''}</span><span class="c1">${b}</span><span class="c2">${c}</span><span class="c3">${d}</span>`; $('#sh').appendChild(e); return e; });
+
+/* e-mails em formatos diferentes */
+const ML = [['mail', 'Re: Re: status Galpão Norte', 'E-mail'], ['foto', 'Fwd: fotos obra Batel (14)', 'Fotos'], ['doc', 'Relatório semanal (1).pdf', 'PDF'],
+  ['chat', 'Áudio · Subestação Leste', 'Áudio'], ['grade', 'controle_v8_final.xlsx', 'Planilha'], ['mail', 'Ligação perdida · Obra Portão', 'Recado'], ['mail', 'Fwd: Fwd: cronograma Obra Centro', 'E-mail']];
+const mls = ML.map(([g, n, f]) => { const e = document.createElement('div'); e.className = 'li';
+  e.innerHTML = `<span class="ico">${S(g, '#64748B', 2.2)}</span>${n}<span class="pill cinza">${f}</span>`; $('#mls').appendChild(e); e._p = e.querySelector('.pill'); return e; });
+
+/* conversa: você precisa perguntar */
+const PERG = 'Pessoal, como está a obra hoje?';
+const MS = [[-1, 'dia', 'Ontem', ''], [-1, 'in', '<span class="au">Rita · Compras</span>Material chega quinta', '15:20'], [-1, 'in', '<span class="au">Marcos · Encarregado</span>Concretagem amanhã cedo', '17:10'], [-1, 'in', '<span class="au">Marcos · Encarregado</span>📷 Foto', '17:52'],
+  [-1, 'dia', 'Hoje', ''], [14.45, 'out', PERG, '16:05']];
+const msgs = conversa($('#msgs'), MS);
+
+/* mapa com camadas */
+{ const R = FM.rng(21); let s = mapaFundo(892, 520, 8);
+  const pts = n => { const P = []; while (P.length < n) { const x = 50 + R() * 792, y = 45 + R() * 430; if (P.every(([a, b]) => Math.hypot(a - x, b - y) > 64)) P.push([x, y]); } return P; };
+  const P = pts(30); P[0] = [300, 300];
+  P.slice(0, 10).forEach(([x, y], k) => s += pino(x.toFixed(0), y.toFixed(0), '', 'num', 'pp' + k));
+  P.slice(10, 21).forEach(([x, y], k) => s += pino(x.toFixed(0), y.toFixed(0), '', 'pt', 'pt' + k));
+  P.slice(21).forEach(([x, y], k) => s += pino(x.toFixed(0), y.toFixed(0), '', 'ok', 'pr' + k));
+  s += `<circle id="sel" cx="300" cy="300" r="30" fill="none" stroke="#3D7A89" stroke-width="5" opacity="0"/>`;
+  $('#mapa2').innerHTML = s; }
+const camadas = [[...document.querySelectorAll('#mapa2 [id^="pp"]')], [...document.querySelectorAll('#mapa2 [id^="pt"]')], [...document.querySelectorAll('#mapa2 [id^="pr"]')]];
+const LY = [17.15, 17.81, 18.39], LYC = ['#3D7A89', '#5B6B80', '#15803D'];
+
+let alt = null;
+window.quadro = function (tl) {
+  const t = WARP(tl);
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'whatsapp', 5.9);
+  window.PAPEL_TOPO = (t > 6.9 && t < 16.4) || (t > 17.16 && t < 21.8) ? 0 : 9999;
+
+  /* ── equipe · 0,2 → 3,75 ── */
+  A($('#eqp'), t, 0.2, 3.65, { de: 0.86, dy: -60, dout: 0.3 });
+  [0.18, 1.66, 2.98].forEach((a, k) => { const e = $('#eq' + k), on = t >= a; acende(e, on ? 1 : 0);
+    const p = e.querySelector('.pill'); p.className = 'pill ' + (on ? 'azul' : 'cinza'); p.style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; });
+
+  /* ── locais · 3,95 → 5,6 ── */
+  A($('#loc'), t, 3.95, 5.55, { de: 0.86, dy: -60, dout: 0.3 });
+  { const on = t >= 5.06; $('#loc30').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#loc30').style.transform = `scale(${1 + 0.12 * pulso(t, 5.06, 0.4)})`; }
+
+  /* ── FS1 · 6,9 → 16,05 ── */
+  A($('#win'), t, 6.95, 15.95, { de: 0.88, dy: 120, dout: 0.2 });
+  grs.forEach((e, k) => { const a = 7.05 + k * 0.07; e.style.opacity = pr(t, a, 0.25, E.cubicOut);
+    acende(e, GRP[k][5] ? pulso(t, 8.38 + k * 0.08, 0.8) : 0); });
+  $('#g30').style.transform = `scale(${1 + 0.1 * pulso(t, 7.0, 0.5)})`;
+  // "planilha em outro" → aba Planilha · "atualização…" → E-mail · "precisa perguntar" → WhatsApp (conversa)
+  const tP = 9.5, tM = 10.5, tW = 12.75;
+  cursor($('#cur1'), t, 9.0, [980, 1400], alvo(abas[1], 20, 6), tP, 9.95);
+  cursor($('#cur2'), t, 10.05, [980, 1400], alvo(abas[2], 20, 6), tM, 10.95);
+  cursor($('#cur3'), t, 12.25, [980, 1400], alvo(abas[0], 20, 6), tW, 13.2);
+  { const ativa = t >= tW + 0.05 ? 0 : t >= tM + 0.05 ? 2 : t >= tP + 0.05 ? 1 : 0, tc = t >= tW ? tW : t >= tM ? tM : tP;
+    abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+    $('#carrega').style.width = (t >= tP && t - tc < 0.55 ? pr(t, tc + 0.05, 0.35, E.cubicOut) * 100 : 0) + '%';
+    $('#vWl').style.opacity = ativa === 0 && t < tW ? 1 : 0;
+    $('#vPl').style.opacity = ativa === 1 ? pr(t, tP + 0.08, 0.2, E.cubicOut) : 0;
+    $('#vMl').style.opacity = ativa === 2 ? pr(t, tM + 0.08, 0.2, E.cubicOut) : 0;
+    $('#vWc').style.opacity = t >= tW + 0.05 ? pr(t, tW + 0.08, 0.2, E.cubicOut) : 0; }
+  // planilha: o arquivo e as células desatualizadas acendem
+  { const on = t >= 9.96; $('#plP').className = 'pill ' + (on ? 'verm' : 'cinza'); $('#plP').style.transform = `scale(${1 + 0.1 * pulso(t, 9.96, 0.4)})`; }
+  pls.forEach((e, k) => { const ruim = /\?|—/.test(PL[k][2]); if (k) acende(e, ruim && t >= 10.0 + k * 0.03 ? 1 : 0, '201,55,42'); });
+  // e-mails: cada formato diferente acende
+  mls.forEach((e, k) => { const a = 11.0 + k * 0.17, on = t >= a; e.style.opacity = pr(t, tM + 0.05 + k * 0.06, 0.25, E.cubicOut);
+    e._p.className = 'pill ' + (on ? 'azul' : 'cinza'); e._p.style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; });
+  // "para saber o que está acontecendo": digita a pergunta · envia · "você precisa perguntar": sem resposta
+  { if (t < 14.45) digita($('#barra'), PERG, t, 13.35, 0.95); else if ($('#barra')._v !== '') { $('#barra').innerHTML = '<span style="color:#8696A0">Mensagem</span>'; $('#barra')._v = ''; } }
+  if (!alt) alt = msgs.map(e => e.offsetHeight + 12);
+  rolaConversa($('#msgs'), msgs, MS, t, alt, 108 * pr(t, 15.1, 0.35, E.cubicOut));
+  { pop($('#cob'), t, 15.1); $('#cob').style.borderColor = t >= 15.51 ? 'var(--verm)' : 'transparent';
+    if (t >= 15.51) $('#cob').style.transform = `scale(${1 + 0.04 * pulso(t, 15.51, 0.5)})` + tranco(t, 15.51); }
+
+  /* ── logo · 16,2 → 17,0 ── */
+  A($('#logoCard'), t, 16.2, 16.9, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 17,05 → 21,45 ── */
+  A($('#app'), t, 17.1, 21.35, { de: 0.88, dy: 120, dout: 0.2 });
+  // "projetos" · "tarefas" · "registros de campo": cada camada liga e os pinos dela aparecem no mapa
+  LY.forEach((a, k) => { const on = t >= a, el = $('#ly' + k); el.classList.toggle('on', on); el.querySelector('i').style.background = on ? LYC[k] : '';
+    el.style.transform = `scale(${1 + 0.08 * pulso(t, a, 0.4)})`; camadas[k].forEach((g, j) => popSvg(g, t, a + j * 0.03)); });
+  // "organizados diretamente no mapa": clique numa obra → resumo dela no próprio mapa
+  { const tc = 20.35; cursor($('#cur4'), t, 19.75, [1000, 1500], alvo($('#pp0')), tc, 21.0);
+    const s = t >= tc ? 1 : 0, a = (t * 1.1) % 1; $('#sel').setAttribute('opacity', s * (1 - a)); $('#sel').setAttribute('r', 26 + 16 * a);
+    const p = pr(t, tc + 0.05, 0.3, E.cubicOut); $('#pop').style.opacity = t >= tc ? p : 0; $('#pop').style.transform = `translateY(${(1 - p) * 16}px) scale(${L(0.94, 1, M.prog(t, tc + 0.05, 0.5, E.spring))})`; }
+  { const on = t >= 21.27; $('#tudo').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#tudo').textContent = on ? '30 locais · 1 mapa' : '30 locais'; $('#tudo').style.transform = `scale(${1 + 0.1 * pulso(t, 21.27, 0.4)})`; }
+
+  /* ── CTA · 21,6 → fim ── */
+  A($('#cta'), t, 21.6, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur5'), t, 24.8, [1020, 760], alvo($('#btnCta'), 60, 6), 25.5, 26.4); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 25.65) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 25.65 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(tl);
+};
+fim();
+</script>
+</body>
+</html>

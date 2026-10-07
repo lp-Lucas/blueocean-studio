@@ -1,0 +1,56 @@
+/* identidade LOGAMA (logamalogistica.com.br, CSS do site): fundo creme #FAF8F6 / cartões brancos, tinta azul-marinho #0D1C27,
+   cinza #535558, linha #DFDDDC, destaque vermelho-laranja #EE3533 (cor do logo/botões); Space Grotesk nos títulos, Inter no corpo; raio 12 px. */
+@font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../fontes/Inter.ttf'); }
+@font-face { font-family: 'Space'; font-weight: 300 700; src: url('../../fontes/SpaceGrotesk.ttf'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+@font-face { font-family: 'Mao'; src: url('../../fontes/Caveat.ttf'); }
+:root { --tinta: #0D1C27; --cinza: #535558; --linha: #DFDDDC; --claro: #F0EEEC; --azul: #EE3533; --verde: #15803D; --verdec: #E7F5EC; --verm: #C9372A; --vermc: #FCEBE9; }
+html, body { background: transparent !important; }
+body { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; color: var(--tinta); }
+#azul, #leg { display: none !important; }
+.card { background: #fff; border-radius: 22px; box-shadow: 0 1px 0 rgba(13,28,39,.04), 0 18px 44px rgba(0,0,0,.26); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* inserções e telas do produto (no estilo do site) */
+.chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Inter';
+         white-space: nowrap; box-shadow: 0 18px 44px rgba(0,0,0,.3); color: var(--tinta); letter-spacing: -0.02em; }
+.chipI .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.chipI .bol svg { width: 32px; }
+.chipI.preto { background: var(--tinta); color: #fff; }
+.chipI:not(:has(.bol)) { padding: 0 48px; height: 96px; justify-content: center; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 7px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+.marca { display: flex; align-items: center; gap: 18px; font: 700 64px 'Space'; letter-spacing: -0.02em; color: var(--tinta); }
+.marca img { height: 72px; }
+#logoCard { padding: 40px 56px; border-radius: 26px; }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 74px; padding: 0 30px; border-radius: 12px; background: var(--tinta); color: #fff; font: 600 30px 'Inter'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn svg { width: 26px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'Inter'; white-space: nowrap; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.vivo i { width: 12px; height: 12px; border-radius: 50%; background: #22C55E; }
+.pill.cinza { background: var(--claro); color: #3F4652; }
+.k { font: 600 21px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* janela do app (tela cheia 2) */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 104px; display: flex; align-items: center; gap: 18px; padding: 0 32px; border-bottom: 1.5px solid var(--linha); background: #fff; position: relative; z-index: 2; }
+.app .bar img { height: 46px; } .app .bar .nm { font: 700 32px 'Space'; letter-spacing: -0.02em; }
+.app .bar .nav { display: flex; gap: 26px; margin-left: 34px; font: 500 24px 'Inter'; color: var(--cinza); }
+.app .bar .nav b { color: var(--tinta); font-weight: 600; }
+.app .bar .av { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--claro); border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 22px 'Inter'; color: #3F4652; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: #fff; }
+.app h3 { font: 700 40px 'Space'; letter-spacing: -0.02em; } .app h3 + p { font: 400 25px 'Inter'; color: var(--cinza); margin-top: 6px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+
+/* ícone de marca famosa que expande e vira a tela cheia */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }

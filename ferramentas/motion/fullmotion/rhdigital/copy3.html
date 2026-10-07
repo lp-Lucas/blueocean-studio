@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>RH Digital — Copy 3 (tempo perdido · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 27.74;
+// cortes depois do motion pronto: início (cabelo, 0,48 s) e pigarro (0,86 s em 4,12) → animação no tempo antigo, legenda no novo
+const WARP = t0 => t0 + 0.48 + (t0 >= 4.12 ? 0.86 : 0);
+const ROSTO = [540, 850];
+const FS = [[5.46, 10.55, true], [16.12, 21.2, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 20.68, ps: FM.criaConfete(23, 50, 540, 600, 700, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="rhdigital.js"></script>
+<script>
+/* gancho (0,3 → 5,2): a lista de cobranças do dia */
+const TF = [['Bruno Alves', 'Holerite'], ['Diego Rocha', 'Aviso de férias'], ['João Pedro Silva', 'Termo LGPD']];
+cartao('tf', 'Tarefas do RH · hoje<span class="pill cinza num" id="tfP">12 cobranças</span>',
+  TF.map(([n, d], k) => `<span class="tx">Cobrar ${n}</span><span class="pill cinza" id="tfD${k}">${d}</span>`));
+/* tela cheia 1 (5,46 → 10,55): identificar a pendência, entrar em contato e cobrar */
+const O1 = { primeira: 'pl', pend: 6.16, col: 7.44, contaT: 8.2, contaN: [9], abas: [[9.0, 'wa']], cobra: [9.9, 3, 0.18] };
+const F1 = montaFS1(O1);
+/* inserção (10,66 → 15,75): multiplique por dezenas de funcionários e vários documentos */
+cartao('mt', 'Assinaturas · por mês<span class="pill cinza">empresa com 48 pessoas</span>', [
+  '<span class="tx">Funcionários</span><span class="v num" id="mtV0">0</span>',
+  '<span class="tx">Documentos por mês</span><span class="v num" id="mtV1">0</span>',
+  '<span class="tx">Assinaturas para acompanhar</span><span class="v num" id="mtV2">0</span>']);
+/* tela cheia 2 (16,12 → 21,2): acompanha os status e cobra automaticamente */
+const O2 = { inicio: 'status', status: 17.04, auto: 18.66, assina: [20.0, 0.16] };
+const F2 = montaFS2(O2);
+/* inserção (21,32 → 24,8): reduz tarefas repetitivas e recupera tempo */
+const g = mk('div', 'p card ins'); g.id = 'gn'; Object.assign(g.style, { left: '540px', top: '300px' });
+g.innerHTML = `<div class="cabI"><img src="img/logo.png">Rotina do RH · outubro</div>
+  <div class="bx" id="gn0"><span class="lb">Tarefas repetitivas</span><div class="tr"><i id="gnB0" style="background:#B9BEC9"></i></div><span class="v num" id="gnV0">288</span></div>
+  <div class="bx" id="gn1"><span class="lb">Tempo recuperado</span><div class="tr"><i id="gnB1" style="background:var(--verde)"></i></div><span class="v num" id="gnV1" style="color:var(--verde)">+0 h</span></div>`;
+const cur = montaCTA('Automatize essa cobrança');
+
+window.quadro = function (t0) {
+  const t = WARP(t0);
+  FM.antes(t); tela(t);
+  window.PAPEL_TOPO = (t > 5.76 && t < 10.9) || (t > 16.42 && t < 21.55) ? 0 : 9999;
+
+  /* ── gancho ── */
+  A($('#tf'), t, 0.5, 4.3, { de: 0.86, dy: -60, dout: 0.3 });
+  TF.forEach((_, k) => { const a = 1.94 + k * 0.18; acende($('#tfL' + k), t, a, '201,55,42', 0.06);
+    const d = $('#tfD' + k), on = t >= 3.72 + k * 0.1; d.className = 'pill ' + (on ? 'lar' : 'cinza'); d.style.transform = `scale(${1 + 0.1 * pulso(t, 3.72 + k * 0.1, 0.4)})`; });
+  { const on = t >= 1.58; $('#tfP').className = 'pill num ' + (on ? 'verm' : 'cinza'); $('#tfP').innerHTML = (on ? '<i></i>' : '') + '12 cobranças';
+    $('#tfP').style.transform = on ? `scale(${1 + 0.1 * pulso(t, 1.58, 0.45)})` + tranco(t, 1.62) : ''; }
+
+  /* ── tela cheia 1 ── */
+  fs1(t, F1, O1, 5.46, 10.55);
+
+  /* ── inserção: multiplique ── */
+  A($('#mt'), t, 10.66, 15.7, { de: 0.86, dy: -60, dout: 0.3 });
+  [[12.1, 48], [13.86, 6], [14.8, 288]].forEach(([a, v], k) => { $('#mtV' + k).textContent = conta(t, a, 0.7, 0, v);
+    acende($('#mtL' + k), t, a, k === 2 ? '201,55,42' : '255,85,0', 0.06); if (k === 2) $('#mtV2').style.color = t >= a ? 'var(--verm)' : '';
+    $('#mtV' + k).style.transform = `scale(${1 + 0.12 * pulso(t, a + 0.6, 0.4)})`; });
+
+  /* ── tela cheia 2 ── */
+  fs2(t, F2, O2, 16.12, 21.2);
+
+  /* ── inserção: ganho ── */
+  A($('#gn'), t, 21.32, 24.75, { de: 0.86, dy: -60, dout: 0.3 });
+  { const p0 = pr(t, 21.74, 0.9, E.cubicInOut), p1 = pr(t, 23.83, 0.8, E.cubicInOut);
+    $('#gnB0').style.width = L(100, 8, p0) + '%'; $('#gnV0').textContent = Math.round(L(288, 0, p0));
+    $('#gnB1').style.width = L(25, 100, p1) + '%'; $('#gnV1').textContent = `+${Math.round(L(0, 12, p1))} h`;
+    $('#gn1').style.background = `rgba(21,128,61,${0.08 * pulso(t, 23.83, 1.0)})`; }
+
+  /* ── CTA ── */
+  cta(t, cur, 24.9, 27.05);
+
+  confete(t);
+  legenda(t0);
+};
+fim();
+</script>
+</body>
+</html>

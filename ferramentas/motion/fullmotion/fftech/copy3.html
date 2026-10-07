@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FF Tech — Copy 3 BOFU (CTO · fale com quem executa)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 620px; }
+  #win .corpo { height: 542px; }
+  .row .h { width: 0; display: none; }
+  .row .ds { font: 400 22px 'GMono'; color: var(--cinza); }
+  .row .nm { width: 260px; flex: none; font-weight: 600; color: var(--tinta); }
+  .row b { margin-left: auto; font: 600 30px 'GMono'; color: var(--tinta); }
+  .aba .pdf { background: var(--verm); color: #fff; font: 700 11px 'GMono'; }
+  #quem { display: flex; align-items: center; margin-top: 20px; height: 100px; padding: 0 28px; border-radius: 16px; background: rgba(255,255,255,.04); border: 2px solid var(--linha2); font: 600 29px 'AtypT'; }
+  #quem b { margin-left: auto; font: 700 48px 'GMono'; letter-spacing: .06em; color: var(--cinza); }
+
+  #eng .li { height: 92px; }
+  #eng .av { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; font: 600 22px 'GMono'; flex: none; }
+  #eng .nm { font: 600 28px 'AtypT'; color: var(--tinta); position: relative; } #eng .nm span { display: block; font: 400 20px 'GMono'; color: var(--cinza); margin-top: 2px; }
+
+  #call { height: 790px; }
+  #call .corpo { height: 698px; }
+  .gente { display: flex; gap: 14px; }
+  .pt { flex: 1; height: 96px; border-radius: 16px; background: var(--card2); border: 1.5px solid var(--linha2); display: flex; align-items: center; gap: 14px; padding: 0 20px; }
+  .pt .av { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font: 600 20px 'GMono'; flex: none; }
+  .pt .nm { font: 600 24px 'AtypT'; } .pt .nm span { display: block; font: 400 18px 'GMono'; color: var(--cinza); }
+  .tela2 { margin-top: 18px; border-radius: 16px; border: 1.5px solid var(--linha); padding: 18px 24px 8px; }
+  .tela2 .cab { display: flex; align-items: center; } .tela2 .cab .pill { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,6 → 11,6): mais um diagnóstico em PDF · você já sabe onde dói ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="abas"><div class="aba"><i class="pdf">PDF</i>Diagnóstico_v7.pdf</div><div class="aba">Produção</div></div>
+  <div class="carrega" id="carrega1" style="top:74px"></div>
+  <div class="corpo">
+    <div class="vista" id="vPdf">
+      <h3>Diagnóstico de infraestrutura</h3><p>Consultoria anterior · entregue em ago/26</p>
+      <div style="margin-top:12px">
+        <div class="row d"><span class="nm">Páginas</span><b>84</b></div>
+        <div class="row d"><span class="nm">Recomendações</span><b>47</b></div>
+        <div class="row d"><span class="nm">Executadas</span><b id="exe">0</b></div>
+        <div class="row d"><span class="nm">Status</span><span class="pill cinza" id="stPdf">Entregue</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vProd" style="opacity:0">
+      <h3>Ambiente · produção</h3><p>Onde dói hoje</p>
+      <div style="margin-top:12px">
+        <div class="row pd"><span class="nm">Observabilidade</span><span class="ds">sem métricas nem alertas</span><span class="pill cinza">Atenção</span></div>
+        <div class="row pd"><span class="nm">Backup</span><span class="ds">restore nunca testado</span><span class="pill cinza">Atenção</span></div>
+        <div class="row pd"><span class="nm">Fornecedor</span><span class="ds">só depois do incidente</span><span class="pill cinza">Atenção</span></div>
+      </div>
+      <div id="quem">Quem executa?<b id="quemB">—</b></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÕES (11,7 → 16,5) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo-branco.png" style="height:58px"></div></div>
+<div class="p card ins" id="eng" style="left:540px;top:300px">
+  <div class="cabI">Quem fala com você<span class="pill cinza">Na FF Tech</span></div>
+  <div class="li e"><div class="av" style="background:var(--cianoc);color:var(--ciano)">RM</div><div class="nm">Engenheiro sênior<span>quem vai executar</span></div><span class="pill cinza" id="pEx">Cloud · Segurança</span></div>
+  <div class="li e"><div class="av" style="background:rgba(255,255,255,.07);color:#B8BDCB">VD</div><div class="nm" id="vend">Vendedor<span>não entra na conversa</span></div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (16,55 → 21,25): ele abre seu ambiente na chamada · o que sustenta e o que refazer ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="call" style="left:540px;top:810px">
+  <div class="bar"><img class="lg" src="img/logo-fftech.png"><span class="tt">// Chamada técnica</span><span class="pill ruim"><i></i>Ao vivo</span></div>
+  <div class="corpo">
+    <div class="gente"><div class="pt" id="ptE"><div class="av" style="background:var(--cianoc);color:var(--ciano)">RM</div><div class="nm">Rafael M.<span>engenheiro sênior</span></div></div>
+      <div class="pt"><div class="av" style="background:rgba(255,255,255,.07);color:#B8BDCB">VC</div><div class="nm">Você<span>CTO</span></div></div></div>
+    <div class="tela2" id="t2">
+      <div class="cab"><span class="k c" id="t2k">Seu ambiente · tela compartilhada</span><span class="pill cinza" id="t2p">Abrindo</span></div>
+      <div class="row s" style="margin-top:6px"><span class="nm">prod-api</span><span class="ds">eks · 6 pods</span><span class="pill cinza">Revisando</span></div>
+      <div class="row s"><span class="nm">prod-db</span><span class="ds">rds · multi-az</span><span class="pill cinza">Revisando</span></div>
+      <div class="row s"><span class="nm">Backup</span><span class="ds">sem teste de restore</span><span class="pill cinza">Revisando</span></div>
+      <div class="row s" style="border-bottom:0"><span class="nm">Observab.</span><span class="ds">sem alertas</span><span class="pill cinza">Revisando</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (21,3 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-branco.png" style="height:40px;margin-bottom:22px">
+  <div class="t"><span>// Fale com quem executa</span>Converse com o engenheiro do projeto</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Agendar conversa <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 25.92;
+const ROSTO = [555, 860];
+const FS = [[0.6, 11.6, true], [16.55, 21.25, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#07091A', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const Q = s => [...document.querySelectorAll(s)];
+const vira = (el, t, t0, txt, cls) => { if (el._b == null) { el._b = el.innerHTML; el._c = el.className; }
+  const on = t >= t0, h = on ? txt : el._b; if (el.innerHTML !== h) el.innerHTML = h; if (cls != null) el.className = on ? 'pill ' + cls : el._c; if (on) pulsa(el, t, t0, 0.1); else el.style.transform = ''; };
+const pdf = Q('#vPdf .row'), prod = Q('#vProd .row'), eng = Q('#eng .li'), srv = Q('#t2 .row');
+const abas1 = Q('#win .aba'); const rV = riscar('vend');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  // câmera (receita 13, linear e suave): sempre andando, zoom sem cortar informação
+  camera(t, '#cam1', [[0.65, [540, 800], 0.92, 3, -4], [2.0, [pdf[0], pdf[3]], 1.08, 2, 2], [3.4, ['#win .abas', pdf[0], pdf[3]], 1.03, 2, -2],
+    [5.2, [prod[0], prod[1]], 1.1, 1, 2], [8.2, [prod[1], prod[2]], 1.14, 1, -1], [10.3, [prod[2], '#quem'], 1.14, 1, 2], [11.3, '#quem', 1.16, 0, 0], [11.6, '#quem', 1.2, 0, 0]]);
+  camera(t, '#cam2', [[16.6, [540, 810], 0.92, 3, 4], [17.6, '#t2', 1.03, 2, -2, 0, -40], [19.3, [srv[0], srv[1]], 1.12, 1, 2], [20.8, [srv[2], srv[3]], 1.14, 1, -2],
+    [21.25, [srv[2], srv[3]], 1.2, 0, 0]]);
+
+  /* ── FS1 · 0,6 → 11,6 ── */
+  A($('#win'), t, 0.65, 11.5, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas1, [$('#vPdf'), $('#vProd')], [[3.95, 1]], $('#carrega1'));
+  cascata(pdf, t, 0.85, 0.08);
+  // "mais um diagnóstico bonito em PDF": 84 páginas, 47 recomendações… nenhuma executada
+  acende(pdf[0], t, 2.6); acende(pdf[1], t, 2.6); acende(pdf[2], t, 3.02, '255,59,59', 0.1); $('#exe').style.color = t >= 3.02 ? 'var(--verm)' : '';
+  vira($('#stPdf'), t, 3.02, 'Arquivado', 'ruim');
+  // "você já sabe onde dói": clica em Produção
+  { const c = cursor($('#cur1'), t, 3.4, [1000, 1500], t > 3.4 ? centro(abas1[1]) : [0, 0], 3.9, 4.25); }
+  cascata([...prod, $('#quem')], t, 4.0, 0.08);
+  prod.forEach((e, k) => { const a = [5.52, 7.8, 10.06][k]; acende(e, t, a, '255,59,59', 0.1); vira(e.querySelector('.pill'), t, a, '<i></i>Crítico', 'ruim'); });
+  // "…depois do incidente": quem executa? ???
+  { const r = t >= 10.72; $('#quemB').textContent = r ? '???' : '—'; $('#quemB').style.color = r ? 'var(--verm)' : ''; acende($('#quem'), t, r ? 10.72 : null, '255,59,59');
+    if (t >= 11.22) $('#quem').style.transform = `scale(${1 + 0.04 * Math.sin(C((t - 11.22) / 0.4) * Math.PI)})` + tranco(t, 11.22); }
+
+  /* ── inserções · 11,7 → 16,5 ── */
+  A($('#logoCard'), t, 11.7, 12.6, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#eng'), t, 12.6, 16.45, { de: 0.86, dy: -60 });
+  cascata(eng, t, 12.65, 0.08, 12);
+  acende(eng[0], t, 13.52); vira($('#pEx'), t, 14.64, '<i></i>Executa', 'vivo');
+  rV(t, 15.98); eng[1].style.opacity = Math.min(+eng[1].style.opacity, t >= 16.2 ? 0.55 : 1);
+
+  /* ── FS2 · 16,55 → 21,25 ── */
+  A($('#call'), t, 16.6, 21.15, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('.pt'), $('#t2')], t, 16.75, 0.08);
+  acende($('#ptE'), t, 16.62);
+  // "abre seu ambiente na própria chamada"
+  vira($('#t2p'), t, 17.34, '<i></i>Compartilhando', 'ciano'); acende($('#t2'), t, 17.94, '21,172,241', 0.05);
+  cascata(srv, t, 17.4, 0.1);
+  // "diz o que sustenta e o que precisa ser refeito"
+  srv.forEach((e, k) => { const ok = k < 2, a = ok ? 19.18 + k * 0.15 : 20.9 + (k - 2) * 0.15;
+    vira(e.querySelector('.pill'), t, a, ok ? '✓ Sustenta' : 'Refazer', ok ? 'vivo' : 'ruim'); acende(e, t, a, ok ? '74,222,128' : '255,59,59', 0.1); });
+
+  /* ── CTA · 21,3 → fim ── */
+  A($('#cta'), t, 21.3, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 23.6, [1020, 760], t > 23.6 ? centro('#btnCta') : [0, 0], 24.3, 25.5); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 24.45) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 24.45 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

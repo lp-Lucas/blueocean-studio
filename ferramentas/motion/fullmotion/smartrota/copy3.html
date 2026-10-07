@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>SmartRota — Copy Transportadora (prejuízo no WhatsApp · tudo em layout)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* gancho: financeiro */
+  #fin { width: 960px; padding: 26px 34px; }
+  .cabI { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 32px; } .cabI .pill { margin-left: auto; } .cabI img { height: 44px; }
+  .li { display: flex; align-items: center; height: 64px; border-top: 1.5px solid var(--linha); font: 600 27px 'Manrope'; color: #3F4D63; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .li:first-of-type { margin-top: 12px; } .li b { margin-left: auto; font: 800 28px 'Manrope'; color: var(--tinta); }
+  /* WhatsApp (tela cheia 1) */
+  #wa { width: 960px; height: 900px; overflow: hidden; border-radius: 22px; }
+  #wa .hd { height: 110px; background: #008069; display: flex; align-items: center; gap: 20px; padding: 0 30px; color: #fff; position: relative; z-index: 2; }
+  .av2 { width: 66px; height: 66px; border-radius: 50%; background: #DFE5E7; color: #54656F; display: grid; place-items: center; font: 800 25px 'Manrope'; flex: none; }
+  #wa .hd .nm { font: 700 30px 'Manrope'; letter-spacing: -0.01em; } #wa .hd .nm span { display: block; font: 500 21px 'Manrope'; opacity: .8; }
+  #wa .chat { position: absolute; top: 110px; left: 0; right: 0; bottom: 0; background: #EFEAE2; overflow: hidden; }
+  #msgs { position: absolute; left: 28px; right: 28px; bottom: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 650px; padding: 14px 20px 32px; border-radius: 16px; font: 500 27px/1.32 'Manrope'; color: #111B21; position: relative; box-shadow: 0 1px 1.5px rgba(11,20,26,.14); letter-spacing: -0.01em; }
+  .msg.dia { align-self: center; background: #fff; padding: 6px 18px; font: 700 20px 'Manrope'; color: #54656F; border-radius: 10px; }
+  .msg.in { align-self: flex-start; background: #fff; border-top-left-radius: 4px; } .msg.out { align-self: flex-end; background: #D9FDD3; border-top-right-radius: 4px; }
+  .msg .h { position: absolute; right: 14px; bottom: 7px; font: 500 18px 'Manrope'; color: #667781; } .msg .h i { color: #53BDEB; font-style: normal; margin-left: 4px; }
+  .msg.foto { padding: 8px 8px 32px; } .msg.foto .im { width: 320px; height: 180px; border-radius: 10px; background: #D1D7DB; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font: 600 22px 'Manrope'; color: #54656F; }
+  .msg.foto .im svg { width: 56px; }
+  .msg.aud { display: flex; align-items: center; gap: 16px; width: 400px; } .msg.aud .pl { width: 0; height: 0; border-left: 22px solid #54656F; border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+  .msg.aud .on { flex: 1; height: 6px; border-radius: 3px; background: #B6BFC4; }
+  #cob { position: absolute; left: 28px; right: 28px; bottom: 26px; }
+  /* inserção: corrida registrada */
+  #reg { width: 960px; padding: 26px 34px 30px; }
+  .passos { display: flex; justify-content: space-between; position: relative; margin-top: 22px; padding: 0 40px; }
+  .passos .ln { position: absolute; left: 92px; right: 92px; top: 25px; height: 5px; background: #D8E3EC; border-radius: 3px; } .passos .ln i { display: block; height: 100%; width: 0; background: var(--verde); border-radius: 3px; }
+  .ps { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 104px; position: relative; font: 700 23px 'Manrope'; color: var(--cinza); }
+  .ps .b { width: 54px; height: 54px; border-radius: 50%; border: 3px solid #B8C3CF; background: #fff; display: grid; place-items: center; } .ps .b svg { width: 28px; }
+  /* plataforma (tela cheia 2) */
+  #app { height: 964px; } #app .corpo { height: 860px; }
+  #app .bar .nav span { position: relative; padding: 8px 0; } #app .bar .nav span.on { color: var(--tinta); } #app .bar .nav span.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; background: var(--azul); border-radius: 2px; }
+  .tb { position: relative; margin-top: 16px; }
+  .tr2 { display: flex; align-items: center; height: 84px; border-bottom: 1.5px solid var(--linha); font: 600 24px 'Manrope'; }
+  .tr2.th2 { height: 50px; } .tr2 > * { padding: 0 10px; } .tr2 .c1 { width: 342px; } .tr2 .c2 { width: 140px; text-align: right; } .tr2 .c3 { width: 160px; } .tr2 .c4 { width: 100px; text-align: center; } .tr2 .c5 { width: 150px; }
+  .tr2 .c1 b { display: block; font: 700 25px 'Manrope'; } .tr2 .c1 span { font: 500 20px 'Manrope'; color: var(--cinza); }
+  .tr2 .c2 { font-weight: 800; } .tr2 .pill { height: 38px; font-size: 19px; padding: 0 12px; }
+  .tr2 .c4 svg { width: 30px; }
+  #colHL { position: absolute; top: -4px; height: 646px; border: 3px solid var(--azul); border-radius: 12px; background: rgba(22,116,232,.04); opacity: 0; pointer-events: none; }
+  .sec { margin-top: 20px; } .sec .k { margin-bottom: 4px; }
+  .rw { display: flex; align-items: center; gap: 16px; height: 76px; border-bottom: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 12px; font: 700 26px 'Manrope'; }
+  .rw .av2 { width: 50px; height: 50px; font-size: 19px; } .rw .v { margin-left: auto; font: 800 27px 'Manrope'; } .rw small { font: 500 21px 'Manrope'; color: var(--cinza); margin-left: 8px; }
+  .rw .pill { margin-left: 18px; }
+  #sem { position: absolute; left: 34px; right: 34px; bottom: 30px; display: flex; justify-content: center; gap: 18px; }
+  #sem .chipI { height: 72px; font-size: 27px; box-shadow: none; border: 1.5px solid var(--linha); opacity: 0; } #sem .bol { width: 48px; height: 48px; } #sem .bol svg { width: 28px; }
+  /* custo */
+  #custo { width: 960px; padding: 26px 34px 28px; }
+  .bx { display: flex; align-items: center; gap: 18px; height: 80px; border-top: 1.5px solid var(--linha); font: 700 25px 'Manrope'; } .bx:first-of-type { margin-top: 14px; }
+  .bx .lb { width: 230px; } .bx .tr { flex: 1; height: 26px; border-radius: 8px; background: #EDF2F6; overflow: hidden; } .bx .tr i { display: block; height: 100%; border-radius: 8px; }
+  .bx .v { width: 170px; text-align: right; font: 800 27px 'Manrope'; }
+  #cta { width: 960px; padding: 40px 36px 38px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #cta img { height: 64px; } #cta .tit { font-weight: 700; font-size: 42px; margin-top: 22px; }
+  #btnCta { margin-top: 24px; height: 82px; padding: 0 44px; font-size: 32px; } #btnCta svg { width: 28px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ GANCHO (1,25 → 4,3): o prejuízo do mês ═════ -->
+<div class="p card" id="fin" style="left:540px;top:300px">
+  <div class="cabI">Financeiro · setembro<span class="pill cinza">Transportadora</span></div>
+  <div class="li"><span>Corridas realizadas</span><b class="num">214</b></div>
+  <div class="li"><span>Cobradas do cliente</span><b class="num">187</b></div>
+  <div class="li" id="liSem"><span>Sem cobrança</span><b class="num" id="semV">27 corridas</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (WhatsApp, 5,55 → 15,45) ═════ -->
+<div class="p card fs" id="wa" style="left:540px;top:810px">
+  <div class="hd"><div class="av2">MB</div><div class="nm">Mercado Bom Preço<span>online</span></div></div>
+  <div class="chat"><div id="msgs"></div>
+    <div class="alerta" id="cob">Cobrança ao cliente<b style="font-size:34px">Não enviada</b></div></div>
+</div>
+
+<!-- ═════ INSERÇÕES (15,6 → 19,6): SmartRota · corrida registrada do pedido ao pagamento ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px;padding:40px 64px"><img src="img/logo.png" style="height:84px;display:block"></div>
+<div class="p card" id="reg" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/simbolo.png">Corrida #2481<span class="pill cinza" id="regP">Mercado Bom Preço</span></div>
+  <div class="passos"><div class="ln"><i id="regL"></i></div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (19,75 → 32,95): tudo centralizado · financeiro ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">SmartRota</span><div class="nav"><span id="nCor" class="on">Corridas</span><span id="nFin">Financeiro</span></div><div class="av">TR</div></div>
+  <div class="corpo">
+    <div class="vista" id="vCor">
+      <div class="cab"><h3>Corridas · hoje</h3><span class="pill azul"><i></i>7 abertas</span></div>
+      <div class="tb" id="tb"><div id="colHL"></div>
+        <div class="tr2 th2"><span class="c1 k">Solicitação</span><span class="c2 k">Valor</span><span class="c3 k">Status</span><span class="c4 k">Compr.</span><span class="c5 k">Cobrança</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vFin" style="opacity:0">
+      <div class="cab"><h3>Financeiro · setembro</h3><span class="pill cinza" id="realiz">214 corridas realizadas</span></div>
+      <div class="sec"><div class="k">A receber dos clientes</div><div id="rec"></div></div>
+      <div class="sec"><div class="k">Repasses aos entregadores</div><div id="rep"></div></div>
+    </div>
+  </div>
+  <div id="sem"><span class="chipI" id="sem1"><div class="bol" style="background:#25D366" id="sem1i"></div><span style="position:relative" id="sem1t">Conversas</span></span>
+    <span class="chipI" id="sem2"><div class="bol" style="background:#1E8E3E" id="sem2i"></div><span style="position:relative" id="sem2t">Planilhas</span></span></div>
+</div>
+
+<!-- ═════ CUSTO (33,1 → 36,85) e CTA (37,0 → fim) ═════ -->
+<div class="p card" id="custo" style="left:540px;top:300px">
+  <div class="cabI" id="custoT">Custos operacionais · por mês<span class="pill vivo" id="menos" style="opacity:0"><i></i>até −40%</span></div>
+  <div class="bx"><span class="lb">Hoje</span><div class="tr"><i style="width:100%;background:#B8C3CF"></i></div><span class="v num">R$ 18.400</span></div>
+  <div class="bx"><span class="lb">Com a SmartRota</span><div class="tr"><i id="barN" style="width:100%;background:var(--verde)"></i></div><span class="v num" id="valN" style="color:var(--verde)">R$ 18.400</span></div>
+</div>
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img src="img/logo.png" id="ctaLogo">
+  <div class="tit">Recupere as horas da sua operação</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Chamar no WhatsApp <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 41.18;
+const ROSTO = [510, 840];
+const FS = [[5.55, 15.45, false], [19.75, 32.95, true]];
+const OCULTA = [];
+const ESTOUROS = [];   // sem confete (pedido da pessoa, 06/10/2026)
+</script>
+<script src="base.js"></script>
+<script src="smartrota.js"></script>
+<script>
+Object.assign(FM.GLIFO, { doc: 'M7 3 H14 L19 8 V21 H7 Z M14 3 V8 H19 M10 13 H16 M10 17 H16', foto: 'M4 7 H8 L10 5 H14 L16 7 H20 V19 H4 Z M12 10 a3 3 0 1 0 0.01 0 Z',
+  caixa: 'M4 8 L12 4 L20 8 V16 L12 20 L4 16 Z M4 8 L12 12 L20 8 M12 12 V20', moto: 'M5 17 a2.5 2.5 0 1 0 0.01 0 Z M19 17 a2.5 2.5 0 1 0 0.01 0 Z M7.5 17 H13 L16 10 H19 M13 10 H10',
+  cifrao: 'M12 3 V21 M16.5 7.5 C16 5.5 14 5 12 5 C9.5 5 8 6.3 8 8 C8 12 16 10.5 16 15 C16 17 14.3 18.5 12 18.5 C9.5 18.5 8 17.5 7.5 15.5' });
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#sem1i').innerHTML = S('chat', '#fff', 2.6); $('#sem2i').innerHTML = S('grade', '#fff', 2.6);
+const rS1 = riscar('sem1t'), rS2 = riscar('sem2t');
+
+/* conversa do WhatsApp: [quando aparece, lado, html, hora] */
+const MS = [[-1, 'in', 'Obrigado pela entrega de hoje!', '16:20'], [-1, 'dia', 'Ontem', ''], [-1, 'in', 'Boa tarde! Amanhã cedo tem entrega?', '17:40'], [-1, 'out', 'Tem sim, manda os endereços', '17:42'],
+  [-1, 'in', 'Combinado!', '17:43'], [-1, 'out', 'Até amanhã!', '17:44'], [-1, 'dia', 'Hoje', ''], [5.76, 'in', 'Bom dia! Preciso de uma entrega hoje', '08:12'], [6.62, 'in', 'Retirada na Av. Paulista, 900<br>Entrega na R. Augusta, 1200', '08:12'],
+  [8.28, 'out', 'Fechado! O Carlos já está indo', '08:14'], [9.58, 'in', 'Chegou aqui, obrigado!', '09:02'], [10.28, 'out', 'Repasse Carlos: R$ 35,00 · Pix enviado', '09:05'],
+  [11.9, 'in foto', `<div class="im">${S('foto', '#54656F', 2)}comprovante.jpg</div>`, '09:06'],
+  [12.35, 'in', 'Amanhã tem mais duas, pode ser?', '09:20'], [12.5, 'out', 'Pode sim', '09:21'], [12.62, 'in', 'Outro endereço: Al. Santos, 1500', '09:24'],
+  [12.75, 'in aud', '<span class="pl"></span><span class="on"></span>0:42', '09:25'], [12.88, 'out', 'Anotado!', '09:31'], [13.0, 'in', 'Me manda a nota depois?', '09:40']];
+const msgs = MS.map(([t0, lado, html, h]) => { const e = document.createElement('div'); e.className = 'msg ' + lado;
+  e.innerHTML = html + (h ? `<span class="h">${h}${lado.startsWith('out') ? '<i>✓✓</i>' : ''}</span>` : ''); $('#msgs').appendChild(e); return e; });
+
+/* corrida registrada: passos */
+const PASSOS = [['Pedido', 'doc', 18.6], ['Coleta', 'caixa', 18.78], ['Entrega', 'moto', 18.95], ['Pagamento', 'cifrao', 19.14]];
+const ps = PASSOS.map(([n, g]) => { const e = document.createElement('div'); e.className = 'ps'; e.innerHTML = `<div class="b">${S(g, '#8794A3', 2.2)}</div>${n}`; $('.passos').appendChild(e); return e; });
+
+/* tabela de corridas */
+const OKI = S('foto', '#0CA47C', 2.2), NAO = '<span style="color:#A3AEBB;font-weight:800">—</span>';
+const P_ = (c, t) => `<span class="pill ${c}">${c === 'vivo' || c === 'azul' ? '<i></i>' : ''}${t}</span>`;
+const CORR = [['Mercado Bom Preço', 'Paulista → Augusta', '35,00', P_('vivo', 'Entregue'), OKI, P_('azul', 'Enviada')], ['Farmácia Vida', 'Asa Sul → Centro', '42,00', P_('vivo', 'Entregue'), OKI, P_('vivo', 'Paga')],
+  ['Loja Express', 'Moema → Saúde', '28,50', P_('azul', 'Em rota'), NAO, P_('cinza', 'Pendente')], ['Supermercado Central', 'Centro → Brooklin', '64,00', P_('vivo', 'Entregue'), OKI, P_('azul', 'Enviada')],
+  ['Padaria Pão & Sabor', 'Pinheiros → Lapa', '22,00', P_('vivo', 'Entregue'), OKI, P_('vivo', 'Paga')], ['Drogaria Saúde', 'Vila Mariana → Ipiranga', '31,00', P_('cinza', 'Coleta'), NAO, P_('cinza', 'Pendente')],
+  ['Minimercado Ideal', 'Itaim → Vila Olímpia', '47,00', P_('vivo', 'Entregue'), OKI, P_('azul', 'Enviada')]];
+const linhas = CORR.map(([c, r, v, st, cp, cb]) => { const e = document.createElement('div'); e.className = 'tr2';
+  e.innerHTML = `<span class="c1"><b>${c}</b><span>${r}</span></span><span class="c2 num">R$ ${v}</span><span class="c3">${st}</span><span class="c4">${cp}</span><span class="c5">${cb}</span>`; $('#tb').appendChild(e); return e; });
+const COLS = [[0, 342], [342, 140], [482, 160], [642, 100], [742, 150]];   // x e largura de cada coluna (somam 892)
+
+/* financeiro */
+const REC = [['MB', 'Mercado Bom Preço', 1240, 'vivo', 'Pago'], ['LE', 'Loja Express', 860, 'verm', 'Pendente'], ['DS', 'Drogaria Saúde', 515, 'verm', 'Pendente']];
+const REP = [['CH', 'Carlos Henrique', 1120, 32], ['RO', 'Ricardo Oliveira', 940, 27], ['AP', 'Ana Paula', 780, 22], ['ML', 'Marcos Lima', 610, 18]];
+const recs = REC.map(([a, n, v, c, s]) => { const e = document.createElement('div'); e.className = 'rw';
+  e.innerHTML = `<div class="av2">${a}</div>${n}<span class="v num">${brl(v)}</span>${P_(c, s)}`; $('#rec').appendChild(e); return e; });
+const reps = REP.map(([a, n, v, q]) => { const e = document.createElement('div'); e.className = 'rw';
+  e.innerHTML = `<div class="av2" style="background:#E5F0FD;color:#1674E8">${a}</div>${n}<small>${q} corridas</small><span class="v num">${brl(v)}</span>`; $('#rep').appendChild(e); e._v = e.querySelector('.v'); return e; });
+
+let alt = null;   // alturas das mensagens (medidas no 1º quadro, com a fonte já carregada)
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'whatsapp', 4.55);
+  window.PAPEL_TOPO = (t > 5.6 && t < 15.8) || (t > 20.1 && t < 33.3) ? 0 : 9999;
+
+  /* ── gancho · 1,25 → 4,3 ── */
+  A($('#fin'), t, 1.25, 4.15, { de: 0.86, dy: -60, dout: 0.3 });
+  { const f = t >= 1.9; $('#liSem').style.background = f ? `rgba(201,55,42,${0.08 + 0.06 * pulso(t, 1.9, 0.6)})` : ''; $('#semV').style.color = f ? 'var(--verm)' : '';
+    $('#semV').textContent = f ? '27 · − R$ 3.840' : '27 corridas'; $('#liSem').style.transform = f ? `scale(${1 + 0.03 * pulso(t, 1.9, 0.5)})` + tranco(t, 1.95) : ''; }
+
+  /* ── FS1 · WhatsApp · 5,55 → 15,45 ── */
+  A($('#wa'), t, 5.6, 15.35, { de: 0.88, dy: 120, dout: 0.2 });
+  if (!alt) alt = msgs.map(e => e.offsetHeight + 12);
+  { let desce = 0; msgs.forEach((e, k) => { const p = pr(t, MS[k][0], 0.3, E.cubicOut); desce += alt[k] * (1 - p); e.style.opacity = p; });
+    const sobe = 108 * pr(t, 13.6, 0.35, E.cubicOut);   // o alerta da cobrança empurra a conversa
+    $('#msgs').style.transform = `translateY(${desce - sobe}px)`;
+    // "o comprovante": a foto acende antes de sumir no meio das mensagens
+    const fc = pulso(t, 11.95, 0.9); msgs[12].style.boxShadow = fc > 0.02 ? `0 0 0 ${4 * fc}px rgba(12,164,124,${fc})` : ''; }
+  { pop($('#cob'), t, 13.6); $('#cob').style.borderColor = t >= 15.0 ? 'var(--verm)' : 'transparent';
+    if (t >= 15.0) $('#cob').style.transform = `scale(${1 + 0.04 * pulso(t, 15.0, 0.5)})` + tranco(t, 15.0); }
+
+  /* ── inserções · 15,6 → 19,6 ── */
+  A($('#logoCard'), t, 15.65, 16.65, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#reg'), t, 16.85, 19.55, { de: 0.86, dy: -60, dout: 0.3 });
+  { const ok = t >= 17.8; $('#regP').className = 'pill ' + (ok ? 'vivo' : 'cinza'); $('#regP').innerHTML = ok ? '<i></i>Registrada' : 'Mercado Bom Preço'; $('#regP').style.transform = `scale(${1 + 0.12 * pulso(t, 17.8, 0.4)})`;
+    PASSOS.forEach(([n, g, a], k) => { const on = t >= a, b = ps[k].querySelector('.b');
+      if (b._on !== on) { b.innerHTML = S(on ? 'ok' : g, on ? '#fff' : '#8794A3', on ? 3 : 2.2); b._on = on; }
+      b.style.background = on ? 'var(--verde)' : '#fff'; b.style.borderColor = on ? 'var(--verde)' : '#B8C3CF'; ps[k].style.color = on ? 'var(--tinta)' : '';
+      b.style.transform = `scale(${on ? L(0.7, 1, M.prog(t, a, 0.5, E.spring)) : 1})`; });
+    $('#regL').style.width = pr(t, 18.6, 0.55, E.cubicInOut) * 100 + '%'; }
+
+  /* ── FS2 · 19,75 → 32,95 ── */
+  A($('#app'), t, 19.8, 32.85, { de: 0.88, dy: 120, dout: 0.2 });
+  linhas.forEach((e, k) => { const a = 20.0 + k * 0.08; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -16}px)`; });
+  // solicitações · valores · status · comprovantes · cobranças: a coluna citada ganha contorno
+  { const TS = [20.5, 21.35, 22.0, 22.58, 24.05]; let i = -1; TS.forEach((a, k) => { if (t >= a) i = k; });
+    const hl = $('#colHL'); hl.style.opacity = i < 0 ? 0 : pr(t, 20.5, 0.2, E.cubicOut);
+    if (i >= 0) { const de = COLS[Math.max(0, i - 1)], pa = COLS[i], q = i ? pr(t, TS[i], 0.3, E.cubicInOut) : 1;
+      hl.style.left = L(de[0], pa[0], q) + 'px'; hl.style.width = L(de[1], pa[1], q) + 'px'; } }
+  // "e repasses": clique em Financeiro
+  { const tc = 24.85; cursor($('#cur1'), t, 24.3, [1000, 1500], alvo($('#nFin')), tc, 25.4); const fin = t >= tc + 0.05;
+    $('#nCor').classList.toggle('on', !fin); $('#nFin').classList.toggle('on', fin);
+    $('#vCor').style.opacity = fin ? 0 : 1; $('#vFin').style.opacity = fin ? pr(t, tc + 0.08, 0.2, E.cubicOut) : 0; }
+  [...recs, ...reps].forEach((e, k) => { const a = 25.0 + k * 0.07; e.style.opacity = pr(t, a, 0.25, E.cubicOut); });
+  // "o que foi realizado" · "quem ainda precisa pagar" · "quanto cada entregador deve receber"
+  { const on = t >= 26.0; $('#realiz').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#realiz').style.transform = `scale(${1 + 0.1 * pulso(t, 26.0, 0.4)})`; }
+  recs.forEach((e, k) => { const f = k ? pr(t, 27.4 + (k - 1) * 0.15, 0.3, E.cubicOut) * (1 - pr(t, 32.3, 0.3)) : 0; e.style.background = f > 0.01 ? `rgba(201,55,42,${0.08 * f})` : ''; });
+  reps.forEach((e, k) => { const a = 28.55 + k * 0.22, pv = pr(t, a, 0.7, E.quintOut); e._v.textContent = brl(REP[k][2] * (t < 25 ? 1 : t < a ? 0 : pv));
+    const f = pulso(t, a, 1.0); e.style.background = f > 0.01 ? `rgba(22,116,232,${0.08 * f})` : ''; });
+  // "sem cruzar conversas e planilhas"
+  { const e1 = pr(t, 30.42, 0.25, E.cubicOut), e2 = pr(t, 30.55, 0.25, E.cubicOut); $('#sem1').style.opacity = e1 * (1 - pr(t, 32.75, 0.2)); $('#sem2').style.opacity = e2 * (1 - pr(t, 32.75, 0.2));
+    $('#sem1').style.transform = `translateY(${(1 - e1) * 20}px)`; $('#sem2').style.transform = `translateY(${(1 - e2) * 20}px)`; rS1(t, 31.0); rS2(t, 31.84); }
+
+  /* ── custo · 33,1 → 36,85 ── */
+  A($('#custo'), t, 33.1, 36.8, { de: 0.86, dy: -60, dout: 0.3 });
+  { const p = pr(t, 34.62, 0.9, E.cubicInOut); $('#barN').style.width = L(100, 60, p) + '%'; $('#valN').textContent = 'R$ ' + Math.round(L(18400, 11040, p)).toLocaleString('pt-BR');
+    pop($('#menos'), t, 34.62); $('#custoT').style.color = pulso(t, 35.72, 0.6) > 0.05 ? 'var(--azul)' : ''; }
+
+  /* ── CTA · 37,0 → fim ── */
+  A($('#cta'), t, 37.0, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur2'), t, 38.7, [1020, 760], alvo($('#btnCta'), 60, 6), 39.4, 40.4); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 39.55) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 39.55 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

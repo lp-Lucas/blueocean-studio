@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FF Tech — Copy 1 MOFU (Head de Infraestrutura · time único)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 850px; }
+  #win .corpo { height: 758px; }
+  .topo { display: flex; align-items: flex-start; }
+  .topo .pill { margin-left: auto; margin-top: 4px; }
+  .sec { margin-top: 26px; margin-bottom: 4px; }
+  .row .forn { font: 600 26px 'AtypT'; color: var(--tinta); }
+  .log .seta { color: var(--cinza); }
+  .log b { font-weight: 500; color: var(--tinta); }
+
+  #time .li span:first-child { font: 600 28px 'AtypT'; color: var(--tinta); width: 250px; }
+  #time .li .mono { font: 400 23px 'GMono'; color: var(--cinza); }
+
+  #app2 { height: 692px; }
+  #app2 .corpo { height: 522px; }
+  #app2 .row b { font: 400 22px 'GMono'; color: var(--cinza); font-weight: 400; }
+  .passo { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 21px 'GMono'; color: var(--ciano); flex: none; }
+  #resp { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 104px; border-radius: 16px; background: var(--card2); border: 1.5px solid var(--linha);
+          display: flex; align-items: center; gap: 18px; padding: 0 24px; }
+  #resp .av { width: 60px; height: 60px; border-radius: 50%; background: var(--cianoc); color: var(--ciano); display: grid; place-items: center; font: 600 23px 'GMono'; flex: none; }
+  #resp .nm { font: 600 26px 'AtypT'; } #resp .nm span { display: block; font: 400 19px 'GMono'; color: var(--cinza); letter-spacing: .04em; margin-top: 2px; text-transform: uppercase; }
+  #resp .ps { margin-left: auto; display: flex; gap: 10px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,2 → 11,1): o mesmo ambiente explicado para 3 fornecedores · o incidente segue aberto ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><span class="tt">// Service desk · incidentes</span><span class="pill cinza">P1</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>INC-4821 · prod-api fora do ar</h3><p>Aberto às 08:14 · 3 fornecedores acionados</p></div><span class="pill ruim" id="stAb"><i></i>Aberto</span></div>
+    <div class="k sec">Fornecedores</div>
+    <div class="row f"><span class="h">Rede</span><span class="forn">NetLink Telecom</span><span class="pill cinza" id="e1">Ambiente explicado</span></div>
+    <div class="row f"><span class="h">Cloud</span><span class="forn">CloudOps Partner</span><span class="pill cinza" id="e2">Ambiente explicado</span></div>
+    <div class="row f"><span class="h">Segur.</span><span class="forn">SecureGuard</span><span class="pill cinza" id="e3">Ambiente explicado</span></div>
+    <div class="k sec">Histórico do chamado</div>
+    <div class="log l"><span class="h">09:02</span><span class="o">rede</span><span>“é na cloud”<span class="seta"> → </span><b>cloud</b></span><span class="pill cinza">Repassado</span></div>
+    <div class="log l"><span class="h">10:37</span><span class="o">cloud</span><span>“é na segurança”<span class="seta"> → </span><b>segurança</b></span><span class="pill cinza">Repassado</span></div>
+    <div class="log l"><span class="h">12:15</span><span class="o">segurança</span><span>“aguardando análise”</span><span class="pill cinza">Em fila</span></div>
+    <div class="log l"><span class="h">14:56</span><span class="o">noc</span><span>prod-api segue fora</span><span class="pill ruim" id="lAb">Aberto há 6 h</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÕES (11,2 → 15,3) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo-branco.png" style="height:58px"></div></div>
+<div class="p card ins" id="time" style="left:540px;top:300px">
+  <div class="cabI">Time técnico FF Tech<span class="pill cinza" id="umTime">1 time</span></div>
+  <div class="li"><span>Segurança</span><span class="mono">SOC · Pentest · DFIR</span></div>
+  <div class="li"><span>Cloud</span><span class="mono">AWS · Azure · FinOps</span></div>
+  <div class="li"><span>Infraestrutura</span><span class="mono">NOC · SRE · IaC</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (15,35 → 25,05): ambiente documentado · IaC versionada · runbook de on-call · um responsável ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img class="lg" src="img/logo-fftech.png"><span class="tt">// DevOps · SRE · IaC · NOC</span><span class="pill vivo"><i></i>Live</span></div>
+  <div class="abas"><div class="aba">Ambiente</div><div class="aba">IaC</div><div class="aba">Runbook</div></div>
+  <div class="carrega" id="carrega2" style="top:166px"></div>
+  <div class="corpo">
+    <div class="vista" id="vAmb">
+      <h3>Ambiente · produção</h3><p>Inventário documentado pelo time</p>
+      <div style="margin-top:14px">
+        <div class="row a"><span class="h">eks</span>prod-api<b>6 pods</b><span class="pill cinza">Documentado</span></div>
+        <div class="row a"><span class="h">rds</span>prod-db<b>postgres 15</b><span class="pill cinza">Documentado</span></div>
+        <div class="row a"><span class="h">vpc</span>rede-core<b>3 AZs</b><span class="pill cinza">Documentado</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vIac" style="opacity:0">
+      <h3>infra-prod · terraform</h3><p>Toda mudança vira commit revisado</p>
+      <div style="margin-top:14px">
+        <div class="log c"><span class="h">v2.4</span><span class="o">apply ✓</span><span>eks: pod scale 3→6</span><span class="pill vivo">ok</span></div>
+        <div class="log c"><span class="h">v2.3</span><span class="o">apply ✓</span><span>waf: regra /api/auth</span><span class="pill vivo">ok</span></div>
+        <div class="log c"><span class="h">v2.2</span><span class="o">apply ✓</span><span>backup: retenção 35d</span><span class="pill vivo">ok</span></div>
+        <div class="log c"><span class="h">v2.1</span><span class="o">apply ✓</span><span>vpc: 3 AZs</span><span class="pill vivo">ok</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vRun" style="opacity:0">
+      <h3>Runbook · prod-api fora do ar</h3><p>On-call 24/7 · revisado em set/26</p>
+      <div style="margin-top:14px">
+        <div class="row r"><span class="passo">1</span>Checar alerta no Grafana</div>
+        <div class="row r"><span class="passo">2</span>Escalar pods 3 → 6 (IaC v2.4)</div>
+        <div class="row r"><span class="passo">3</span>Validar SLO 99,9% e fechar</div>
+      </div>
+    </div>
+    <div id="resp"><div class="av">RM</div><div class="nm">Rafael M.<span id="respT">Runbook · on-call</span></div>
+      <div class="ps"><span class="pill cinza" id="pD">Diagnóstico</span><span class="pill cinza" id="pS">Sustentação</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (25,15 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-branco.png" style="height:40px;margin-bottom:22px">
+  <div class="t"><span>// Time único · ponta a ponta</span>Veja o time único assumir seu ambiente</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Falar com um especialista <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 30.21;
+const ROSTO = [555, 860];
+const FS = [[1.2, 11.12, true], [15.35, 25.05, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#07091A', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const Q = s => [...document.querySelectorAll(s)];
+const fs1 = Q('#win .row.f'), logs = Q('#win .log.l'), tl = Q('#time .li'), amb = Q('#vAmb .row'), iac = Q('#vIac .log'), run = Q('#vRun .row');
+const abas2 = Q('#app2 .aba'), vistas2 = [$('#vAmb'), $('#vIac'), $('#vRun')];
+const vira = (el, t, t0, txt, cls) => { if (el._b == null) { el._b = el.innerHTML; el._c = el.className; }
+  const on = t >= t0, h = on ? txt : el._b; if (el.innerHTML !== h) el.innerHTML = h; if (cls != null) el.className = on ? 'pill ' + cls : el._c; if (on) pulsa(el, t, t0, 0.1); else el.style.transform = ''; };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  // câmera (receita 13, linear e suave): sempre andando, zoom sem cortar informação
+  camera(t, '#cam1', [[1.25, [540, 800], 0.92, 3, -4], [2.6, [fs1[0], fs1[2]], 1.06, 2, -2], [5.0, [fs1[0], fs1[2]], 1.14, 1, 2],
+    [6.4, [logs[0], logs[3]], 1.1, 2, 2], [9.3, [logs[0], logs[3]], 1.16, 1, -2], [10.4, '#win .topo', 1.14, 0, 2, 0, 60], [11.1, '#win .topo', 1.22, 0, 1, 0, 40]]);
+  camera(t, '#cam2', [[15.4, [540, 810], 0.92, 3, 4], [16.3, ['#app2 .abas', '#vAmb'], 1.04, 2, 2], [18.0, ['#app2 .abas', '#vAmb'], 1.1, 2, -1],
+    [19.3, '#vRun', 1.12, 1, -2], [20.6, '#resp', 1.08, 1, 2, 0, -70], [24.6, '#resp', 1.16, 0, -1], [25.05, '#resp', 1.2, 0, 0]]);
+
+  /* ── FS1 · 1,2 → 11,1 ── */
+  A($('#win'), t, 1.25, 11.0, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...fs1, ...logs], t, 1.45, 0.08);
+  // "explicou o mesmo ambiente": cada fornecedor recebe a mesma explicação; "três fornecedores": as 3 linhas acendem
+  ['#e1', '#e2', '#e3'].forEach((id, k) => vira($(id), t, 2.75 + k * 0.25, 'Explicado ×' + (k + 1), 'ciano'));
+  fs1.forEach((e, k) => acende(e, t, 4.34 + k * 0.28));
+  // "o de rede aponta o de cloud, o de cloud aponta o de segurança": o chamado pula de mão em mão
+  logs.forEach((e, k) => acende(e, t, [6.34, 7.94, 8.58, 9.7][k], k === 3 ? '255,59,59' : '21,172,241'));
+  // "e o incidente segue aberto": status em vermelho
+  pulsa($('#stAb'), t, 10.36, 0.16); pulsa($('#lAb'), t, 9.75, 0.1);
+
+  /* ── inserções · 11,2 → 15,3 ── */
+  A($('#logoCard'), t, 11.2, 12.0, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#time'), t, 12.0, 15.25, { de: 0.86, dy: -60 });
+  cascata(tl, t, 12.0, 0.06, 12);
+  tl.forEach((e, k) => acende(e, t, [12.06, 12.82, 13.28][k]));
+  vira($('#umTime'), t, 14.38, '<i></i>1 time', 'ciano');
+
+  /* ── FS2 · 15,35 → 25,05 ── */
+  A($('#app2'), t, 15.4, 24.95, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, vistas2, [[16.62, 1], [18.02, 2]], $('#carrega2'));
+  cascata(amb, t, 15.6, 0.08);
+  amb.forEach((e, k) => { const p = e.querySelector('.pill'); vira(p, t, 15.6 + 0.3 * k + 0.35, '✓ Documentado', 'vivo'); });
+  { const c1 = cursor($('#cur1'), t, 16.0, [1000, 1500], t > 16.0 ? centro(abas2[1]) : [0, 0], 16.55, 16.75); }
+  cascata(iac, t, 16.7, 0.08); acende(iac[0], t, 17.2);
+  { const c2 = cursor($('#cur2'), t, 17.45, centro(abas2[1]), t > 17.45 ? centro(abas2[2]) : [0, 0], 17.95, 18.3); }
+  cascata(run, t, 18.1, 0.12);
+  acende($('#resp'), t, 20.12);
+  vira($('#respT'), t, 20.12, 'Atende o chamado', null);
+  // "sem handoff no meio da crise": o mesmo nome do começo ao fim
+  vira($('#respT'), t, 23.74, 'Sem handoff', null); $('#respT').style.color = t >= 23.74 ? 'var(--verde)' : '';
+  vira($('#pD'), t, 22.08, '✓ Diagnóstico', 'vivo'); vira($('#pS'), t, 22.8, '✓ Sustentação', 'vivo');
+
+  /* ── CTA · 25,15 → fim ── */
+  A($('#cta'), t, 25.15, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 26.7, [1020, 760], t > 26.7 ? centro('#btnCta') : [0, 0], 27.4, 29.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.55) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.55 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

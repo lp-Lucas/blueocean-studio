@@ -1,4 +1,4 @@
-/* Base SmartRota (copiada da Neosync) (receita 15): transições das telas cheias, cursor, riscos, caneta, marca-texto, confete e legenda —
+/* Base Geodocs (copiada da SmartRota/Neosync) (receita 15): transições das telas cheias, cursor, riscos, caneta, marca-texto, confete e legenda —
    copiados do forma.html aprovado. A página define FS, ROSTO, ESTOUROS (cores) e OCULTA antes de chamar NB.iniciar(). */
 const { M, E, C, L, $, pr } = FM, A = FM.anim;
 const S = (g, cor, w = 2.6) => FM.svg(g, cor, w);
@@ -74,7 +74,7 @@ GR.forEach(g => { const d = document.createElement('div'); d.style.position = 'a
 function legenda(t) {
   const oc = OCULTA.some(([a, b]) => t >= a && t < b);
   const papel = (window.PAPEL_TOPO ?? 9999) < 1460;
-  legEl.style.color = papel ? '#102039' : '#fff'; legEl.style.textShadow = papel ? 'none' : '';
+  legEl.style.color = papel ? '#0F172A' : '#fff'; legEl.style.textShadow = papel ? 'none' : '';
   GR.forEach((g, k) => { const ini = g[0][0] - 0.05, fim = Math.min(GR[k + 1] ? GR[k + 1][0][0] - 0.05 : 99, g[g.length - 1][1] + 0.6);
     if (oc || t < ini || t >= fim) { g.el.style.opacity = 0; return; }
     g.el.style.opacity = 1;
@@ -83,9 +83,9 @@ function legenda(t) {
 }
 const TELA_SVG = `<defs><filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".45"/></filter>
   <mask id="furoM"><rect x="-60" y="-60" width="1200" height="2040" fill="#fff"/><path id="furoP" fill="#000" d=""/></mask></defs>
-  <g mask="url(#furoM)"><rect x="-60" y="-60" width="1200" height="2040" fill="#F1F8FD"/></g>
+  <g mask="url(#furoM)"><rect x="-60" y="-60" width="1200" height="2040" fill="#F4F5F7"/></g>
   <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
-  <path id="telaArco" fill="none" stroke="#102039" stroke-width="26" stroke-linecap="round" d=""/>`;
+  <path id="telaArco" fill="none" stroke="#0F172A" stroke-width="26" stroke-linecap="round" d=""/>`;
 $('#tela').innerHTML = TELA_SVG;
 
 /* marca famosa citada na fala (ex.: Amazon): o ícone pula sobre a modelo, o fundo dele se expande e vira a tela cheia */

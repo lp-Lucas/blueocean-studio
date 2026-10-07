@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Geodocs — Copy 2 (Cadê a prova desse serviço?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 734px; } #win .corpo { height: 650px; }
+  .vista p { font: 500 24px 'Inter'; color: var(--cinza); margin-top: 6px; }
+  #vWa { position: absolute; inset: 0; }
+  .mail { margin-top: 18px; border: 1.5px solid var(--linha); border-radius: 16px; padding: 22px 26px; }
+  .mail .de { display: flex; align-items: center; gap: 16px; font: 700 25px 'Inter'; } .mail .de span { display: block; font: 500 21px 'Inter'; color: var(--cinza); }
+  .mail .de .h { margin-left: auto; font: 500 21px 'Inter'; color: var(--cinza); }
+  .mail .as { font: 700 27px 'Inter'; margin-top: 18px; letter-spacing: -0.02em; }
+  .mail .tx { font: 500 26px/1.5 'Inter'; color: #334155; margin-top: 10px; }
+  .mail .tx em { font-style: normal; border-radius: 6px; padding: 0 4px; margin: 0 -4px; }
+  #busca { margin-top: 20px; } #busca .in { gap: 14px; } #busca .in svg { width: 28px; flex: none; }
+  .arq { display: flex; align-items: center; gap: 16px; height: 70px; border-top: 1.5px solid var(--linha); margin: 0 -14px; padding: 0 14px; border-radius: 10px; font: 600 25px 'Inter'; }
+  .arq .ico { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; flex: none; } .arq .ico svg { width: 24px; }
+  .arq .d { margin-left: auto; font: 500 22px 'Inter'; color: var(--cinza); }
+  #cob { position: absolute; left: 26px; right: 26px; bottom: 24px; }
+  #app { height: 874px; } #app .corpo { padding: 26px 34px; }
+  .regs { display: flex; gap: 24px; margin-top: 18px; } .regs .fotoC { width: 330px; height: 330px; flex: none; } .regs .lista { flex: 1; }
+  .regs .meta:first-child { border-top: none; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ INSERÇÃO (0,05 → 3,25): equipe de O&M ═════ -->
+<div class="p card ins" id="eqp" style="left:540px;top:300px">
+  <div class="cabI">UFV Norte · Operação<span class="pill cinza">Equipe</span></div>
+  <div class="eq" id="eq0"><div class="av2">BR</div>Gerente de O&amp;M<span class="pill cinza">Bruno Reis</span></div>
+  <div class="eq" id="eq1"><div class="av2">TA</div>Coordenador de manutenção<span class="pill cinza">Tiago Alves</span></div>
+  <div class="eq" id="eq2"><div class="av2">MF</div>Diretor técnico<span class="pill cinza">Marta Freitas</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (3,3 → 13,3): cliente pede a prova · foto no WhatsApp · relatório numa pasta · quem esteve lá ??? ═════ -->
+<div class="p card app fs win" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba on"><i style="background:#64748B" id="icM"></i>E-mail</div><div class="aba"><i style="background:#25D366" id="icW"></i>WhatsApp</div><div class="aba"><i style="background:#64748B" id="icA"></i>Arquivos</div></div>
+  <div class="carrega" id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vMail">
+      <div class="cab"><h3>Caixa de entrada</h3><span class="pill cinza" id="urg">Agora</span></div>
+      <div class="mail">
+        <div class="de"><div class="av2">ES</div><div>Energia Solar Norte<span>cliente · contrato O&amp;M</span></div><span class="h">09:12</span></div>
+        <div class="as">Comprovação da manutenção · Inversor 03</div>
+        <div class="tx">Bom dia! Podem enviar <em id="hAgora">agora</em> a <em id="hProva">prova da manutenção</em> preventiva do Inversor 03, feita em <em id="hData">22/09</em>?</div>
+      </div>
+      <div class="campo" id="busca"><div class="in"><span id="lupa"></span><span id="bTx"></span></div></div>
+      <div id="velhos" style="margin-top:8px"></div>
+    </div>
+    <div id="vWa" style="opacity:0"><div class="wa"><div class="hd"><div class="av2">OM</div><div class="nm">Equipe O&amp;M · Norte<span>9 participantes</span></div></div>
+      <div class="msgs" id="msgs"></div>
+      <div class="alerta" id="cob">Quem esteve no local<b>???</b></div></div></div>
+    <div class="vista" id="vArq" style="opacity:0">
+      <div class="cab"><h3>Arquivos</h3><span class="pill cinza" id="camP">Manutenção › 2026 › Setembro</span></div>
+      <div id="arqs" style="margin-top:12px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (13,45 → 16,85): ordens de serviço sem prova ═════ -->
+<div class="p card ins" id="os" style="left:540px;top:300px">
+  <div class="cabI" id="osT">Ordens de serviço · setembro<span class="pill cinza" id="osP">3 concluídas</span></div>
+  <div id="osL"></div>
+</div>
+
+<!-- ═════ INSERÇÃO (16,95 → 17,75): Geodocs ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px;padding:40px 64px"><img src="img/logo.png" style="height:74px;display:block"></div>
+
+<!-- ═════ TELA CHEIA 2 (17,8 → 23,95): registro de campo no local · coordenada, data, hora, autor · offline ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Geodocs</span><div class="nav"><b>Mapa</b><span>Registros</span><span>Equipe</span></div><div class="av">TA</div></div>
+  <div class="corpo">
+    <svg class="mapa" id="mapa2" width="892" height="300" viewBox="0 0 892 300"></svg>
+    <div class="cab" style="margin-top:18px"><h3>Registro de campo · Inversor 03</h3><span class="pill cinza" id="st">Preventiva</span></div>
+    <div class="regs"><div class="fotoC" id="foto"><span class="selo" id="selo"></span></div><div class="lista" id="metas"></div></div>
+  </div>
+</div>
+
+<!-- ═════ CTA (24,05 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:305px">
+  <img src="img/logo.png">
+  <div class="tit">Se aconteceu no campo,<br>tenha como provar</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Criar conta <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur5" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 27.60;
+const ROSTO = [640, 660];
+const FS = [[3.3, 13.3, true], [17.8, 23.95, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="geodocs.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#icM').innerHTML = S('mail', '#fff', 2.6); $('#icW').innerHTML = S('chat', '#fff', 2.6); $('#icA').innerHTML = S('pasta', '#fff', 2.6);
+$('#lupa').innerHTML = S('lupa', '#64748B', 2.4);
+const abas = [...document.querySelectorAll('#win .aba')];
+
+/* WhatsApp da equipe: a foto do dia 22 e, depois, a pergunta de quem esteve lá */
+const MS = [[-1, 'dia', '22/09', ''], [-1, 'in', '<span class="au">Pedro · Técnico</span>Chegando na UFV', '08:52'],
+  [-1, 'in foto', `<span class="au" style="padding:4px 10px 6px">Pedro · Técnico</span><div class="im">${fotoCampo(340, 190, 'solar')}</div>`, '10:14'],
+  [-1, 'dia', 'Hoje', ''], [11.25, 'out', 'Quem esteve no Inversor 03 dia 22?', '09:20'], [11.85, 'in', '<span class="au">Lucas · Técnico</span>Acho que foi o Pedro…', '09:22'],
+  [12.3, 'in', '<span class="au">Pedro · Técnico</span>Eu estava na UFV Sul nesse dia', '09:23']];
+const msgs = conversa($('#msgs'), MS);
+
+/* e-mails anteriores (a caixa não fica vazia) */
+[['Agenda de preventivas · outubro', '03/10'], ['Relatório mensal · agosto', '05/09']].forEach(([n, d]) => { const e = document.createElement('div'); e.className = 'li';
+  e.innerHTML = `<span class="ico">${S('mail', '#64748B', 2.2)}</span>${n}<b style="font:500 22px Inter;color:var(--cinza)">${d}</b>`; $('#velhos').appendChild(e); });
+
+/* pasta de arquivos */
+const ARQ = [['doc', '#C9372A', 'relatorio_inversor.pdf', '23/09'], ['doc', '#C9372A', 'relatorio_inversor (2).pdf', '23/09'], ['doc', '#C9372A', 'Relatório final v3.pdf', '24/09'],
+  ['foto', '#3D7A89', 'IMG_4471.jpg', '25/09'], ['grade', '#15803D', 'controle_preventivas.xlsx', '30/09'], ['doc', '#C9372A', 'relatorio_FINAL_revisado.pdf', '01/10'], ['pasta', '#64748B', 'fotos_setembro.zip', '02/10']];
+const arqs = ARQ.map(([g, c, n, d]) => { const e = document.createElement('div'); e.className = 'arq';
+  e.innerHTML = `<span class="ico" style="background:${c}1A">${S(g, c, 2.2)}</span>${n}<span class="d">${d}</span>`; $('#arqs').appendChild(e); return e; });
+
+/* ordens de serviço */
+const OS = [['OS #1182 · Inversor 03', 14.44], ['OS #1190 · String box 12', 14.6], ['OS #1197 · Transformador T2', 14.76]];
+const oss = OS.map(([n]) => { const e = document.createElement('div'); e.className = 'li';
+  e.innerHTML = `<span class="ico">${S('tarefa', '#64748B', 2.2)}</span>${n}<span class="pill vivo"><i></i>Concluída</span>`; $('#osL').appendChild(e); e._p = e.querySelector('.pill'); return e; });
+
+/* mapa da usina (FS2) */
+{ let s = mapaFundo(892, 300, 6);
+  s += `<path d="M140 50 L760 40 L790 260 L120 270 Z" fill="rgba(61,122,137,.14)" stroke="#3D7A89" stroke-width="4" stroke-dasharray="10 8"/>`;
+  s += pino(240, 110, '01', 'num') + pino(420, 200, '02', 'num') + pino(560, 120, '03', 'num', 'p03') + pino(690, 210, '04', 'num');
+  s += `<circle id="sel" cx="560" cy="120" r="30" fill="none" stroke="#3D7A89" stroke-width="5" opacity="0"/>`;
+  $('#mapa2').innerHTML = s; }
+$('#foto').insertAdjacentHTML('afterbegin', fotoCampo(330, 330, 'solar'));
+$('#selo').innerHTML = S('pin', '#fff', 2.4) + 'Inversor 03 · 09:41';
+const META = [['pin', 'Local', 'Inversor 03 · UFV Norte', 19.68], ['alvo', 'Coordenada', '−5,0921, −42,8038', 20.34], ['cal', 'Data', '22/09/2026', 21.18],
+  ['relogio', 'Hora', '09:41', 21.72], ['user', 'Autor', 'Pedro Almeida', 21.94]];
+const metas = META.map(([g, k, v]) => { const e = document.createElement('div'); e.className = 'meta';
+  e.innerHTML = `<span class="ico">${S(g, '#3D7A89', 2.2)}</span>${k}<b class="num">${v}</b>`; $('#metas').appendChild(e); return e; });
+
+let alt = null;
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 3.47 && t < 13.65) || (t > 17.91 && t < 24.3) ? 0 : 9999;
+
+  /* ── equipe · 0,05 → 3,25 ── */
+  A($('#eqp'), t, 0.05, 3.15, { de: 0.86, dy: -60, dout: 0.3 });
+  [0.0, 1.16, 2.6].forEach((a, k) => { const e = $('#eq' + k), on = t >= a; acende(e, on ? 1 : 0);
+    const p = e.querySelector('.pill'); p.className = 'pill ' + (on ? 'azul' : 'cinza'); p.style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; });
+
+  /* ── FS1 · 3,3 → 13,3 ── */
+  A($('#win'), t, 3.35, 13.2, { de: 0.88, dy: 120, dout: 0.2 });
+  // "agora" · "a prova" · "duas semanas": cada trecho do e-mail acende
+  [['#hAgora', 4.24], ['#hProva', 4.96], ['#hData', 6.4]].forEach(([id, a]) => { const on = t >= a; $(id).style.background = on ? 'rgba(61,122,137,.16)' : ''; $(id).style.color = on ? 'var(--azulE)' : ''; });
+  { const on = t >= 4.24; $('#urg').className = 'pill ' + (on ? 'verm' : 'cinza'); $('#urg').style.transform = `scale(${1 + 0.1 * pulso(t, 4.24, 0.4)})`; }
+  // "você encontra?": busca digitando
+  digita($('#bTx'), 'Inversor 03 · 22/09', t, 7.1, 0.75); $('#busca .in').classList.toggle('foco', t >= 7.0);
+  if (t < 7.05 && $('#bTx')._v !== 'Buscar…') { $('#bTx').innerHTML = '<span style="color:#94A3B8">Buscar…</span>'; $('#bTx')._v = 'Buscar…'; }
+  // "uma foto no WhatsApp" → aba WhatsApp · "um relatório numa pasta" → Arquivos · "alguém tentando lembrar" → WhatsApp de novo
+  const tW = 8.05, tA = 9.55, tW2 = 10.95;
+  cursor($('#cur1'), t, 7.6, [980, 1400], alvo(abas[1], 20, 6), tW, 8.5);
+  cursor($('#cur2'), t, 9.05, [980, 1400], alvo(abas[2], 20, 6), tA, 10.0);
+  cursor($('#cur3'), t, 10.45, [980, 1400], alvo(abas[1], 20, 6), tW2, 11.4);
+  { const ativa = t >= tW2 + 0.05 ? 1 : t >= tA + 0.05 ? 2 : t >= tW + 0.05 ? 1 : 0, tc = t >= tW2 ? tW2 : t >= tA ? tA : tW;
+    abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+    $('#carrega').style.width = (ativa && t - tc < 0.55 ? pr(t, tc + 0.05, 0.35, E.cubicOut) * 100 : 0) + '%';
+    $('#vMail').style.opacity = ativa === 0 ? 1 : 0;
+    $('#vWa').style.opacity = ativa === 1 ? pr(t, tc + 0.08, 0.2, E.cubicOut) : 0;
+    $('#vArq').style.opacity = ativa === 2 ? pr(t, tA + 0.08, 0.2, E.cubicOut) : 0; }
+  if (!alt) alt = msgs.map(e => e.offsetHeight + 12);
+  rolaConversa($('#msgs'), msgs, MS, t, alt, 108 * pr(t, 12.55, 0.35, E.cubicOut));
+  { const f = pulso(t, 8.5, 1.0); msgs[2].style.boxShadow = f > 0.02 ? `0 0 0 ${5 * f}px rgba(61,122,137,${f})` : ''; }
+  // "relatório": as versões do relatório acendem · "pasta": o caminho acende
+  arqs.forEach((e, k) => { const a = 9.65 + k * 0.07; e.style.opacity = pr(t, a, 0.25, E.cubicOut); acende(e, k < 3 ? pulso(t, 9.82 + k * 0.12, 0.8) : 0); });
+  { const on = t >= 10.46; $('#camP').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#camP').style.transform = `scale(${1 + 0.08 * pulso(t, 10.46, 0.4)})`; }
+  // "quem esteve no local": problema em vermelho
+  { pop($('#cob'), t, 12.55); $('#cob').style.borderColor = t >= 12.94 ? 'var(--verm)' : 'transparent';
+    if (t >= 12.94) $('#cob').style.transform = `scale(${1 + 0.04 * pulso(t, 12.94, 0.5)})` + tranco(t, 12.94); }
+
+  /* ── ordens de serviço · 13,45 → 16,85 ── */
+  A($('#os'), t, 13.45, 16.75, { de: 0.86, dy: -60, dout: 0.3 });
+  oss.forEach((e, k) => { const a = OS[k][1], q = t >= a, h = q ? 'Procurando prova' : '<i></i>Concluída';
+    if (e._p._v !== h) { e._p.innerHTML = h; e._p._v = h; e._p.className = 'pill ' + (q ? 'verm' : 'vivo'); }
+    e._p.style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; acende(e, q ? 1 : 0, '201,55,42'); });
+  { const on = t >= 16.42; $('#osP').className = 'pill ' + (on ? 'verm' : 'cinza'); $('#osP').textContent = on ? '3 sem prova' : '3 concluídas';
+    $('#osP').style.transform = `scale(${1 + 0.1 * pulso(t, 16.42, 0.4)})` + tranco(t, 16.45); }
+
+  /* ── logo · 16,95 → 17,75 ── */
+  A($('#logoCard'), t, 16.95, 17.6, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 17,8 → 23,95 ── */
+  A($('#app'), t, 17.85, 23.85, { de: 0.88, dy: 120, dout: 0.2 });
+  // "registro de campo": clique no pino do Inversor 03 · "associado ao local": o pino fica selecionado
+  { const tc = 18.45; cursor($('#cur4'), t, 17.95, [1000, 1450], alvo($('#p03')), tc, 19.0);
+    const s = t >= tc ? 1 : 0, a = (t * 1.1) % 1; $('#sel').setAttribute('opacity', s * (1 - a)); $('#sel').setAttribute('r', 26 + 16 * a);
+    const f = pulso(t, 17.9, 1.0); $('#foto').style.boxShadow = f > 0.02 ? `0 0 0 ${5 * f}px rgba(61,122,137,${f})` : ''; }
+  metas.forEach((e, k) => { const a = META[k][3], on = t >= a; acende(e, on ? 1 : 0); e.querySelector('b').style.color = on ? 'var(--azulE)' : '';
+    e.style.transform = `scale(${1 + 0.025 * pulso(t, a, 0.4)})`; });
+  // "mesmo trabalhando offline": registrado offline → sincronizado
+  { const off = t >= 22.92, sinc = t >= 23.4; const h = sinc ? '✓ Sincronizado' : off ? S('semsinal', '#3D7A89', 2.4) + 'Registrado offline' : 'Preventiva';
+    $('#st').className = 'pill ' + (sinc ? 'vivo' : off ? 'azul' : 'cinza');
+    if ($('#st')._v !== h) { $('#st').innerHTML = h; $('#st')._v = h; const s = $('#st').querySelector('svg'); if (s) s.style.width = '24px'; }
+    $('#st').style.transform = `scale(${1 + 0.1 * pulso(t, off && !sinc ? 22.92 : 23.4, 0.4)})`; }
+
+  /* ── CTA · 24,05 → fim ── */
+  A($('#cta'), t, 24.05, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur5'), t, 26.3, [1020, 760], alvo($('#btnCta'), 60, 6), 27.0, 27.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.15) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.15 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

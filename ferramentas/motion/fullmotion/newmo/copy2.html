@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Newmo — Copy 2 (SDR com IA 24 h no WhatsApp → humano assume com contexto)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .fld { height: 72px; border: 2px solid var(--linha); border-radius: 14px; display: flex; align-items: center; padding: 0 22px; font: 500 27px 'Inter'; margin-top: 10px; }
+  .fld.foco { border-color: var(--dest); box-shadow: 0 0 0 4px rgba(0,199,103,.15); }
+  .dig::after { content: ''; display: inline-block; width: 3px; height: 32px; background: var(--tinta); margin-left: 3px; vertical-align: middle; }
+  .sec { margin-top: 22px; } .sec .k { margin-bottom: 2px; display: flex; align-items: center; } .sec .k span { margin-left: auto; letter-spacing: 0; text-transform: none; font: 600 22px 'Inter'; color: var(--tinta); }
+  .li { display: flex; align-items: center; gap: 16px; height: 66px; border-top: 1.5px solid var(--linha); font: 500 26px 'Inter'; color: #C5CFC6; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .li:first-of-type { margin-top: 14px; } .li .pill { margin-left: auto; }
+  .inf { display: flex; align-items: center; height: 66px; border-bottom: 1.5px solid var(--linha); font: 500 26px 'Inter'; color: #C5CFC6; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .inf b { margin-left: auto; font: 600 26px 'Inter'; color: var(--tinta); }
+  /* tela cheia 1: novo agente */
+  #ag { height: 830px; } #ag .corpo { height: 730px; }
+  #horas { display: flex; gap: 5px; margin-top: 12px; } #horas i { flex: 1; height: 46px; border-radius: 6px; background: #1E2423; }
+  #horasR { display: flex; justify-content: space-between; font: 500 19px 'Inter'; color: var(--cinza); margin-top: 8px; }
+  #canal { display: flex; align-items: center; gap: 16px; height: 72px; margin-top: 10px; padding: 0 22px; border: 2px solid var(--linha); border-radius: 14px; font: 600 27px 'Inter'; }
+  #canal .bolWa { width: 44px; height: 44px; border-radius: 50%; background: var(--wa); display: grid; place-items: center; } #canal .bolWa svg { width: 26px; } #canal .pill { margin-left: auto; }
+  #rodAg { position: absolute; left: 34px; right: 34px; bottom: 32px; display: flex; justify-content: flex-end; }
+  #btnAt { height: 80px; font-size: 28px; padding: 0 36px; } #btnAt svg { width: 26px; }
+  /* tela cheia 2: conversa no WhatsApp */
+  #wa2 { height: 760px; }
+  .anu { display: block; margin: -4px -10px 10px; padding: 12px 16px; border-radius: 10px; background: #1D282F; font: 600 21px 'Inter'; color: #E9EDEF; } .anu span { display: block; font: 500 19px 'Inter'; color: #8696A0; }
+  .msg.cripto { align-self: center; max-width: 720px; background: #182229; padding: 10px 20px; font: 500 21px/1.35 'Inter'; color: #FFD279; text-align: center; border-radius: 10px; }
+  #perf { position: absolute; left: 26px; right: 26px; bottom: 24px; height: 104px; border-radius: 18px; background: #111614; display: flex; align-items: center; gap: 12px; padding: 0 24px;
+          box-shadow: 0 6px 18px rgba(0,0,0,.4); border: 3px solid transparent; font: 700 26px 'Inter'; opacity: 0; }
+  #perf .pill { opacity: 0; } #perf #pDest { margin-left: auto; }
+  /* inserções */
+  #etapas { width: 960px; padding: 24px 34px 26px; }
+  .passos { display: flex; justify-content: space-between; position: relative; margin-top: 20px; padding: 0 30px; }
+  .passos .ln { position: absolute; left: 100px; right: 100px; top: 25px; height: 5px; background: #E1E5E1; border-radius: 3px; } .passos .ln i { display: block; height: 100%; width: 0; background: var(--dest); border-radius: 3px; }
+  .ps { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 140px; position: relative; font: 600 23px 'Inter'; color: var(--cinza); }
+  .ps .b { width: 54px; height: 54px; border-radius: 50%; border: 3px solid #3A4442; background: #1E2423; display: grid; place-items: center; } .ps .b svg { width: 28px; }
+  .ps small { font: 600 18px 'Inter'; letter-spacing: .06em; text-transform: uppercase; color: #8C958D; }
+  #fila { width: 960px; padding: 24px 34px 26px; }
+  #fila .li span b { font-weight: 600; color: var(--tinta); }
+  /* tela cheia 3: humano assume */
+  #app { height: 760px; } #app .corpo { height: 660px; }
+  #ctx { margin-top: 22px; padding: 18px 24px 8px; border-radius: 16px; border: 2.5px solid var(--linha); }
+  #ctx .k { display: flex; align-items: center; gap: 10px; } #ctx .k svg { width: 24px; }
+  #ctx .inf:last-child { border-bottom: 0; }
+  #rodAp { position: absolute; left: 34px; right: 34px; bottom: 32px; display: flex; align-items: center; justify-content: space-between; }
+  #btnAs { height: 80px; font-size: 28px; padding: 0 36px; } #btnAs svg { width: 26px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,55 → 4,6): criando o agente SDR ═════ -->
+<div class="p card app fs" id="ag" style="left:540px;top:800px">
+  <div class="bar"><img src="img/simbolo.svg"><span class="nm">Newmo</span><div class="nav"><span class="on">Agentes de IA</span><span>Atendimentos</span></div><div class="av">CS</div></div>
+  <div class="corpo">
+    <div class="cab"><h3>Novo agente</h3><span class="pill cinza" id="agP">Rascunho</span></div>
+    <div class="sec"><div class="k">Nome</div><div class="fld" id="fNome"><span id="tNome"></span></div></div>
+    <div class="sec"><div class="k">Função</div><div class="fld" id="fFun"><span id="tFun"></span></div></div>
+    <div class="sec" id="secH"><div class="k">Horário de atendimento<span id="hTxt">08h às 18h</span></div><div id="horas"></div><div id="horasR"><span>00h</span><span>06h</span><span>12h</span><span>18h</span><span>23h</span></div></div>
+    <div class="sec"><div class="k">Canal</div><div id="canal"><div class="bolWa" id="waC"></div>WhatsApp<span class="pill vivo"><i></i>Conectado</span></div></div>
+    <div id="rodAg"><div class="btn" id="btnAt"><span id="atT">Ativar agente</span><span id="atI"></span></div></div>
+  </div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (WhatsApp, 6,0 → 12,95) ═════ -->
+<div class="p card wa fs" id="wa2" style="left:540px;top:800px">
+  <div class="hd"><div class="av2">AR</div><div class="nm">Ana Ribeiro<span>online</span></div></div>
+  <div class="chat"><div class="msgs" id="ms2"></div>
+    <div id="perf">Perfil<span class="pill cinza" id="pA">Clínica</span><span class="pill cinza" id="pB">6 atendentes</span><span class="pill vivo" id="pDest"><i></i>Equipe comercial</span></div></div>
+</div>
+
+<!-- ═════ INSERÇÕES (13,1 → 18,95): a IA cuida da 1ª etapa · fila do vendedor ═════ -->
+<div class="p card" id="etapas" style="left:540px;top:250px">
+  <div class="cabI"><img src="img/simbolo.svg">Etapas do atendimento</div>
+  <div class="passos"><div class="ln"><i id="etL"></i></div></div>
+</div>
+<div class="p card" id="fila" style="left:540px;top:250px">
+  <div class="cabI">Fila do Carlos · vendedor<span class="pill vivo"><i></i>Só qualificados</span></div>
+  <div class="li" id="f1"><span><b>Ana Ribeiro</b> · Clínica Sorriso</span><span class="pill vivo">Pronta para proposta</span></div>
+  <div class="li" id="f2"><span><b>Rafael Mendes</b> · Loja Express</span><span class="pill vivo">Quer negociar</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (19,05 → 22,45): o humano assume com contexto ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:800px">
+  <div class="bar"><img src="img/simbolo.svg"><span class="nm">Newmo</span><div class="nav"><span>Agentes de IA</span><span class="on">Atendimentos</span></div><div class="av">CS</div></div>
+  <div class="corpo">
+    <div class="cab"><div class="av2" style="margin-right:18px">AR</div><div><h3>Ana Ribeiro</h3><p>Clínica Sorriso · via WhatsApp</p></div><span class="pill" id="stP"></span></div>
+    <div id="ctx"><div class="k" id="ctxK"></div><div id="infs"></div></div>
+    <div id="rodAp"><span class="pill ia" id="quemP"></span><div class="btn" id="btnAs"><span id="asT">Assumir conversa</span><span id="asI"></span></div></div>
+  </div>
+</div>
+
+<!-- ═════ CTA (22,6 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:252px">
+  <img src="img/logo-claro.svg">
+  <div class="tit">Seu SDR com IA no WhatsApp</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agendar demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 25.00;
+// corte do "SDR" repetido (0,60 s em 0,60): a animação roda no tempo antigo (WARP), a legenda no novo
+const WARP = T => T < 0.6 ? T : T + 0.6;
+const ROSTO = [580, 720];
+const FS = [[1.25, 4.6, true], [6.0, 12.95, false], [19.05, 22.45, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+$('#waC').innerHTML = WA_SVG('#fff');
+$('#btnCtaI').innerHTML = S('seta2', '#0B1210', 3);
+$('#ctxK').innerHTML = S('robo', '#5C685D', 2.2) + '<span>Contexto coletado pela IA</span>';
+for (let h = 0; h < 24; h++) $('#horas').appendChild(document.createElement('i'));
+const HS = [...$('#horas').children];
+
+/* conversa: o lead chama às 22h47 e a IA responde no mesmo minuto */
+const CV = conversa('#ms2', [[-1, 'cripto', 'As mensagens são protegidas com a criptografia de ponta a ponta.', ''], [-1, 'dia', 'Hoje', ''],
+  [-1, 'in', '<span class="anu">Anúncio<span>Atendimento com IA no WhatsApp</span></span>Oi! Vi o anúncio de vocês', '22:46'], [6.3, 'in', 'Vocês atendem a essa hora?', '22:47'],
+  [7.2, 'out', '<span class="quem">IA Newmo</span>Atendemos sim, a qualquer hora! Posso te fazer duas perguntas rápidas?', '22:47'],
+  [9.1, 'out', '<span class="quem">IA Newmo</span>Qual é o seu segmento e quantas pessoas atendem no WhatsApp?', '22:47'],
+  [9.6, 'in', 'Clínica odontológica, somos 6', '22:48'], [11.3, 'sis', 'Oportunidade enviada para a Equipe comercial', '']]);
+
+/* etapas: [nome, quem, ícone, acende em] */
+const ETP = [['Contato', 'IA', 'chat', 13.62], ['Perguntas', 'IA', 'robo', 13.9], ['Perfil', 'IA', 'pessoa', 14.18], ['Vendedor', 'Humano', 'pessoa', 15.36]];
+const ps = ETP.map(([n, q, g]) => { const e = document.createElement('div'); e.className = 'ps'; e.innerHTML = `<div class="b">${S(g, '#8C958D', 2.2)}</div>${n}<small>${q}</small>`; $('.passos').appendChild(e); return e; });
+
+/* contexto que a IA entrega para o vendedor */
+const INF = [['Segmento', 'Clínica odontológica'], ['Atendentes no WhatsApp', '6 pessoas'], ['Interesse', 'Plano com IA + equipe'], ['Quer começar', 'Este mês']];
+const infs = INF.map(([l, v]) => { const e = document.createElement('div'); e.className = 'inf'; e.innerHTML = `<span>${l}</span><b>${v}</b>`; $('#infs').appendChild(e); return e; });
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'whatsapp', 5.0);
+  window.PAPEL_TOPO = (t > 1.4 && t < 4.95) || (t > 6.05 && t < 13.3) || (t > 19.3 && t < 22.8) ? 0 : 9999;
+
+  /* ── FS1 · novo agente · 0,55 → 4,6 ── */
+  A($('#ag'), t, 1.3, 4.5, { de: 0.88, dy: 120, dout: 0.2 });
+  $('#fNome').classList.toggle('foco', t >= 1.35 && t < 2.2); digita($('#tNome'), 'SDR · Pré-vendas', t, 1.4, 30);
+  $('#fFun').classList.toggle('foco', t >= 2.3 && t < 3.5); digita($('#tFun'), 'Responder e qualificar oportunidades', t, 2.4, 40);
+  // "24 horas por dia": a faixa do horário comercial vira o dia inteiro
+  HS.forEach((e, h) => { const com = h >= 8 && h < 18, a = 3.7 + Math.abs(h - 12.5) * 0.03, on = com || t >= a;
+    e.style.background = on ? 'var(--dest)' : '#1E2423'; e.style.transform = !com && t >= a ? `scaleY(${L(0.4, 1, M.prog(t, a, 0.5, E.spring))})` : ''; });
+  { const v = t >= 3.75; $('#hTxt').textContent = v ? '24 horas · todos os dias' : '08h às 18h'; $('#hTxt').style.color = v ? 'var(--verde)' : '';
+    acende($('#secH'), t, 3.7, 4.5); }
+  // "pelo WhatsApp": ativar
+  { const tc = 4.15, cl = cursor($('#cur1'), t, 3.6, [1000, 1500], alvo($('#btnAt')), tc, 4.5), ok = t >= tc + 0.05;
+    $('#btnAt').style.transform = `scale(${1 - 0.06 * cl})`; $('#btnAt').style.background = ok ? 'var(--verdec)' : ''; $('#btnAt').style.color = ok ? 'var(--verde)' : '';
+    if ($('#atT')._ok !== ok) { $('#atT').textContent = ok ? 'Agente ativo' : 'Ativar agente'; $('#atI').innerHTML = S(ok ? 'ok' : 'seta2', ok ? '#33D285' : '#0B1210', 3); $('#atT')._ok = ok; }
+    $('#agP').className = 'pill ' + (ok ? 'vivo' : 'cinza'); $('#agP').innerHTML = ok ? '<i></i>Ativo' : 'Rascunho'; }
+
+  /* ── FS2 · WhatsApp · 6,0 → 12,95 ── */
+  A($('#wa2'), t, 6.05, 12.85, { de: 0.88, dy: 120, dout: 0.2 });
+  CV.anima(t, 128 * pr(t, 9.95, 0.35, E.cubicOut));
+  // "identifica o perfil" · "direciona as oportunidades certas para a sua equipe"
+  pop($('#perf'), t, 9.95);
+  pop($('#pA'), t, 10.15); pop($('#pB'), t, 10.4); pop($('#pDest'), t, 11.3);
+  $('#perf').style.borderColor = t >= 12.2 ? 'var(--dest)' : 'transparent';
+  if (t >= 12.2) $('#perf').style.transform = `scale(${1 + 0.03 * pulso(t, 12.2, 0.5)})`;
+
+  /* ── inserções · 13,1 → 18,95 ── */
+  A($('#etapas'), t, 13.1, 15.95, { de: 0.86, dy: -60, dout: 0.3 });
+  ETP.forEach(([n, q, g, a], k) => { const on = t >= a, b = ps[k].querySelector('.b');
+    if (b._on !== on) { b.innerHTML = S(on ? 'ok' : g, on ? '#0B1210' : '#8C958D', on ? 3 : 2.2); b._on = on; }
+    const hum = k === 3; b.style.background = on ? (hum ? 'var(--titulo)' : 'var(--dest)') : '#1E2423'; b.style.borderColor = on ? (hum ? 'var(--titulo)' : 'var(--dest)') : '#3A4442';
+    ps[k].style.color = on ? 'var(--tinta)' : ''; b.style.transform = `scale(${on ? L(0.7, 1, M.prog(t, a, 0.5, E.spring)) : 1})`; });
+  $('#etL').style.width = (pr(t, 13.62, 0.6, E.cubicInOut) * 66.6 + pr(t, 15.0, 0.4, E.cubicInOut) * 33.4) + '%';
+  A($('#fila'), t, 16.1, 18.85, { de: 0.86, dy: -60, dout: 0.3 });
+  acende($('#f1'), t, 17.86, null); acende($('#f2'), t, 18.05, null);
+
+  /* ── FS3 · humano assume · 19,05 → 22,45 ── */
+  A($('#app'), t, 19.1, 22.35, { de: 0.88, dy: 120, dout: 0.2 });
+  { const pr_ = t >= 20.1; if ($('#stP')._p !== pr_) { $('#stP').className = 'pill ' + (pr_ ? 'vivo' : 'cinza'); $('#stP').innerHTML = pr_ ? '<i></i>Lead pronto' : 'Em qualificação'; $('#stP')._p = pr_; }
+    $('#stP').style.transform = `scale(${1 + 0.14 * pulso(t, 20.1, 0.45)})`; }
+  { const tc = 20.95, cl = cursor($('#cur2'), t, 20.35, [1000, 1500], alvo($('#btnAs')), tc, 21.6), ok = t >= tc + 0.05;
+    $('#btnAs').style.transform = `scale(${1 - 0.06 * cl})`; $('#btnAs').style.background = ok ? 'var(--verdec)' : ''; $('#btnAs').style.color = ok ? 'var(--verde)' : '';
+    if ($('#asT')._ok !== ok) { $('#asT').textContent = ok ? 'Você assumiu' : 'Assumir conversa'; $('#asI').innerHTML = S(ok ? 'ok' : 'seta2', ok ? '#33D285' : '#0B1210', 3); $('#asT')._ok = ok;
+      $('#quemP').className = 'pill ' + (ok ? 'vivo' : 'ia'); $('#quemP').innerHTML = ok ? '<i></i>Carlos atendendo' : S('robo', '#0B1210', 2.2) + 'IA atendendo'; } }
+  // "com todo o contexto"
+  $('#ctx').style.borderColor = t >= 21.7 ? 'var(--dest)' : 'var(--linha)';
+  infs.forEach((e, k) => acende(e, t, 21.75 + k * 0.1, null));
+
+  /* ── CTA · 22,6 → fim ── */
+  A($('#cta'), t, 22.6, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 23.4, [1000, 1250], alvo($('#btnCta'), 70, 8), 24.1, 25.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 24.25) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 24.25 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

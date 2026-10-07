@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FF Tech — Copy 4 BOFU (Head de Cloud · revisão multi-cloud)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 704px; }
+  #win .corpo { height: 612px; }
+  .contas { margin-left: auto; display: flex; gap: 10px; }
+  .ct { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1.5px solid var(--linha2); font: 600 21px 'AtypT'; }
+  .ct img { height: 24px; }
+  .kpis { display: flex; gap: 14px; margin-top: 20px; }
+  .kpi { flex: 1; border: 1.5px solid var(--linha2); border-radius: 16px; padding: 16px 20px; }
+  .kpi .v { font: 600 38px 'GMono'; letter-spacing: -0.02em; margin-top: 6px; white-space: nowrap; } .kpi .d { font: 500 19px 'GMono'; margin-top: 2px; color: var(--cinza); }
+  .row .nm { font-weight: 600; color: var(--tinta); }
+  .row .ds { font: 400 21px 'GMono'; color: var(--cinza); }
+
+  #mapa .li .pr { font: 600 22px 'GMono'; color: var(--ciano); width: 46px; flex: none; }
+  #mapa .li img { height: 24px; }
+  #mapa .li span.t { font: 500 26px 'AtypT'; color: var(--tinta); }
+
+  #app2 { height: 760px; }
+  #app2 .corpo { height: 668px; }
+  .term { border-radius: 14px; background: #05060F; border: 1.5px solid var(--linha2); padding: 14px 20px; }
+  .term .log { height: 50px; border-bottom: 0; font-size: 21px; }
+  .term .cmd { color: var(--ciano); }
+  .sx { display: flex; align-items: center; gap: 16px; height: 96px; border-bottom: 1.5px solid var(--linha2); font: 500 26px 'AtypT'; color: #D5D8E2; border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+  .sx .nm { font-weight: 600; color: var(--tinta); } .sx .nm span { display: block; font: 400 19px 'GMono'; color: var(--cinza); margin-top: 2px; }
+  .sx .btn { margin-left: auto; height: 60px; font-size: 24px; padding: 0 26px; }
+  .tog { margin-left: auto; width: 84px; height: 46px; border-radius: 23px; background: rgba(255,255,255,.14); position: relative; flex: none; }
+  .tog i { position: absolute; top: 5px; left: 5px; width: 36px; height: 36px; border-radius: 50%; background: #fff; }
+  .barra { height: 8px; border-radius: 4px; background: rgba(255,255,255,.08); margin-top: 10px; overflow: hidden; } .barra i { display: block; height: 100%; width: 0; background: var(--ciano); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (AWS expande 1,6 → 2,6 → 9,5): sustentado por quem só entrega relatório · fatura sobe, risco igual ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><span class="tt">// Cloud · produção</span><div class="contas"><div class="ct"><img src="img/aws-cor.svg">AWS</div><div class="ct"><img src="img/azure-cor.svg">Azure</div></div></div>
+  <div class="corpo">
+    <h3>Fornecedor atual</h3><p>Sustentação terceirizada · contrato mensal</p>
+    <div class="kpis">
+      <div class="kpi" id="kF"><div class="k">Fatura/mês</div><div class="v num" id="fat">R$ 182 mil</div><div class="d" id="fatD">set/26</div></div>
+      <div class="kpi" id="kR"><div class="k">Risco</div><div class="v">Alto</div><div class="d" id="rD">desde jun/26</div></div>
+      <div class="kpi" id="kE"><div class="k">Execução</div><div class="v">—</div><div class="d">sem dono</div></div>
+    </div>
+    <div class="k" style="margin-top:24px">Entregas do fornecedor</div>
+    <div class="row r"><span class="nm">Relatório set/26</span><span class="ds">62 pág.</span><span class="pill cinza">Entregue</span></div>
+    <div class="row r"><span class="nm">Relatório ago/26</span><span class="ds">58 pág.</span><span class="pill cinza">Entregue</span></div>
+    <div class="row r"><span class="nm">Mudanças aplicadas</span><span class="ds">no ambiente</span><span class="pill cinza" id="mud">0</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÕES (9,6 → 14,0) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo-branco.png" style="height:58px"></div></div>
+<div class="p card ins" id="mapa" style="left:540px;top:300px">
+  <div class="cabI">Mapa de risco<span class="pill cinza" id="mpP">Multi-cloud</span></div>
+  <div class="li m"><span class="pr">P1</span><img src="img/aws-cor.svg"><span class="t">Bucket S3 público</span><span class="pill ruim">Crítico</span></div>
+  <div class="li m"><span class="pr">P2</span><img src="img/azure-cor.svg"><span class="t">Admin sem MFA</span><span class="pill" style="background:rgba(245,158,11,.14);color:var(--amar)">Alto</span></div>
+  <div class="li m"><span class="pr">P3</span><img src="img/aws-cor.svg"><span class="t">Instâncias ociosas</span><span class="pill cinza">Médio</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (14,05 → 22,5): plano em IaC · mesmo time assina · acesso de leitura · revisão do crítico ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img class="lg" src="img/logo-fftech.png"><span class="tt">// Cloud · IaC · sustentação</span><span class="pill vivo"><i></i>Live</span></div>
+  <div class="corpo">
+    <div class="term" id="term">
+      <div class="log tl"><span class="cmd">$ terraform apply plano-p1-p3</span></div>
+      <div class="log tl"><span class="o">aws</span><span>s3: bloqueio público</span></div>
+      <div class="log tl"><span class="o">azure</span><span>entra id: mfa obrigatório</span></div>
+      <div class="log tl" id="apl"><span class="cmd" id="aplT">aplicando…</span></div>
+    </div>
+    <div class="sx s" id="sAss" style="margin-top:12px"><div class="nm">Sustentação<span>mesmo time do plano</span></div><div class="btn" id="bAss"><span id="bAssT">Assinar</span></div></div>
+    <div class="sx s" id="sLei"><div class="nm">Acesso de leitura<span>readonly · aws + azure</span></div><div class="tog" id="tog"><i></i></div></div>
+    <div class="sx s" id="sRev" style="border-bottom:0;height:auto;padding-top:16px;padding-bottom:16px;display:block">
+      <div style="display:flex;align-items:center"><div class="nm">Revisão · prod-core<span>ambiente crítico</span></div><span class="pill cinza" id="pRev" style="margin-left:auto">Na fila</span></div>
+      <div class="barra"><i id="barra"></i></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (22,55 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-branco.png" style="height:40px;margin-bottom:22px">
+  <div class="t"><span>// Revisão multi-cloud</span>Peça a revisão do seu ambiente</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Pedir revisão <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy4/palavras.js"></script>
+<script>
+window.DURACAO = 26.22;
+const ROSTO = [555, 860];
+const FS = [[2.6, 9.5, false], [14.05, 22.5, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 15.25, ps: FM.criaConfete(5, 50, 540, 640, 760, 60, 0.7), rgb: [74, 222, 128] }];
+</script>
+<script src="base.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#07091A', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const Q = s => [...document.querySelectorAll(s)];
+const vira = (el, t, t0, txt, cls) => { if (el._b == null) { el._b = el.innerHTML; el._c = el.className; }
+  const on = t >= t0, h = on ? txt : el._b; if (el.innerHTML !== h) el.innerHTML = h; if (cls != null) el.className = on ? 'pill ' + cls : el._c; if (on) pulsa(el, t, t0, 0.1); else el.style.transform = ''; };
+const rel = Q('#win .row'), kp = Q('#win .kpi'), mp = Q('#mapa .li'), tl = Q('#term .log'), sx = Q('#app2 .sx');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  tela(t);
+  // câmera (receita 13, linear e suave): sempre andando, zoom sem cortar informação
+  camera(t, '#cam1', [[2.65, [540, 800], 0.92, 3, -4], [4.2, [rel[0], rel[2]], 1.08, 2, 2], [6.2, '#win .kpis', 1.1, 1, -2], [7.9, [kp[0], kp[1]], 1.28, 1, 2],
+    [9.2, [kp[0], kp[1]], 1.34, 0, 0], [9.5, [kp[0], kp[1]], 1.38, 0, 0]]);
+  camera(t, '#cam2', [[14.1, [540, 810], 0.92, 3, 4], [15.3, '#term', 1.08, 2, -2], [16.7, '#sAss', 1.1, 1, 2, 0, -20], [18.9, '#sLei', 1.12, 1, -2],
+    [20.8, '#sRev', 1.12, 1, 2, 0, -20], [22.1, '#sRev', 1.16, 0, 0], [22.45, '#sRev', 1.2, 0, 0]]);
+
+  /* ── FS1 · 2,6 → 9,5 ── */
+  A($('#win'), t, 2.65, 9.4, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...kp, ...rel], t, 2.8, 0.07);
+  // "sustentado por quem só entrega relatório": os relatórios acendem; mudanças aplicadas = 0
+  acende(rel[0], t, 4.5); acende(rel[1], t, 4.7); acende(rel[2], t, 4.9, '255,59,59', 0.1); vira($('#mud'), t, 4.9, '0', 'ruim');
+  // "ninguém assume a execução"
+  acende(kp[2], t, 6.24, '255,59,59', 0.1); kp[2].querySelector('.v').style.color = t >= 6.24 ? 'var(--verm)' : '';
+  // "a fatura sobe": conta de 182 para 214 mil
+  { const p = pr(t, 7.68, 0.8, E.cubicInOut); $('#fat').textContent = 'R$ ' + Math.round(L(182, 214, p)) + ' mil'; $('#fat').style.color = p > 0 ? 'var(--verm)' : '';
+    $('#fatD').textContent = p > 0.5 ? '↑ 18% · out/26' : 'set/26'; $('#fatD').style.color = p > 0.5 ? 'var(--verm)' : ''; acende(kp[0], t, 7.68, '255,59,59', 0.1); }
+  // "e o risco fica igual"
+  acende(kp[1], t, 8.56, '255,59,59', 0.1); kp[1].querySelector('.v').style.color = t >= 8.56 ? 'var(--verm)' : ''; vira($('#rD'), t, 9.1, 'igual há 4 meses', null);
+  if (t >= 9.1) kp[1].style.transform = `scale(${1 + 0.04 * Math.sin(C((t - 9.1) / 0.4) * Math.PI)})` + tranco(t, 9.1);
+
+  /* ── inserções · 9,6 → 14,0 ── */
+  A($('#logoCard'), t, 9.6, 10.45, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#mapa'), t, 10.45, 13.95, { de: 0.86, dy: -60 });
+  cascata(mp, t, 10.5, 0.06, 12);
+  vira($('#mpP'), t, 11.26, 'Multi-cloud', 'ciano');
+  mp.forEach((e, k) => acende(e, t, 12.72 + k * 0.27, k ? '21,172,241' : '255,59,59', 0.1));
+
+  /* ── FS2 · 14,05 → 22,5 ── */
+  A($('#app2'), t, 14.1, 22.4, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...tl, ...sx], t, 14.3, 0.07);
+  // "plano aplicado em IaC": apply completo (+ confete)
+  { const ok = t >= 15.08, p = pr(t, 15.08, 0.6, E.quintOut); $('#aplT').textContent = ok ? `Apply complete! ${Math.round(12 * p)} changed, 0 destroyed` : 'aplicando…';
+    $('#aplT').style.color = ok ? 'var(--verde)' : ''; acende($('#apl'), t, ok ? 15.08 : null, '74,222,128', 0.1); }
+  // "o mesmo time assinando a sustentação": clique em Assinar
+  { const cl = cursor($('#cur1'), t, 15.9, [1000, 1500], t > 15.9 ? centro('#bAss') : [0, 0], 16.5, 17.0); const ok = t >= 16.55;
+    $('#bAss').style.transform = `scale(${1 - 0.05 * cl})`; $('#bAss').classList.toggle('ok', ok); vira($('#bAssT'), t, 16.55, 'Assinado ✓', null); acende(sx[0], t, ok ? 17.17 : null, '74,222,128', 0.08); }
+  // "você libera o acesso de leitura": liga a chave
+  { const cl = cursor($('#cur2'), t, 18.1, [1000, 1500], t > 18.1 ? centro('#tog') : [0, 0], 18.7, 19.4); const p = pr(t, 18.72, 0.25, E.cubicOut);
+    $('#tog i').style.left = L(5, 43, p) + 'px'; $('#tog').style.background = p > 0.5 ? 'var(--verde)' : ''; acende(sx[1], t, t >= 19.51 ? 19.51 : null, '74,222,128', 0.08); }
+  // "a gente começa pela revisão do ambiente crítico"
+  vira($('#pRev'), t, 20.41, '<i></i>Em andamento', 'ciano'); $('#barra').style.width = pr(t, 20.41, 1.9, E.cubicInOut) * 100 + '%';
+  acende(sx[2], t, 21.93);
+
+  /* ── CTA · 22,55 → fim ── */
+  A($('#cta'), t, 22.55, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur3'), t, 24.1, [1020, 760], t > 24.1 ? centro('#btnCta') : [0, 0], 24.8, 26.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 24.95) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 24.95 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

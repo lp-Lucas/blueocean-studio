@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Geodocs — Copy 1 (Você terminou a obra. O RDO não.)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win { height: 734px; } #win .corpo { height: 650px; }
+  .vista p { font: 500 24px 'Inter'; color: var(--cinza); margin-top: 6px; }
+  #vWa { position: absolute; inset: 0; }
+  .fr { display: flex; align-items: center; height: 68px; border-top: 1.5px solid var(--linha); font: 600 25px 'Inter'; margin: 0 -14px; padding: 0 14px; border-radius: 10px; }
+  .fr .a { width: 400px; } .fr .b { width: 220px; color: var(--cinza); font-weight: 500; } .fr .c { margin-left: auto; }
+  .frh { height: 48px; margin-top: 16px; } .frh > * { font: 600 20px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+  #app { height: 972px; } #app .corpo { padding: 26px 34px; }
+  .lin2 { display: flex; gap: 18px; align-items: flex-end; } .lin2 .campo { width: 270px; }
+  #salvar { margin-left: auto; height: 66px; padding: 0 30px; font-size: 26px; border-radius: 999px; }
+  .regs { display: flex; gap: 24px; margin-top: 18px; } .regs .fotoC { width: 330px; height: 264px; flex: none; } .regs .lista { flex: 1; }
+  .regs .meta:first-child { border-top: none; }
+  #tbDia .li .pill { min-width: 0; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ INSERÇÃO (0,15 → 4,55): equipe da obra (quem a fala qualifica) ═════ -->
+<div class="p card ins" id="eqp" style="left:540px;top:300px">
+  <div class="cabI">Residencial Vila Nova<span class="pill cinza">Equipe da obra</span></div>
+  <div class="eq" id="eq0"><div class="av2">RS</div>Coordenador de obras<span class="pill cinza">Rafael Souza</span></div>
+  <div class="eq" id="eq1"><div class="av2">LT</div>Gerente de contrato<span class="pill cinza">Luana Torres</span></div>
+  <div class="eq" id="eq2"><div class="av2">CM</div>Engenheiro de planejamento<span class="pill cinza">Caio Martins</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (4,75 → 14,6): RDO não iniciado · fotos no WhatsApp · anotação · cada frente ??? ═════ -->
+<div class="p card app fs win" id="win" style="left:540px;top:810px">
+  <div class="abas"><div class="aba on"><i style="background:#3D7A89" id="icR"></i>RDO · 06/10</div><div class="aba"><i style="background:#25D366" id="icW"></i>WhatsApp</div><div class="aba"><i style="background:#64748B" id="icF"></i>Frentes</div></div>
+  <div class="carrega" id="carrega"></div>
+  <div class="corpo">
+    <div class="vista" id="vRdo">
+      <div class="cab"><h3>Diário de obra · 06/10</h3><span class="pill cinza" id="hr18">18:00 · obra encerrada</span></div>
+      <p>Residencial Vila Nova · Bloco B</p>
+      <div id="campos"></div>
+      <div class="alerta" id="naoIni" style="margin-top:20px">Status do RDO<b style="font-size:36px">Não iniciado</b></div>
+    </div>
+    <div id="vWa" style="opacity:0"><div class="wa"><div class="hd"><div class="av2">VN</div><div class="nm">Obra Vila Nova · Equipe<span>14 participantes</span></div></div>
+      <div class="msgs" id="msgs" style="top:auto"></div></div></div>
+    <div class="vista" id="vFr" style="opacity:0">
+      <div class="cab"><h3>Frentes · hoje</h3><span class="pill cinza">5 frentes</span></div>
+      <div class="fr frh"><span class="a">Frente</span><span class="b">Responsável</span><span class="c">Registro</span></div>
+      <div id="frs"></div>
+      <div class="alerta" id="zero" style="margin-top:20px">Frentes com registro hoje<b style="font-size:36px">0 de 5</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (14,8 → 16,6): amanhã começa de novo ═════ -->
+<div class="p card ins" id="dias" style="left:540px;top:300px">
+  <div class="cabI">Diários de obra<span class="pill cinza">Bloco B</span></div>
+  <div id="tbDia">
+    <div class="li"><span class="ico" id="d0i"></span>Seg · 05/10<span class="pill verm">Feito às 22:10</span></div>
+    <div class="li"><span class="ico" id="d1i"></span>Ter · 06/10<span class="pill verm">Não iniciado</span></div>
+    <div class="li" id="d2"><span class="ico" id="d2i"></span>Qua · 07/10 · amanhã<span class="pill cinza" id="d2p">A fazer</span></div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (16,8 → 17,7): Geodocs ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px;padding:40px 64px"><img src="img/logo.png" style="height:74px;display:block"></div>
+
+<!-- ═════ TELA CHEIA 2 (17,75 → 24,55): RDO preenchido no campo, sem sinal · foto com local, data, hora e responsável ═════ -->
+<div class="p card app fs" id="app" style="left:540px;top:820px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Geodocs</span><div class="nav"><b>Mapa</b><span>Diário de obra</span><span>Equipe</span></div><div class="av">CM</div></div>
+  <div class="corpo">
+    <svg class="mapa" id="mapa2" width="892" height="250" viewBox="0 0 892 250"></svg>
+    <div class="cab" style="margin-top:18px"><h3>RDO · 06/10 · Bloco B</h3><span class="pill cinza" id="st">Rascunho</span></div>
+    <div class="campo"><div class="k">Atividades do dia</div><div class="in" id="fAt"></div></div>
+    <div class="lin2"><div class="campo"><div class="k">Efetivo</div><div class="in" id="fEf"></div></div>
+      <div class="campo"><div class="k">Clima</div><div class="in">Ensolarado</div></div>
+      <div class="btn" id="salvar"><span id="salvarTx">Salvar RDO</span></div></div>
+    <div class="regs"><div class="fotoC" id="foto"><span class="selo" id="selo"></span></div>
+      <div class="lista" id="metas"></div></div>
+  </div>
+</div>
+
+<!-- ═════ CTA (24,7 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:305px">
+  <img src="img/logo.png">
+  <div class="tit">Pare de reconstruir a obra<br>depois que ela termina</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Criar conta <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 26.98;
+// cortes depois do motion pronto: repetição "Coordenador…" (−0,80 s) e tomada errada de "Com o Geodocs" (−0,56 s); fim de "responsável" estendido (+0,20 s).
+// A animação roda no tempo antigo (WARP), a legenda no novo.
+const WA = [[0, 0.8], [15.9, 16.7], [16.06, 16.76], [16.36, 17.31], [16.76, 18.12], [23.22, 24.58], [23.42, 24.58], [40, 41.16]];
+const WARP = x => { for (let k = 1; k < WA.length; k++) if (x <= WA[k][0]) { const [a, A0] = WA[k - 1], [b, B0] = WA[k]; return A0 + (B0 - A0) * (x - a) / (b - a); } return x + 1.16; };
+const ROSTO = [640, 660];
+const FS = [[4.75, 14.6, true], [17.75, 24.55, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 21.05, ps: FM.criaConfete(7, 46, 800, 900, 260, 60, 0.6), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="geodocs.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+$('#icR').innerHTML = S('doc', '#fff', 2.6); $('#icW').innerHTML = S('chat', '#fff', 2.6); $('#icF').innerHTML = S('grade', '#fff', 2.6);
+$('#d0i').innerHTML = S('cal', '#64748B', 2.2); $('#d1i').innerHTML = S('cal', '#64748B', 2.2); $('#d2i').innerHTML = S('cal', '#64748B', 2.2);
+const abas = [...document.querySelectorAll('#win .aba')];
+
+/* RDO vazio: campos pendentes */
+const CAMPOS = [['cal', 'Clima'], ['user', 'Efetivo'], ['tarefa', 'Atividades'], ['foto', 'Fotos'], ['doc', 'Ocorrências']];
+const campos = CAMPOS.map(([g, n]) => { const e = document.createElement('div'); e.className = 'li';
+  e.innerHTML = `<span class="ico">${S(g, '#64748B', 2.2)}</span>${n}<span class="pill cinza">Pendente</span>`; $('#campos').appendChild(e); return e; });
+
+/* WhatsApp da obra */
+const nota = `<svg viewBox="0 0 340 190"><rect width="340" height="190" fill="#EDE8DC"/><g transform="rotate(-4 170 95)" font-family="Mao" fill="#24407A">
+  <text x="26" y="58" font-size="34">laje bl. B ~70%?</text><text x="26" y="102" font-size="34">faltou 2 pedreiros</text><text x="26" y="146" font-size="34">ver c/ Marcos amanhã</text></g></svg>`;
+const MS = [[-1, 'dia', 'Hoje', ''], [-1, 'in', '<span class="au">Marcos · Fundação</span>Equipe já no bloco C', '07:12'], [-1, 'in', '<span class="au">Ana · Estrutura</span>Concreto chega às 9h', '08:05'],
+  [9.6, 'in foto', `<span class="au" style="padding:4px 10px 6px">João · Alvenaria</span><div class="im">${fotoCampo(340, 190, 'obra')}</div>`, '11:40'],
+  [10.35, 'in', '<span class="au">Paulo · Elétrica</span>Fiação do 2º ok, falta o quadro', '16:48'],
+  [11.15, 'in foto', `<span class="au" style="padding:4px 10px 6px">Marcos · Fundação</span><div class="im">${nota}</div>`, '17:31'],
+  [12.2, 'in', '<span class="au">Rita · Cobertura</span>Alguém fechou o bloco A hoje?', '17:55']];
+const msgs = conversa($('#msgs'), MS);
+
+/* frentes da obra */
+const FR = [['Fundação · Bloco C', 'Marcos'], ['Estrutura · Bloco B', 'Ana'], ['Alvenaria · Bloco A', 'João'], ['Instalações elétricas', 'Paulo'], ['Cobertura · Bloco A', 'Rita']];
+const frs = FR.map(([a, b]) => { const e = document.createElement('div'); e.className = 'fr';
+  e.innerHTML = `<span class="a">${a}</span><span class="b">${b}</span><span class="c"><span class="pill cinza">Sem registro</span></span>`; $('#frs').appendChild(e); e._c = e.querySelector('.c'); return e; });
+
+/* mapa da obra (FS2) */
+{ let s = mapaFundo(892, 250, 4);
+  s += `<path d="M250 40 L640 30 L690 210 L230 220 Z" fill="rgba(61,122,137,.16)" stroke="#3D7A89" stroke-width="4" stroke-dasharray="10 8"/>`;
+  s += pino(330, 90, 'A', 'num') + pino(470, 150, 'B', 'num') + pino(600, 80, 'C', 'num') + pino(505, 120, '', 'ok', 'pFoto');
+  s += `<circle id="aqui" cx="470" cy="150" r="20" fill="none" stroke="#3D7A89" stroke-width="5"/>`;
+  $('#mapa2').innerHTML = s; }
+$('#foto').insertAdjacentHTML('afterbegin', fotoCampo(330, 264, 'obra'));
+$('#selo').innerHTML = S('pin', '#fff', 2.4) + 'Bloco B · 14:32';
+const META = [['pin', 'Local', 'Bloco B · 3º pav.', 22.91], ['cal', 'Data', '06/10/2026', 23.43], ['relogio', 'Hora', '14:32', 23.85], ['user', 'Responsável', 'Carla Mendes', 24.11]];
+const metas = META.map(([g, k, v]) => { const e = document.createElement('div'); e.className = 'meta';
+  e.innerHTML = `<span class="ico">${S(g, '#3D7A89', 2.2)}</span>${k}<b>${v}</b>`; $('#metas').appendChild(e); return e; });
+
+let alt = null;
+window.quadro = function (tl) {
+  const t = WARP(tl);
+  FM.antes(t);
+  tela(t);
+  window.PAPEL_TOPO = (t > 4.92 && t < 14.95) || (t > 17.86 && t < 24.9) ? 0 : 9999;
+
+  /* ── equipe · 0,15 → 4,55 ── */
+  A($('#eqp'), t, 0.85, 4.45, { de: 0.86, dy: -60, dout: 0.3 });
+  [0.92, 2.27, 3.39].forEach((a, k) => { const e = $('#eq' + k), on = t >= a; acende(e, on ? 1 : 0);
+    const p = e.querySelector('.pill'); p.className = 'pill ' + (on ? 'azul' : 'cinza'); p.style.transform = `scale(${1 + 0.1 * pulso(t, a, 0.4)})`; });
+
+  /* ── FS1 · 4,75 → 14,6 ── */
+  A($('#win'), t, 4.8, 14.5, { de: 0.88, dy: 120, dout: 0.2 });
+  campos.forEach((e, k) => { const a = 5.0 + k * 0.08; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * -16}px)`; });
+  // "às 18 horas": o horário acende
+  { const on = t >= 5.85; $('#hr18').className = 'pill ' + (on ? 'azul' : 'cinza'); $('#hr18').style.transform = `scale(${1 + 0.1 * pulso(t, 5.85, 0.4)})`; }
+  // "o seu RDO": os campos pendentes acendem · "nem começou?": status em vermelho
+  campos.forEach((e, k) => acende(e, pulso(t, 7.04 + k * 0.07, 0.6), '201,55,42'));
+  { pop($('#naoIni'), t, 7.5); $('#naoIni').style.borderColor = t >= 7.96 ? 'var(--verm)' : 'transparent';
+    if (t >= 7.96) $('#naoIni').style.transform = `scale(${1 + 0.04 * pulso(t, 7.96, 0.5)})` + tranco(t, 7.96); }
+  // "procurar foto no WhatsApp": clique na aba WhatsApp · "cada frente": clique em Frentes
+  const tW = 9.45, tF = 12.85;
+  cursor($('#cur1'), t, 8.9, [980, 1400], alvo(abas[1], 20, 6), tW, 9.9);
+  cursor($('#cur2'), t, 12.3, [980, 1400], alvo(abas[2], 20, 6), tF, 13.3);
+  { const ativa = t >= tF + 0.05 ? 2 : t >= tW + 0.05 ? 1 : 0, tc = ativa === 2 ? tF : tW;
+    abas.forEach((e, k) => e.classList.toggle('on', k === ativa));
+    $('#carrega').style.width = (ativa && t - tc < 0.55 ? pr(t, tc + 0.05, 0.35, E.cubicOut) * 100 : 0) + '%';
+    $('#vRdo').style.opacity = ativa === 0 ? 1 : 0;
+    $('#vWa').style.opacity = ativa === 1 ? pr(t, tW + 0.08, 0.2, E.cubicOut) : 0;
+    $('#vFr').style.opacity = ativa === 2 ? pr(t, tF + 0.08, 0.2, E.cubicOut) : 0; }
+  if (!alt) alt = msgs.map(e => e.offsetHeight + 12);
+  rolaConversa($('#msgs'), msgs, MS, t, alt);
+  // "foto": a foto acende · "anotação no papel": a anotação acende
+  { const f1 = pulso(t, 9.9, 0.9), f2 = pulso(t, 11.34, 1.0);
+    msgs[3].style.boxShadow = f1 > 0.02 ? `0 0 0 ${5 * f1}px rgba(61,122,137,${f1})` : ''; msgs[5].style.boxShadow = f2 > 0.02 ? `0 0 0 ${5 * f2}px rgba(61,122,137,${f2})` : ''; }
+  frs.forEach((e, k) => { const a = 13.0 + k * 0.08; e.style.opacity = pr(t, a, 0.25, E.cubicOut);
+    const q = t >= 13.3 + k * 0.12, h = q ? '<span class="pill verm">???</span>' : '<span class="pill cinza">Sem registro</span>'; if (e._c._v !== h) { e._c.innerHTML = h; e._c._v = h; }
+    acende(e, pulso(t, 13.96 + k * 0.08, 0.6), '201,55,42'); });
+  { pop($('#zero'), t, 14.05); $('#zero').style.borderColor = t >= 14.2 ? 'var(--verm)' : 'transparent';
+    if (t >= 14.2) $('#zero').style.transform = `scale(${1 + 0.04 * pulso(t, 14.2, 0.5)})` + tranco(t, 14.2); }
+
+  /* ── amanhã de novo · 14,8 → 16,6 ── */
+  A($('#dias'), t, 14.8, 16.5, { de: 0.86, dy: -60, dout: 0.25 });
+  { const on = t >= 15.67; $('#d2p').className = 'pill ' + (on ? 'verm' : 'cinza'); $('#d2p').textContent = on ? 'Começa do zero' : 'A fazer';
+    $('#d2p').style.transform = `scale(${1 + 0.1 * pulso(t, 15.67, 0.4)})` + tranco(t, 15.7); acende($('#d2'), on ? 1 : 0, '201,55,42'); }
+
+  /* ── logo · 16,8 → 17,7 ── */
+  A($('#logoCard'), t, 16.8, 17.6, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 17,75 → 24,55 ── */
+  A($('#app'), t, 17.8, 24.45, { de: 0.88, dy: 120, dout: 0.2 });
+  { const a = (t * 1.2) % 1; $('#aqui').setAttribute('r', 20 + 14 * a); $('#aqui').style.opacity = 1 - a; }
+  // "preenchido no próprio campo": digitando
+  digita($('#fAt'), 'Concretagem da laje · 3º pavimento', t, 18.9, 1.1); $('#fAt').classList.toggle('foco', t >= 18.85 && t < 20.1);
+  digita($('#fEf'), '12 pessoas', t, 20.0, 0.4); $('#fEf').classList.toggle('foco', t >= 19.95 && t < 20.55);
+  // "até sem sinal": status offline
+  { const on = t >= 20.67; $('#st').className = 'pill ' + (on ? 'azul' : 'cinza'); const h = on ? S('semsinal', '#3D7A89', 2.4) + 'Sem sinal · salvo no aparelho' : 'Rascunho';
+    if ($('#st')._v !== h) { $('#st').innerHTML = h; $('#st')._v = h; const s = $('#st').querySelector('svg'); if (s) s.style.width = '24px'; }
+    $('#st').style.transform = `scale(${1 + 0.1 * pulso(t, 20.67, 0.4)})`; }
+  { const tc = 21.0, cl = cursor($('#cur3'), t, 20.45, [1000, 1500], alvo($('#salvar')), tc, 21.6), ok = t >= tc + 0.05;
+    $('#salvar').style.transform = `scale(${1 - 0.06 * cl})`; $('#salvar').style.background = ok ? 'var(--verde)' : '';
+    const h = ok ? 'Salvo ✓' : 'Salvar RDO'; if ($('#salvarTx').textContent !== h) $('#salvarTx').textContent = h; }
+  // "fotos e registros": a foto acende · local, data, hora e responsável acendem na fala
+  { const f = pulso(t, 21.39, 1.0); $('#foto').style.boxShadow = f > 0.02 ? `0 0 0 ${5 * f}px rgba(61,122,137,${f})` : ''; }
+  metas.forEach((e, k) => { const a = META[k][3], on = t >= a && t < 24.5; acende(e, on ? 1 : 0); e.querySelector('b').style.color = on ? 'var(--azulE)' : '';
+    e.style.transform = `scale(${1 + 0.025 * pulso(t, a, 0.4)})`; });
+  popSvg($('#pFoto'), t, 22.91);
+
+  /* ── CTA · 24,7 → fim ── */
+  A($('#cta'), t, 24.7, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur4'), t, 26.7, [1020, 760], alvo($('#btnCta'), 60, 6), 27.35, 28.3); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 27.5) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.5 ? -200 : L(-200, 700, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(tl);
+};
+fim();
+</script>
+</body>
+</html>
