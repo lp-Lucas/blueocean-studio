@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Criativo 05 (dinheiro na mesa sem CAPI → o Leadrive fecha o loop)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo, #w2 .corpo { padding: 26px 34px 32px; }
+  #w1 .ev .pill { min-width: 200px; justify-content: center; }
+  #otm .li .pill, #fila .li b { min-width: 170px; justify-content: center; text-align: right; }
+  #w2 .ev { height: 80px; } #w2 .ev + .ev { margin-top: 10px; }
+  #w3 .corpo { height: 640px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,55 → 7,15; entra com o ícone do WhatsApp): sem lead qualificado via CAPI → dinheiro na mesa ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span id="mt1"></span><span class="tt" style="border:0;padding-left:0">Conversions API · Meta</span><span class="pill cinza">Tráfego para WhatsApp</span></div>
+  <div class="corpo">
+    <div class="ev" id="e0"><span id="ei0"></span><div><div class="tx">Lead qualificado</div><span class="utm">via CAPI</span></div><span class="pill cinza" id="ep0">—</span></div>
+    <div class="ev" id="e1" style="margin-top:12px"><span id="ei1"></span><div><div class="tx">Venda</div><span class="utm">via CAPI</span></div><span class="pill cinza" id="ep1">—</span></div>
+    <div class="li" id="mesa" style="margin-top:16px"><span>Dinheiro na mesa este mês</span><b class="num" id="mesaV">R$ 0</b></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,25 → 12,35): a Meta otimiza pra lead barato, sem saber quem virou oportunidade ═════ -->
+<div class="p card ins" id="otm" style="left:540px;top:300px">
+  <div class="cabI"><span id="mtO"></span>A Meta aprende com<span class="pill cinza" id="pOtm">Otimização</span></div>
+  <div class="li" id="t0"><span>Lead barato</span><span class="pill cinza" id="tp0">—</span></div>
+  <div class="li" id="t1"><span>Oportunidade real</span><span class="pill cinza" id="tp1">—</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (12,45 → 20,05): escala com dado incompleto → lead desqualificado → time sobrecarregado ═════ -->
+<div class="p card ins" id="fila" style="left:540px;top:300px">
+  <div class="cabI">Fila do comercial<span class="pill cinza" id="pFila">Campanha escalada</span></div>
+  <div class="li" id="f0"><span>Leads na fila</span><b class="num" id="fv0">38</b></div>
+  <div class="li" id="f1"><span>Curiosos sem intenção</span><b class="num" id="fv1">—</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (20,1 → 33,5): o Leadrive fecha o loop — conecta tudo e devolve os eventos certos via CAPI ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mk2"></span><span class="tt">O loop fechado</span><span class="pill cinza" id="pLoop">Conectando</span></div>
+  <div class="corpo">
+    <div id="camC"></div>
+    <svg width="892" height="70" viewBox="0 0 892 70" style="display:block;margin-top:-8px">
+      <path id="volta" d="M818 4 C818 58, 760 62, 446 62 C132 62, 74 58, 74 10" stroke="#25D366" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path id="pontaV" d="M62 22 L74 6 L86 22" stroke="#25D366" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>
+    </svg>
+    <div id="evs" style="margin-top:10px">
+      <div class="ev"><span class="ri"></span><div><div class="tx">Lead qualificado</div></div><span class="pill cinza" id="rp0">Na fila</span></div>
+      <div class="ev"><span class="ri"></span><div><div class="tx">Oportunidade</div></div><span class="pill cinza" id="rp1">Na fila</span></div>
+      <div class="ev"><span class="ri"></span><div><div class="tx">Venda · R$ 2.400</div></div><span class="pill cinza" id="rp2">Na fila</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (33,6 → 39,2): a campanha otimiza por qualidade e receita → muito mais resultado ═════ -->
+<div class="p card ins" id="qr" style="left:540px;top:300px">
+  <div class="cabI"><span id="mtQ"></span>Campanha otimizando por<span class="pill cinza" id="pQr">Antes: lead barato</span></div>
+  <div class="li" id="g0"><span>Qualidade do lead</span><span class="pill cinza" id="gp0">—</span></div>
+  <div class="li" id="g1"><span>Receita</span><b class="num" id="gv1">—</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (39,3 → 44,4): quais campanhas geram dinheiro e menos desperdício com lead ruim ═════ -->
+<div class="cam" id="cam3"><div class="p card app fs" id="w3" style="left:540px;top:800px"></div></div>
+
+<!-- ═════ CTA (44,5 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">O próximo passo<br><em>da sua operação.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Solicite uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="cr5/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 50.35;
+const ROSTO = [540, 720];
+const FS = [[1.55, 7.15, false], [20.1, 33.5, true], [39.3, 44.4, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 33.14, ps: FM.criaConfete(51, 50, 540, 900, 520, 60, 0.7), rgb: [37, 211, 102] }, { t0: 41.9, ps: FM.criaConfete(52, 50, 540, 760, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+['#mt1', '#ei0', '#ei1', '#mtO', '#mtQ'].forEach(s => $(s).innerHTML = mk('meta', s === '#mt1' ? 48 : 44));
+Q('#evs .ri').forEach(e => e.innerHTML = mk('meta', 48));
+$('#mk2').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+$('#camC').innerHTML = caminho('c', [['anuncio', 'Campanha'], ['clique', 'Anúncio'], ['painel', 'Criativo'], ['gente', 'Lead'], ['chat', 'WhatsApp'], ['venda', 'Venda']]);
+$('#w3').innerHTML = painelCompleto('b', { camps: ['CAMPANHA-3 · Meta', 'REELS-12 · Meta', 'SEARCH-BR · Google'], kpis: [['Leads', '412'], ['Vendas', '0'], ['Receita', 'R$ 0'], ['Desperdício', 'R$ 3.800']] });
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const e1 = Q('#w1 .ev'), ev = Q('#evs .ev');
+Q('#camC .k').forEach(k => k.style.fontSize = '13px'); Q('#camC [id^=cn]').forEach(n => n.style.fontSize = '22px');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  marcaExpande(t, 'whatsapp', 0.55);
+  tela(t);
+  camera(t, '#cam1', [[1.6, [540, 800], 0.92, 3, -3], [3.0, e1, 1.04, 2, -1], [4.6, e1[0], 1.08, 1, 2], [6.0, '#mesa', 1.06, -1, 1], [7.15, '#mesa', 1.1, 0, 0]]);
+  camera(t, '#cam2', [[20.15, [540, 800], 0.92, 3, 3], [22.0, ['#ce0', '#ce2'], 1.04, 2, 1, 120, 0], [24.4, ['#ce2', '#ce5'], 1.04, 1, -2, -60, 0], [26.6, '#camC', 1.02, -1, 1], [28.8, ['#camC', '#volta'], 1.03, 1, 1],
+    [30.6, [ev[0], ev[1]], 1.06, 2, -1], [32.2, [ev[1], ev[2]], 1.06, 0, 1], [33.5, ev[2], 1.08, 0, 0]]);
+  camera(t, '#cam3', [[39.35, [540, 800], 0.92, 3, 3], [40.6, '#bc0', 1.04, 2, 1, 280, 120], [41.9, ['#bk1', '#bk2'], 1.08, 1, -1], [43.2, '#bk3', 1.1, -1, 1, -120, 0], [44.4, ['#bk2', '#bk3'], 1.1, 0, 0]]);
+
+  /* ── FS1 · 1,55 → 7,15: sem lead qualificado via CAPI pro Meta → dinheiro na mesa ── */
+  A($('#w1'), t, 1.6, 7.05, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...e1, $('#mesa')], t, 1.65, 0.06);
+  vira($('#ep0'), t, 3.26, 'Não enviado', 'ruim'); acende(e1[0], t, 3.26, VERM, 0.1);
+  vira($('#ep1'), t, 4.46, 'Não enviado', 'ruim'); acende(e1[1], t, 4.46, VERM, 0.1);
+  conta($('#mesaV'), t, 5.6, 1.3, 12400, x => 'R$ ' + Math.round(x).toLocaleString('pt-BR')); $('#mesaV').style.color = t >= 5.6 ? 'var(--verm)' : ''; acende($('#mesa'), t, 6.44, VERM, 0.14);
+
+  /* ── inserção · 7,25 → 12,35: otimiza pra lead barato, não sabe quem virou oportunidade ── */
+  A($('#otm'), t, 7.25, 12.35, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#otm .li'), t, 7.35, 0.1, 12);
+  vira($('#tp0'), t, 9.02, '✓ Usado', 'roxo'); acende($('#t0'), t, 9.02, ROXO, 0.12);
+  vira($('#tp1'), t, 11.34, 'Não sabe', 'ruim'); acende($('#t1'), t, 11.34, VERM, 0.12);
+
+  /* ── inserção · 12,45 → 20,05: escala com dado incompleto → lead desqualificado → time sobrecarregado com curioso ── */
+  A($('#fila'), t, 12.45, 20.05, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#fila .li'), t, 12.55, 0.1, 12);
+  vira($('#pFila'), t, 14.54, 'Escalada com dado incompleto', 'ruim');
+  { const q = E.cubicInOut(C((t - 16.06) / 2.6)); $('#fv0').textContent = Math.round(L(38, 146, q)); $('#fv0').style.color = t >= 17.62 ? 'var(--verm)' : ''; }
+  acende($('#f0'), t, 17.62, VERM, 0.12);
+  { const on = t >= 19.32; $('#fv1').textContent = on ? Math.round(68 * E.cubicOut(C((t - 19.32) / 0.6))) + '%' : '—'; $('#fv1').style.color = on ? 'var(--verm)' : ''; acende($('#f1'), t, 19.32, VERM, 0.12); }
+
+  /* ── FS2 · 20,1 → 33,5: conecta campanha → … → venda e fecha o loop devolvendo os eventos via CAPI ── */
+  A($('#w2'), t, 20.15, 33.4, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#camC'), ...ev], t, 20.2, 0.06);
+  vira($('#pLoop'), t, 20.64, 'Loop fechado', 'roxo');
+  caminhoAnda('c', t, [22.28, 22.98, 23.6, 24.4, 25.46, 26.46]);
+  tinta(t, 'volta', 28.1, 1.5); $('#pontaV').setAttribute('opacity', pr(t, 29.5, 0.2));
+  vira($('#pLoop'), t, t >= 29.5 ? 29.5 : 20.64, t >= 29.5 ? '✓ Loop fechado' : 'Conectando', t >= 29.5 ? 'vivo' : 'roxo');
+  [[31.42, 0], [32.12, 1], [33.14, 2]].forEach(([t0, k]) => { vira($('#rp' + k), t, t0, 'Enviado ✓', 'vivo'); acende(ev[k], t, t0, VERDE, 0.08); });
+  ev.forEach((e, k) => { if (t >= 30.5 && t < [31.42, 32.12, 33.14][k]) acende(e, t, 30.5, ROXO, 0.08); });
+
+  /* ── inserção · 33,6 → 39,2: otimiza com qualidade e receita → muito mais resultado ── */
+  A($('#qr'), t, 33.6, 39.2, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#qr .li'), t, 33.7, 0.1, 12);
+  vira($('#pQr'), t, 35.18, '✓ Qualidade e receita', 'vivo');
+  vira($('#gp0'), t, 36.32, '✓ Lead qualificado', 'vivo'); acende($('#g0'), t, 36.32, VERDE, 0.12);
+  conta($('#gv1'), t, 37.22, 1.4, 41300, x => '+R$ ' + Math.round(x).toLocaleString('pt-BR')); $('#gv1').style.color = t >= 37.22 ? 'var(--verde)' : ''; acende($('#g1'), t, 37.22, VERDE, 0.12);
+  if (t < 37.22) $('#gv1').textContent = '—';
+
+  /* ── FS3 · 39,3 → 44,4: quais campanhas geram dinheiro, menos desperdício com lead ruim ── */
+  A($('#w3'), t, 39.35, 44.3, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w3 .lat .it'), ...Q('#w3 .kpi')], t, 39.4, 0.04);
+  Q('#w3 .lat .it').slice(0, 3).forEach((e, k) => acende(e, t, 40.42 + 0.12 * k, ROXO, k ? 0.1 : 0));
+  conta($('#bv1'), t, 41.48, 0.9, 38); conta($('#bv2'), t, 41.48, 1.0, 91200, x => 'R$ ' + Math.round(x).toLocaleString('pt-BR'));
+  acende($('#bk1'), t, 41.9, VERDE, 0.12); acende($('#bk2'), t, 41.9, VERDE, 0.12);
+  { const q = E.cubicInOut(C((t - 42.7) / 1.2)); $('#bv3').textContent = 'R$ ' + Math.round(L(3800, 900, q)).toLocaleString('pt-BR'); $('#bv3').style.color = t >= 42.7 ? 'var(--verde)' : 'var(--verm)'; acende($('#bk3'), t, 44.12, VERDE, 0.12); }
+
+  /* ── CTA · 44,5 → fim ── */
+  A($('#cta'), t, 44.5, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 47.2, [1020, 760], t > 47.2 ? centro('#btnCta') : [0, 0], 47.94, 50.3); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 48.1) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 48.1 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

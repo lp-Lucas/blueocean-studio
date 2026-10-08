@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Roteiro 2 (conversão perdida no WhatsApp)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo { padding: 26px 34px 34px; }
+  #ads .li b { min-width: 120px; text-align: right; }
+  #w2 .corpo { height: 650px; }
+  #w2 .lead .pill { min-width: 230px; justify-content: center; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (2,3 → 8,85; entra com o ícone do WhatsApp): a venda acontece no WhatsApp, o evento não volta pra campanha ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar" style="background:#202C33"><span id="waI"></span><span class="tt" style="color:#E9EDEF">WhatsApp · Vendas</span><span class="pill vivo" id="pVen"><i></i>Venda fechada</span></div>
+  <div class="corpo">
+    <div class="chat" style="background:#0B141A;border-radius:18px;padding:22px 24px">
+      <div class="bal c">Fechado! Pode gerar o pedido.<small>14:09</small></div>
+      <div class="bal v">Pedido gerado ✓ R$ 1.890<small>14:10</small></div>
+    </div>
+    <svg width="892" height="150" viewBox="0 0 892 150" style="display:block">
+      <path d="M446 10 V140" stroke="rgba(111,111,255,.3)" stroke-width="4" stroke-dasharray="6 10" fill="none"/>
+      <path id="evA" d="M446 10 V68" stroke="#6F6FFF" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path id="evB" d="M446 84 V140" stroke="#6F6FFF" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <g id="evX" opacity="0"><path d="M432 62 L460 90 M460 62 L432 90" stroke="#FF6B8A" stroke-width="7" stroke-linecap="round"/></g>
+      <text x="476" y="82" style="font:500 21px JBM;fill:#9598B8;letter-spacing:.1em" id="evT">EVENTO DE CONVERSÃO</text>
+    </svg>
+    <div class="kpi" id="ads" style="padding:20px 26px">
+      <div style="display:flex;align-items:center;gap:14px"><span id="metaI"></span><span style="font:650 27px 'INT'">Gerenciador de anúncios</span><span class="pill cinza" style="margin-left:auto">Campanha · Leads WhatsApp</span></div>
+      <div class="li" style="margin-top:12px"><span>Conversas iniciadas</span><b class="num">128</b></div>
+      <div class="li" id="liComp"><span>Compras</span><b class="num" id="nComp">0</b></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (9,6 → 16,95): anúncio → lead → atendimento → venda … e para o marketing, sumiu ═════ -->
+<div class="p card ins" id="cam" style="left:540px;top:300px">
+  <div class="cabI">O caminho do lead<span class="pill cinza" id="pCam">Marketing</span></div>
+  <div id="camC"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (17,75 → 28,75): Leadrive — origem do contato + resultado comercial → quais campanhas vendem ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:810px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Painel</span><span class="pill ruim"><i></i>Ao vivo</span></div>
+  <div class="abas"><div class="aba on">Leads</div><div class="aba" id="abaC">Campanhas</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo"><div class="vista" id="v1"></div><div class="vista" id="v2"></div></div>
+</div>
+</div>
+
+<!-- ═════ CTA (28,85 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Do <em>clique</em> até a <em>venda</em>,<br>em uma única linha.</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agende uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 34.15;
+const ROSTO = [540, 720];
+const FS = [[2.3, 8.85, false], [17.75, 28.75, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 27.9, ps: FM.criaConfete(5, 50, 540, 760, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#waI').innerHTML = WA(40); $('#metaI').innerHTML = mk('meta', 48); $('#mk2').innerHTML = MARCA(38);
+$('#camC').innerHTML = caminho('c', [['anuncio', 'Anúncio'], ['chat', 'Lead'], ['gente', 'Atendimento'], ['venda', 'Venda'], ['painel', 'Marketing']]);
+$('#v1').innerHTML = corpoDe(painelLeads('a', { status: ['Em atendimento', 'Novo', 'Novo', 'Novo'] }));
+$('#v2').innerHTML = `<div style="display:flex;gap:26px">${corpoDe(painelCompleto('b', { kpis: [['Leads', '312'], ['Vendas', '0'], ['Receita', 'R$ 0'], ['CPL', 'R$ 12']] }))}</div>`;
+$('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const ls = Q('#v1 .lead'), cs = Q('#v2 .lat .it');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  marcaExpande(t, 'whatsapp', 1.3);
+  tela(t);
+  camera(t, '#cam1', [[2.35, [540, 800], 0.92, 3, -3], [3.6, ['#evA', '#evB'], 1.02, 2, -1], [5.4, ['#evA', '#ads'], 1.03, 1, 2], [7.2, ['#evB', '#liComp'], 1.05, -1, 1], [8.85, ['#evB', '#liComp'], 1.07, 0, 0]]);
+  camera(t, '#cam2', [[17.8, [540, 810], 0.92, 3, 3], [19.3, [ls[0], ls[1]], 1.04, 2, 1], [21.6, ls[0], 1.08, 1, -2], [23.6, [ls[0], ls[1]], 1.06, -1, -1],
+    [25.2, '#abaC', 1.02, 1, 2, 220, 260], [26.6, cs, 1.06, 2, 1, 40, 0], [27.9, '#bk1', 1.1, 0, -1, -100, 0], [28.75, ['#bk1', '#bk2'], 1.12, 0, 0]]);
+
+  /* ── FS1 · 2,3 → 8,85: a venda acontece no WhatsApp… e o evento nunca volta pra campanha ── */
+  A($('#w1'), t, 2.35, 8.75, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w1 .bal'), $('#ads')], t, 2.45, 0.08);
+  tinta(t, 'evA', 2.92, 0.5);
+  { const p = pr(t, 3.56, 0.25), q = pr(t, 4.04, 0.3); $('#evB').style.opacity = 1 - q; $('#evB').style.strokeDasharray = 56; $('#evB').style.strokeDashoffset = 56 * (1 - p);
+    $('#evX').setAttribute('opacity', q); $('#evA').setAttribute('stroke', t >= 4.04 ? '#FF6B8A' : '#6F6FFF'); $('#evT').style.fill = t >= 4.04 ? '#FF6B8A' : ''; }
+  { const on = t >= 4.62; $('#nComp').textContent = on ? 'sem dado' : '0'; $('#nComp').style.color = on ? 'var(--verm)' : ''; if (on) pulsa($('#nComp'), t, 4.62, 0.1); }
+  acende($('#liComp'), t, t >= 7.9 ? 7.9 : 4.62, VERM, t >= 7.9 ? 0.2 : 0.14);
+
+  /* ── inserção · 9,6 → 16,95: anúncio → lead → atendimento → venda … e o marketing não vê ── */
+  A($('#cam'), t, 9.6, 16.95, { de: 0.86, dy: -60, dout: 0.25 });
+  caminhoAnda('c', t, [9.72, 10.42, 11.36, 12.1, 99]);
+  { const e = $('#ce4'), on = t >= 13.58; e.style.borderColor = on ? '#FF6B8A' : ''; e.style.background = on ? 'rgba(255,107,138,.14)' : '';
+    e.querySelector('path').setAttribute('stroke', on ? '#FF6B8A' : '#8B8BFF'); $('#cn4').style.color = on ? 'var(--verm)' : '';
+    brilha(e, t, on ? 14.42 : 99, '255,107,138'); }
+  vira($('#pCam'), t, 16.12, 'Conversão: não registrada', 'ruim');
+
+  /* ── FS2 · 17,75 → 28,75: origem do contato + resultado comercial → quais campanhas vendem de verdade ── */
+  A($('#w2'), t, 17.8, 28.65, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#w2 .aba'), [$('#v1'), $('#v2')], [[25.2, 1]], $('#car2'));
+  cascata([...Q('#v1 .kpi'), ...ls], t, 17.85, 0.05);
+  acende(Q('#v1 .utm')[0].parentNode.parentNode, t, 19.44, ROXO, 0.14); if (t >= 19.44) pulsa(Q('#v1 .utm')[0], t, 19.44, 0.1);
+  { const c = cursor($('#cur1'), t, 20.6, [980, 1650], t > 20.6 ? centro('#as0') : [0, 0], 21.82, 22.6); $('#as0').style.transform = `scale(${1 - 0.06 * c})`; }
+  vira($('#as0'), t, 21.82, '✓ Venda R$ 1.890', 'vivo');
+  acende(ls[0], t, 23.16, VERDE, 0.1);
+  { const c = cursor($('#cur2'), t, 24.3, [960, 1500], t > 24.3 ? centro('#abaC') : [0, 0], 25.1, 25.8); }
+  cs.forEach((e, k) => acende(e, t, 26.52 + 0.12 * k, ROXO, k === 0 ? 0 : 0.1));
+  conta($('#bv1'), t, 27.82, 0.9, 47); conta($('#bv2'), t, 27.82, 0.9, 18420, x => 'R$ ' + Math.round(x).toLocaleString('pt-BR'));
+  acende($('#bk1'), t, 27.82, VERDE, 0.12); acende($('#bk2'), t, 27.94, VERDE, 0.12);
+
+  /* ── CTA · 28,85 → fim ── */
+  A($('#cta'), t, 28.85, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur3'), t, 31.6, [1020, 760], t > 31.6 ? centro('#btnCta') : [0, 0], 32.43, 34.1); if (t > 30) $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 32.6) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 32.6 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

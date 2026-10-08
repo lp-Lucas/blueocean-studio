@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Soft CS — Peça 06 (convite ao diagnóstico)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .cd { display: flex; flex-direction: column; justify-content: center; height: 214px; padding: 0 28px; background: #fff; border-radius: 20px; border: 1.5px solid #EEF0F6; box-shadow: 0 2px 14px rgba(15,23,42,.06); opacity: .45; }
+  .cd + .cd { margin-top: 16px; }
+  .cd .tp { display: flex; align-items: center; gap: 18px; }
+  .cd .ico { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; flex: none; } .cd .ico svg { width: 34px; height: 34px; }
+  .cd .nm { font: 800 32px 'MAN'; letter-spacing: -0.02em; white-space: nowrap; } .cd .nm small { display: block; font: 500 20px 'MAN'; color: var(--cinza); margin-top: 2px; letter-spacing: 0; }
+  .cd .v { margin-left: auto; font: 800 60px 'MAN'; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .cd .ch { display: flex; gap: 10px; margin-top: 18px; }
+  .cd .ch span { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px 0 6px; border-radius: 12px; background: var(--app); border: 1.5px solid #EEF0F6; font: 700 19px 'MAN'; white-space: nowrap; }
+  .cd .ch .av { width: 34px; height: 34px; border-radius: 9px; font-size: 13px; }
+  #c0 .ico { background: var(--vermc); } #c0 .v { color: var(--verm); }
+  #c1 .ico { background: var(--roxoc); } #c1 .v { color: var(--roxo2); }
+  #c2 .ico { background: var(--verdec); } #c2 .v { color: var(--verde); }
+  /* agendamento da conversa consultiva */
+  .ag { display: flex; align-items: center; gap: 18px; }
+  .ag .ico { width: 70px; height: 70px; border-radius: 18px; background: var(--roxoc); display: grid; place-items: center; flex: none; } .ag .ico svg { width: 38px; height: 38px; }
+  .ag .pill { margin-left: auto; }
+  .ver { display: flex; gap: 10px; margin-top: 20px; padding-bottom: 22px; border-bottom: 1.5px solid var(--linha); }
+  .gd { display: grid; grid-template-columns: 1fr 300px; gap: 22px; margin-top: 22px; }
+  .cal { background: #fff; border-radius: 18px; border: 1.5px solid #EEF0F6; padding: 18px 18px 14px; }
+  .cal .m { font: 800 24px 'MAN'; padding: 0 6px 10px; }
+  .cal .g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+  .cal .g b { font: 700 16px 'MAN'; color: var(--cinza2); padding: 4px 0; }
+  .cal .g span { height: 52px; display: grid; place-items: center; border-radius: 12px; font: 600 21px 'MAN'; color: var(--tinta); }
+  .cal .g span.x { color: #CBD0E0; } .cal .g span.on { background: var(--roxo); color: #fff; }
+  .hs { display: flex; flex-direction: column; gap: 12px; }
+  .hs .k { font: 700 17px ui-monospace, Consolas, monospace; letter-spacing: .14em; color: var(--cinza2); padding: 6px 4px 2px; }
+  .hs span { height: 64px; display: grid; place-items: center; border-radius: 14px; border: 2px solid #E4DAFD; background: #fff; font: 700 24px 'MAN'; color: var(--roxo2); }
+  .hs span.on { background: var(--roxo); border-color: var(--roxo); color: #fff; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<div class="p tit menor" id="h1" style="left:540px;top:360px" data-tx="Você viu o produto.|Agora veja|[a sua base.]"></div>
+
+<!-- A SUA BASE EM 3 CARDS (0 → 7,6) -->
+<div class="cam" id="cam1">
+<div class="p win" id="w1" style="left:540px;top:1120px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">softcs.com.br / sua-base</span><span class="dir">107 contas</span></div>
+  <div class="corpo">
+    <div class="cd" id="c0"><div class="tp"><span class="ico" id="ic0"></span><div class="nm">Contas em risco<small>R$ 148 mil em MRR</small></div><span class="v" id="v0">—</span></div>
+      <div class="ch"><span><b class="av a1">GV</b>Grupo Vértice</span><span><b class="av a3">LT</b>Lumen Tech</span><span><b class="av a5">CS</b>Casa Solar</span></div></div>
+    <div class="cd" id="c1"><div class="tp"><span class="ico" id="ic1"></span><div class="nm">Contas para expansão<small>+ R$ 62 mil possíveis</small></div><span class="v" id="v1">—</span></div>
+      <div class="ch"><span><b class="av a4">OS</b>Orbe Saúde</span><span><b class="av a2">KE</b>Kora Educação</span><span><b class="av a6">RP</b>Rede Prisma</span></div></div>
+    <div class="cd" id="c2"><div class="tp"><span class="ico" id="ic2"></span><div class="nm">Contas saudáveis<small>engajadas e usando</small></div><span class="v" id="v2">—</span></div>
+      <div class="ch"><span><b class="av a6">HA</b>Hub Atlas</span><span><b class="av a2">MS</b>Mercado Sigma</span><span><b class="av a1">ID</b>Instituto Delta</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- CONVERSA CONSULTIVA (7,6 → 12,4) -->
+<div class="cam" id="cam2">
+<div class="p win" id="w2" style="left:540px;top:830px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">softcs.com.br / agendar-conversa</span></div>
+  <div class="corpo">
+    <div class="ag"><span class="ico" id="icA"></span><h4>Conversa consultiva<div class="sub">30 min · com os dados da sua operação</div></h4></div>
+    <div class="ver" id="ver"><span class="pill cr"><i></i>Contas em risco</span><span class="pill rx"><i></i>Expansão</span><span class="pill ok"><i></i>Saudáveis</span></div>
+    <div class="gd">
+      <div class="cal"><div class="m">Outubro 2026</div><div class="g" id="cal"></div></div>
+      <div class="hs"><div class="k">HORÁRIOS</div><span id="h0">09:00</span><span id="h1h">10:30</span><span id="h2">14:00</span><span id="h3">16:30</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="p" id="cta" style="left:540px;top:880px">
+  <span class="logo" id="ctaL"></span>
+  <div class="tit" id="ctaT" data-tx="[Agende]|sua conversa."></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div><span id="btT">Agendar conversa</span><span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="curC" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="c6/palavras.js"></script>
+<script>
+window.DURACAO = 14.75;
+const ROSTO = [540, 960], FS = [];
+const OCULTA = [[0, 7.6], [12.4, 99]];
+const ESTOUROS = [{ t0: 13.85, ps: FM.criaConfete(9, 80, 540, 1180, 500, 40, 0.85), rgb: [135, 88, 243] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script src="softcs.js"></script>
+<script>
+$('#ctaL').innerHTML = LOGO(104); $('#ctaS').innerHTML = ic('seta', '#fff', 2.6);
+$('#ic0').innerHTML = ic('alerta', '#EF4444'); $('#ic1').innerHTML = ic('sobe', '#6B3FE0'); $('#ic2').innerHTML = ic('pulso', '#16A34A'); $('#icA').innerHTML = ic('agenda', '#6B3FE0');
+// outubro/2026 começa numa quinta
+$('#cal').innerHTML = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map(d => `<b>${d}</b>`).join('') +
+  Array.from({ length: 35 }, (_, i) => { const d = i - 3; return d < 1 || d > 31 ? '<span class="x"></span>' : `<span class="${d < 8 ? 'x' : ''}" id="d${d}">${d}</span>`; }).join('');
+const CARD = [[T0(9), 25], [T0(12), 18], [T0(15), 64]];
+const TDIA = 9.55, THORA = 10.75;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  camera(t, '#cam1', [[0, [540, 830], 1, 2, -2], [3.3, [540, 840], 1, 1, -1], [4.0, '#c0', 1.04, -1, 1, 0, 120], [5.0, '#c1', 1.05, 1, 1], [6.4, '#c2', 1.05, -1, -1, 0, -80], [7.6, ['#c0', '#c2'], 1.02, 0, 0]]);
+  camera(t, '#cam2', [[7.6, [540, 830], 0.97, -2, 2], [8.7, '#ver', 1.06, 1, 1, 0, 120], [9.6, '.cal', 1.04, -1, 1, 140, 0], [10.8, '.gd', 1.06, 1, -1], [12.4, '.gd', 1.09, 0, 0]]);
+
+  tit('#h1', t, PAL.slice(0, 9).map(w => w[0]), 3.5);
+  A($('#w1'), t, -0.45, 7.6, { de: 0.9, dy: 160 });
+  CARD.forEach(([t0, n], k) => { const c = $('#c' + k); c.style.opacity = L(0.45, 1, pr(t, t0, 0.3, E.cubicOut));
+    $('#v' + k).textContent = t < t0 ? '—' : Math.round(n * E.cubicOut(C((t - t0) / 0.7)));
+    if (t >= t0 + 0.7) pulsa($('#v' + k), t, t0 + 0.7, 0.08);
+    c.style.boxShadow = t >= t0 ? `0 2px 14px rgba(15,23,42,.06), 0 0 0 ${3 * pr(t, t0, 0.3)}px ${['rgba(239,68,68,.45)', 'rgba(135,88,243,.5)', 'rgba(34,195,109,.45)'][k]}` : '';
+    });
+
+  A($('#w2'), t, 7.6, 12.4, { de: 1, dy: 0, dout: 0.3 });
+  passa(t, '#w1', '#w2', 7.6);
+  cascata(Q('#ver .pill'), t, 7.9, 0.12, 10);
+  acende($('#ver'), t, null);
+  if (t > 8.5 && t < 11.6) { const [dx, dy] = centro('#d16'), [hx, hy] = centro('#h2');
+    passeia($('#cur1'), t, [[8.9, 980, 1500], [TDIA - 0.05, dx, dy], [THORA - 0.05, hx, hy], [11.2, hx + 20, hy + 10]], [TDIA, THORA]); } else $('#cur1').style.opacity = 0;
+  $('#d16').classList.toggle('on', t >= TDIA); if (t >= TDIA) pulsa($('#d16'), t, TDIA, 0.15);
+  $('#h2').classList.toggle('on', t >= THORA); if (t >= THORA) pulsa($('#h2'), t, THORA, 0.1);
+
+  cta(t, 12.45, PAL.slice(29, 32).map(w => w[0]), 13.8, window.DURACAO);
+  { const on = t >= 13.85, s = on ? '✓ Conversa agendada' : 'Agendar conversa'; if ($('#btT').textContent !== s) $('#btT').textContent = s; $('#btnCta').classList.toggle('ok', on); $('#ctaS').style.display = on ? 'none' : ''; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

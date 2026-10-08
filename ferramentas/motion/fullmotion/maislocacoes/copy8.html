@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 3 Black Friday (containers: perde o rastro dos ativos?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #m1 { width: 892px; height: 560px; margin-top: 22px; }
+  #sol .cabI img { height: 52px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,8 → 3,3): ainda perde o rastro dos ativos? (ilustração: o rastro se rompe) ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Rastreio de containers</span><span class="pill cinza" id="pos">Container CT-022</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Trajeto do container</h3><p>Saída do pátio → obra do cliente</p></div></div>
+    <div class="mapa" id="m1"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (3,42 → 6,85): isso já tem solução · Mais Locações ═════ -->
+<div class="p card ins" id="sol" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/logo-navy.svg"><span class="pill cinza" id="pSol">Rastro dos ativos</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (6,9 → 14,65): oferta Black Friday ═════ -->
+<div id="ofW"></div>
+
+<!-- ═════ CTA (14,76 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Até o fim da Black Friday</span>Feche sua condição especial</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Falar com o nosso time <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy8/palavras.js"></script>
+<script>
+window.DURACAO = 20.31;
+const ROSTO = [560, 740];
+const FS = [[0.8, 3.3, true], [6.9, 14.65, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 10.42, ps: FM.criaConfete(13, 60, 540, 1060, 760, 60, 0.7), rgb: [177, 232, 58] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#ofW').outerHTML = OFERTA_HTML;
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+mapa($('#m1'), 29);
+const pat = pino($('#m1'), 110, 470, '', '#01235C', 'Pátio');
+$('#m1').insertAdjacentHTML('beforeend', `<svg style="position:absolute;inset:0;width:100%;height:100%">
+  <g id="ga"><path id="ta" d="M110 450 C 200 380, 260 400, 340 330 S 420 250, 470 230" fill="none" stroke="#0B3A9E" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 16"/></g>
+  <g id="gb"><path id="tb" d="M500 220 C 580 190, 640 230, 700 160 S 760 110, 790 110" fill="none" stroke="#0B3A9E" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 16"/></g></svg>`);
+const ct = pino($('#m1'), 790, 112, '', '#01235C', 'CT-022');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.85, [540, 800], 0.92, 3, -3], [1.8, '#m1', 1.0, 2, -1], [2.6, '#m1', 1.04, 1, 2], [3.3, '#m1', 1.08, 0, 0]]);
+
+  /* ── FS1 · 0,8 → 3,3: o rastro se desenha e se rompe ── */
+  A($('#win'), t, 0.85, 3.2, { de: 0.88, dy: 120, dout: 0.2 });
+  popPino(pat, t, 1.0); popPino(ct, t, 1.1);
+  $('#ga').style.clipPath = `inset(0 ${100 - 100 * pr(t, 1.2, 0.7, E.cubicInOut)}% 0 0)`; $('#gb').style.clipPath = `inset(0 ${100 - 100 * pr(t, 1.7, 0.7, E.cubicInOut)}% 0 0)`;
+  { const q = M.prog(t, 2.44, 0.6, E.spring), on = t >= 2.44;
+    $('#gb').setAttribute('transform', `translate(${16 * q} ${-14 * q})`); $('#ga').setAttribute('transform', `translate(${-10 * q} ${8 * q})`);
+    $('#ta').setAttribute('stroke', on ? '#C9372A' : '#0B3A9E'); $('#tb').setAttribute('stroke', on ? '#C9372A' : '#0B3A9E');
+    pinoCor(ct, on ? '#9AA3B5' : '#01235C', on ? '?' : ''); if (on) pulsa(ct, t, 2.44, 0.14); }
+  vira($('#pos'), t, 2.82, 'Rastro perdido', 'ruim');
+
+  /* ── inserção · 3,42 → 6,85 ── */
+  A($('#sol'), t, 3.42, 6.85, { de: 0.86, dy: -60, dout: 0.25 });
+  vira($('#pSol'), t, 4.28, '✓ Isso já tem solução', 'vivo');
+  pulsa($('#sol .cabI img'), t, 6.06, 0.08);
+
+  /* ── FS2 · 6,9 → 14,65: oferta ── */
+  oferta(t, { ent: 6.95, tag: 7.28, dez: 10.36, jan: 13.64, sai: 14.65 });
+
+  /* ── CTA · 14,76 → fim ── */
+  A($('#cta'), t, 14.76, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 15.7, [1020, 760], t > 15.7 ? centro('#btnCta') : [0, 0], 16.4, 19.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 16.55) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 16.55 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

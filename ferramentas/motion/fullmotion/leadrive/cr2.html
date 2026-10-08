@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Criativo 02 (agência que metrifica venda na planilha)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo { padding: 26px 34px 32px; }
+  #w2 .corpo { padding: 26px 34px 32px; }
+  #w2 .lead { height: 92px; } #w2 .lead .pill { min-width: 190px; justify-content: center; }
+  #det .li { height: 64px; font-size: 23px; } #det .li b { font: 500 21px 'JBM'; color: var(--lilas); }
+  #ret .ev { height: 76px; } #ret .ev .mk { width: 46px; height: 46px; } #ret .li { height: 70px; }
+  #w3 .corpo { height: 640px; }
+  #extras { display: flex; gap: 14px; padding: 0 34px 30px; background: var(--card); }
+  #extras .kpi { flex: 1; display: flex; align-items: center; gap: 14px; padding: 16px 20px; font: 600 23px 'INT'; }
+  #extras svg { width: 34px; height: 34px; flex: none; } #extras .pill { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,5 → 7,55): a equipe metrifica venda na planilha, à mão ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding:0;color:#fff;font-size:26px">vendas_clientes_outubro.xlsx</span><span class="pill cinza" id="pPl">Preenchido à mão</span></div>
+  <div class="corpo">
+    <div class="pl" id="pl">
+      <div class="h n">#</div><div class="h">Lead</div><div class="h">Origem</div><div class="h">Venda</div>
+      <div class="n">1</div><div id="l0">Camila R.</div><div id="o0"></div><div id="s0"></div>
+      <div class="n">2</div><div id="l1">João M.</div><div id="o1"></div><div id="s1"></div>
+      <div class="n">3</div><div id="l2">Ana Paula</div><div id="o2"></div><div id="s2"></div>
+      <div class="n">4</div><div id="l3">Ricardo S.</div><div id="o3"></div><div id="s3"></div>
+    </div>
+    <div class="li" id="tot" style="margin-top:16px"><span>Leads por dia</span><b class="num" id="totV">4</b></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (8,0 → 18,65): o Leadrive rastreia sozinho a origem de cada lead ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Leads</span><span class="pill cinza" id="pAuto">Rastreamento</span></div>
+  <div class="corpo">
+    <div id="lsW"></div>
+    <div class="kpi" id="det" style="margin-top:16px;padding:16px 24px 10px">
+      <div style="display:flex;align-items:center"><div class="k roxo">Camila Ribeiro · origem</div><span class="pill cinza" id="pHum" style="margin-left:auto">—</span></div>
+      <div class="li" style="margin-top:8px" id="d0"><span>Campanha</span><b id="dv0">…</b></div>
+      <div class="li" id="d1"><span>Anúncio</span><b id="dv1">…</b></div>
+      <div class="li" id="d2"><span>Criativo</span><b id="dv2">…</b></div>
+      <div class="li" id="d3"><span>Conversa no WhatsApp</span><b id="dv3">…</b></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (18,75 → 24,5): sinais de venda devolvidos pra Meta e Google via CAPI → ROAS verdadeiro ═════ -->
+<div class="p card ins" id="ret" style="left:540px;top:300px">
+  <div class="cabI">Retroalimentação de Ads<span class="pill cinza" id="pRet">API oficial</span></div>
+  <div style="margin-top:14px">
+    <div class="ev" id="e0"><span id="eI0"></span><div><div class="tx">Venda · Camila R. · R$ 2.400</div></div><span class="pill cinza" id="es0">Na fila</span></div>
+    <div class="ev" id="e1"><span id="eI1"></span><div><div class="tx">Venda · João M. · R$ 1.890</div></div><span class="pill cinza" id="es1">Na fila</span></div>
+  </div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (24,6 → 33,5): painel único — relatórios, receita atribuída em tempo real, CRM e IA ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="w3" style="left:540px;top:800px">
+  <div id="pc"></div>
+  <div id="extras">
+    <div class="kpi" id="x0"><span id="xi0"></span>CRM incluso<span class="pill cinza" id="xp0">—</span></div>
+    <div class="kpi" id="x1"><span id="xi1"></span>IA de atendimento<span class="pill cinza" id="xp1">—</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (33,55 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Automatize o rastreio<br><em>das suas vendas.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Clique no link<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="cr2/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 36.9;
+const ROSTO = [540, 720];
+const FS = [[0.5, 7.6, true], [7.6, 18.65, true], [24.6, 33.5, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 29.68, ps: FM.criaConfete(22, 50, 540, 760, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#mk2').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+$('#eI0').innerHTML = mk('meta', 46); $('#eI1').innerHTML = mk('google', 46); Q('#ret .mk')[1].style.border = '1.5px solid rgba(255,255,255,.2)';
+$('#xi0').innerHTML = ic('kanban', '#8B8BFF'); $('#xi1').innerHTML = ic('robo', '#8B8BFF');
+// lista de leads do topo do site (3 linhas) — a origem aparece sozinha
+const pl = painelLeads('a', { leads: LEADS.slice(0, 3), status: ['Novo', 'Novo', 'Novo'] });
+$('#lsW').innerHTML = (() => { const d = document.createElement('div'); d.innerHTML = pl; return [...d.querySelectorAll('.lead')].map(e => e.outerHTML).join(''); })();
+$('#pc').innerHTML = painelCompleto('b', { camps: ['Clínica Sorriso · Meta', 'Imobiliária Lar · Google', 'Escola Up · Meta'], vends: ['Letícia M.', 'Diego A.', 'Paula T.'],
+  kpis: [['Leads', '312'], ['Vendas', '0'], ['Receita atribuída', 'R$ 0'], ['ROAS real', '0x']] });
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const ORIG = ['Instagram?', 'acho que Google', '?', 'perguntar pro vendedor'], VEND = ['R$ 2.400', '—', 'R$ 1.890', '?'];
+const ls = Q('#lsW .lead'), us = Q('#lsW .utm'), UT = us.map(u => u.innerHTML), dl = Q('#det .li');
+const DV = ['CAMPANHA-3 · Meta', 'Vídeo depoimento', 'Criativo 02', '✓ vinculada'];
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.55, [540, 800], 0.92, 3, -3], [2.0, '#pl', 1.02, 2, -1], [3.6, ['#o0', '#s3'], 1.08, 1, 2], [5.4, '#pl', 1.04, -1, 1], [7.55, ['#pl', '#tot'], 1.06, 0, 0]]);
+  camera(t, '#cam2', [[7.6, [540, 800], 0.94, 3, 3], [10.4, [ls[0], ls[2]], 1.04, 2, 1], [12.4, us, 1.06, 1, -2, 120, 0], [14.0, ['#d0', '#d1'], 1.06, -1, 1], [15.8, ['#d1', '#d3'], 1.08, 1, -1], [18.65, '#det', 1.1, 0, 0]]);
+  camera(t, '#cam3', [[24.65, [540, 800], 0.92, 3, 3], [25.9, '#bc0', 1.04, 2, 1, 280, 120], [27.4, '#bk0', 1.04, 1, -1, -80, 220], [29.0, ['#bk2', '#bk3'], 1.08, -1, 1], [30.6, '#x0', 1.06, 1, 1, 200, 0], [31.6, ['#x0', '#x1'], 1.06, 0, -1], [33.5, ['#x0', '#x1'], 1.08, 0, 0]]);
+
+  /* ── FS1 · 0,5 → 7,55: a planilha preenchida à mão ── */
+  A($('#w1'), t, 0.55, 7.6, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#pl'), $('#tot')], t, 0.6, 0.08);
+  [0, 1, 2, 3].forEach(k => { digita($('#o' + k), t, 1.1 + 0.55 * k, 0.45, ORIG[k]); digita($('#s' + k), t, 1.35 + 0.55 * k, 0.3, VEND[k]);
+    $('#o' + k).style.color = 'var(--verm)'; });
+  vira($('#pPl'), t, 4.0, 'Preenchido à mão', 'ruim');
+  { const on = t >= 6.82; $('#totV').textContent = on ? '4 ✓' : '4'; $('#totV').style.color = on ? 'var(--verde)' : ''; acende($('#tot'), t, 6.82, VERDE, 0.1); }
+
+  /* ── FS2 · 8,0 → 18,65: elimina o trabalho manual — a origem chega sozinha ── */
+  A($('#w2'), t, 7.6, 18.55, { de: 1, dy: 0, dout: 0.2 });
+  passa(t, '#w1', '#w2', 7.6);
+  cascata([...ls, $('#det')], t, 7.6, 0.04);
+  vira($('#pAuto'), t, 9.7, '✓ Sem trabalho manual', 'vivo');
+  us.forEach((u, k) => { const t0 = 11.52 + 0.3 * k; if (t < t0) { const h = '<span>utm:</span> …'; if (u.innerHTML !== h) u.innerHTML = h; }
+    else if (t < t0 + 0.6) digita(u, t, t0, 0.6, u.textContent.length > 8 ? UT[k].replace(/<[^>]+>/g, '') : UT[k].replace(/<[^>]+>/g, ''));
+    else if (u.innerHTML !== UT[k]) u.innerHTML = UT[k]; });
+  acende(ls[0], t, 12.5, ROXO, 0.12);
+  [13.66, 14.2, 14.78, 15.46].forEach((t0, k) => { if (t < t0) $('#dv' + k).textContent = '…'; else digita($('#dv' + k), t, t0, 0.35, DV[k]); acende(dl[k], t, t0, ROXO, 0.12); });
+  vira($('#pHum'), t, 17.46, '✓ 0 preenchimento humano', 'vivo');
+
+  /* ── inserção · 18,75 → 24,5: venda real de volta pra Meta e Google via CAPI → ROAS verdadeiro ── */
+  A($('#ret'), t, 18.75, 24.5, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#ret .ev'), t, 18.85, 0.1, 12);
+  [[20.86, 0], [21.28, 1]].forEach(([t0, k]) => { vira($('#es' + k), t, t0, 'Enviado ✓', 'vivo'); acende(Q('#ret .ev')[k], t, t0, VERDE, 0.08); });
+  vira($('#pRet'), t, 23.0, 'ROAS real: 4,8x', 'vivo');
+
+  /* ── FS3 · 24,6 → 33,5: painel único, relatórios, receita atribuída em tempo real, CRM, IA ── */
+  A($('#w3'), t, 24.65, 33.4, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w3 .lat .it'), ...Q('#w3 .kpi')], t, 24.7, 0.04);
+  acende($('#bc0'), t, 25.94, ROXO, 0);
+  { const r = $('#bclipR'); r.setAttribute('width', t < 26.5 ? 0 : 560 * E.cubicInOut(C((t - 26.5) / 1.4))); $('#bpto').style.opacity = t >= 27.9 ? 1 : 0; }
+  conta($('#bv1'), t, 28.34, 1.0, 47); conta($('#bv2'), t, 28.7, 1.0, 112800, x => 'R$ ' + Math.round(x).toLocaleString('pt-BR'));
+  conta($('#bv3'), t, 29.0, 0.8, 48, x => (x / 10).toFixed(1).replace('.', ',') + 'x');
+  acende($('#bk1'), t, 28.7, VERDE, 0.12); acende($('#bk2'), t, 28.7, VERDE, 0.12); acende($('#bk3'), t, 29.68, VERDE, 0.12);
+  vira($('#xp0'), t, 30.7, '✓', 'vivo'); acende($('#x0'), t, 30.7, ROXO, 0.12);
+  vira($('#xp1'), t, 31.34, '✓', 'vivo'); acende($('#x1'), t, 31.34, ROXO, 0.12);
+  if (t >= 32.86) pulsa($('#x1'), t, 32.86, 0.03);
+
+  /* ── CTA · 33,55 → fim ── */
+  A($('#cta'), t, 33.55, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 35.2, [1020, 760], t > 35.2 ? centro('#btnCta') : [0, 0], 35.96, 36.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 36.1) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 36.1 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

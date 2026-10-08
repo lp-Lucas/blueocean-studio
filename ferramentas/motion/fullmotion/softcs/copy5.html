@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Soft CS — Peça 05 (demonstração Lari AI)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* Lari AI (o que o site mostra: copiloto que analisa os dados, identifica risco de churn e cria planos de ação) */
+  .lh { display: flex; align-items: center; gap: 16px; height: 104px; padding: 0 28px; background: #fff; border-bottom: 1.5px solid var(--linha); }
+  .lh .avL { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex: none; box-shadow: 0 0 0 3px var(--roxoc); } .lh .avL img { width: 100%; height: 100%; display: block; }
+  .lh .lg img { height: 44px; display: block; } .lh .lg small { display: block; font: 500 19px 'MAN'; color: var(--cinza); margin-top: 2px; }
+  .lh .pill { margin-left: auto; }
+  #chat { height: 620px; display: flex; flex-direction: column; justify-content: flex-end; gap: 0; padding: 0 28px 20px; overflow: hidden; }
+  .msg { overflow: hidden; flex: none; } .msg > div { margin-top: 16px; }
+  .bL { max-width: 86%; background: #fff; border: 1.5px solid #EEF0F6; border-radius: 6px 22px 22px 22px; padding: 18px 22px; font: 500 24px/1.35 'MAN'; color: var(--tinta); box-shadow: 0 2px 10px rgba(15,23,42,.05); }
+  .bU { margin-left: auto; max-width: 80%; width: fit-content; background: var(--roxo); color: #fff; border-radius: 22px 6px 22px 22px; padding: 18px 24px; font: 600 25px/1.3 'MAN'; }
+  .st { display: flex; align-items: center; gap: 14px; font: 600 21px 'MAN'; color: var(--cinza); padding: 4px 4px; }
+  .st .gi { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--roxoc); border-top-color: var(--roxo); flex: none; display: grid; place-items: center; }
+  .st .gi svg { width: 20px; height: 20px; opacity: 0; } .st.ok .gi { border-color: var(--verdeF); background: var(--verdeF); } .st.ok .gi svg { opacity: 1; }
+  .res { background: #fff; border: 1.5px solid #E4DAFD; border-radius: 6px 22px 22px 22px; padding: 18px 20px 20px; box-shadow: 0 2px 14px rgba(135,88,243,.10); }
+  .res .k { display: flex; align-items: center; gap: 10px; font: 800 24px 'MAN'; color: var(--tinta); padding: 0 4px 10px; } .res .k svg { width: 26px; height: 26px; }
+  .pr { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 14px; border-top: 1.5px solid var(--linha); border-radius: 12px; }
+  .pr .n { width: 36px; font: 800 24px 'MAN'; color: var(--cinza2); text-align: center; flex: none; }
+  .pr .nm { font: 700 23px 'MAN'; color: var(--tinta); white-space: nowrap; } .pr .nm small { display: block; font: 500 18px 'MAN'; color: var(--cinza); margin-top: 2px; }
+  .pr .sc { margin-left: auto; min-width: 58px; height: 42px; font-size: 21px; }
+  .pr .ac { display: block; margin-top: 6px; font: 700 18px 'MAN'; color: var(--roxo2); }
+  #btPl { margin-top: 14px; }
+  .inp { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 22px 0 28px; background: #fff; border-top: 1.5px solid var(--linha); }
+  .inp .cp { flex: 1; height: 66px; display: flex; align-items: center; padding: 0 22px; border-radius: 14px; border: 2px solid var(--linha); font: 500 25px 'MAN'; color: var(--tinta); white-space: pre; overflow: hidden; }
+  .inp .cp.foco { border-color: var(--roxo); box-shadow: 0 0 0 4px rgba(135,88,243,.15); }
+  .inp .cp .ph { color: var(--cinza2); } .inp .cp .car { display: inline-block; width: 2.5px; height: 30px; background: var(--roxo); margin-left: 2px; }
+  .inp .env { width: 66px; height: 66px; border-radius: 14px; background: var(--roxo); display: grid; place-items: center; flex: none; } .inp .env svg { width: 32px; height: 32px; }
+  .ins { display: flex; align-items: center; gap: 12px; height: 62px; border-top: 1.5px solid var(--linha); font: 600 21px 'MAN'; color: var(--tinta); white-space: nowrap; }
+  .ins .pill { margin-left: auto; height: 36px; font-size: 18px; }
+  #cta .lari { height: 70px; display: block; margin: -20px 0 40px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<div class="p tit" id="h1" style="left:540px;top:350px" data-tx="Pergunte para a IA|qual cliente|vai [cancelar.]"></div>
+
+<div class="cam" id="cam1">
+<div class="p win" id="w1" style="left:540px;top:1150px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">app.softcs.com.br / lari</span></div>
+  <div class="lh"><span class="avL"><img src="img/lari-avatar.png"></span><div class="lg"><img src="img/lari-logo.png"><small>Sua copiloto de Customer Success</small></div><span class="pill ok"><i></i>Online</span></div>
+  <div id="chat" style="background:var(--app)">
+    <div class="msg" id="mR"><div class="res" style="max-width:92%">
+      <div class="k"><span id="icR0"></span>Resumo inteligente · hoje</div>
+      <div class="ins">25 contas em risco crítico<span class="pill at"><i></i>Atenção</span></div>
+      <div class="ins">3 renovações nesta semana<span class="pill at"><i></i>Atenção</span></div>
+      <div class="ins">12 oportunidades de upsell<span class="pill ok"><i></i>Positivo</span></div>
+    </div></div>
+    <div class="msg" id="m0"><div class="bL">Oi, Marina! Já analisei sua base de hoje. Em que posso ajudar?</div></div>
+    <div class="msg" id="m1"><div class="bU">Quais clientes têm mais risco de cancelar?</div></div>
+    <div class="msg" id="m2"><div class="st" id="st"><span class="gi" id="gi"></span><span id="stT">Lendo 107 contas · Health Score, uso, tickets e NPS</span></div></div>
+    <div class="msg" id="m3"><div class="res">
+      <div class="k"><span id="icR"></span>Onde agir primeiro</div>
+      <div class="pr" id="p0"><span class="n">1</span><span class="av a1">GV</span><div class="nm">Grupo Vértice<small>Uso caiu 45% · 6 chamados no mês</small><span class="ac">→ Ligar hoje e abrir plano de save</span></div><span class="sc cr">38</span></div>
+      <div class="pr" id="p1"><span class="n">2</span><span class="av a3">LT</span><div class="nm">Lumen Tech<small>Renovação em 38 dias · NPS 4</small><span class="ac">→ Check-in com o decisor</span></div><span class="sc cr">47</span></div>
+      <div class="pr" id="p2"><span class="n">3</span><span class="av a5">CS</span><div class="nm">Casa Solar<small>Fatura em atraso · admin sem login</small><span class="ac">→ Trilha de reengajamento</span></div><span class="sc at">56</span></div>
+      <div class="bt2" id="btPl"><span id="btPlT">Criar plano de ação</span></div>
+    </div></div>
+  </div>
+  <div class="inp"><div class="cp" id="cp"><span class="ph" id="ph">Pergunte para a Lari…</span><span id="dig"></span><span class="car" id="car"></span></div><span class="env" id="env"></span></div>
+</div>
+</div>
+
+<div class="p" id="cta" style="left:540px;top:880px">
+  <img class="lari" src="img/lari-logo.png" style="filter:brightness(0) invert(1)">
+  <div class="tit" id="ctaT" data-tx="Veja a [Lari AI]|na sua operação."></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agendar demo<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="curC" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="c5/palavras.js"></script>
+<script>
+window.DURACAO = 12.0;
+const ROSTO = [540, 960], FS = [];
+const OCULTA = [[0, 2.6], [9.2, 99]];
+const ESTOUROS = [{ t0: 8.4, ps: FM.criaConfete(5, 70, 540, 1150, 600, 60, 0.8), rgb: [135, 88, 243] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script src="softcs.js"></script>
+<script>
+$('#ctaS').innerHTML = ic('seta', '#fff', 2.6); $('#env').innerHTML = ic('envia', '#fff', 2.2); $('#gi').innerHTML = ic('check', '#fff', 3.2); $('#icR').innerHTML = ic('brilho', '#8758F3', 2); $('#icR0').innerHTML = ic('brilho', '#8758F3', 2);
+const PERG = 'Quais clientes têm mais risco de cancelar?';
+const TDIG = 2.7, DDIG = 2.0, TENV = 4.85, TST = T0(8), TOK = T0(11) + 0.3, TRES = T0(13) - 0.05, TPL = 8.25;
+const MSG = Q('.msg'), HM = MSG.map(m => m.offsetHeight);   // altura de cada mensagem (medida antes de esconder)
+const TM = [null, null, TENV + 0.1, TST, TRES];
+const VERDE = '34,195,109';
+
+window.quadro = function (t) {
+  FM.antes(t);
+  camera(t, '#cam1', [[0, [540, 820], 1, 2, -2], [2.45, [540, 840], 1, 1, -1], [3.1, '.inp', 1.08, -1, 1, 0, -60], [4.9, '.inp', 1.1, 1, 1, 0, -60], [5.6, '#m1', 1.04, -1, -1, 0, 80],
+    [6.6, '#m3', 1.0, 1, 1], [7.8, '#m3', 1.04, -1, 1], [9.2, '#m3', 1.06, 0, 0]]);
+
+  tit('#h1', t, PAL.slice(0, 8).map(w => w[0]), 2.5);
+  A($('#w1'), t, -0.45, 9.2, { de: 0.9, dy: 160 });
+
+  // mensagens entram abrindo espaço de baixo para cima (o chat rola sozinho)
+  MSG.forEach((m, k) => { const t0 = TM[k]; if (t0 == null) return; const p = pr(t, t0, 0.45, E.cubicInOut);
+    m.style.height = HM[k] * p + 'px'; const b = m.firstElementChild, ps = M.prog(t, t0, 0.55, E.spring);
+    b.style.opacity = pr(t, t0 + 0.05, 0.2, E.cubicOut); b.style.transform = `translateY(${(1 - ps) * 24}px)`; });
+
+  // digitação
+  { const n = Math.round(PERG.length * C((t - TDIG) / DDIG)), txt = t < TDIG || t >= TENV ? '' : PERG.slice(0, n);
+    if ($('#dig').textContent !== txt) $('#dig').textContent = txt; $('#ph').style.display = txt ? 'none' : '';
+    $('#cp').classList.toggle('foco', t >= TDIG - 0.3 && t < TENV); $('#car').style.opacity = t >= TDIG - 0.3 && t < TENV && (Math.floor(t * 2.2) % 2 === 0 || t < TDIG + DDIG) ? 1 : 0; }
+  if (t > TDIG - 1 && t < TENV + 1) { const [cx, cy] = centro('#cp'), [ex, ey] = centro('#env');
+    passeia($('#cur1'), t, [[TDIG - 0.6, 900, 1560], [TDIG - 0.25, cx + 120, cy + 6], [TDIG + DDIG, cx + 150, cy + 10], [TENV - 0.1, ex, ey], [TENV + 0.4, ex + 10, ey + 6]], [TENV]); }
+  else $('#cur1').style.opacity = 0;
+  $('#env').style.transform = `scale(${1 - 0.12 * (t >= TENV && t < TENV + 0.25 ? Math.sin((t - TENV) / 0.25 * Math.PI) : 0)})`;
+
+  // ela lê os dados → responde com as contas priorizadas e a ação sugerida
+  $('#st').classList.toggle('ok', t >= TOK); $('#gi').style.transform = t < TOK ? `rotate(${t * 400}deg)` : '';
+  { const s = t >= TOK ? '107 contas analisadas · Health Score, uso, tickets e NPS' : 'Lendo 107 contas · Health Score, uso, tickets e NPS'; if ($('#stT').textContent !== s) $('#stT').textContent = s; }
+  cascata([$('#p0'), $('#p1'), $('#p2'), $('#btPl')], t, TRES + 0.25, 0.25, 14);
+  acende($('#p0'), t, T0(15), '239,68,68', 0.07);
+  { const c = cursor($('#cur2'), t, TPL - 0.7, [980, 1650], t > TPL - 0.7 ? centro('#btPl') : [0, 0], TPL, 9.3);
+    $('#btPl').style.transform = `scale(${1 - 0.08 * c})`; const on = t >= TPL + 0.1;
+    $('#btPl').className = 'bt2' + (on ? ' ok' : ''); const s = on ? '✓ Plano de ação criado' : 'Criar plano de ação'; if ($('#btPlT').textContent !== s) $('#btPlT').textContent = s; }
+
+  cta(t, 9.25, PAL.slice(17, 24).map(w => w[0]), 11.2, window.DURACAO);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

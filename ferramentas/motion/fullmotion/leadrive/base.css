@@ -1,0 +1,151 @@
+/* identidade Leadrive (leadrive.com.br, tokens --lv-* do CSS do site): site ESCURO — fundo navy #0A0B2E com a grade
+   quadriculada de 72 px do site (.lv-atmosphere), cartões #131546/#1A1D5C com borda branca a 7–14 %, índigo #4848F0 /
+   #6F6FFF (destaque, botão "Comece Grátis →" em pílula), lilás #8B8BFF, rosa #FF6B8A (problema: "? qual anúncio vendeu?"),
+   verde do WhatsApp #25D366, ouro #FFC857 (estrelas). Inter (títulos com tracking apertado) + JetBrains Mono nos rótulos
+   ("LEADS HOJE", "utm: META_ADS · CAMPANHA-3"). Interfaces recriadas: Painel · Leads (hero), Painel completo (campanhas,
+   vendedores, KPIs, gráfico 30 dias), O caminho do lead (5 etapas), O ponto cego, cards de funcionalidade. Receita 15. */
+@font-face { font-family: 'INT'; font-weight: 100 900; src: url('fonts/Inter.woff2'); }
+@font-face { font-family: 'JBM'; font-weight: 100 900; src: url('fonts/JBMono.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #0A0B2E; --card: #13154A; --card2: #1A1D5C; --card3: #0F1140; --tinta: #F4F2FA; --texto: #C9CAE3; --cinza: #9598B8; --mute: #6A6D92;
+        --linha: rgba(255,255,255,.09); --linha2: rgba(255,255,255,.15); --grade: rgba(255,255,255,.045);
+        --roxo: #4848F0; --roxoc: #6F6FFF; --lilas: #8B8BFF; --roxof: rgba(72,72,240,.18); --ciano: #00D4FF; --ouro: #FFC857;
+        --verde: #25D366; --verdec: rgba(37,211,102,.16); --verm: #FF6B8A; --vermc: rgba(255,107,138,.16); }
+html, body { background: transparent !important; }
+body { font-family: 'INT', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border: 1.5px solid var(--linha2); border-radius: 22px; box-shadow: 0 22px 50px rgba(3,4,20,.55); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes do site */
+.k { font: 500 19px 'JBM'; letter-spacing: .14em; color: var(--mute); text-transform: uppercase; }
+.k.roxo { color: var(--lilas); } .k.rosa { color: var(--verm); }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: 'JBM'; letter-spacing: .02em; }
+.pill { display: inline-flex; align-items: center; gap: 9px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 21px 'INT'; white-space: nowrap; letter-spacing: 0; }
+.pill i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.roxo { background: var(--roxof); color: var(--lilas); }
+.pill.cheio { background: var(--roxo); color: #fff; }
+.pill.cinza { background: rgba(255,255,255,.05); color: var(--texto); border: 1.5px solid var(--linha2); }
+.pill.tag { font: 500 18px 'JBM'; letter-spacing: .14em; text-transform: uppercase; color: var(--cinza); background: transparent; border: 1.5px solid var(--linha2); }
+.pill.tag i { color: var(--roxoc); width: 8px; height: 8px; }
+/* "? qual anúncio vendeu?" (O ponto cego) */
+.duv { display: inline-flex; align-items: center; height: 54px; padding: 0 20px; border-radius: 12px; font: 500 22px 'JBM'; color: var(--verm);
+       background: rgba(255,107,138,.07); border: 1.5px solid rgba(255,107,138,.35); white-space: nowrap; }
+/* botão do site: pílula índigo com seta */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 92px; padding: 0 50px; border-radius: 999px;
+       background: linear-gradient(135deg, #4848F0, #6F6FFF); color: #fff; font: 600 32px 'INT'; white-space: nowrap; position: relative; overflow: hidden;
+       box-shadow: 0 14px 40px rgba(72,72,240,.45); letter-spacing: -0.01em; }
+.btn svg { width: 30px; height: 30px; }
+.btn.ok { background: #1F9D55; box-shadow: 0 14px 40px rgba(37,211,102,.3); }
+.btn.sec { background: transparent; border: 2px solid var(--linha2); box-shadow: none; }
+
+/* marca: símbolo + "Leadrive" (como no topo do site) */
+.marca { display: inline-flex; align-items: center; gap: 12px; font: 650 30px 'INT'; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.marca img { height: 36px; display: block; }
+
+/* avatar com iniciais (lista de leads do site) */
+.av { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font: 700 19px 'INT'; color: #fff; flex: none; }
+.av.a1 { background: linear-gradient(135deg, #4848F0, #8B8BFF); } .av.a2 { background: linear-gradient(135deg, #FF8A3D, #FFC857); }
+.av.a3 { background: linear-gradient(135deg, #1E90FF, #00D4FF); } .av.a4 { background: linear-gradient(135deg, #C04CFD, #FF6B8A); }
+.estr { font-size: 22px; letter-spacing: 3px; color: var(--ouro); white-space: nowrap; } .estr s { text-decoration: none; color: #4A4D78; }
+.wa { width: 30px; height: 30px; flex: none; }
+.utm { font: 500 18px 'JBM'; color: var(--lilas); letter-spacing: .04em; white-space: nowrap; } .utm span { color: var(--mute); }
+
+/* inserções (faixa de cima, y 120–470) */
+.ins { width: 960px; padding: 28px 34px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 650 31px 'INT'; letter-spacing: -0.015em; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 74px; border-top: 1.5px solid var(--linha); font: 500 26px 'INT'; color: var(--texto); border-radius: 12px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 14px; }
+.li .pill, .li b, .li .estr { margin-left: auto; }
+.li .utm { font-size: 22px; }
+.li b { font: 700 27px 'INT'; color: var(--tinta); }
+
+/* janela do app (telas cheias) */
+.app { width: 960px; overflow: hidden; border-radius: 24px; background: var(--card); }
+.app .bar { height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 30px; background: var(--card3); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.app .bar .tt { font: 600 25px 'INT'; color: var(--texto); padding-left: 18px; border-left: 1.5px solid var(--linha2); }
+.app .bar .pill { margin-left: auto; }
+.abas { height: 74px; display: flex; align-items: flex-end; gap: 6px; padding: 0 22px; background: var(--card3); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { height: 58px; display: flex; align-items: center; gap: 10px; padding: 0 24px; border-radius: 14px 14px 0 0; font: 500 19px 'JBM'; letter-spacing: .12em; color: var(--mute); white-space: nowrap; text-transform: uppercase; }
+.aba.on { background: var(--card); color: #fff; box-shadow: inset 0 3px 0 var(--roxoc); }
+.carrega { position: absolute; left: 0; bottom: 0; height: 4px; background: var(--roxoc); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: var(--card); }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+
+/* KPIs (LEADS HOJE · CONVERTIDOS · TAXA) */
+.kpis { display: grid; gap: 16px; }
+.kpi { background: rgba(255,255,255,.035); border: 1.5px solid var(--linha); border-radius: 16px; padding: 18px 22px 16px; }
+.kpi .v { font: 650 46px 'INT'; letter-spacing: -0.02em; margin-top: 6px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* linha de lead (Painel · Leads) */
+.lead { display: flex; align-items: center; gap: 18px; height: 100px; padding: 0 22px; border-radius: 16px; background: rgba(255,255,255,.035); border: 1.5px solid var(--linha); }
+.lead + .lead { margin-top: 12px; }
+.lead .nm { font: 600 26px 'INT'; color: #fff; } .lead .utm { margin-top: 6px; display: block; }
+.lead .dir { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+/* menu lateral (Painel completo) */
+.lat .it { height: 62px; display: flex; align-items: center; padding: 0 18px; border-radius: 12px; font: 500 24px 'INT'; color: var(--texto); border: 1.5px solid transparent; white-space: nowrap; }
+.lat .it.on { background: var(--roxof); border-color: rgba(111,111,255,.55); color: var(--lilas); }
+/* etapas (O caminho do lead / Como funciona) */
+.eta { width: 104px; height: 104px; border-radius: 22px; display: grid; place-items: center; background: #15185A; border: 1.5px solid rgba(111,111,255,.45); box-shadow: 0 0 30px rgba(72,72,240,.25); }
+.eta svg { width: 44px; height: 44px; }
+.passo { display: flex; align-items: center; gap: 22px; padding: 22px 26px; border-radius: 18px; background: rgba(255,255,255,.035); border: 1.5px solid var(--linha); }
+.passo .n { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg, #4848F0, #6F6FFF); display: grid; place-items: center; font: 700 25px 'INT'; flex: none; }
+.passo h5 { font: 650 27px 'INT'; letter-spacing: -0.01em; } .passo p { font: 400 21px/1.35 'INT'; color: var(--cinza); margin-top: 4px; }
+/* conversa do WhatsApp (modo escuro) */
+.chat { display: flex; flex-direction: column; gap: 12px; }
+.bal { max-width: 80%; border-radius: 18px; padding: 14px 20px; font: 500 25px/1.3 'INT'; }
+.bal.c { background: #202C33; color: #E9EDEF; align-self: flex-start; border-top-left-radius: 6px; }
+.bal.v { background: #005C4B; color: #E9EDEF; align-self: flex-end; border-top-right-radius: 6px; }
+.bal small { display: block; font: 500 16px 'INT'; color: rgba(233,237,239,.55); text-align: right; margin-top: 4px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 5px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+.li .risca { left: 6px; right: 6px; }
+
+/* CTA (marca + frase + botão do site) */
+#cta { width: 960px; padding: 40px 40px 46px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .marca { font-size: 40px; margin-bottom: 22px; } #cta .marca img { height: 50px; }
+#cta .t { font: 650 46px/1.1 'INT'; color: #fff; letter-spacing: -0.03em; } #cta .t em { font-style: italic; font-weight: 400; color: var(--lilas); }
+#btnCta { margin-top: 30px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+
+/* ícone de marca famosa */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }
+.mk { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; flex: none; }
+.mk svg { width: 32px; height: 32px; }
+
+/* ilustração da fala */
+.cx { font: 600 22px 'INT'; fill: var(--texto); }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }
+
+/* ── componentes reutilizados nos criativos (07/10) ── */
+/* tabela de campanhas (Painel completo do site em linhas): .tab > .hd + .ln, 4 colunas */
+.tab .hd, .tab .ln { display: grid; grid-template-columns: 1fr 150px 130px 150px; align-items: center; gap: 10px; }
+.tab .hd { padding: 0 16px 10px; } .tab .hd .k { font-size: 16px; } .tab .hd .k + .k, .tab .ln b { text-align: right; }
+.tab .ln { height: 84px; padding: 0 16px; border-top: 1.5px solid var(--linha); border-radius: 12px; font: 500 24px 'INT'; color: var(--texto); }
+.tab .ln b { font: 650 27px 'INT'; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tab .ln .utm { font-size: 20px; }
+/* evento enviado pela Retroalimentação de Ads (ícone da plataforma + evento + status) */
+.ev { display: flex; align-items: center; gap: 16px; height: 88px; padding: 0 20px; border-radius: 16px; background: rgba(255,255,255,.035); border: 1.5px solid var(--linha); }
+.ev + .ev { margin-top: 12px; } .ev .tx { font: 600 23px 'INT'; white-space: nowrap; } .ev .utm { display: block; margin-top: 4px; font-size: 17px; } .ev .pill { margin-left: auto; }
+/* grade 2×2 de chips do "ponto cego" */
+.gdv { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; } .gdv .duv { justify-content: center; height: 62px; font-size: 20px; }
+/* planilha (o processo manual que a fala cita — tela de sistema, não papel) */
+.pl { display: grid; grid-template-columns: 70px 1fr 1fr 1fr; border: 1.5px solid var(--linha2); border-radius: 12px; overflow: hidden; font: 500 21px 'JBM'; }
+.pl > div { height: 60px; display: flex; align-items: center; padding: 0 14px; border-right: 1.5px solid var(--linha); border-bottom: 1.5px solid var(--linha); color: var(--texto); white-space: nowrap; overflow: hidden; }
+.pl > .h { background: rgba(255,255,255,.06); color: var(--cinza); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; }
+.pl > .n { color: var(--mute); justify-content: center; }

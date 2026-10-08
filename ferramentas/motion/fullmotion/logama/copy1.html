@@ -103,7 +103,7 @@
 <script src="../fm.js"></script>
 <script src="copy1/palavras.js"></script>
 <script>
-window.DURACAO = 43.84;
+window.DURACAO = 43.52;
 const ROSTO = [610, 860];
 const FS = [[1.6, 16.95, true], [31.55, 40.6, true]];
 const OCULTA = [];
@@ -121,7 +121,7 @@ const rotas = ROTAS.map(([r, v, s, c]) => { const e = document.createElement('di
   e.innerHTML = `<span>${r}</span><span class="vei">${v}</span><span class="pill ${c}">${s}</span>`; $('#rotas').appendChild(e); return e; });
 
 window.quadro = function (T) {
-  const T2 = T < 36.46 ? T : T + 0.72, t = T2 < 10.84 ? T2 : T2 + 0.40;   // WARP: cortes do "de" (0,40 s em 10,84) e do "pode" repetido (0,72 s em 36,46); animação no tempo antigo, legenda no novo
+  const T1 = T + 0.32, T2 = T1 < 36.46 ? T1 : T1 + 0.72, t = T2 < 10.84 ? T2 : T2 + 0.40;   // + entrada sem o respiro (0,32 s)   // WARP: cortes do "de" (0,40 s em 10,84) e do "pode" repetido (0,72 s em 36,46); animação no tempo antigo, legenda no novo
   FM.antes(t);
   tela(t);
   window.PAPEL_TOPO = (t > 1.9 && t < 17.1) || (t > 31.9 && t < 40.8) ? 0 : 9999;

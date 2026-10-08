@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>VSL Métora — peças gráficas (1920×1080, fundo transparente) · identidade do site metoraperformance.com.br</title>
+<style>
+  /* identidade tirada do site: Syne (títulos largos) + DM Sans, verde-petróleo escuro e verde-menta */
+  @font-face { font-family: 'Syne'; font-weight: 400 800; src: url('../../fontes/Syne.ttf'); }
+  @font-face { font-family: 'DM'; font-weight: 100 1000; src: url('../../fontes/DMSans.ttf'); }
+  :root { --menta: #3FD8B6; --menta2: #2BC7A3; --fundo: #0E1A1C; --card: #172427; --card2: #1D2C30; --linha: rgba(255,255,255,.08);
+          --texto: #EAF2F1; --mudo: #8EA3A5; --verm: #F06A5D; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: transparent; font-family: 'DM', sans-serif; color: var(--texto); }
+  .p { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
+  .sy { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  .m { color: var(--menta); }
+  .frase { font-family: 'Syne'; font-weight: 800; font-size: 82px; line-height: 1.0; letter-spacing: -0.01em; white-space: nowrap; color: #fff;
+           text-shadow: 0 6px 34px rgba(0,0,0,.55); text-align: left; }
+  .veuD { position: absolute; left: 1000px; top: 0; width: 920px; height: 1080px; opacity: 0;
+          background: linear-gradient(90deg, transparent, rgba(6,16,17,.5) 30%, rgba(6,16,17,.66)); }
+
+  /* chips (como os do site: escuro translúcido, borda fina, check menta) */
+  .chip { display: flex; align-items: center; gap: 14px; background: rgba(14,26,28,.86); border: 1.5px solid rgba(255,255,255,.12); border-radius: 999px;
+          padding: 16px 30px 16px 20px; font-size: 36px; font-weight: 600; white-space: nowrap; color: #fff; box-shadow: 0 16px 40px rgba(0,0,0,.35); }
+  .chip svg { width: 30px; height: 30px; flex: none; }
+  .etq { font-size: 30px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 12px 24px; border-radius: 12px; white-space: nowrap; }
+
+  /* prints da bagunça (sem emoji, com foto real) */
+  .print { border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,.4), 0 4px 10px rgba(0,0,0,.25); overflow: hidden; background: #fff; color: #0F0F0F; font-family: 'DM'; }
+  .gg { width: 640px; padding: 26px 28px 20px; }
+  .gg .logo { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; font-family: Arial, sans-serif; }
+  .gg .busca { margin-top: 16px; height: 62px; border-radius: 31px; border: 1.5px solid #DFE1E5; display: flex; align-items: center; padding: 0 24px; font-size: 25px; gap: 14px; font-family: Arial, sans-serif; }
+  .gg .sug { font-size: 22px; color: #4D5156; padding: 12px 24px 0 62px; font-family: Arial, sans-serif; }
+  .yt { width: 560px; background: #0F0F0F; color: #F1F1F1; }
+  .yt .th { height: 315px; position: relative; background: #222 center/cover no-repeat; }
+  .yt .th .dur { position: absolute; right: 12px; bottom: 12px; background: rgba(0,0,0,.8); color: #fff; font-size: 19px; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+  .yt .info { padding: 16px 20px 20px; display: flex; gap: 14px; font-family: Arial, sans-serif; }
+  .yt .av { width: 44px; height: 44px; border-radius: 50%; background: #6B5547; flex: none; }
+  .yt .t1 { font-size: 23px; font-weight: 700; line-height: 1.2; }
+  .yt .t2 { font-size: 18px; color: #AAAAAA; margin-top: 6px; }
+  .ig { width: 470px; font-family: Arial, sans-serif; }
+  .ig .top { display: flex; align-items: center; gap: 12px; padding: 14px 18px; font-size: 20px; font-weight: 700; }
+  .ig .top .av { width: 38px; height: 38px; border-radius: 50%; background: #C9B39E; box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px #E1306C; }
+  .ig .img { height: 470px; background: #ddd center/cover no-repeat; position: relative; }
+  .ig .img b { position: absolute; left: 24px; right: 24px; bottom: 26px; font-size: 46px; line-height: 1; font-weight: 900; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.6); }
+  .ig .bar { display: flex; gap: 18px; padding: 14px 18px; font-size: 19px; align-items: center; color: #262626; }
+  .ig .salvo { margin-left: auto; font-weight: 700; display: flex; gap: 8px; align-items: center; }
+  .apps { width: 520px; padding: 22px 24px; font-family: -apple-system, Arial, sans-serif; }
+  .apps h4 { font-size: 24px; margin-bottom: 10px; }
+  .apps .ap { display: flex; align-items: center; gap: 16px; padding: 10px 0; border-top: 1px solid #EEE; }
+  .apps .ap i { width: 62px; height: 62px; border-radius: 15px; flex: none; }
+  .apps .ap b { font-size: 22px; display: block; }
+  .apps .ap small { font-size: 17px; color: #8A8A8E; }
+  .apps .ap .bt { margin-left: auto; background: #EEF0F4; color: #0A66FF; font-weight: 700; border-radius: 999px; padding: 7px 20px; font-size: 18px; }
+  .pl { width: 600px; font-family: Arial, sans-serif; }
+  .pl .tb { background: #1F7A46; color: #fff; font-size: 20px; font-weight: 600; padding: 12px 18px; }
+  .pl table { border-collapse: collapse; width: 100%; font-size: 20px; }
+  .pl td { border: 1px solid #DADCE0; padding: 9px 12px; white-space: nowrap; }
+  .pl tr:first-child td { background: #F1F3F4; font-weight: 700; }
+  .pl td.x { color: #B3261E; }
+  .ifl { width: 380px; }
+  .ifl .vid { height: 640px; background: #333 center/cover no-repeat; position: relative; }
+  .ifl .vid::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(0,0,0,.75)); }
+  .ifl .tx { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2; color: #fff; font-family: Arial, sans-serif; }
+  .ifl .tx b { font-size: 31px; line-height: 1.08; display: block; }
+  .ifl .tx small { font-size: 18px; margin-top: 10px; display: block; opacity: .85; font-weight: 600; }
+  .nt { width: 560px; background: #FFFFFF; padding: 22px 30px 30px; font-family: -apple-system, Arial, sans-serif; }
+  .nt .h { font-size: 20px; color: #D9A400; font-weight: 700; }
+  .nt .li { white-space: nowrap; font-size: 34px; line-height: 1.25; margin-top: 8px; position: relative; display: inline-block; font-weight: 500; }
+  .nt .li .r { position: absolute; left: -4px; right: -4px; top: 54%; height: 4px; background: #E5484D; border-radius: 2px; transform-origin: 0 50%; transform: scaleX(0); }
+  .nt .dt { font-size: 18px; color: #8A8A8E; margin-top: 4px; }
+
+  /* telas cheias: degradê verde-petróleo do site */
+  .tela { position: absolute; inset: 0; opacity: 0; overflow: hidden;
+          background: radial-gradient(120% 90% at 85% 100%, #1C5C57 0%, #134340 38%, #0E2624 70%, #0B1B1C 100%); }
+  /* celular com a tela REAL do app (prints do site) */
+  .cel { width: 452px; height: 960px; border-radius: 66px; background: #07090A; padding: 13px; box-shadow: 0 50px 110px rgba(0,0,0,.55), inset 0 0 0 2px #2A3134; }
+  .cel .tl { position: relative; width: 100%; height: 100%; border-radius: 54px; overflow: hidden; background: #0F1719; }
+  .cel .tl img, .cel .tl .scr { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; object-fit: cover; }
+  .tit { font-family: 'Syne'; font-weight: 800; font-size: 76px; line-height: 1.02; letter-spacing: -0.01em; white-space: nowrap; color: #fff; }
+  .sub { font-size: 32px; color: var(--mudo); font-weight: 500; white-space: nowrap; }
+  .pil { display: flex; align-items: center; gap: 22px; font-family: 'Syne'; font-weight: 800; font-size: 58px; white-space: nowrap; color: #fff; }
+  .pil i { width: 78px; height: 78px; border-radius: 22px; background: rgba(63,216,182,.14); border: 1.5px solid rgba(63,216,182,.35); display: grid; place-items: center; flex: none; }
+  .pil i svg { width: 40px; height: 40px; }
+  .wm { font-family: 'Syne'; font-weight: 800; letter-spacing: 0.02em; color: #fff; }
+
+  /* quiz (recriado no estilo do app: escuro, cartões, menta) */
+  .scr { padding: 92px 26px 0; background: #0F1719; }
+  .qh { position: absolute; left: 0; right: 0; top: 0; height: 250px; background: linear-gradient(160deg, #165450, #0F2C2A); }
+  .scr > *:not(.qh) { position: relative; }
+  .qtop { display: flex; align-items: center; justify-content: space-between; font-size: 19px; color: #A9C2C0; font-weight: 600; }
+  .prog { height: 7px; border-radius: 4px; background: rgba(255,255,255,.12); margin-top: 16px; overflow: hidden; }
+  .prog i { display: block; height: 100%; background: var(--menta); border-radius: 4px; }
+  .qq { font-size: 32px; font-weight: 700; color: #fff; margin-top: 38px; line-height: 1.12; }
+  .qs { font-size: 18px; color: #A9C2C0; margin-top: 8px; }
+  .op { min-height: 76px; border-radius: 18px; background: #18262A; border: 2px solid rgba(255,255,255,.06); display: flex; align-items: center; padding: 0 22px; font-size: 21px; font-weight: 600; margin-top: 12px; color: #E3ECEB; gap: 14px; }
+  .op .rd { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #4C5F62; flex: none; }
+  .op.on { border-color: var(--menta); background: rgba(63,216,182,.10); }
+  .op.on .rd { border: 8px solid var(--menta); }
+
+  /* comparação (como a tabela "O que muda em relação ao que você já tentou") */
+  .col { position: absolute; top: 0; height: 1080px; width: 960px; }
+  .colE { left: 0; background: #0D1718; }
+  .colD { left: 960px; background: radial-gradient(110% 90% at 80% 100%, #1C5C57 0%, #134340 45%, #0E2624 85%); }
+  .cab { font-size: 28px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mudo); white-space: nowrap; }
+  .solto { background: #172326; border: 1.5px solid rgba(255,255,255,.07); border-radius: 18px; padding: 18px 28px; font-size: 34px; font-weight: 600;
+           white-space: nowrap; color: #B9C6C7; display: flex; align-items: center; gap: 16px; }
+  .solto i { width: 12px; height: 12px; border-radius: 50%; background: #56686B; flex: none; }
+  .okk { display: flex; align-items: center; gap: 18px; font-size: 46px; font-weight: 700; white-space: nowrap; color: #fff; }
+  .okk i { width: 54px; height: 54px; border-radius: 50%; background: var(--menta); display: grid; place-items: center; flex: none; }
+  .okk i svg { width: 30px; height: 30px; }
+  .fala { font-size: 46px; font-weight: 500; white-space: nowrap; color: #C4CFD0; }
+  .fala .r { position: absolute; left: -6px; right: -6px; top: 54%; height: 5px; background: var(--verm); border-radius: 3px; transform-origin: 0 50%; transform: scaleX(0); }
+  .botao { display: flex; align-items: center; gap: 16px; background: var(--menta); color: #062520; font-weight: 700; font-size: 32px; border-radius: 999px; padding: 22px 38px; white-space: nowrap;
+           box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .botao svg { width: 40px; height: 40px; }
+</style>
+</head>
+<body>
+
+<div class="veuD" id="veu"></div>
+
+<!-- P1 · gancho -->
+<div class="p frase" id="p1">Por que meu<br>corpo <span class="m">não muda?</span></div>
+<!-- P2 -->
+<div class="p frase" id="p2a">Não é falta<br>de esforço.</div>
+<div class="p frase" id="p2b" style="font-size:92px">É falta de<br><span class="m">método.</span></div>
+
+<!-- P3 · prints da bagunça (fotos reais nas miniaturas) -->
+<div class="p print gg" id="pr1"><div class="logo"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></div>
+  <div class="busca"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="2.5"><circle cx="10" cy="10" r="7"/><path d="M15 15l6 6"/></svg><span id="pr1t"></span></div>
+  <div class="sug">como secar a barriga em 7 dias</div><div class="sug">treino para emagrecer em casa</div></div>
+<div class="p print yt" id="pr2"><div class="th" id="ytTh"><div class="dur">15:02</div></div>
+  <div class="info"><div class="av"></div><div><div class="t1">TREINO DE 15 MIN PRA SECAR A BARRIGA (sem equipamento)</div><div class="t2">FitTop · 2,1 mi de visualizações · há 3 anos</div></div></div></div>
+<div class="p print ig" id="pr3"><div class="top"><div class="av"></div>nutri.dicas.fit</div>
+  <div class="img" id="igImg"><b>DIETA DE 7 DIAS PRA SECAR</b></div>
+  <div class="bar">18,4 mil curtidas · 902 comentários <div class="salvo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#262626"><path d="M6 3h12v18l-6-5-6 5z"/></svg>Salvo</div></div></div>
+<div class="p print apps" id="pr4"><h4>Saúde e fitness · Mais baixados</h4>
+  <div class="ap"><i style="background:linear-gradient(135deg,#43C46B,#2A9D52)"></i><div><b>Contador de Calorias</b><small>Saúde e fitness</small></div><div class="bt">Abrir</div></div>
+  <div class="ap"><i style="background:linear-gradient(135deg,#5B7CFF,#2E4FD8)"></i><div><b>Treino em Casa 7 min</b><small>Saúde e fitness</small></div><div class="bt">Abrir</div></div>
+  <div class="ap"><i style="background:linear-gradient(135deg,#9B6BEA,#6C3FC7)"></i><div><b>Jejum Intermitente</b><small>Saúde e fitness</small></div><div class="bt">Abrir</div></div>
+  <div class="ap"><i style="background:linear-gradient(135deg,#3BB8DE,#1B8DB3)"></i><div><b>Beber Água — Lembrete</b><small>Saúde e fitness</small></div><div class="bt">Abrir</div></div></div>
+<div class="p print pl" id="pr5"><div class="tb">treino_definitivo_v3.xlsx</div><table>
+  <tr><td>Dia</td><td>Treino</td><td>Feito?</td></tr><tr><td>Seg</td><td>Peito + tríceps</td><td>✓</td></tr><tr><td>Ter</td><td>Costas</td><td class="x">✗</td></tr>
+  <tr><td>Qua</td><td>Perna (?)</td><td class="x">✗</td></tr><tr><td>Qui</td><td>—</td><td class="x">✗</td></tr></table></div>
+<div class="p print ifl" id="pr6"><div class="vid" id="reelImg"></div><div class="tx"><b>O segredo que ninguém te conta pra definir</b><small>@influ.shape · 3,4 mi de visualizações</small></div></div>
+<div class="p print nt" id="pr7"><div class="h">Notas</div>
+  <div class="li" id="n1">Dieta: começar segunda<div class="r"></div></div><br>
+  <div class="li" id="n2">Academia: segunda sem falta<div class="r"></div></div><br>
+  <div class="li" id="n3">Agora vai: segunda<div class="r"></div></div>
+  <div class="dt">editado há 3 semanas</div></div>
+
+<!-- P4 · corpo atual × corpo desejado -->
+<div class="p etq" id="e1" style="background:rgba(14,26,28,.86);color:#fff;border:1.5px solid rgba(255,255,255,.14)">Corpo atual</div>
+<div class="p etq" id="e2" style="background:var(--menta);color:#062520">Corpo desejado</div>
+
+<!-- P5 / P9 / P10 / P12 · chips -->
+<div class="p chip" id="r1">Treino bem estruturado</div>
+<div class="p chip" id="r2">Alimentação alinhada ao objetivo</div>
+<div class="p chip" id="r3">Consistência</div>
+<div class="p chip" id="r4">Acompanhamento da evolução</div>
+<div class="p chip" id="d1">Perder gordura</div>
+<div class="p chip" id="d2">Ganhar massa muscular</div>
+<div class="p chip" id="d3">Aumentar a definição</div>
+<div class="p frase" id="d4" style="font-size:76px">Voltar a gostar<br>do que <span class="m">vê no espelho.</span></div>
+<div class="p chip" id="v1">Sua rotina</div>
+<div class="p chip" id="v2">Seu ponto de partida</div>
+<div class="p chip" id="v3">Seu objetivo</div>
+<div class="p chip" id="min">Leva poucos minutos</div>
+
+<!-- P6 · andando em círculos -->
+<div class="p" id="circ" style="width:260px;height:260px"><svg viewBox="0 0 100 100" width="260" height="260"><path id="circP" d="M50 12 A38 38 0 1 1 13.6 39" fill="none" stroke="#3FD8B6" stroke-width="5" stroke-linecap="round"/><path d="M6 33 L13.6 40 L21 32" fill="none" stroke="#3FD8B6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+<!-- P14 · CTA -->
+<div class="p frase" id="cta" style="font-size:80px">Responda o<br>quiz <span class="m">abaixo.</span></div>
+<div class="p botao" id="ctaBt">Descobrir meu próximo passo<svg viewBox="0 0 24 24" fill="none" stroke="#062520" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+
+<!-- ═════ P7 · a bagunça é varrida → MÉTORA → app real ═════ -->
+<div class="tela" id="t7">
+  <div class="p" id="t7wm"><span class="wm" style="font-size:200px">MÉTORA</span></div>
+  <div class="p sub" id="t7sub">Treino e dieta que se ajustam a você.</div>
+  <div class="p cel" id="cel1"><div class="tl">
+    <img id="iHome" src="../../../../projetos/VSL%20MENTORA/midia/site/app/cel-05.png">
+    <img id="iTreino" src="../../../../projetos/VSL%20MENTORA/midia/site/app/cel-01.png">
+    <img id="iNutri" src="../../../../projetos/VSL%20MENTORA/midia/site/app/cel-02.png">
+    <img id="iEvo" src="../../../../projetos/VSL%20MENTORA/midia/site/app/cel-03.png">
+  </div></div>
+  <div class="p pil" id="pl1"><i><svg viewBox="0 0 24 24" fill="none" stroke="#3FD8B6" stroke-width="2.2" stroke-linecap="round"><path d="M3 9v6M6 6v12M18 6v12M21 9v6M6 12h12"/></svg></i>Treino</div>
+  <div class="p pil" id="pl2"><i><svg viewBox="0 0 24 24" fill="none" stroke="#3FD8B6" stroke-width="2.2" stroke-linecap="round"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 2.5-3 6s1.5 4 3 4v8"/></svg></i>Nutrição</div>
+  <div class="p pil" id="pl3"><i><svg viewBox="0 0 24 24" fill="none" stroke="#3FD8B6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></i>Evolução</div>
+  <div class="p tit" id="pl4" style="font-size:64px">Tudo em <span class="m">um só lugar.</span></div>
+</div>
+
+<!-- ═════ P8 · sozinho × com a Métora ═════ -->
+<div class="tela" id="t8">
+  <div class="col colE"></div><div class="col colD" id="t8D"></div>
+  <div class="p cab" id="c8a">Sozinho</div>
+  <div class="p solto" id="x1"><i></i>Treino do YouTube</div>
+  <div class="p solto" id="x2"><i></i>Dieta salva no Instagram</div>
+  <div class="p solto" id="x3"><i></i>Planilha</div>
+  <div class="p solto" id="x4"><i></i>Bloco de notas</div>
+  <div class="p solto" id="x5"><i></i>Um app pra cada coisa</div>
+  <div class="p cab" id="c8b" style="color:var(--menta)">Com a Métora</div>
+  <div class="p okk" id="y1"><i></i>Treino</div>
+  <div class="p okk" id="y2"><i></i>Nutrição</div>
+  <div class="p okk" id="y3"><i></i>Acompanhamento</div>
+  <div class="p tit" id="y4" style="font-size:54px">Tudo em <span class="m">um único lugar.</span></div>
+</div>
+
+<!-- ═════ P11 · quiz ═════ -->
+<div class="tela" id="t11">
+  <div class="p cel" id="cel2"><div class="tl">
+    <div class="scr" id="q1"><div class="qh"></div><div class="qtop"><span class="wm" style="font-size:22px">MÉTORA</span><span>1 de 3</span></div><div class="prog"><i style="width:33%"></i></div>
+      <div class="qq">Qual é o seu<br>objetivo?</div><div class="qs">Escolha o principal</div>
+      <div class="op" id="q1a"><div class="rd"></div>Perder gordura</div><div class="op"><div class="rd"></div>Ganhar massa muscular</div><div class="op"><div class="rd"></div>Aumentar a definição</div><div class="op"><div class="rd"></div>Voltar a gostar do espelho</div></div>
+    <div class="scr" id="q2"><div class="qh"></div><div class="qtop"><span class="wm" style="font-size:22px">MÉTORA</span><span>2 de 3</span></div><div class="prog"><i style="width:66%"></i></div>
+      <div class="qq">Quantos dias por<br>semana você treina?</div><div class="qs">Seja sincero</div>
+      <div class="op"><div class="rd"></div>2 dias</div><div class="op" id="q2b"><div class="rd"></div>3 dias</div><div class="op"><div class="rd"></div>4 dias</div><div class="op"><div class="rd"></div>5 ou mais</div></div>
+    <div class="scr" id="q3"><div class="qh"></div><div class="qtop"><span class="wm" style="font-size:22px">MÉTORA</span><span>3 de 3</span></div><div class="prog"><i style="width:100%"></i></div>
+      <div class="qq">O que mais te<br>trava hoje?</div><div class="qs">Pode marcar mais de uma</div>
+      <div class="op" id="q3a"><div class="rd"></div>Eu treino, mas não vejo resultado</div><div class="op"><div class="rd"></div>Não sei montar meu treino</div><div class="op" id="q3c"><div class="rd"></div>Não sei o que comer</div><div class="op"><div class="rd"></div>Começo e desisto toda vez</div></div>
+  </div></div>
+  <div class="p tit" id="q11a" style="font-size:66px">Um quiz rápido<br><span class="m">sobre você.</span></div>
+  <div class="p okk" id="qa" style="font-size:40px"><i></i>Seu objetivo</div>
+  <div class="p okk" id="qb" style="font-size:40px"><i></i>Sua rotina</div>
+  <div class="p okk" id="qc" style="font-size:40px"><i></i>O que mudar no corpo</div>
+</div>
+
+<!-- ═════ P13 · tentativa aleatória × método ═════ -->
+<div class="tela" id="t13">
+  <div class="col colE"></div><div class="col colD"></div>
+  <div class="p cab" id="c13a">Tentativa aleatória</div>
+  <div class="p fala" id="a1">“Vou tentar essa dieta.”<div class="r"></div></div>
+  <div class="p fala" id="a2">“Vou copiar esse treino.”<div class="r"></div></div>
+  <div class="p fala" id="a3">“Vou começar segunda.”<div class="r"></div></div>
+  <div class="p cab" id="c13b" style="color:var(--menta)">Método</div>
+  <div class="p okk" id="b1"><i></i>Treino estruturado</div>
+  <div class="p okk" id="b2"><i></i>Nutrição alinhada</div>
+  <div class="p okk" id="b3"><i></i>Evolução acompanhada</div>
+  <div class="p" id="t13f" style="width:1920px;height:1080px;background:radial-gradient(120% 90% at 85% 100%, #1C5C57 0%, #134340 38%, #0E2624 70%, #0B1B1C 100%)"></div>
+  <div class="p tit" id="t13t" style="font-size:108px;text-align:center">Transformação<br>com <span class="m">método.</span></div>
+</div>
+
+<script>
+const $ = s => document.getElementById(s);
+const C = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const L = (a, b, p) => a + (b - a) * p;
+const E = {
+  out: p => 1 - Math.pow(1 - p, 3), in: p => p * p * p,
+  io: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  mola: p => p >= 1 ? 1 : 1 - Math.exp(-7 * p) * Math.cos(7 * p),
+};
+const pr = (t, a, d, e = E.out) => e(C((t - a) / d));
+const CHECK = c => `<svg viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+document.querySelectorAll('.chip').forEach(el => el.insertAdjacentHTML('afterbegin', CHECK('#3FD8B6')));
+document.querySelectorAll('.okk i').forEach(i => i.innerHTML = CHECK('#062520'));
+const PR = '../../../../projetos/VSL%20MENTORA/midia/site/prints/';
+$('ytTh').style.backgroundImage = `url(${PR}yt.jpg)`; $('igImg').style.backgroundImage = `url(${PR}ig.jpg)`; $('reelImg').style.backgroundImage = `url(${PR}reel.jpg)`;
+
+/* elemento centrado em (x,y): entra em a, sai em b. Movimento curto e simples (nada de efeito enfeitado) */
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  const { x = 960, y = 540, rot = 0, de = .94, dy = 24, dx = 0, din = .45, dout = .22 } = o;
+  if (t < a || (b != null && t > b + dout)) { el.style.opacity = 0; return 0; }
+  const pm = pr(t, a, din * 1.3, E.mola), pa = pr(t, a, din * .5), po = b == null ? 0 : pr(t, b, dout, E.in);
+  el.style.opacity = pa * (1 - po);
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  el.style.transform = `translate(-50%,-50%) translate(${(1 - pm) * dx}px,${(1 - pm) * dy + po * 10}px) rotate(${rot}deg) scale(${L(de, 1, pm)})`;
+  return pa * (1 - po);
+}
+/* alinha pela esquerda em x0 (A centraliza) */
+const esq = (id, x0) => { const el = $(id); el.style.left = (x0 + el.offsetWidth / 2) + 'px'; };
+function tela(id, t, a, b) {
+  const el = $(id), on = t >= a && t < b;
+  el.style.opacity = on ? 1 : 0;
+  if (on) el.style.transform = `scale(${L(1.03, 1, pr(t, a, .6))})`;
+  return on;
+}
+const risco = (el, t, t0) => { el.querySelector('.r').style.transform = `scaleX(${pr(t, t0, .35, E.io)})`; };
+/* telas do app: troca com leve deslize */
+function telas(lista, t) {
+  lista.forEach(([id, a], k) => {
+    const b = lista[k + 1] ? lista[k + 1][1] : 1e9, el = $(id);
+    const on = t >= a && t < b + .25;
+    el.style.opacity = on ? pr(t, a, .3) : 0;
+    el.style.zIndex = k;
+    el.style.transform = `translateX(${(1 - pr(t, a, .45)) * 60}px)`;
+  });
+}
+
+function desenha(t) {
+  const trechosV = [[4.4, 7.05], [18.3, 23.15], [74.1, 76.9], [113.5, 119.8]];
+  let v = 0; for (const [a, b] of trechosV) v = Math.max(v, pr(t, a - .1, .35) * (1 - pr(t, b - .2, .3)));
+  $('veu').style.opacity = v;
+
+  /* P1, P2 — frases à direita, no fundo escuro atrás dela */
+  A('p1', t, 4.55, 6.85, { x: 0, y: 480 }); esq('p1', 1190);
+  A('p2a', t, 18.5, 21.15, { x: 0, y: 510 }); esq('p2a', 1250);
+  A('p2b', t, 21.3, 22.95, { x: 0, y: 510, de: .88 }); esq('p2b', 1250);
+
+  /* P3 — prints se empilhando */
+  const fim3 = 33.8;
+  A('pr1', t, 25.25, fim3, { x: 430, y: 300, rot: -3, dy: 50 });
+  const busca = 'como secar a barriga rápido';
+  $('pr1t').textContent = busca.slice(0, Math.round(C((t - 25.4) / .55) * busca.length));
+  A('pr2', t, 25.95, fim3, { x: 1500, y: 330, rot: 2.5, dy: 50 });
+  A('pr3', t, 27.05, fim3, { x: 420, y: 640, rot: 4, dy: 50 });
+  A('pr4', t, 28.2, fim3, { x: 1470, y: 730, rot: -2.5, dy: 50 });
+  A('pr5', t, 28.75, fim3, { x: 780, y: 840, rot: 1.5, dy: 50 });
+  A('pr6', t, 29.3, fim3, { x: 1200, y: 500, rot: -4, dy: 50 });
+  A('pr7', t, 30.9, fim3, { x: 760, y: 470, rot: 2, dy: 50 });
+  risco($('n1'), t, 31.7); risco($('n2'), t, 32.2); risco($('n3'), t, 32.85);
+
+  /* P4 */
+  A('e1', t, 34.1, 36.8, { x: 480, y: 940 });
+  A('e2', t, 34.5, 36.8, { x: 1440, y: 940 });
+
+  /* P5 — pilares sobre o B-roll */
+  A('r1', t, 38.45, 40.2, { x: 0, y: 950, dx: -30, dy: 0 }); esq('r1', 80);
+  A('r2', t, 40.35, 42.6, { x: 0, y: 950, dx: -30, dy: 0 }); esq('r2', 80);
+  A('r3', t, 42.75, 43.6, { x: 0, y: 950, dx: -30, dy: 0 }); esq('r3', 80);
+  A('r4', t, 43.75, 45.2, { x: 0, y: 950, dx: -30, dy: 0 }); esq('r4', 80);
+
+  /* P6 */
+  {
+    const el = $('circ');
+    A(el, t, 50.4, 51.9, { x: 1480, y: 450, de: .8, dy: 0 });
+    el.style.transform += ` rotate(${pr(t, 50.45, 1.2, E.io) * 300}deg)`;
+    const p = $('circP'), Lp = p.getTotalLength(); p.style.strokeDasharray = Lp; p.style.strokeDashoffset = Lp * (1 - pr(t, 50.4, .6, E.io));
+  }
+
+  /* P9 — desejo */
+  A('d1', t, 70.3, 71.3, { x: 0, y: 950, dx: 30, dy: 0 }); { const el = $('d1'); el.style.left = (1840 - el.offsetWidth / 2) + 'px'; }
+  A('d2', t, 71.4, 72.75, { x: 0, y: 950, dx: 30, dy: 0 }); { const el = $('d2'); el.style.left = (1840 - el.offsetWidth / 2) + 'px'; }
+  A('d3', t, 72.85, 74.05, { x: 0, y: 950, dx: 30, dy: 0 }); { const el = $('d3'); el.style.left = (1840 - el.offsetWidth / 2) + 'px'; }
+  A('d4', t, 74.2, 76.75, { x: 0, y: 500 }); esq('d4', 1150);
+
+  /* P10, P12 */
+  A('v1', t, 81.25, 85.6, { x: 0, y: 400, dx: 30, dy: 0 }); esq('v1', 1300);
+  A('v2', t, 82.55, 85.6, { x: 0, y: 520, dx: 30, dy: 0 }); esq('v2', 1300);
+  A('v3', t, 84.3, 85.6, { x: 0, y: 640, dx: 30, dy: 0 }); esq('v3', 1300);
+  A('min', t, 100.95, 103.4, { x: 0, y: 420, dx: 30, dy: 0 }); esq('min', 1300);
+
+  /* P14 — CTA */
+  A('cta', t, 113.75, null, { x: 0, y: 430 }); esq('cta', 1250);
+  A('ctaBt', t, 114.6, null, { x: 0, y: 690, dy: 30 }); esq('ctaBt', 1250);
+  if (t > 115.3) $('ctaBt').style.transform += ` translateY(${Math.sin((t - 115.3) * 4) * 6}px)`;
+
+  /* ═════ P7 ═════ */
+  if (tela('t7', t, 52.0, 61.2)) {
+    const varre = 53.05;
+    [['pr1', 430, 300, -3], ['pr2', 1500, 330, 2.5], ['pr3', 420, 640, 4], ['pr4', 1470, 730, -2.5], ['pr5', 780, 840, 1.5], ['pr6', 1200, 500, -4], ['pr7', 760, 470, 2]]
+      .forEach(([id, x, y, rot], k) => {
+        const el = $(id), s = pr(t, varre + k * .04, .5, E.in), lado = x < 960 ? -1 : 1;
+        el.style.opacity = t < varre + .6 ? 1 : 0;
+        el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.zIndex = 20;
+        el.style.transform = `translate(-50%,-50%) translate(${lado * s * 1400}px,${-s * 100}px) rotate(${rot + lado * s * 20}deg)`;
+      });
+    $('t7').style.zIndex = 10;
+    A('t7wm', t, 54.3, 55.75, { x: 960, y: 500, de: .96, dy: 16, din: .6 });
+    A('t7sub', t, 54.65, 55.75, { x: 960, y: 640, dy: 14 });
+    A('cel1', t, 55.85, null, { x: 640, y: 560, dy: 110, de: .97, din: .7 });
+    telas([['iHome', 55.85], ['iTreino', 56.8], ['iNutri', 57.65], ['iEvo', 58.5]], t);
+    A('pl1', t, 56.85, null, { x: 0, y: 330, dx: 40, dy: 0 }); esq('pl1', 1130);
+    A('pl2', t, 57.7, null, { x: 0, y: 470, dx: 40, dy: 0 }); esq('pl2', 1130);
+    A('pl3', t, 58.55, null, { x: 0, y: 610, dx: 40, dy: 0 }); esq('pl3', 1130);
+    A('pl4', t, 60.25, null, { x: 0, y: 790, dy: 24 }); esq('pl4', 1130);
+    // a palavra falada fica acesa; as outras apagam um pouco
+    [['pl1', 56.85, 57.7], ['pl2', 57.7, 58.55], ['pl3', 58.55, 60.25]].forEach(([id, a, b]) => {
+      if (t >= a) $(id).style.opacity = (t < b || t >= 60.25) ? 1 : .45;
+    });
+  } else ['pr1', 'pr2', 'pr3', 'pr4', 'pr5', 'pr6', 'pr7'].forEach(id => $(id).style.zIndex = '');
+
+  /* ═════ P8 ═════ */
+  if (tela('t8', t, 61.2, 68.4)) {
+    const xs = [[300, -2], [420, 1.5], [540, -1.5], [660, 2], [780, -1]];
+    A('c8a', t, 61.3, null, { x: 480, y: 170 });
+    ['x1', 'x2', 'x3', 'x4', 'x5'].forEach((id, k) => {
+      const solto = t > 64.4 ? Math.sin(t * 13 + k * 2) : 0;   // "espalhadas": ficam soltas, se mexendo
+      A(id, t, 61.55 + k * .38, null, { x: [470, 500, 430, 520, 460][k] + solto * 8, y: xs[k][0], rot: xs[k][1] + solto * 1.2, dy: 30 });
+    });
+    $('t8D').style.clipPath = `inset(0 ${(1 - pr(t, 65.9, .5, E.io)) * 100}% 0 0)`;
+    A('c8b', t, 66.1, null, { x: 1440, y: 170 });
+    A('y1', t, 66.35, null, { x: 0, y: 330, dx: 30, dy: 0 }); esq('y1', 1190);
+    A('y2', t, 66.7, null, { x: 0, y: 450, dx: 30, dy: 0 }); esq('y2', 1190);
+    A('y3', t, 67.05, null, { x: 0, y: 570, dx: 30, dy: 0 }); esq('y3', 1190);
+    A('y4', t, 67.6, null, { x: 0, y: 760, dy: 20 }); esq('y4', 1190);
+  }
+
+  /* ═════ P11 ═════ */
+  if (tela('t11', t, 92.3, 100.9)) {
+    A('cel2', t, 92.35, null, { x: 640, y: 560, dy: 110, de: .97, din: .7 });
+    telas([['q1', 92.6], ['q2', 97.6], ['q3', 98.95]], t);
+    $('q1a').className = 'op' + (t > 96.9 ? ' on' : '');
+    $('q2b').className = 'op' + (t > 98.5 ? ' on' : '');
+    $('q3a').className = 'op' + (t > 99.95 ? ' on' : '');
+    $('q3c').className = 'op' + (t > 100.4 ? ' on' : '');
+    A('q11a', t, 92.6, null, { x: 0, y: 330 }); esq('q11a', 1130);
+    A('qa', t, 97.35, null, { x: 0, y: 560, dx: 30, dy: 0 }); esq('qa', 1130);
+    A('qb', t, 98.45, null, { x: 0, y: 670, dx: 30, dy: 0 }); esq('qb', 1130);
+    A('qc', t, 99.85, null, { x: 0, y: 780, dx: 30, dy: 0 }); esq('qc', 1130);
+  }
+
+  /* ═════ P13 (mais lento: frases espaçadas e 1 s de pausa na fala antes do CTA) ═════ */
+  if (tela('t13', t, 106.9, 113.9)) {
+    A('c13a', t, 106.95, null, { x: 480, y: 200, din: .7 });
+    [['a1', 107.4, 380], ['a2', 108.25, 520], ['a3', 109.05, 660]].forEach(([id, a, y], k) => {
+      A(id, t, a, null, { x: 480, y, dy: 20, din: .75 });
+      $(id).querySelector('.r').style.transform = `scaleX(${pr(t, 110.05 + k * .25, .55, E.io)})`;
+      if (t > 110.3 + k * .25) $(id).style.opacity = L(1, .5, pr(t, 110.3 + k * .25, .5));
+    });
+    A('c13b', t, 110.6, null, { x: 1440, y: 200, din: .7 });
+    A('b1', t, 110.8, null, { x: 0, y: 380, dx: 24, dy: 0, din: .75 }); esq('b1', 1190);
+    A('b2', t, 111.3, null, { x: 0, y: 520, dx: 24, dy: 0, din: .75 }); esq('b2', 1190);
+    A('b3', t, 111.8, null, { x: 0, y: 660, dx: 24, dy: 0, din: .75 }); esq('b3', 1190);
+    const f = $('t13f'); f.style.opacity = pr(t, 112.15, .5, E.io); f.style.left = '960px'; f.style.top = '540px'; f.style.transform = 'translate(-50%,-50%)';
+    A('t13t', t, 112.3, null, { x: 960, y: 540, de: .96, dy: 16, din: 1.0 });
+  }
+
+}
+
+const T0 = (window.PARAMS && window.PARAMS.t0) || 0;
+window.DURACAO = (window.PARAMS && window.PARAMS.dur) || 10;
+window.quadro = t => desenha(T0 + t);
+window.pronto = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))]);
+function caber(id, max) {
+  const el = $(id); let fs = parseFloat(getComputedStyle(el).fontSize);
+  while (el.offsetWidth > max && fs > 18) { fs -= 1; el.style.fontSize = fs + 'px'; }
+}
+function ajustar() {
+  [['p1', 690], ['p2a', 630], ['p2b', 630], ['cta', 630], ['d4', 730], ['pl4', 740], ['y4', 700], ['q11a', 740], ['t7wm', 1500], ['t13t', 1500]].forEach(([id, m]) => caber(id, m));
+}
+ajustar();
+window.pronto = window.pronto.then(ajustar);
+desenha(0);
+</script>
+</body>
+</html>

@@ -83,9 +83,9 @@ function legenda(t) {
 }
 const TELA_SVG = `<defs><filter id="borda" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".45"/></filter>
   <mask id="furoM"><rect x="-60" y="-60" width="1200" height="2040" fill="#fff"/><path id="furoP" fill="#000" d=""/></mask></defs>
-  <g mask="url(#furoM)"><rect x="-60" y="-60" width="1200" height="2040" fill="#F4F5F7"/></g>
+  <g mask="url(#furoM)"><rect x="-60" y="-60" width="1200" height="2040" fill="#F9FAFB"/></g>
   <path id="telaBorda" fill="none" stroke="#fff" stroke-width="14" filter="url(#borda)" d=""/>
-  <path id="telaArco" fill="none" stroke="#0B121C" stroke-width="26" stroke-linecap="round" d=""/>`;
+  <path id="telaArco" fill="none" stroke="#1A212D" stroke-width="26" stroke-linecap="round" d=""/>`;
 $('#tela').innerHTML = TELA_SVG;
 
 /* marca famosa citada na fala (ex.: Amazon): o ícone pula sobre a modelo, o fundo dele se expande e vira a tela cheia */

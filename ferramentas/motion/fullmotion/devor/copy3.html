@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Devor — Copy 3 (a mesma habilidade de um corretor com décadas de mercado)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .cmp { display: flex; align-items: center; gap: 16px; height: 96px; border-bottom: 1.5px solid var(--linha); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+  .cmp .nm { width: 300px; font: 600 25px 'URB'; color: var(--texto); }
+  .cmp .bs { flex: 1; display: flex; flex-direction: column; gap: 9px; }
+  .cmp .bs span { display: block; height: 12px; border-radius: 6px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .cmp .bs i { display: block; height: 100%; border-radius: 6px; }
+  .cmp .bs .sr i { background: #878C91; } .cmp .bs .vc i { background: var(--roxo); }
+  .cmp .nt { width: 64px; text-align: right; font: 800 32px 'URB'; font-variant-numeric: tabular-nums; }
+  #leg1 { display: flex; gap: 12px; margin-top: 14px; margin-bottom: 6px; }
+  #app2 .corpo { height: 490px; }
+  #dias { display: flex; gap: 12px; margin-top: 14px; }
+  #dias span { flex: 1; height: 64px; border-radius: 14px; display: grid; place-items: center; font: 800 24px 'URB'; color: var(--cinza); background: rgba(255,255,255,.06); border: 1.5px solid var(--linha); }
+  #rel .hab { height: 76px; }
+  #rel .hab .nm2 { flex: 1; }
+  #rel .hab .br { width: 230px; }
+  #rel .tag { visibility: hidden; }
+  #melhora { border-left: 4px solid var(--laranja); border-radius: 6px 18px 18px 6px; margin-top: 18px; }
+  #melhora p { font: 600 26px/1.38 'URB'; color: var(--texto); margin-top: 8px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,95 → 4,95): você × corretor com décadas de mercado — suas barras chegam nas dele ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Relatório</span><span class="pill cinza">Mapa de desempenho</span></div>
+  <div class="corpo">
+    <div class="k">Mapa de desempenho</div>
+    <div id="leg1"><span class="pill roxo"><i></i>Você</span><span class="pill cinza" id="pSr"><i></i>Corretor sênior</span></div>
+    <div class="cmp"><span class="nm">Prospecção</span><div class="bs"><span class="sr"><i style="width:93%"></i></span><span class="vc"><i data-a="52" data-b="91"></i></span></div><span class="nt num">52</span></div>
+    <div class="cmp"><span class="nm">Negociação</span><div class="bs"><span class="sr"><i style="width:90%"></i></span><span class="vc"><i data-a="41" data-b="88"></i></span></div><span class="nt num">41</span></div>
+    <div class="cmp"><span class="nm">Fechamento &amp; objeções</span><div class="bs"><span class="sr"><i style="width:94%"></i></span><span class="vc"><i data-a="38" data-b="92"></i></span></div><span class="nt num">38</span></div>
+    <div class="cmp"><span class="nm">Follow-up</span><div class="bs"><span class="sr"><i style="width:89%"></i></span><span class="vc"><i data-a="47" data-b="87"></i></span></div><span class="nt num">47</span></div>
+    <div class="cmp" style="border-bottom:0"><span class="nm">Gestão das emoções</span><div class="bs"><span class="sr"><i style="width:95%"></i></span><span class="vc"><i data-a="55" data-b="93"></i></span></div><span class="nt num">55</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,05 → 9,2): experiência vem de repetição e treino (ilustração: degraus subindo, round a round) ═════ -->
+<div class="p card ins" id="ilu" style="left:540px;top:300px">
+  <div class="cabI">Sua experiência<span class="pill roxo num" id="pRep">0 rounds</span></div>
+  <svg width="892" height="220" viewBox="0 0 892 220" style="display:block;margin-top:8px">
+    <path d="M60 196 H832" stroke="rgba(255,255,255,.08)" stroke-width="3"/>
+    <path id="deg" d="M70 196 H250 V148 H440 V102 H630 V56 H820" stroke="#7758F1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <g id="m1"><circle cx="70" cy="196" r="18" fill="#131F22" stroke="#878C91" stroke-width="6"/><text class="cx" x="70" y="164" text-anchor="middle">Round 1</text></g>
+    <g id="m2"><circle cx="250" cy="148" r="18" fill="#131F22" stroke="#878C91" stroke-width="6"/><text class="cx" x="250" y="116" text-anchor="middle">Round 10</text></g>
+    <g id="m3"><circle cx="440" cy="102" r="18" fill="#131F22" stroke="#878C91" stroke-width="6"/><text class="cx" x="440" y="70" text-anchor="middle">Round 30</text></g>
+    <g id="m4"><circle cx="630" cy="56" r="18" fill="#131F22" stroke="#878C91" stroke-width="6"/><text class="cx" x="630" y="24" text-anchor="middle">Round 60</text></g>
+    <path id="ok4" d="M621 56 L628 63 L640 49" stroke="#7EE08A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (9,3 → 10,1): logo Devor ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (11,17 → 18,4, entra pelo Duolingo): treino diário → situação real → feedback em menos de 15 min ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Desafio Devor</span><span class="pill cinza num" id="pTimer">Treino diário</span></div>
+  <div class="abas"><div class="aba on">Início</div><div class="aba">Round</div><div class="aba" id="abaF">Feedback</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v0">
+      <div class="topo" style="align-items:center"><div class="k">Sequência</div><span class="pill cinza num" id="pSeq">11 dias seguidos</span></div>
+      <div id="dias"><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span></div>
+      <div class="ctx" id="ctx2" style="margin-top:24px"><div class="k">Desafio do dia · situação real</div><h4>Fernanda · 1º imóvel · MCMV</h4><p>Tem medo de não aprovar o financiamento.</p></div>
+      <div style="display:flex;justify-content:center;margin-top:22px"><div class="btn roxo" id="btnR" style="height:80px;font-size:28px">Começar round</div></div>
+    </div>
+    <div class="vista" id="v1">
+      <div class="chat">
+        <div class="bal c"><b>Cliente</b>E se o banco não aprovar meu financiamento?</div>
+        <div class="bal v">A gente faz a simulação antes, com o seu perfil. Posso fazer agora?</div>
+        <div class="bal c"><b>Cliente</b>Pode! Quanto ficaria a parcela?</div>
+        <div class="bal v">Com o seu perfil, em torno de R$ 1.150 por mês.</div>
+      </div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="topo" style="align-items:center"><div class="k">Feedback do round</div><span class="pill vivo num">Em 12 min</span></div>
+      <div class="hab" style="margin-top:10px"><span>Empatia com o cliente</span><span class="nt num">88</span></div>
+      <div class="hab"><span>Condução da conversa</span><span class="nt num">79</span></div>
+      <div class="bloco" id="melhora"><div class="k lar">O que precisa ser melhorado</div><p id="melP">Negociação: sustente o valor antes de falar em condição.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (19,4 → 25,3): diagnóstico com nota por habilidade — onde você trava e cada nota subindo ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="rel" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Relatório</span><span class="pill roxo num" id="pRd">Round 12</span></div>
+  <div class="corpo">
+    <div class="topo" style="align-items:center"><div class="k">Nota por habilidade</div><span class="pill cinza" id="pDia">Diagnóstico</span></div>
+    <div style="margin-top:8px">
+      <div class="hab"><span class="nm2">Prospecção</span><span class="br"><i></i></span><span class="tag v num">+2</span><span class="nt num" data-a="93" data-b="95">93</span></div>
+      <div class="hab"><span class="nm2">Negociação</span><span class="br"><i></i></span><span class="tag v num">+13</span><span class="nt num" data-a="67" data-b="80">67</span></div>
+      <div class="hab" id="hTr"><span class="nm2">Fechamento &amp; objeções</span><span class="br"><i></i></span><span class="tag v num">+22</span><span class="nt num" data-a="49" data-b="71">49</span></div>
+      <div class="hab"><span class="nm2">Follow-up</span><span class="br"><i></i></span><span class="tag v num">+12</span><span class="nt num" data-a="66" data-b="78">66</span></div>
+      <div class="hab"><span class="nm2">Gestão das emoções</span><span class="br"><i></i></span><span class="tag v num">+1</span><span class="nt num" data-a="95" data-b="96">95</span></div>
+      <div class="hab" style="border-bottom:0"><span class="nm2">Hábitos de alta performance</span><span class="br"><i></i></span><span class="tag v num">+8</span><span class="nt num" data-a="70" data-b="78">70</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (25,4 → 27,45): anos de experiência em meses de treino ═════ -->
+<div class="p card ins" id="anos" style="left:540px;top:300px">
+  <div class="cabI">Até vender como sênior<span class="pill cinza">Estimativa</span></div>
+  <div class="li"><span>Só com a prática do dia a dia</span><span class="pill cinza num" id="pAnos">Anos</span></div>
+  <div class="li"><span>Com treino diário na Devor</span><span class="pill cinza num" id="pMes">Meses</span></div>
+</div>
+
+<!-- ═════ CTA (27,5 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo.svg">
+  <div class="t"><span>O Duolingo das vendas</span>Comece a <em>treinar</em> hoje</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div><span id="estr"></span>Baixe agora</div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 29.28;
+const ROSTO = [540, 660];
+const FS = [[0.95, 4.62, true], [11.17, 18.4, false], [19.4, 25.3, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 23.95, ps: FM.criaConfete(7, 50, 760, 460, 520, 60, 0.7), rgb: [119, 88, 241] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+const ESTRELA = '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2 C12.9 8.6 15.4 11.1 22 12 C15.4 12.9 12.9 15.4 12 22 C11.1 15.4 8.6 12.9 2 12 C8.6 11.1 11.1 8.6 12 2 Z"/></svg>';
+$('#estr').innerHTML = ESTRELA;
+const cm = Q('#win .cmp'), ds = Q('#dias span'), rh = Q('#rel .hab'), an = Q('#anos .li');
+const ROXO = '119,88,241', VERM = '229,72,77', VERDE = '67,153,67';
+const marco = (id, t, t0) => { const g = $('#' + id), on = t >= t0; g.querySelector('circle').setAttribute('stroke', on ? '#A47CF3' : '#878C91');
+  g.querySelector('circle').setAttribute('fill', on ? '#7758F1' : '#131F22'); if (on) { const k = 1 + 0.25 * Math.sin(C((t - t0) / 0.35) * Math.PI);
+    g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center'; g.querySelector('circle').style.transformBox = 'fill-box'; g.querySelector('circle').style.transformOrigin = 'center'; g.querySelector('circle').style.transform = `scale(${k})`; } };
+
+const warp = WARP([[0, 3.12, 8.21], [5.09, 10.22, 20.86], [15.73, 21.08, 30.95], [25.6, 37.34, 39.68], [27.94, 39.86, 42.57]],
+  [[0, 3.12, 7.78], [4.66, 10.22, 19.98], [14.42, 21.14, 30.95], [24.23, 37.34, 39.68], [26.57, 39.86, 42.57]]);
+window.quadro = function (T) {
+  const t = warp(T);
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  marcaExpande(t, 'duolingo', 10.17);
+  tela(t);
+  camera(t, '#cam1', [[1.0, [540, 800], 0.92, 3, -3], [2.0, [cm[0], cm[2]], 1.04, 2, -1], [3.3, [cm[1], cm[3]], 1.06, 1, 2], [4.62, ['#leg1', cm[1]], 1.1, 0, 0]]);
+  camera(t, '#cam2', [[11.2, [540, 810], 0.92, 3, 3], [12.6, '#dias', 1.06, 2, 1, 0, 40], [13.6, '#ctx2', 1.08, 1, -2], [14.6, '#btnR', 1.06, 1, 2, 0, -120], [16.4, [540, 860], 1.04, -1, 1],
+    [17.4, '#abaF', 1.06, 1, -1, -200, 160], [18.4, '#melhora', 1.12, 0, 0]]);
+  camera(t, '#cam3', [[19.45, [540, 800], 0.92, 3, -3], [20.6, [rh[0], rh[2]], 1.04, 2, 1], [22.2, rh[2], 1.12, 1, -2], [23.9, [rh[1], rh[3]], 1.08, 1, 2], [25.3, [rh[1], rh[3]], 1.12, 0, 0]]);
+
+  /* ── FS1 · 0,95 → 4,95: suas barras alcançam as do corretor com décadas de mercado ── */
+  A($('#win'), t, 1.0, 4.52, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([Q('#win .k')[0], $('#leg1'), ...cm], t, 1.15, 0.08);
+  cm.forEach((c, k) => { const i = c.querySelector('.vc i'), a = +i.dataset.a, b = +i.dataset.b, q = E.cubicInOut(C((t - 1.34 - 0.12 * k) / 1.1)), v = Math.round(L(a, b, q));
+    i.style.width = v + '%'; c.querySelector('.nt').textContent = v; c.querySelector('.nt').style.color = q >= 1 ? '#A47CF3' : '#fff'; });
+  vira($('#pSr'), t, 3.78, '<i></i>Sênior · décadas de mercado', 'cinza');
+
+  /* ── inserção · 5,05 → 9,2: degraus — repetição e treino ── */
+  A($('#ilu'), t, 5.05, 9.2, { de: 0.86, dy: -60, dout: 0.25 });
+  tinta(t, 'deg', 7.73, 1.2);
+  [['m1', 7.73], ['m2', 8.05], ['m3', 8.39], ['m4', 8.93]].forEach(([id, t0]) => marco(id, t, t0));
+  $('#ok4').setAttribute('opacity', pr(t, 8.93, 0.2));
+  { const r = t < 7.73 ? 0 : t < 8.05 ? 1 : t < 8.39 ? 10 : t < 8.93 ? 30 : 60; const s = r + (r === 1 ? ' round' : ' rounds'); if ($('#pRep').textContent !== s) $('#pRep').textContent = s; if (t >= 7.73) pulsa($('#pRep'), t, [7.73, 8.05, 8.39, 8.93][[1, 10, 30, 60].indexOf(r)], 0.08); }
+
+  /* ── logo · 9,3 → 10,1 ── */
+  A($('#logoCard'), t, 9.3, 10.0, { de: 0.82, dy: -60, dout: 0.2 });
+
+  /* ── FS2 · 11,17 → 18,4: treino diário → situação real → feedback em 12 min ── */
+  A($('#app2'), t, 11.22, 18.3, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#app2 .aba'), [$('#v0'), $('#v1'), $('#v2')], [[14.45, 1], [17.38, 2]], $('#car2'));
+  cascata([Q('#v0 .topo')[0], $('#dias'), $('#ctx2'), $('#btnR').parentElement], t, 11.35, 0.1);
+  ds.forEach((d, k) => { const on = k < 5 || t >= 12.63 + 0.08 * (k - 5); d.style.background = on ? '#7758F1' : ''; d.style.color = on ? '#fff' : ''; d.style.borderColor = on ? '#7758F1' : '';
+    if (k >= 5 && on) pulsa(d, t, 12.63 + 0.08 * (k - 5), 0.12); });
+  vira($('#pSeq'), t, 12.79, '12 dias seguidos', 'roxo num');
+  acende($('#ctx2'), t, 13.35, '164,124,243', 0.0);
+  { const c = cursor($('#cur1'), t, 13.6, [980, 1480], t > 13.6 ? centro('#btnR') : [0, 0], 14.31, 14.9); $('#btnR').style.transform = `scale(${1 - 0.06 * c})`; }
+  cascata(Q('#v1 .bal'), t, 14.5, 0.1);
+  if (t >= 16.59) vira($('#pTimer'), t, 16.59, '✓ Concluído em 12 min', 'vivo num'); else if (t >= 14.45) { const s = Math.floor((t - 14.45) * 3.4); $('#pTimer').textContent = `Round · ${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; $('#pTimer').className = 'pill roxo num'; }
+  else { $('#pTimer').textContent = 'Treino diário'; $('#pTimer').className = 'pill cinza num'; }
+  cursor($('#cur2'), t, 16.7, [980, 1480], t > 16.7 ? centro('#abaF') : [0, 0], 17.3, 17.9);
+  cascata([...Q('#v2 .topo, #v2 .hab'), $('#melhora')], t, 17.45, 0.1);
+  acende($('#melhora'), t, 17.87, '242,163,58', 0.12); $('#melP').style.color = t >= 17.87 ? '#fff' : '';
+
+  /* ── FS3 · 19,4 → 25,3: nota por habilidade, onde trava, cada uma subindo ── */
+  A($('#rel'), t, 19.45, 25.2, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([Q('#rel .topo')[0], ...rh], t, 19.6, 0.08);
+  rh.forEach((h, k) => { const n = h.querySelector('.nt'), a = +n.dataset.a, b = +n.dataset.b;
+    const v = t < 23.89 ? a : Math.round(L(a, b, E.cubicInOut(C((t - 23.89 - 0.08 * k) / 1.2))));
+    n.textContent = v; h.querySelector('.br i').style.width = v + '%';
+    h.querySelector('.br i').style.background = (k === 2 && t >= 22.23 && t < 23.89) ? '#FF6B6B' : '';
+    const tg = h.querySelector('.tag'); tg.style.visibility = t >= 23.95 + 0.08 * k ? 'visible' : 'hidden'; });
+  if (t < 23.89) acende(rh[2], t, t >= 22.23 ? 22.23 : null, VERM, 0.16); else acende(rh[2], t, 23.89, VERDE, 0.18);
+  if (t >= 23.89) vira($('#pDia'), t, 23.89, '↑ Subindo', 'vivo'); else vira($('#pDia'), t, 22.23, 'Trava: fechamento', 'ruim');
+  { const r = t < 24.21 ? 12 : t < 25.11 ? 13 : 14; const s = 'Round ' + r; if ($('#pRd').textContent !== s) $('#pRd').textContent = s; if (t >= 24.21) pulsa($('#pRd'), t, r === 13 ? 24.21 : 25.11, 0.12); }
+
+  /* ── inserção · 25,4 → 27,45: anos → meses ── */
+  A($('#anos'), t, 25.4, 27.45, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(an, t, 25.5, 0.1, 12);
+  vira($('#pAnos'), t, 25.6, '10+ anos', 'ruim num'); acende(an[0], t, 25.6, VERM, 0.14);
+  vira($('#pMes'), t, 26.72, '6 meses', 'vivo num'); acende(an[1], t, 26.72, VERDE, 0.18);
+
+  /* ── CTA · 27,5 → fim ── */
+  A($('#cta'), t, 27.5, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur3'), t, 27.75, [1020, 760], t > 27.75 ? centro('#btnCta') : [0, 0], 28.32, 30.4); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    $('#btnCta').className = t >= 28.32 ? 'btn roxo' : 'btn';
+    const ciclo = ((t - 28.5) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 28.5 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

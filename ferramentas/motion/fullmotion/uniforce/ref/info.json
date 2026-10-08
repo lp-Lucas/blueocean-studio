@@ -1,0 +1,517 @@
+{
+ "cores": [
+  [
+   "bg rgba(0, 0, 0, 0)",
+   33468964.898362577
+  ],
+  [
+   "bg rgb(255, 255, 255)",
+   17843319.44189453
+  ],
+  [
+   "bg rgb(246, 247, 248)",
+   2274649.984375
+  ],
+  [
+   "bg rgb(243, 244, 246)",
+   1474731
+  ],
+  [
+   "bg rgb(235, 250, 235)",
+   35654.4765625
+  ],
+  [
+   "bg rgb(237, 244, 253)",
+   26214.8984375
+  ],
+  [
+   "bg rgba(43, 128, 233, 0.1)",
+   4380.59375
+  ],
+  [
+   "bg rgb(18, 31, 48)",
+   3460.078125
+  ],
+  [
+   "bg rgb(43, 128, 233)",
+   2687.5451562404633
+  ],
+  [
+   "bg rgb(214, 228, 245)",
+   2372.75
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.9)",
+   2304
+  ],
+  [
+   "bg rgb(253, 237, 237)",
+   1536
+  ],
+  [
+   "bg rgba(134, 71, 235, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(245, 159, 10, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(17, 186, 212, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(239, 67, 67, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(40, 208, 37, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(61, 139, 235, 0.18)",
+   1296
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.15)",
+   1296
+  ],
+  [
+   "bg rgb(0, 15, 31)",
+   576
+  ],
+  [
+   "tx rgb(0, 15, 31)",
+   52
+  ],
+  [
+   "tx rgb(46, 69, 96)",
+   46
+  ],
+  [
+   "tx rgb(79, 109, 146)",
+   27
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.65)",
+   21
+  ],
+  [
+   "tx rgb(255, 255, 255)",
+   20
+  ],
+  [
+   "tx rgb(43, 128, 233)",
+   20
+  ],
+  [
+   "tx rgb(134, 156, 182)",
+   18
+  ],
+  [
+   "tx rgb(186, 202, 222)",
+   14
+  ],
+  [
+   "tx rgba(255, 255, 255, 0.7)",
+   7
+  ],
+  [
+   "tx rgb(86, 243, 83)",
+   6
+  ]
+ ],
+ "fontes": [
+  [
+   "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif 700",
+   89
+  ],
+  [
+   "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif 400",
+   59
+  ],
+  [
+   "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif 600",
+   38
+  ],
+  [
+   "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif 500",
+   35
+  ],
+  [
+   "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif 900",
+   33
+  ]
+ ],
+ "imgs": [
+  [
+   "https://uniforce.com.br/assets/uniforce-logo-dark-BYKLruRH.png",
+   "Uniforce",
+   100
+  ],
+  [
+   "data:image/webp;base64,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",
+   "D-Kiros logo",
+   149
+  ],
+  [
+   "https://uniforce.com.br/assets/client-igp-fibra-DEbDHzl3.png",
+   "IGP Fibra logo",
+   40
+  ],
+  [
+   "https://uniforce.com.br/assets/client-agy-BxqH8bOf.svg",
+   "Agy Telecom logo",
+   104
+  ],
+  [
+   "https://uniforce.com.br/assets/client-unifibra-Bv4cNP3E.png",
+   "Unifibra Telecom logo",
+   50
+  ],
+  [
+   "https://uniforce.com.br/assets/client-circle-CREJTe1w.png",
+   "Cliente Uniforce logo",
+   36
+  ],
+  [
+   "https://uniforce.com.br/assets/client-fiberschool-Wt4axCVx.png",
+   "FiberSchool logo",
+   83
+  ],
+  [
+   "https://uniforce.com.br/assets/uniforce-logo-dark-BYKLruRH.png",
+   "Uniforce",
+   0
+  ],
+  [
+   "https://uniforce.com.br/assets/uniforce-logo-dark-BYKLruRH.png",
+   "Uniforce",
+   100
+  ]
+ ],
+ "btn": [
+  [
+   "Como funciona",
+   "rgba(0, 0, 0, 0)",
+   "rgb(46, 69, 96)",
+   "10px",
+   "Inter, -apple-system, BlinkMac",
+   "500"
+  ],
+  [
+   "Jornadas",
+   "rgba(0, 0, 0, 0)",
+   "rgb(46, 69, 96)",
+   "10px",
+   "Inter, -apple-system, BlinkMac",
+   "500"
+  ],
+  [
+   "Integrações",
+   "rgba(0, 0, 0, 0)",
+   "rgb(46, 69, 96)",
+   "10px",
+   "Inter, -apple-system, BlinkMac",
+   "500"
+  ],
+  [
+   "Resultados",
+   "rgba(0, 0, 0, 0)",
+   "rgb(46, 69, 96)",
+   "10px",
+   "Inter, -apple-system, BlinkMac",
+   "500"
+  ],
+  [
+   "Planos",
+   "rgba(0, 0, 0, 0)",
+   "rgb(46, 69, 96)",
+   "10px",
+   "Inter, -apple-system, BlinkMac",
+   "500"
+  ],
+  [
+   "Entrar",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Descobrir oportunidades",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Descobrir oportunidades na minha base",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver as jornadas",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Cobrança",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Onboarding",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "NPS",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Retenção",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Upgrade",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Indicações",
+   "rgb(246, 247, 248)",
+   "rgb(46, 69, 96)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "600"
+  ],
+  [
+   "Ver como as jornadas funcionam",
+   "rgb(255, 255, 255)",
+   "rgb(0, 15, 31)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Ver jornada",
+   "rgba(0, 0, 0, 0)",
+   "rgb(43, 128, 233)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Descobrir oportunidades na minha base",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Saiba mais sobre os planos",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "A Uniforce substitui meu ERP?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Preciso trocar meu WhatsApp ou canal de ",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Quanto tempo leva a implantação?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Preciso ativar todas as jornadas?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Como a Uniforce mede resultado?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "A Uniforce atende qualquer tamanho de Pr",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Como os dados são protegidos?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "O que meu time precisa fazer durante a i",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Prefere falar agora pelo WhatsApp(48) 99",
+   "rgba(0, 0, 0, 0)",
+   "rgb(0, 15, 31)",
+   "12px",
+   "Inter, -apple-system, BlinkMac",
+   "400"
+  ],
+  [
+   "Sim",
+   "rgb(255, 255, 255)",
+   "rgb(46, 69, 96)",
+   "12px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Não",
+   "rgb(255, 255, 255)",
+   "rgb(46, 69, 96)",
+   "12px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Continuar para o diagnóstico",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "9999px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "(48) 99622-1997",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.65)",
+   "12px",
+   "Inter, -apple-system, BlinkMac",
+   "400"
+  ],
+  [
+   "vendas@uniforce.com.br",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.65)",
+   "12px",
+   "Inter, -apple-system, BlinkMac",
+   "400"
+  ],
+  [
+   "Solução",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.55)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ],
+  [
+   "Jornadas",
+   "rgba(0, 0, 0, 0)",
+   "rgba(255, 255, 255, 0.55)",
+   "0px",
+   "Inter, -apple-system, BlinkMac",
+   "700"
+  ]
+ ],
+ "txt": "Como funciona\nJornadas\nIntegrações\nResultados\nPlanos\nEntrar\nDescobrir oportunidades\nPÓS-VENDA DE PERFORMANCE PARA PROVEDORES\nSua próxima receita já está na sua base.\n\nA Uniforce conecta os dados do seu Provedor e implementa jornadas automáticas de onboarding, cobrança, NPS, retenção, upgrades e indicações — da instalação à indicação, com a ação certa no momento certo.\n\nDescobrir oportunidades na minha base\nVer as jornadas\n\nPara Provedores com mais de 5.000 clientes · implantação assistida · integrado ao seu ERP\n\nJORNADA DO ASSINANTE\nCliente #4821 · plano 600 Mbps\nOnboarding\nCobrança\nNPS\nRetenção\nUpgrade\nIndicações\nMOMENTO\nAtivação concluída\nAÇÃO DA UNIFORCE\nBoas-vindas, orientação e checagem de experiência\nRESULTADO\nCliente começa melhor\nReceita recuperada\nReceita protegida\nNova receita gerada\nCONFIANÇA OPERACIONAL\n\nConfiado por provedores que já retêm clientes com análise preditiva\n\nPARCEIROS\nO problema não é falta de dados.\nÉ falta de continuidade.\n\nA instalação termina. A cobrança roda. O suporte atende. O NPS pergunta. Mas cada evento fica preso em um sistema e quase nunca gera a próxima ação. É aí que a receita começa a vazar.\n\nSEM UNIFORCE\ndados espalhados entre ERP, financeiro e atendimento\nações manuais e tardias\ncliente satisfeito nunca recebe pedido de indicação\noportunidade de upgrade passa despercebida\ninadimplência só é tratada quando já virou problema\nrisco aparece quando o cancelamento já foi pedido\nCOM UNIFORCE\ncada evento inicia uma jornada\na ação tem responsável, canal e prazo\na resposta do cliente atualiza o próximo passo\no resultado volta para o dashboard\n\nO ciclo é contínuo: evento do cliente → sinal capturado → ação executada → resultado medido.\n\nTrês resultados dentro da sua própria base.\n\nToda jornada da Uniforce existe para recuperar receita que está vazando, proteger a receita que está em risco ou gerar nova receita com quem já é seu cliente.\n\nRecuperar receita\n\nCobrança no momento certo, segunda via, Pix, negociação e acompanhamento do pagamento.\n\nCobrança\nProteger receita\n\nOnboarding, NPS e leitura de sinais de risco com ação antes do pedido de cancelamento.\n\nOnboarding\nNPS\nRetenção\nExpandir receita\n\nClientes elegíveis para upgrade e promotores ativados para gerar indicações.\n\nUpgrade\nIndicações\nVer como as jornadas funcionam\nA JORNADA COMPLETA\nUma venda não termina na instalação.\nEla começa ali.\n\nCada etapa tem um momento que a dispara, uma ação executada e um resultado medido. A resposta de uma jornada alimenta a próxima.\n\nETAPA 1\nOnboarding\nMOMENTO\nAtivação concluída\nAÇÃO\nBoas-vindas, orientação e checagem de experiência\nRESULTADO\nCliente começa melhor\nProteger receita\nVer jornada\nETAPA 2\nCobrança\nMOMENTO\nVencimento se aproxima ou atrasa\nAÇÃO\nRégua contextual com segunda via, Pix e negociação\nRESULTADO\nReceita recuperada\nRecuperar receita\nVer jornada\nETAPA 3\nNPS\nMOMENTO\nMomento relevante do relacionamento\nAÇÃO\nPesquisa, classificação e tratativa da resposta\nRESULTADO\nVoz do cliente vira ação\nProteger receita\nVer jornada\nETAPA 4\nRetenção\nMOMENTO\nSinais financeiros, técnicos ou relacionais\nAÇÃO\nPriorização, plano de ação e acompanhamento\nRESULTADO\nReceita protegida\nProteger receita\nVer jornada\nETAPA 5\nUpgrade\nMOMENTO\nCliente elegível\nAÇÃO\nOferta com contexto e acompanhamento do aceite\nRESULTADO\nReceita adicional na base\nExpandir receita\nVer jornada\nETAPA 6\nIndicações\nMOMENTO\nCliente satisfeito ou problema resolvido\nAÇÃO\nConvite, incentivo e acompanhamento da indicação\nRESULTADO\nNovos clientes vindos da base\nExpandir receita\nVer jornada\nRESULTADOS E ATRIBUIÇÃO\nResultado medido dentro da operação.\n\nA Uniforce acompanha o que aconteceu com cada carteira: quanto da inadimplência foi regularizado, quais clientes em risco foram tratados e quantas ações foram executadas ao longo das jornadas.\n\nINADIMPLÊNCIA REGULARIZADA\nR$ 3,1 milhões\n\nEm faturas vencidas pagas por clientes acompanhados pelas jornadas de cobrança.\n\nRECEITA ACOMPANHADA\nLTV ESTIMADO PRESERVADO\nR$ 5,4 milhões\n\nValor potencial de permanência dos clientes em risco tratados e mantidos na base.\n\nINDICADOR ESTIMADO\nAÇÕES EXECUTADAS\n2,3 milhões\n\nMensagens, pesquisas e tratativas registradas nas jornadas da Uniforce.\n\nATRIBUIÇÃO DIRETA\n\nResultados acumulados das operações acompanhadas pela Uniforce. Os números variam conforme tamanho da base, período, escopo implantado e critérios de atribuição.\n\nUNIFORCE NA MÍDIA\nA Uniforce em destaque\n\nVeja como estamos transformando o pós-venda dos provedores de internet.\n\nINTEGRAÇÕES\nSeus dados continuam onde estão.\nA jornada passa a conectá-los.\n\nERP, financeiro, chamados, canais e sinais operacionais entram em uma visão única do relacionamento com o assinante. Parte das integrações é nativa e parte é assistida pelo nosso time na implantação.\n\nCadastro e contrato\n\nquem é o cliente e o que ele assinou\n\nInstalação e ordens de serviço\n\nquando o serviço entrou em pé\n\nFinanceiro e cobrança\n\nvencimentos, atrasos e pagamentos\n\nAtendimento e chamados\n\nhistórico de atrito e reincidência\n\nNPS e conversas\n\na fala do cliente, não só a nota\n\nPlano e elegibilidade\n\nquem pode subir de plano ou indicar\n\nPLANOS\nUma solução completa de pós-venda.\nO investimento acompanha a sua base.\n\nPara Provedores com até 5.000 clientes ativos. Acima disso, o investimento cresce conforme o volume da base — sem custo oculto e sem surpresa no final do mês.\n\nTUDO INCLUÍDO\n\nProposta sob medida, definida no diagnóstico da sua base.\n\nAs seis jornadas de pós-venda em uma única solução\nIntegração com o ERP e com os canais da operação\nImplantação assistida pelo time Uniforce\nAcompanhamento de resultado por jornada\nDescobrir oportunidades na minha base\nSaiba mais sobre os planos\nO QUE DEFINE O INVESTIMENTO\n1\nTamanho da base\n\nquantos clientes ativos entram nas jornadas\n\n2\nEscopo de implantação\n\nquais jornadas entram primeiro em produção\n\n3\nIntegrações necessárias\n\no que precisa ser conectado e validado\n\nO próximo passo é o diagnóstico da base, não um checkout: o valor final é confirmado junto com o escopo de impla",
+ "title": "Pós-venda de performance para Provedores de internet · Uniforce · Uniforce"
+}

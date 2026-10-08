@@ -1,0 +1,106 @@
+/* identidade Mais Locações (maislocacoes.com): corpo do site claro — fundo das seções #EEEEEE, cartões brancos com sombra
+   suave e raio 15 px, títulos navy #01235C, texto #5B5B5B, botão verde-limão #B1E83A com texto navy (raio 8 px), topo/rodapé
+   navy #061333; o sistema (print do hero) tem barra navy, mapa claro e pinos navy. Fonte DM Sans (a do site). Receita 15. */
+@font-face { font-family: 'DMS'; font-weight: 100 1000; src: url('fonts/DMSans.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #EEEEEE; --card: #FFFFFF; --card2: #F6F7F9; --tinta: #01235C; --texto: #3E4656; --cinza: #7A8294; --linha: rgba(1,35,92,.10);
+        --navy: #01235C; --navy2: #061333; --lima: #B1E83A; --limac: rgba(177,232,58,.22); --azul: #0B3A9E; --azulc: rgba(11,58,158,.08);
+        --verde: #15803D; --verdec: #E7F5EC; --verm: #C9372A; --vermc: #FCEBE9; --mapa: #EEF1EA; --rua: #FFFFFF; }
+html, body { background: transparent !important; }
+body { font-family: 'DMS', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border-radius: 22px; box-shadow: 0 18px 44px rgba(1,35,92,.16); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes */
+.k { font: 600 21px 'DMS'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'DMS'; white-space: nowrap; }
+.pill i { width: 11px; height: 11px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.azul { background: var(--azulc); color: var(--azul); }
+.pill.lima { background: var(--lima); color: var(--navy); }
+.pill.cinza { background: #EEF0F4; color: #5B6274; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 14px; height: 84px; padding: 0 40px; border-radius: 12px; background: var(--lima); color: var(--navy);
+       font: 700 30px 'DMS'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn svg { width: 28px; }
+.btn.ok { background: var(--verde); color: #fff; }
+
+/* inserções (faixa de cima, y 120–470) */
+.ins { width: 960px; padding: 28px 34px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 700 32px 'DMS'; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 72px; border-top: 1.5px solid var(--linha); font: 500 27px 'DMS'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 14px; }
+.li .pill, .li b { margin-left: auto; }
+.li b { font: 700 27px 'DMS'; color: var(--tinta); }
+#logoCard { padding: 40px 64px; display: flex; align-items: center; justify-content: center; }
+#logoCard img { height: 96px; display: block; }
+
+/* janela do sistema (telas cheias) — barra navy como o sistema do site */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 30px; background: var(--navy); position: relative; z-index: 2; }
+.app .bar img { height: 40px; } .app .bar .tt { font: 600 24px 'DMS'; color: #fff; opacity: .9; }
+.app .bar .pill { margin-left: auto; }
+.app .bar .pill.cinza { background: rgba(255,255,255,.12); color: #fff; }
+.abas { height: 78px; display: flex; align-items: flex-end; gap: 8px; padding: 0 22px; background: var(--card2); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { height: 62px; display: flex; align-items: center; padding: 0 26px; border-radius: 14px 14px 0 0; font: 500 24px 'DMS'; color: var(--cinza); white-space: nowrap; }
+.aba.on { background: var(--card); color: var(--tinta); font-weight: 700; box-shadow: inset 0 4px 0 var(--lima); }
+.carrega { position: absolute; left: 0; height: 4px; background: var(--lima); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: var(--card); }
+.app h3 { font: 700 36px 'DMS'; } .app h3 + p { font: 400 25px 'DMS'; color: var(--cinza); margin-top: 6px; }
+.topo { display: flex; align-items: flex-start; } .topo .pill { margin-left: auto; margin-top: 4px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+.row { display: flex; align-items: center; gap: 16px; height: 84px; border-bottom: 1.5px solid var(--linha); font: 500 26px 'DMS'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.row .pill { margin-left: auto; }
+.row .id { font: 700 22px 'DMS'; color: var(--azul); width: 104px; flex: none; }
+.row .nm { font: 600 26px 'DMS'; color: var(--tinta); } .row .nm span { display: block; font: 400 21px 'DMS'; color: var(--cinza); margin-top: 2px; }
+
+/* mapa (recriado do sistema: fundo claro, ruas brancas, pinos navy) */
+.mapa { position: relative; overflow: hidden; border-radius: 16px; background: var(--mapa); }
+.mapa svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pino { position: absolute; width: 44px; height: 56px; margin: -54px 0 0 -22px; opacity: 0; transform-origin: 50% 100%; }
+.pino svg { width: 44px; height: 56px; display: block; }
+.pino b { position: absolute; left: 0; right: 0; top: 7px; text-align: center; font: 800 20px 'DMS'; color: #fff; }
+.rot { position: absolute; transform: translate(-50%, 8px); font: 700 18px 'DMS'; color: var(--navy); background: #fff; border-radius: 8px; padding: 3px 8px; white-space: nowrap; box-shadow: 0 4px 10px rgba(1,35,92,.15); opacity: 0; }
+
+/* celular (app do site: topo navy com logo) */
+.cel { width: 560px; height: 1040px; border-radius: 64px; background: #0B0F1A; padding: 16px; box-shadow: 0 30px 70px rgba(1,35,92,.28); }
+.cel .tela2 { position: relative; width: 100%; height: 100%; border-radius: 50px; overflow: hidden; background: var(--fundo); }
+.cel .topoC { height: 168px; background: var(--navy); display: flex; flex-direction: column; justify-content: flex-end; padding: 0 30px 22px; gap: 10px; }
+.cel .topoC img { height: 42px; align-self: flex-start; }
+.cel .topoC .tt { font: 600 22px 'DMS'; color: #fff; opacity: .85; display: flex; align-items: center; }
+.cel .topoC .tt .pill { margin-left: auto; height: 38px; font-size: 19px; }
+.notif { position: absolute; left: 18px; right: 18px; top: 22px; border-radius: 26px; background: #fff; box-shadow: 0 14px 34px rgba(1,35,92,.28);
+         padding: 20px 22px; display: flex; gap: 16px; align-items: center; z-index: 5; opacity: 0; }
+.notif .ic { width: 58px; height: 58px; border-radius: 14px; background: var(--navy); display: grid; place-items: center; flex: none; }
+.notif .ic img { width: 44px; }
+.notif .tx { font: 500 21px/1.25 'DMS'; color: var(--texto); } .notif .tx b { display: block; font: 700 22px 'DMS'; color: var(--tinta); margin-bottom: 2px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 5px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* CTA (navy do topo/rodapé do site, logo original, botão verde-limão) */
+#cta { width: 960px; padding: 40px 40px; display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--navy2); box-shadow: 0 18px 44px rgba(0,0,0,.35); }
+#cta .lgc { height: 70px; margin-bottom: 22px; }
+#cta .t { font: 700 40px/1.15 'DMS'; color: #fff; } #cta .t span { color: var(--lima); font: 600 21px 'DMS'; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 12px; }
+#btnCta { margin-top: 26px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); left: -200px; }
+
+/* ícone de marca famosa */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }
+.wa { width: 64px; height: 64px; border-radius: 16px; background: #25D366; display: grid; place-items: center; flex: none; }
+.wa img { width: 40px; filter: brightness(0) invert(1); }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }

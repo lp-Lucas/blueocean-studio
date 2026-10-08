@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Devor — Copy 2 (aumente sua taxa de conversão com 20 minutos de treino por dia)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #graf { padding: 24px 28px 18px; }
+  #graf .topo h3 { font-size: 30px; }
+  #graf .vl { margin-left: auto; font: 800 52px 'URB'; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
+  #graf svg { display: block; margin-top: 14px; }
+  #dias { display: flex; gap: 12px; margin-left: auto; }
+  #dias span { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font: 800 22px 'URB'; color: var(--cinza); background: rgba(255,255,255,.06); border: 1.5px solid var(--linha); }
+  #win .li:first-of-type { margin-top: 18px; }
+  #win .li { height: 84px; }
+  #app2 .corpo { height: 560px; }
+  #trilha .li .pill { min-width: 150px; justify-content: center; }
+  #curso .pill { position: relative; }
+  #cta .t em { font-style: normal; color: var(--roxoc); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,95 → 5,12): Início do app — a conversão sobe com 20 min de treino por dia (ilustração: linha subindo) ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Início</span><span class="pill cinza">Seu desempenho</span></div>
+  <div class="corpo">
+    <div class="bloco" id="graf">
+      <div class="topo" style="align-items:center"><div><div class="k">Taxa de conversão</div><h3 style="margin-top:4px">Visitas que viram venda</h3></div><span class="vl" id="vConv">8%</span></div>
+      <svg width="836" height="230" viewBox="0 0 836 230">
+        <path d="M10 60 H826 M10 120 H826 M10 180 H826" stroke="rgba(255,255,255,.07)" stroke-width="2"/>
+        <path id="antes" d="M20 190 L150 186 L280 192 L410 188 L540 190 L670 187 L800 189" stroke="#878C91" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 14" fill="none"/>
+        <path id="sobe" d="M20 190 L150 178 L280 172 L410 140 L540 118 L670 78 L800 40" stroke="#7758F1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle id="ponta" cx="800" cy="40" r="11" fill="#A47CF3"/>
+        <g class="cx" style="font-size:20px"><text x="20" y="226">sem 1</text><text x="400" y="226">sem 4</text><text x="760" y="226">sem 8</text></g>
+      </svg>
+    </div>
+    <div class="li" id="lMin"><span>Treino de venda por dia</span><span class="pill cinza num" id="pMin">0 min</span></div>
+    <div class="li" id="lDias"><span>Esta semana</span><div id="dias"><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,2 → 8,35): abre o app e já entra em round ═════ -->
+<div class="p card ins" id="abre" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/logo.svg" style="height:40px"><span class="pill cinza" id="pApp">App</span></div>
+  <div class="li"><span>Round de hoje · objeção de preço</span><span class="pill cheio" id="pEnt">Entrar no round ›</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (8,45 → 14,2): o que você aprende nos rounds ═════ -->
+<div class="p card ins" id="trilha" style="left:540px;top:300px">
+  <div class="cabI">Sua trilha<span class="pill roxo">Rounds de hoje</span></div>
+  <div class="li"><span>Quebrar objeções</span><span class="pill cinza">Round 1</span></div>
+  <div class="li"><span>Conduzir a conversa</span><span class="pill cinza">Round 2</span></div>
+  <div class="li"><span>Onde a sua venda trava</span><span class="pill cinza">Diagnóstico</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (14,3 → 20,55): cada round = situação real, feedback na hora e nota por habilidade ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Desafio Devor</span><span class="pill vivo"><i></i>Round 3</span></div>
+  <div class="abas"><div class="aba on">Atendimento</div><div class="aba" id="abaF">Feedback</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v1">
+      <div class="ctx" id="ctx2"><div class="k">Situação real</div><h4>Carlos · investidor · 2º imóvel</h4><p>Quer saber se o bairro valoriza antes de fechar.</p></div>
+      <div class="chat" style="margin-top:22px">
+        <div class="bal c"><b>Cliente</b>Esse bairro vai valorizar mesmo?</div>
+        <div class="bal v" id="bv2">Nos últimos 3 anos, a região subiu 18%.</div>
+        <div class="bal c" id="bc2"><b>Cliente</b>E se eu esperar mais um pouco?</div>
+      </div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="k">Feedback · na hora</div>
+      <div style="margin-top:10px">
+        <div class="hab"><span>Quebra de objeções</span><span class="tag v num">+6</span><span class="nt num" id="n1">74</span></div>
+        <div class="hab"><span>Condução da conversa</span><span class="tag v num">+4</span><span class="nt num" id="n2">81</span></div>
+        <div class="hab" id="hFe"><span>Fechamento</span><span class="tag r num">−3</span><span class="nt num" id="n3">63</span></div>
+      </div>
+      <div class="bloco" style="margin-top:18px"><div class="k roxo">Próximo passo</div><p style="font:600 26px/1.35 'URB';color:var(--texto);margin-top:8px">Feche com data e critério de decisão.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (20,6 → 23,8): sem videoaula, sem curso de 6 horas ═════ -->
+<div class="p card ins" id="curso" style="left:540px;top:300px">
+  <div class="cabI">Curso de vendas<span class="pill cinza num" id="pCur">7% concluído</span></div>
+  <div class="li" id="lv"><span>Videoaula · módulo 1 de 24</span><span class="pill cinza num">48 min</span></div>
+  <div class="li" id="lc"><span>Curso completo</span><span class="pill cinza num">6 horas</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (23,85 → 27,6): treino de verdade, na prática, no tempo curto que você tem ═════ -->
+<div class="p card ins" id="hoje" style="left:540px;top:300px">
+  <div class="cabI">Treino Devor<span class="pill cinza">Hoje</span></div>
+  <div class="li"><span>Round com cliente simulado</span><span class="pill cinza" id="pPra">Atendimento</span></div>
+  <div class="li"><span>Tempo de treino</span><span class="pill cinza num" id="pTmp">0 min</span></div>
+</div>
+
+<!-- ═════ CTA (27,7 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo.svg">
+  <div class="t"><span>20 minutos de treino por dia</span>Aumente sua <em>conversão</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div><span id="estr"></span>Baixe agora</div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 29.28;
+const ROSTO = [540, 660];
+const FS = [[0.95, 5.12, true], [15.6, 20.55, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 2.3, ps: FM.criaConfete(5, 50, 700, 420, 600, 60, 0.7), rgb: [119, 88, 241] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+const ESTRELA = '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2 C12.9 8.6 15.4 11.1 22 12 C15.4 12.9 12.9 15.4 12 22 C11.1 15.4 8.6 12.9 2 12 C8.6 11.1 11.1 8.6 12 2 Z"/></svg>';
+$('#estr').innerHTML = ESTRELA;
+const ds = Q('#dias span'), tr = Q('#trilha .li'), hb = Q('#app2 .hab'), hj = Q('#hoje .li');
+const ROXO = '119,88,241', VERM = '229,72,77', VERDE = '67,153,67';
+const rC = riscar('lv'), rC2 = riscar('lc');
+
+const warp = WARP([[0, 4.88, 10.55], [5.67, 13.58, 16.43], [8.52, 18.5, 37.78], [27.8, 39.62, 42.85]],
+  [[0, 4.88, 10.55], [5.67, 13.58, 16.43], [8.52, 18.5, 22.93], [12.95, 23.42, 24.36], [13.89, 25.62, 37.78], [26.05, 39.62, 42.85]]);
+window.quadro = function (T) {
+  const t = warp(T);
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.0, [540, 800], 0.92, 3, -3], [2.2, '#graf', 1.04, 2, -1], [3.4, '#lMin', 1.1, 1, 2, 0, -60], [5.12, '#lDias', 1.12, 0, 0, 0, -60]]);
+  camera(t, '#cam2', [[15.65, [540, 810], 0.92, 3, 3], [16.5, '#ctx2', 1.04, 2, 1], [18.3, '#abaF', 1.04, 1, -2, 200, 140], [19.6, hb, 1.1, 1, 2], [20.55, hb, 1.14, 0, 0]]);
+
+  /* ── FS1 · 0,95 → 5,12: a conversão sobe (linha subindo), 20 min por dia ── */
+  A($('#win'), t, 1.0, 5.02, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#graf'), $('#lMin'), $('#lDias')], t, 1.15, 0.1);
+  tinta(t, 'sobe', 1.02, 1.3);
+  $('#ponta').style.opacity = pr(t, 2.2, 0.2);
+  $('#antes').style.opacity = 1 - 0.6 * pr(t, 1.02, 0.6);
+  { const v = t < 1.02 ? 8 : Math.round(L(8, 14, E.cubicOut(C((t - 1.02) / 1.3)))); $('#vConv').textContent = v + '%'; $('#vConv').style.color = t >= 2.24 ? '#7EE08A' : '#fff';
+    if (t >= 2.24) pulsa($('#vConv'), t, 2.24, 0.1); }
+  if (t >= 3.02) { conta($('#pMin'), t, 3.02, 0.5, 20, x => Math.round(x) + ' min'); $('#pMin').className = 'pill cheio num'; acende($('#lMin'), t, 3.02, ROXO, 0.14); }
+  else { $('#pMin').textContent = '0 min'; $('#pMin').className = 'pill cinza num'; acende($('#lMin'), t, null); }
+  ds.forEach((d, k) => { const on = t >= 4.86 + 0.06 * k; d.style.background = on ? '#7758F1' : ''; d.style.color = on ? '#fff' : ''; d.style.borderColor = on ? '#7758F1' : ''; if (on) pulsa(d, t, 4.86 + 0.06 * k, 0.12); });
+
+  /* ── inserção · 5,2 → 8,35: abre o app e entra no round ── */
+  A($('#abre'), t, 5.2, 8.35, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#abre .li'), t, 5.3, 0.1, 12);
+  vira($('#pApp'), t, 6.53, 'App aberto', 'roxo');
+  { const c = cursor($('#cur1'), t, 6.6, [1000, 560], t > 6.6 ? centro('#pEnt') : [0, 0], 7.43, 8.1); $('#pEnt').style.transform = `scale(${1 - 0.06 * c})`;
+    vira($('#pEnt'), t, 7.5, '✓ Round iniciado', 'vivo'); acende(Q('#abre .li')[0], t, 7.5, VERDE, 0.18); }
+
+  /* ── inserção · 8,45 → 14,2: quebrar objeções, conduzir, onde trava ── */
+  A($('#trilha'), t, 8.45, 14.2, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(tr, t, 8.55, 0.1, 12);
+  [[9.16, 'Round 1'], [10.56, 'Round 2'], [12.94, 'Diagnóstico']].forEach(([t0, tx], k) => { vira(tr[k].querySelector('.pill'), t, t0, tx, 'cheio'); acende(tr[k], t, t0, ROXO, 0.14); });
+
+  /* ── FS2 · 14,3 → 20,55: round real → feedback na hora → nota por habilidade ── */
+  A($('#app2'), t, 15.65, 20.45, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#app2 .aba'), [$('#v1'), $('#v2')], [[18.66, 1]], $('#car2'));
+  cascata(Q('#v1 .ctx, #v1 .bal'), t, 15.8, 0.12);
+  acende($('#ctx2'), t, 16.6, '164,124,243', 0.0);
+  cursor($('#cur2'), t, 17.7, [960, 1460], t > 17.7 ? centro('#abaF') : [0, 0], 18.55, 19.2);
+  cascata([...hb, Q('#v2 .bloco')[0]], t, 18.8, 0.12);
+  [74, 81, 63].forEach((v, k) => conta($('#n' + (k + 1)), t, 18.8 + 0.12 * k, 0.7, v));
+  hb.forEach((h, k) => acende(h, t, 19.68 + 0.12 * k, k === 2 ? VERM : ROXO, 0.14));
+
+  /* ── inserção · 20,6 → 23,8: sem videoaula, sem curso de 6 horas ── */
+  A($('#curso'), t, 20.6, 23.8, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#curso .li'), t, 20.7, 0.1, 12);
+  rC(t, 20.94); rC2(t, 22.38);
+  vira($('#pCur'), t, 23.44, 'Parado em 7%', 'ruim num');
+
+  /* ── inserção · 23,85 → 27,6: na prática, no tempo curto ── */
+  A($('#hoje'), t, 23.85, 27.6, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(hj, t, 23.95, 0.1, 12);
+  vira($('#pPra'), t, 25.3, '✓ Na prática', 'vivo'); acende(hj[0], t, 25.3, VERDE, 0.18);
+  if (t >= 26.14) { conta($('#pTmp'), t, 26.14, 0.6, 20, x => Math.round(x) + ' min'); $('#pTmp').className = 'pill vivo num'; acende(hj[1], t, 26.14, VERDE, 0.18); }
+  else { $('#pTmp').textContent = '0 min'; $('#pTmp').className = 'pill cinza num'; acende(hj[1], t, null); }
+
+  /* ── CTA · 27,7 → fim ── */
+  A($('#cta'), t, 27.7, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur3'), t, 27.95, [1020, 760], t > 27.95 ? centro('#btnCta') : [0, 0], 28.44, 30.7); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    $('#btnCta').className = t >= 28.44 ? 'btn roxo' : 'btn';
+    const ciclo = ((t - 28.6) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 28.6 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

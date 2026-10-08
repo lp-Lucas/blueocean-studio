@@ -10,6 +10,7 @@ opções (padrão = comportamento antigo; a receita 15 manda usar --fino):
   --fim S           folga depois da última voz de cada trecho (0.1)
   --cauda S         folga depois da última palavra do VÍDEO (= --fim): o vídeo não acaba colado na fala
   --zoom pausas|tomadas   zoom 1,12 alternado em todo pedaço (pausas, padrão) ou só quando muda de trecho/tomada
+  --minpeca S       pedaço menor que S (ex.: 1.0) junta com o vizinho da mesma tomada (sem "pisca" de zoom)
 """
 import sys, json, wave, subprocess, os
 import numpy as np
@@ -22,8 +23,11 @@ if fino: args.remove('--fino')
 BORDA = float(opt('--borda', -46 if fino else -36)); MIN = float(opt('--pausa', 0.45 if fino else 0.28))
 RESP = float(opt('--respiro', 0.14 if fino else 0.1)); FIM = float(opt('--fim', 0.25 if fino else 0.1))
 CAUDA = float(opt('--cauda', 0.55 if fino else FIM)); ZOOM = opt('--zoom', 'pausas')
+MINP = float(opt('--minpeca', 0.1))
 proj, mid, comp, saida = args[:4]
-keep = [tuple(map(float, r.split('-'))) for r in args[4:]]
+# "a-b!" = fim travado em b (sem a folga --fim): para tomada boa colada na próxima tentativa
+trava = [r.endswith('!') for r in args[4:]]
+keep = [tuple(map(float, r.rstrip('!').split('-'))) for r in args[4:]]
 P = json.load(open(os.path.join(proj, 'projeto.json'), encoding='utf8'))
 arq = P['midias'][mid]['arquivo']
 wav = os.path.join(proj, 'cache', f'{mid}-16k.wav')
@@ -41,7 +45,7 @@ for r, (a, b) in enumerate(keep):
     while i0 < i1 and not vozb[i0]: i0 += 1         # apara silêncio da borda
     while i1 > i0 and not vozb[i1 - 1]: i1 -= 1
     ult = r == len(keep) - 1
-    a, b = max(0, i0 / 50 - 0.08), i1 / 50 + (CAUDA if ult else FIM)
+    a, b = max(0, i0 / 50 - 0.08), (b if trava[r] else i1 / 50 + (CAUDA if ult else FIM))
     cur, j = a, i0
     while j < i1:
         if not voz[j]:
@@ -56,6 +60,15 @@ out = []
 for p in pecas:
     if out and p[1] - p[0] < 0.1: out[-1] = (out[-1][0], p[1], out[-1][2])
     else: out.append(p)
+# pedaço curto (< MINP s, ex.: "Na…" antes de uma pausa) com zoom alternado vira um "pisca": junta com o vizinho da
+# mesma tomada e devolve a pausa natural entre eles
+k = 0
+while k < len(out):
+    a, b, r = out[k]
+    if b - a < MINP and len(out) > 1:
+        if k + 1 < len(out) and out[k + 1][2] == r: out[k:k + 2] = [(a, out[k + 1][1], r)]; continue
+        if k > 0 and out[k - 1][2] == r: out[k - 1:k + 1] = [(out[k - 1][0], b, r)]; k -= 1; continue
+    k += 1
 T = json.load(open(os.path.join(proj, 'transcricoes', f'{mid}.json'), encoding='utf8'))
 C = json.load(open(os.path.join(proj, 'composicoes', f'{comp}.json'), encoding='utf8'))
 itens, pal, lin = [], [], 0.0

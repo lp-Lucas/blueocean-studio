@@ -1,0 +1,113 @@
+/* identidade HD Tecnologia (hdtecnologia.com.br — produto: Lírio ERP): site CLARO — fundo #F9F9F9 / faixas #EFEFEF, cartões
+   brancos raio 15–20, títulos em Kanit pesado #333333, texto Poppins #666666 / #7A7A7A, divisórias #E8E8E8, destaque LARANJA
+   #FF4A00 (botão do site: retângulo laranja, texto branco, raio 4–6, hover #C03800), vermelho do site #CB3030.
+   Vocabulário do site: "Dashboard de dados", "Controle de vendas", "Controle de estoque", "Emissão de NF-e", indicadores (KPIs)
+   com o destaque numa caixa laranja (+2,000), lista com chevron laranja ». Símbolo HD (4 cores) no lugar do logo. Receita 15. */
+@font-face { font-family: 'Kanit'; font-weight: 500; src: url('fonts/Kanit-500.woff2'); }
+@font-face { font-family: 'Kanit'; font-weight: 600; src: url('fonts/Kanit-600.woff2'); }
+@font-face { font-family: 'Kanit'; font-weight: 700; src: url('fonts/Kanit-700.woff2'); }
+@font-face { font-family: 'Kanit'; font-weight: 800; src: url('fonts/Kanit-800.woff2'); }
+@font-face { font-family: 'Pop'; font-weight: 400; src: url('fonts/Poppins-400.woff2'); }
+@font-face { font-family: 'Pop'; font-weight: 500; src: url('fonts/Poppins-500.woff2'); }
+@font-face { font-family: 'Pop'; font-weight: 600; src: url('fonts/Poppins-600.woff2'); }
+@font-face { font-family: 'Pop'; font-weight: 700; src: url('fonts/Poppins-700.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #EFEFEF; --card: #FFFFFF; --card2: #F9F9F9; --tinta: #333333; --texto: #666666; --cinza: #7A7A7A; --linha: #E8E8E8;
+        --lar: #FF4A00; --larE: #C03800; --larc: rgba(255,74,0,.09);
+        --verde: #15803D; --verdec: #E7F5EC; --verm: #CB3030; --vermc: #FBEAEA; }
+html, body { background: transparent !important; }
+body { font-family: 'Pop', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border-radius: 20px; box-shadow: 0 18px 44px rgba(0,0,0,.16); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes */
+.k { font: 600 20px 'Pop'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 21px 'Pop'; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pill i { width: 11px; height: 11px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.lar { background: var(--larc); color: var(--lar); }
+.pill.cheia { background: var(--lar); color: #fff; }
+.pill.cinza { background: #F1F1F1; color: #6B6B6B; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 88px; padding: 0 30px 0 44px; border-radius: 6px;
+       background: var(--lar); color: #fff; font: 600 30px 'Pop'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn .bo { width: 34px; height: 34px; display: grid; place-items: center; }
+.btn svg { width: 30px; }
+
+/* inserções (faixa de cima, y 120–420: a cabeça começa em y ≈ 435) */
+.ins { width: 960px; padding: 26px 34px 24px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 600 32px 'Kanit'; color: var(--tinta); height: 46px; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 66px; border-top: 1.5px solid var(--linha); font: 500 26px 'Pop'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 14px; }
+.li .pill, .li > b { margin-left: auto; }
+.li > b { font: 600 27px 'Pop'; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.li .ch { color: var(--lar); font: 700 26px 'Pop'; margin-right: -6px; }
+#logoCard { padding: 34px 60px; display: flex; align-items: center; justify-content: center; gap: 22px; }
+.marca { display: flex; align-items: center; gap: 18px; }
+.marca img { height: 84px; display: block; }
+.marca b { font: 800 66px/1 'Kanit'; color: var(--tinta); letter-spacing: -0.01em; }
+.marca b span { color: var(--lar); }
+
+/* janela do Lírio ERP (telas cheias) — barra branca com o símbolo HD, abas com sublinhado laranja */
+.app { width: 960px; overflow: hidden; border-radius: 20px; }
+.app .bar { height: 92px; display: flex; align-items: center; gap: 16px; padding: 0 30px; background: #fff; border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.app .bar img { height: 46px; } .app .bar .nm { font: 800 32px 'Kanit'; color: var(--tinta); }
+.app .bar .tt { font: 500 23px 'Pop'; color: var(--cinza); padding-left: 16px; border-left: 1.5px solid var(--linha); }
+.app .bar .pill { margin-left: auto; }
+.abas { height: 76px; display: flex; align-items: stretch; gap: 4px; padding: 0 22px; background: var(--card2); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { display: flex; align-items: center; padding: 0 22px; font: 600 23px 'Pop'; color: var(--cinza); white-space: nowrap; }
+.aba.on { color: var(--tinta); box-shadow: inset 0 -5px 0 var(--lar); background: #fff; }
+.carrega { position: absolute; left: 0; bottom: -1.5px; height: 4px; background: var(--lar); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 28px 34px 32px; background: var(--card); }
+.app h3 { font: 600 36px 'Kanit'; color: var(--tinta); } .app h3 + p { font: 400 23px 'Pop'; color: var(--cinza); margin-top: 2px; }
+.topo { display: flex; align-items: flex-start; } .topo .pill { margin-left: auto; margin-top: 4px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 28px; }
+
+/* linhas de tabela/lista */
+.row { display: flex; align-items: center; gap: 16px; height: 84px; border-bottom: 1.5px solid var(--linha); font: 500 25px 'Pop'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.row .pill, .row > b { margin-left: auto; }
+.row > b { font: 600 26px 'Pop'; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.row .nm { font: 600 25px 'Pop'; color: var(--tinta); } .row .nm span { display: block; font: 400 20px 'Pop'; color: var(--cinza); margin-top: 1px; }
+.tab { width: 100%; border-collapse: collapse; margin-top: 14px; }
+.tab th { font: 600 18px 'Pop'; letter-spacing: .06em; text-transform: uppercase; color: var(--cinza); text-align: right; padding: 0 10px 12px; } .tab th:first-child { text-align: left; }
+.tab td { height: 78px; border-top: 1.5px solid var(--linha); font: 500 24px 'Pop'; color: var(--texto); text-align: right; padding: 0 10px; font-variant-numeric: tabular-nums; }
+.tab td:first-child { text-align: left; font-weight: 600; color: var(--tinta); }
+.tab td .pill { height: 38px; font-size: 19px; padding: 0 12px; }
+
+/* KPIs no estilo dos indicadores do site (o destaque vai na caixa laranja) */
+.kpis { display: flex; gap: 14px; }
+.kpi { flex: 1; background: #fff; border: 1.5px solid var(--linha); border-radius: 15px; padding: 16px 20px; }
+.kpi b { display: block; font: 600 40px 'Kanit'; color: var(--tinta); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kpi span { font: 500 19px 'Pop'; color: var(--cinza); }
+.kpi.on { background: var(--lar); border-color: var(--lar); } .kpi.on b, .kpi.on span { color: #fff; }
+
+/* campo de busca */
+.campo { height: 76px; border: 1.5px solid #D7D7D7; border-radius: 8px; display: flex; align-items: center; gap: 14px; padding: 0 22px; font: 500 26px 'Pop'; color: var(--tinta); }
+.campo svg { width: 30px; flex: none; }
+.campo .cr { width: 2px; height: 32px; background: var(--tinta); }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+
+/* CTA (cartão branco, símbolo + Lírio ERP, botão laranja do site) */
+#cta { width: 960px; padding: 36px 40px 40px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .marca img { height: 64px; } #cta .marca b { font-size: 50px; }
+#cta .t { font: 600 36px/1.2 'Kanit'; color: var(--tinta); margin-top: 18px; }
+#btnCta { margin-top: 22px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); left: -200px; }
+
+/* ilustração da fala */
+.cx { font: 600 22px 'Pop'; fill: #7A7A7A; }
+.cx.b { fill: #333333; }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }

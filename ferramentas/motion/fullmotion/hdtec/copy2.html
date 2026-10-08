@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>HD Tecnologia — Copy 2 (qual produto realmente dá lucro?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #ana .corpo { height: 570px; }
+  #cl .lucro { box-shadow: inset 0 0 0 3px transparent; }
+  #barras svg, #ach svg { display: block; }
+  .borra { filter: blur(9px); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,75 → 3,4): mais vendidos — e o lucro de cada um? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="mv" style="left:540px;top:810px">
+  <div class="bar"><span class="nm" style="font-size:30px">Produtos mais vendidos</span><span class="tt">Setembro</span><span class="pill cinza num" id="pTot">0 vendidos</span></div>
+  <div class="corpo" id="cl">
+    <table class="tab" style="margin-top:0">
+      <tr><th>Produto</th><th>Vendidos</th><th id="thL">Lucro</th></tr>
+      <tr><td>Kit Escritório Pro</td><td class="v">1.240</td><td class="lucro"><span class="pill cinza">?</span></td></tr>
+      <tr><td>Cadeira Ergo</td><td class="v">860</td><td class="lucro"><span class="pill cinza">?</span></td></tr>
+      <tr><td>Monitor 24"</td><td class="v">512</td><td class="lucro"><span class="pill cinza">?</span></td></tr>
+      <tr><td>Mesa Office</td><td class="v">318</td><td class="lucro"><span class="pill cinza">?</span></td></tr>
+      <tr><td>Suporte Notebook</td><td class="v">274</td><td class="lucro"><span class="pill cinza">?</span></td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (3,5 → 7,15): vende bastante (barra alta) × pouca margem (barra mínima) ═════ -->
+<div class="p card ins" id="barras" style="left:540px;top:270px">
+  <div class="cabI">Kit Escritório Pro<span class="pill cinza" id="pMar">Margem —</span></div>
+  <svg width="892" height="150" viewBox="0 0 892 150">
+    <text class="cx b" x="0" y="52" style="font:600 26px Pop">Vendas</text>
+    <rect id="bV" x="160" y="22" width="560" height="42" rx="8" fill="#FF4A00"/>
+    <text class="cx b" x="892" y="52" text-anchor="end" id="tBV" style="font:600 26px Pop">1.240 un</text>
+    <text class="cx b" x="0" y="128" style="font:600 26px Pop">Margem</text>
+    <rect id="bM" x="160" y="98" width="22" height="42" rx="8" fill="#CB3030"/>
+    <text class="cx" x="892" y="128" text-anchor="end" id="tBM" style="font:600 26px Pop;fill:#CB3030">4%</text>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (7,2 → 11,5): números que você não enxerga → decisão no achismo ═════ -->
+<div class="p card ins" id="ach" style="left:540px;top:270px">
+  <div class="cabI">Pedido de compra<span class="pill cinza" id="pAch">Rascunho</span></div>
+  <div class="li"><span>Margem por produto</span><b class="num borra" id="nb1">R$ 12.480</b></div>
+  <div class="li"><span>Giro do estoque</span><b class="num borra" id="nb2">38 dias</b></div>
+  <div class="li"><span>Repor: Kit Escritório Pro</span><span class="pill cinza num" id="pRep">—</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (11,55 → 24,0): Lírio ERP — vendas, produtos, clientes, resultados ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="ana" style="left:540px;top:810px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Lírio ERP</span><span class="tt">Análise da operação</span><span class="pill cinza" id="pDad">Reunindo dados</span></div>
+  <div class="abas"><div class="aba on">Vendas</div><div class="aba">Produtos</div><div class="aba">Clientes</div><div class="aba">Resultados</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista">
+      <div class="kpis"><div class="kpi a"><b class="num" id="k1">R$ 0</b><span>Faturado no mês</span></div><div class="kpi a"><b class="num" id="k2">0</b><span>Pedidos</span></div><div class="kpi a"><b class="num">R$ 96</b><span>Ticket médio</span></div></div>
+      <div style="margin-top:20px">
+        <div class="row d"><div class="nm">Loja física<span>balcão e televendas</span></div><b class="num">R$ 128.400</b></div>
+        <div class="row d"><div class="nm">E-commerce<span>site e marketplaces</span></div><b class="num">R$ 74.610</b></div>
+        <div class="row d"><div class="nm">Representantes<span>pedidos externos</span></div><b class="num">R$ 39.320</b></div>
+      </div>
+    </div>
+    <div class="vista">
+      <div class="topo"><div><h3>Produtos</h3><p>Vendidos × margem</p></div><span class="pill cinza num">48 ativos</span></div>
+      <table class="tab"><tr><th>Produto</th><th>Vendidos</th><th>Margem</th></tr>
+        <tr><td>Kit Escritório Pro</td><td>1.240</td><td>4%</td></tr><tr><td>Cadeira Ergo</td><td>860</td><td>31%</td></tr>
+        <tr><td>Monitor 24"</td><td>512</td><td>12%</td></tr><tr><td>Mesa Office</td><td>318</td><td>36%</td></tr></table>
+    </div>
+    <div class="vista">
+      <div class="topo"><div><h3>Clientes</h3><p>Quem mais compra</p></div><span class="pill cinza num">1.906 ativos</span></div>
+      <table class="tab"><tr><th>Cliente</th><th>Pedidos</th><th>Total</th></tr>
+        <tr><td>Construtora Alfa</td><td>42</td><td>R$ 18.940</td></tr><tr><td>Grupo Vértice</td><td>31</td><td>R$ 12.300</td></tr>
+        <tr><td>Clínica Bem-Estar</td><td>18</td><td>R$ 7.860</td></tr><tr><td>Escola Horizonte</td><td>15</td><td>R$ 6.120</td></tr></table>
+    </div>
+    <div class="vista">
+      <div class="topo"><div><h3>Resultados</h3><p>Lucro por produto · setembro</p></div><span class="pill cinza num" id="pRes">Ordenar por lucro</span></div>
+      <table class="tab"><tr><th>Produto</th><th>Margem</th><th>Lucro</th></tr>
+        <tr class="rr"><td>Mesa Office</td><td>36%</td><td><span class="pill cinza">R$ 14.620</span></td></tr>
+        <tr class="rr"><td>Cadeira Ergo</td><td>31%</td><td><span class="pill cinza">R$ 12.480</span></td></tr>
+        <tr class="rr"><td>Monitor 24"</td><td>12%</td><td><span class="pill cinza">R$ 6.140</span></td></tr>
+        <tr class="rr"><td>Kit Escritório Pro</td><td>4%</td><td><span class="pill cinza">R$ 1.980</span></td></tr></table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (24,05 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:270px">
+  <div class="marca"><img src="img/simbolo.png"><b>Lírio <span>ERP</span></b></div>
+  <div class="t">Decisões com dados reais do seu negócio</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Solicitar demonstração <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 29.83;
+const ROSTO = [455, 680];
+const FS = [[0.75, 3.4, true], [11.55, 24.0, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 21.7, ps: FM.criaConfete(5, 50, 540, 560, 760, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+const tr1 = Q('#mv tr'), lc = Q('#mv .lucro'), ab = Q('#ana .aba'), vs = Q('#ana .vista'), ka = Q('#ana .kpi.a'), rd = Q('#ana .row.d'), rr = Q('#ana tr.rr'), li = Q('#ach .li');
+const IN = (t, a, b) => t >= a && t < b;
+const reais = x => 'R$ ' + Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.8, [540, 810], 0.92, 3, -3], [1.9, [tr1[0], tr1[2]], 1.04, 2, -1], [3.4, [tr1[0], tr1[3]], 1.08, 1, 2]]);
+  camera(t, '#cam2', [[11.6, [540, 810], 0.92, 3, 3], [13.4, [ka[0], ka[2]], 1.04, 2, 1], [15.4, '#ana .abas', 1.04, 1, -2], [17.4, '#ana .abas', 1.07, 1, 2],
+    [19.6, [rr[0], rr[1]], 1.08, 0, -1], [21.9, [rr[0], rr[1]], 1.12, 1, 1], [22.8, [rr[2], rr[3]], 1.1, 0, -1], [24.0, rr[3], 1.14, 0, 0]]);
+
+  /* ── FS1 · 0,75 → 3,4: vende muito… e o lucro? ── */
+  A($('#mv'), t, 0.8, 3.3, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(tr1, t, 0.95, 0.08);
+  conta($('#pTot'), t, 0.96, 0.9, 3204, x => Math.round(x).toLocaleString('pt-BR') + ' vendidos');
+  { const p = t >= 2.16 ? pr(t, 2.16, 0.3) : 0; $('#thL').style.color = p > 0.5 ? 'var(--lar)' : '';
+    lc.forEach((e, k) => { const a = t >= 2.16 + 0.08 * k; e.style.background = a ? 'rgba(255,74,0,.07)' : ''; const s = e.querySelector('.pill');
+      if (a) { s.className = 'pill ruim'; s.textContent = '???'; pulsa(s, t, 2.16 + 0.08 * k, 0.1); } else { s.className = 'pill cinza'; s.textContent = '?'; } }); }
+
+  /* ── inserção · 3,5 → 7,15: barra alta de vendas, margem mínima ── */
+  A($('#barras'), t, 3.5, 7.15, { de: 0.86, dy: -60, dout: 0.25 });
+  $('#bV').setAttribute('width', Math.max(0.01, 560 * E.cubicOut(pr(t, 4.85, 0.7)))); $('#tBV').style.opacity = pr(t, 5.17, 0.25);
+  $('#bM').setAttribute('width', Math.max(0.01, 22 * E.cubicOut(pr(t, 6.43, 0.4)))); $('#tBM').style.opacity = pr(t, 6.69, 0.25);
+  vira($('#pMar'), t, 6.69, 'Margem 4%', 'ruim');
+
+  /* ── inserção · 7,2 → 11,5: números borrados → achismo ── */
+  A($('#ach'), t, 7.2, 11.5, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(li, t, 7.3, 0.1, 12);
+  ['#nb1', '#nb2'].forEach((s, k) => { const e = $(s); e.style.filter = `blur(${t >= 8.39 + 0.15 * k ? 9 : 3}px)`; });
+  acende(li[0], t, t >= 8.39 ? 8.39 : null, '203,48,42', 0.05); acende(li[1], t, t >= 8.54 ? 8.54 : null, '203,48,42', 0.05);
+  vira($('#pRep'), t, 9.89, '+800 un?', 'lar');
+  vira($('#pAch'), t, 10.97, 'No achismo', 'ruim'); acende(li[2], t, t >= 10.97 ? 10.97 : null, '203,48,42', 0.07);
+
+  /* ── FS2 · 11,55 → 24,0: Lírio reúne os dados ── */
+  A($('#ana'), t, 11.6, 23.9, { de: 0.88, dy: 120, dout: 0.2 });
+  const T2 = [[16.53, 1], [17.13, 2], [17.57, 3]];
+  abasDe(t, ab, vs, T2, $('#car2'));
+  cascata(ka, t, 12.2, 0.12); cascata(rd, t, 12.7, 0.14);
+  conta($('#k1'), t, 12.19, 1.0, 242330, reais); conta($('#k2'), t, 12.4, 1.0, 2524, x => Math.round(x).toLocaleString('pt-BR'));
+  vira($('#pDad'), t, 13.43, '✓ Dados da operação', 'vivo');
+  if (t >= 15.83 && t < 16.53) pulsa(ab[0], t, 15.83, 0.06);
+  cursorSeq($('#cur2'), t, 15.7, [990, 1480], T2.map(([tt, k]) => [tt, ab[k], true]), 18.2);
+  cascata(rr, t, 17.75, 0.1);
+  vira($('#pRes'), t, 19.83, 'Maior lucro primeiro', 'lar');
+  rr.forEach((r, k) => { const s = r.querySelector('.pill');
+    if (k < 2) { if (t >= 21.61 + 0.15 * k) { s.className = 'pill vivo'; pulsa(s, t, 21.61 + 0.15 * k, 0.1); } else { s.className = 'pill cinza'; s.style.transform = ''; }
+      r.querySelectorAll('td').forEach(td => td.style.background = t >= 21.61 + 0.15 * k ? 'rgba(21,128,61,.06)' : ''); }
+    if (k === 3) { if (t >= 23.07) { s.className = 'pill ruim'; pulsa(s, t, 23.07, 0.1); } else { s.className = 'pill cinza'; s.style.transform = ''; }
+      r.querySelectorAll('td').forEach(td => td.style.background = t >= 23.07 ? 'var(--vermc)' : ''); } });
+
+  /* ── CTA · 24,05 → fim ── */
+  A($('#cta'), t, 24.05, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 26.9, [1020, 700], t > 26.9 ? centro('#btnCtaI') : [0, 0], 28.03, 29.7); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    $('#btnCta').style.background = t >= 28.03 ? 'var(--larE)' : '';
+    const ciclo = ((t - 28.2) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 28.2 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

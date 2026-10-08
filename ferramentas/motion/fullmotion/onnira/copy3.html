@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Onnira — Copy 3 (decisões perdidas depois da reunião)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* gancho: reunião → decisões → execução, e a linha rompe em "perdidas" */
+  #gan { height: 190px; }
+  #gan > svg { position: absolute; left: 0; top: 0; }
+
+  #reu { height: 708px; }
+  #reu .bar .icb { display: flex; } #reu .bar .icb svg { width: 30px; height: 30px; display: block; }
+  #reu .corpo { height: 544px; }
+  .pt { display: flex; align-items: center; gap: 16px; height: 72px; border-bottom: 1.5px solid var(--linha2); font: 500 25px 'Sora'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+  .pt b { margin-left: auto; font: 600 25px 'Sora'; color: var(--tinta); }
+  #reu .tk .pill { width: 200px; }
+  #reu .tk.cab span:not(.n) { width: 200px; }
+
+  #onn { height: 680px; }
+  #onn .abas { background: transparent; padding: 0 30px; }
+  #onn .corpo2 { position: relative; height: 510px; padding: 26px 30px; }
+  #onn .vista { left: 30px; right: 30px; top: 26px; }
+  #onn h3 { font: 600 30px 'Sora'; } #onn h3 + p { font: 400 21px 'Sora'; color: var(--cinza); margin-top: 4px; }
+  #vPe .entrada { margin: 0; position: absolute; left: 0; right: 0; top: 384px; }
+  #fonte { margin-top: 14px; display: flex; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ GANCHO · inserção (0,2 → 4,5): a decisão se perde entre a reunião e a execução ═════ -->
+<div class="p card ins ilu" id="gan" style="left:540px;top:275px">
+  <svg width="960" height="190"><path class="base" d="M150 70 H810"/><path class="tr" id="ganTr" d="M150 70 H480"/><path class="rompe" id="ganR" d="M480 70 H620 M670 70 H810"/></svg>
+  <div class="marco" style="left:150px;top:57px"><div class="o"></div><span>Reunião</span></div>
+  <div class="marco" style="left:480px;top:57px"><div class="o"></div><span>Decisões</span></div>
+  <div class="marco" style="left:810px;top:57px"><div class="o"></div><span>Execução</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (4,6 → 17,4): a reunião · o que foi tratado · depois: quem? qual prazo? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="reu" style="left:540px;top:820px">
+  <div class="bar"><span class="icb" id="icR"></span><span class="tt">Reunião de produção</span><span class="sub">07/10 · 10:00</span><span class="pill vivo" id="stR"><i></i>Ao vivo</span></div>
+  <div class="abas"><div class="aba">Pauta</div><div class="aba">Depois da reunião</div></div>
+  <div class="carrega" id="carrega1" style="top:162px"></div>
+  <div class="corpo">
+    <div class="vista" id="vPa">
+      <div class="k">Participantes</div>
+      <div class="avs"><div class="av">AN</div><div class="av">BR</div><div class="av">CA</div><div class="av">DI</div></div>
+      <div class="k sec" style="margin-top:26px">Tratado na reunião</div>
+      <div class="pt p1">Decisões<b>3</b></div><div class="pt p1">Problemas<b>2</b></div><div class="pt p1">Tarefas<b>5</b></div><div class="pt p1">Próximos passos<b>4</b></div>
+    </div>
+    <div class="vista" id="vDe" style="opacity:0">
+      <h3>Tarefas da reunião</h3><p>Anotadas de cabeça por quem estava lá</p>
+      <div style="margin-top:14px">
+        <div class="tk cab"><span class="n">Tarefa</span><span>Responsável</span><span>Prazo</span></div>
+        <div class="tk t"><span class="n">Setup da linha 2</span><span class="pill cinza r">—</span><span class="pill cinza z">—</span></div>
+        <div class="tk t"><span class="n">Compra de insumos</span><span class="pill cinza r">—</span><span class="pill cinza z">—</span></div>
+        <div class="tk t"><span class="n">Relatório de refugo</span><span class="pill cinza r">—</span><span class="pill cinza z">—</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (17,5 → 19,25) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:275px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 2 (19,3 → 32,75): transcrição → tarefas organizadas → consultar depois ═════ -->
+<div class="cam" id="cam2">
+<div class="p chat fs" id="onn" style="left:540px;top:820px">
+  <div class="side"><div class="sic top"><span class="gi" data-g="brilho"></span></div><div class="sic"><span class="gi" data-g="chat"></span></div><div class="sic on"><span class="gi" data-g="mic"></span></div><div class="sic"><span class="gi" data-g="doc"></span></div></div>
+  <div class="main">
+    <div class="head"><span class="tt">Reuniões</span><span class="pill az"><i></i>Transcrição</span></div>
+    <div class="abas"><div class="aba">Transcrição</div><div class="aba">Tarefas</div><div class="aba">Perguntar</div></div>
+    <div class="corpo2">
+      <div class="vista" id="vTr">
+        <h3>Reunião de produção · 07/10</h3><p>Transcrição automática · 58 min</p>
+        <div style="margin-top:12px">
+          <div class="tl x"><span class="h">10:12</span><b>Bruno</b>Precisamos ajustar o setup da linha 2.</div>
+          <div class="tl x"><span class="h">10:14</span><b>Ana</b>Fico com isso, entrego até sexta.</div>
+          <div class="tl x"><span class="h">10:31</span><b>Carla</b>A compra de insumos é comigo, dia 15.</div>
+          <div class="tl x"><span class="h">10:47</span><b>Bruno</b>O relatório de refugo sai na quinta.</div>
+        </div>
+      </div>
+      <div class="vista" id="vTa" style="opacity:0">
+        <h3>Decisões e tarefas</h3><p>Organizado a partir da transcrição</p>
+        <div style="margin-top:12px">
+          <div class="tk cab"><span class="n">Tarefa</span><span>Responsável</span><span>Prazo</span></div>
+          <div class="tk o"><span class="n">Setup da linha 2</span><span class="pill cinza">—</span><span class="pill cinza">—</span></div>
+          <div class="tk o"><span class="n">Compra de insumos</span><span class="pill cinza">—</span><span class="pill cinza">—</span></div>
+          <div class="tk o"><span class="n">Relatório de refugo</span><span class="pill cinza">—</span><span class="pill cinza">—</span></div>
+        </div>
+      </div>
+      <div class="vista" id="vPe" style="opacity:0">
+        <div id="g1"><div class="rot"><span class="gi" data-g="pessoa"></span>Você</div><div class="bol eu">Quem ficou com o setup da linha 2?</div></div>
+        <div id="g2"><div class="rot ia"><span class="gi" data-g="brilho"></span>Onnira IA</div>
+          <div class="bol ia" id="bolIA"><b>Ana</b> ficou responsável, com prazo até <em>sexta, 10/10</em>.
+            <div id="fonte"><span class="pill cinza" id="fon">Trecho 10:14 da reunião</span></div></div></div>
+        <div class="entrada"><span class="mais">+</span><span class="txt" id="digi"></span><span class="env" id="env"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (32,8 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:275px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t">Conheça a Onnira e <span>veja como funciona</span></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Começar Agora <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur5" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script src="copy3/warp.js"></script>
+<script>
+window.DURACAO = 35.26;
+const ROSTO = [540, 650];
+const FS = [[4.6, 17.4, true], [19.3, 32.75, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+for (const e of Q('.gi')) e.innerHTML = S(e.dataset.g, 'currentColor', 2);
+$('#icR').innerHTML = S('mic', '#60A5FA', 2);
+$('#env').innerHTML = S('raio', '#fff', 2.2);
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const gm = Q('#gan .marco'), avs = Q('#vPa .av'), pts = Q('#vPa .pt'), tks = Q('#vDe .tk.t'), abas1 = Q('#reu .aba'), vistas1 = [$('#vPa'), $('#vDe')];
+const tls = Q('#vTr .tl'), tos = Q('#vTa .tk.o'), abas2 = Q('#onn .aba'), vistas2 = [$('#vTr'), $('#vTa'), $('#vPe')];
+const TR = tks.map(e => e.querySelector('.r')), TZ = tks.map(e => e.querySelector('.z'));
+const RESP = [['Ana', '10/10'], ['Carla', '15/10'], ['Bruno', '09/10']];
+
+window.quadro = function (t) {
+  FM.antes(t);
+  const T = t; t = warpT(t);   // animação no tempo antigo, legenda no novo
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[4.65, [540, 820], 0.92, 3, -4], [6.2, ['#vPa .k', '#vPa .avs'], 1.06, 2, 2, 0, 120], [8.2, pts, 1.06, 1, -2], [10.4, ['#reu .bar', pts[1]], 1.02, 2, 2],
+    [12.3, ['#reu .abas', '#vDe'], 1.04, 1, -2], [14.2, tks, 1.1, 1, 2], [16.0, tks, 1.16, 0, -2], [17.4, tks, 1.2, 0, 0]]);
+  camera(t, '#cam2', [[19.35, [540, 820], 0.92, 3, 4], [20.6, ['#onn .abas', '#vTr'], 1.02, 2, 2], [22.6, tls, 1.08, 1, -2], [24.4, '#vTa', 1.06, 2, 2],
+    [26.2, ['#onn .abas', '#g1'], 1.06, 1, -2], [28.6, ['#g1', '#bolIA'], 1.06, 1, 2], [30.8, '#bolIA', 1.12, 0, -2], [32.75, '#bolIA', 1.16, 0, 0]]);
+
+  /* ── gancho · 0,2 → 4,5 ── */
+  A($('#gan'), t, 0.2, 4.5, { de: 0.86, dy: -60, dout: 0.2 });
+  caminho(t, $('#ganTr'), gm.slice(0, 2), [0.45, 1.34], 0.6);                    // "decisões importantes"
+  tinta(t, 'ganR', 2.3, 0.45); gm[2].classList.toggle('ruim', t >= 2.7); if (t >= 2.7) pulsa(gm[2], t, 2.7, 0.18); else gm[2].style.transform = '';   // "ficam perdidas"
+
+  /* ── FS1 · 4,6 → 17,4 ── */
+  A($('#reu'), t, 4.65, 17.3, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(avs, t, 4.9, 0.06); avs.forEach((e, k) => acende(e, t, 6.15 + k * 0.08));          // "com a equipe"
+  cascata(pts, t, 5.1, 0.08); pts.forEach((e, k) => acende(e, t, [7.09, 7.71, 8.23, 8.89][k]));   // decisões, problemas, tarefas, próximos passos
+  vira($('#stR'), t, 10.49, 'Encerrada', 'cinza');                                         // "a reunião termina"
+  abasDe(t, abas1, vistas1, [[11.4, 1]], $('#carrega1'));
+  cursor($('#cur1'), t, 10.7, [980, 1500], t > 10.7 ? centro(abas1[1]) : [0, 0], 11.25, 11.6);   // "começa aquela história"
+  cascata(tks, t, 11.45, 0.1);
+  vira(TR[0], t, 12.41, 'Quem?', 'ruim');                              // "quem ficou de fazer isso?"
+  tks.forEach((e, k) => vira(TZ[k], t, 14.15 + k * 0.15, 'Sem prazo', 'ruim'));   // "qual foi mesmo o prazo?"
+  tks.forEach((e, k) => { if (k) vira(TR[k], t, 15.83 + k * 0.15, 'Quem?', 'ruim'); });   // "quem ficou responsável?"
+
+  /* ── inserção · 17,5 → 19,25 ── */
+  A($('#logoCard'), t, 17.5, 19.2, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 19,3 → 32,75 ── */
+  A($('#onn'), t, 19.35, 32.65, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, vistas2, [[23.9, 1], [25.75, 2]]);
+  cascata(tls, t, 19.82, 0.35, 14);                                                          // "a transcrição de reuniões"
+  cursor($('#cur2'), t, 23.2, [990, 1500], t > 23.2 ? centro(abas2[1]) : [0, 0], 23.75, 24.1);
+  cascata(tos, t, 23.95, 0.08);
+  tos.forEach((e, k) => { const [r, z] = e.querySelectorAll('.pill'); vira(r, t, 24.14 + k * 0.22, RESP[k][0], 'vivo'); vira(z, t, 24.3 + k * 0.22, RESP[k][1], 'vivo'); });   // "em informações"
+  cursor($('#cur3'), t, 25.1, t > 25.1 ? centro(abas2[1]) : [0, 0], t > 25.1 ? centro(abas2[2]) : [0, 0], 25.6, 25.95);
+  digita($('#digi'), t, 25.95, 0.7, 'Quem ficou com o setup da linha 2?'); if (t >= 26.88) $('#digi').textContent = '';   // "consultadas depois"
+  cursor($('#cur4'), t, 26.3, [1000, 1500], t > 26.3 ? centro('#env') : [0, 0], 26.8, 27.2); pulsa($('#env'), t, 26.85, 0.15);
+  { const on = t >= 26.88; bolha($('#g1'), t, on ? 26.88 : 99); }
+  bolha($('#g2'), t, 27.4);                                                                  // "deixa de depender da memória"
+  acende($('#bolIA'), t, 30.76);                                                             // "recuperar"
+  vira($('#fon'), t, 31.64, '✓ Trecho 10:14 da reunião', 'az');                              // "o que foi discutido"
+
+  /* ── CTA · 32,8 → fim ── */
+  A($('#cta'), t, 32.8, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur5'), t, 33.7, [1000, 700], t > 33.7 ? centro('#btnCta') : [0, 0], 34.4, 35.5); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 34.55) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 34.55 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

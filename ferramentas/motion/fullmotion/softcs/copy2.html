@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Soft CS — Peça 02 (CSM bombeiro)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* notificações do CSM */
+  .csm { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1.5px solid var(--linha); }
+  .csm .av { width: 62px; height: 62px; border-radius: 50%; font-size: 22px; }
+  .csm .nm { font: 800 28px 'MAN'; } .csm .nm small { display: block; font: 500 20px 'MAN'; color: var(--cinza); }
+  .sino { margin-left: auto; position: relative; width: 66px; height: 66px; border-radius: 18px; background: #fff; border: 1.5px solid var(--linha); display: grid; place-items: center; }
+  .sino svg { width: 34px; height: 34px; }
+  .sino b { position: absolute; right: -10px; top: -10px; min-width: 38px; height: 38px; border-radius: 19px; background: var(--vermF); color: #fff; font: 800 20px 'MAN'; display: grid; place-items: center; padding: 0 8px; box-shadow: 0 0 0 4px var(--app); }
+  #lista { position: relative; height: 644px; overflow: hidden; margin-top: 18px; }
+  .nt { position: absolute; left: 0; right: 0; height: 80px; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: #fff; border-radius: 14px; border: 1.5px solid #EEF0F6; box-shadow: 0 2px 10px rgba(15,23,42,.05); }
+  .nt .d { width: 14px; height: 14px; border-radius: 50%; flex: none; } .nt .d.r { background: var(--vermF); box-shadow: 0 0 0 5px rgba(239,68,68,.15); } .nt .d.a { background: var(--amarF); box-shadow: 0 0 0 5px rgba(234,179,8,.15); }
+  .nt .tx { font: 700 23px 'MAN'; white-space: nowrap; } .nt .tx small { display: block; font: 500 18px 'MAN'; color: var(--cinza); margin-top: 1px; }
+  .nt .h { margin-left: auto; font: 600 18px 'MAN'; color: var(--cinza2); }
+  /* automação (componente do site: TRIGGER → PLAYBOOK) */
+  .no { display: flex; gap: 18px; padding: 22px 24px; background: #fff; border-radius: 16px; border: 1.5px solid #EEF0F6; box-shadow: 0 2px 12px rgba(15,23,42,.06), inset 5px 0 0 var(--roxo); }
+  .no .ico { width: 56px; height: 56px; border-radius: 14px; background: var(--roxoc); display: grid; place-items: center; flex: none; } .no .ico svg { width: 30px; height: 30px; }
+  .no .k { font: 700 17px ui-monospace, Consolas, monospace; letter-spacing: .14em; color: var(--roxo2); }
+  .no .t { font: 700 26px 'MAN'; margin-top: 4px; white-space: nowrap; } .no .t em { font-style: normal; color: var(--roxo2); }
+  .no .chip { display: inline-block; margin-top: 10px; padding: 6px 14px; border-radius: 8px; background: var(--roxoc); font: 600 19px 'MAN'; color: var(--roxo2); }
+  .no .pill { margin-left: auto; align-self: center; }
+  .liga { height: 44px; position: relative; } .liga::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 2px dashed #CBD0E0; }
+  .ps { display: flex; align-items: center; gap: 16px; height: 74px; padding: 0 20px; border-top: 1.5px solid var(--linha); font: 600 23px 'MAN'; color: var(--tinta); white-space: nowrap; }
+  .ps .ck { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid #CBD0E0; display: grid; place-items: center; flex: none; } .ps .ck svg { width: 22px; height: 22px; opacity: 0; }
+  .ps.on .ck { background: var(--verdeF); border-color: var(--verdeF); } .ps.on .ck svg { opacity: 1; }
+  .ps .pill { margin-left: auto; }
+  #rod2 { display: flex; align-items: center; gap: 16px; margin-top: 18px; padding: 18px 22px; background: #fff; border-radius: 16px; border: 1.5px solid #EEF0F6; font: 700 23px 'MAN'; }
+  #rod2 .sino { width: 54px; height: 54px; margin-left: 0; } #rod2 .sino svg { width: 28px; height: 28px; } #rod2 .sino b { min-width: 34px; height: 34px; font-size: 18px; }
+  #rod2 .pill { margin-left: auto; }
+  /* ligação estratégica */
+  .conta { display: flex; align-items: center; gap: 18px; }
+  .conta .av { width: 78px; height: 78px; border-radius: 20px; font-size: 26px; }
+  .conta h4 small { display: block; font: 500 21px 'MAN'; color: var(--cinza); margin-top: 2px; letter-spacing: 0; }
+  .conta .pill { margin-left: auto; }
+  #call { display: flex; align-items: center; gap: 18px; margin-top: 24px; padding: 22px 24px; border-radius: 18px; background: var(--fundo2); color: #fff; }
+  #call .fo { width: 64px; height: 64px; border-radius: 50%; background: var(--verdeF); display: grid; place-items: center; flex: none; } #call .fo svg { width: 32px; height: 32px; }
+  #call .tx { font: 800 26px 'MAN'; } #call .tx small { display: block; font: 500 20px 'MAN'; color: var(--lilas); margin-top: 2px; }
+  #call .tm { margin-left: auto; font: 700 30px ui-monospace, Consolas, monospace; color: #fff; }
+  .pauta { margin-top: 22px; background: #fff; border-radius: 16px; border: 1.5px solid #EEF0F6; padding: 8px 22px; }
+  .pauta .k { font: 700 17px ui-monospace, Consolas, monospace; letter-spacing: .14em; color: var(--cinza2); padding: 12px 0 4px; }
+  .pauta .ps { padding: 0; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<div class="p tit" id="h1" style="left:540px;top:380px" data-tx="Seu CSM passa|o dia inteiro|[apagando incêndio.]"></div>
+
+<!-- NOTIFICAÇÕES (0 → 3,95) -->
+<div class="cam" id="cam1">
+<div class="p win" id="w1" style="left:540px;top:1110px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">caixa de entrada · CS</span></div>
+  <div class="corpo">
+    <div class="csm"><span class="av a1">MC</span><div class="nm">Marina Costa<small>Customer Success · 107 contas</small></div><div class="sino" id="sino1"><span id="sinoI"></span><b id="bad1">0</b></div></div>
+    <div id="lista"></div>
+  </div>
+</div>
+</div>
+
+<!-- PLAYBOOK AUTOMÁTICO (3,95 → 7,0) -->
+<div class="cam" id="cam2">
+<div class="p win" id="w2" style="left:540px;top:830px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">softcs.com.br / automações</span><span class="dir">Soft CS · Automações</span></div>
+  <div class="corpo">
+    <div class="no" id="trg"><span class="ico" id="i1"></span><div><div class="k">TRIGGER</div><div class="t">Quando o <em>Health Score</em> muda de faixa</div><span class="chip">Playbook combina com 8 contas</span></div></div>
+    <div class="liga"></div>
+    <div class="no" id="pb"><span class="ico" id="i2"></span><div><div class="k">PLAYBOOK · FAIXA ATENÇÃO</div><div class="t">Reengajamento &amp; Adoção</div></div><span class="pill cz" id="pPb">Pronto</span></div>
+    <div style="margin-top:14px;background:#fff;border-radius:16px;border:1.5px solid #EEF0F6;padding:0 4px">
+      <div class="ps" id="s0" style="border-top:none"><span class="ck" id="c0"></span>E-mail de reengajamento<span class="pill cz">8 contas</span></div>
+      <div class="ps" id="s1"><span class="ck" id="c1"></span>Trilha de adoção iniciada<span class="pill cz">8 contas</span></div>
+      <div class="ps" id="s2"><span class="ck" id="c2"></span>Check-in agendado<span class="pill cz">8 contas</span></div>
+    </div>
+    <div id="rod2"><div class="sino"><span id="sinoI2"></span><b id="bad2">10</b></div>Notificações da Marina<span class="pill cz" id="pRes">Em aberto</span></div>
+  </div>
+</div>
+</div>
+
+<!-- LIGAÇÃO ESTRATÉGICA (7,0 → 10,5) -->
+<div class="cam" id="cam3">
+<div class="p win" id="w3" style="left:540px;top:820px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">softcs.com.br / clientes / orbe-saude</span></div>
+  <div class="corpo">
+    <div class="conta"><span class="av a4">OS</span><h4>Orbe Saúde<small>MRR R$ 18.400 · Health Score 81</small></h4><span class="pill rx" id="pPri">Conta estratégica</span></div>
+    <div id="call"><span class="fo" id="foI"></span><div class="tx">Ligação estratégica<small>Marina Costa · CSM</small></div><span class="tm" id="tm">00:00</span></div>
+    <div class="pauta">
+      <div class="k">PAUTA</div>
+      <div class="ps" id="pa0" style="border-top:none"><span class="ck"></span>Expansão para 3 novas unidades<span class="pill rx">+ R$ 9.200</span></div>
+      <div class="ps" id="pa1"><span class="ck"></span>Renovação antecipada</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="p" id="cta" style="left:540px;top:880px">
+  <span class="logo" id="ctaL"></span>
+  <div class="tit" id="ctaT" data-tx="Automatize seus|[playbooks.]"></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agendar demo<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="curC" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="c2/palavras.js"></script>
+<script>
+window.DURACAO = 13.18;
+const ROSTO = [540, 960], FS = [];
+const OCULTA = [[0, 2.9], [10.5, 99]];
+const ESTOUROS = [{ t0: 6.25, ps: FM.criaConfete(7, 70, 540, 1180, 600, 60, 0.8), rgb: [135, 88, 243] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script src="softcs.js"></script>
+<script>
+$('#ctaL').innerHTML = LOGO(104); $('#ctaS').innerHTML = ic('seta', '#fff', 2.6);
+$('#sinoI').innerHTML = ic('sino', '#0F172A'); $('#sinoI2').innerHTML = ic('sino', '#0F172A');
+$('#i1').innerHTML = ic('pulso', '#6B3FE0'); $('#i2').innerHTML = ic('fluxo', '#6B3FE0'); $('#foI').innerHTML = ic('fone', '#fff', 2.2);
+Q('.ck').forEach(c => c.innerHTML = ic('check', '#fff', 3));
+const VERDE = '34,195,109', ROXO = '135,88,243';
+
+/* 10 notificações chegando (exemplo); a mais nova entra em cima e empurra as outras */
+const NTS = [['r', 'Ticket crítico aberto', 'Instituto Delta'], ['r', 'NPS 3 recebido', 'Rede Prisma'], ['a', 'Uso caiu 30% na semana', 'Lumen Tech'],
+  ['r', 'Fatura em atraso', 'Casa Solar'], ['a', 'Renovação em 7 dias', 'Grupo Atlas'], ['r', 'Pedido de cancelamento', 'Studio Nexo'],
+  ['a', 'Onboarding parado há 12 dias', 'Hub Mira'], ['a', 'E-mail sem resposta', 'Colégio Vale'], ['r', 'Reclamação no suporte', 'Agência Fluxa'], ['a', 'Admin não faz login', 'Centro Brava']];
+const TA = [-1.5, -1.2, -0.9, -0.6, -0.3, 0.4, 0.9, 1.4, 1.9, 2.4];
+$('#lista').innerHTML = NTS.map(([c, a, b]) => `<div class="nt"><span class="d ${c}"></span><div class="tx">${a}<small>${b}</small></div><span class="h">agora</span></div>`).join('');
+const NT = Q('.nt');
+function notifs(t) {
+  NT.forEach((e, k) => { const y = TA.slice(k + 1).reduce((s, tj) => s + 92 * pr(t, tj, 0.45, E.expoOut), 0);
+    const p = M.prog(t, TA[k], 0.5, E.spring);
+    e.style.opacity = pr(t, TA[k], 0.15, E.cubicOut); e.style.transform = `translateY(${y + (1 - p) * -40}px) scale(${L(0.92, 1, p)})`;
+    e.querySelector('.d').style.opacity = 0.35 + 0.65 * Math.abs(Math.cos(t * 5 + k * 1.3)); });
+  const n = TA.filter(x => t >= x).length; $('#bad1').textContent = n;
+  const ult = TA.filter(x => t >= x).pop(); if (ult != null) pulsa($('#bad1'), t, ult, 0.25);
+  $('#sino1').style.transform = `rotate(${n ? 9 * Math.sin(t * 22) * Math.exp(-4 * (t - (ult ?? 0))) : 0}deg)`;
+}
+
+window.quadro = function (t) {
+  FM.antes(t);
+  camera(t, '#cam1', [[0, [540, 830], 1, 2, -2], [2.75, [540, 840], 1.0, 1, -1], [3.5, [540, 1110], 1.04, -1, 1], [3.95, [540, 1110], 1.05, 0, 0]]);
+  camera(t, '#cam2', [[3.95, [540, 830], 0.97, 2, -2], [4.6, ['#trg', '#pb'], 1.04, 1, 1], [5.3, ['#s0', '#s2'], 1.08, -1, 1], [6.2, '#rod2', 1.08, 1, -1], [7.0, '#rod2', 1.1, 0, 0]]);
+  camera(t, '#cam3', [[7.0, [540, 820], 0.97, -2, 2], [7.9, '#call', 1.06, 1, 1], [8.8, '.conta', 1.08, -1, -1], [9.6, '.pauta', 1.06, 1, 1], [10.5, '.pauta', 1.08, 0, 0]]);
+
+  tit('#h1', t, PAL.slice(0, 7).map(w => w[0]), 2.85);
+
+  A($('#w1'), t, -0.45, 3.95, { de: 0.9, dy: 160 });
+  notifs(t);
+
+  A($('#w2'), t, 3.95, 7.0, { de: 1, dy: 0 });
+  passa(t, '#w1', '#w2', 3.95);
+  vira($('#pPb'), t, T0(7), '<i></i>Playbook ativo', 'ok'); acende($('#pb'), t, T0(7), ROXO, 0.06);
+  [[T0(9), 0], [T0(10) + 0.05, 1], [T0(11) + 0.15, 2]].forEach(([t0, k]) => { $('#s' + k).classList.toggle('on', t >= t0); if (t >= t0) pulsa($('#c' + k), t, t0, 0.2); acende($('#s' + k), t, t0, VERDE, 0.06); });
+  { const p = E.cubicOut(C((t - 6.0) / 0.5)), n = Math.round(L(10, 2, p)); $('#bad2').textContent = n; }
+  vira($('#pRes'), t, 6.25, '✓ 8 resolvidas pelo playbook', 'ok'); acende($('#rod2'), t, 6.25, VERDE, 0.06);
+
+  A($('#w3'), t, 7.0, 10.5, { de: 1, dy: 0, dout: 0.3 });
+  passa(t, '#w2', '#w3', 7.0);
+  { const s = Math.max(0, t - 7.45); $('#tm').textContent = '00:' + String(Math.floor(s)).padStart(2, '0'); }
+  acende($('#call'), t, null);
+  vira($('#pPri'), t, T0(18), '<i></i>Vale a conversa', 'ok');
+  [['#pa0', 8.35], ['#pa1', 9.4]].forEach(([s, t0]) => { $(s).classList.toggle('on', t >= t0); acende($(s), t, t0, VERDE, 0.06); });
+
+  cta(t, 10.55, PAL.slice(21, 24).map(w => w[0]), 12.15, window.DURACAO);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

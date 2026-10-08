@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 3 (containers: em qual obra está cada ativo?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #m1 { width: 892px; height: 520px; margin-top: 22px; }
+  #m3 { width: 892px; height: 210px; margin-top: 18px; }
+  #app2 .row { height: 80px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,95 → 4,2): sabe em qual obra está cada ativo agora? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Containers alugados</span><span class="pill cinza" id="pos">Atualizado em 12/09</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Containers por obra</h3><p>5 containers nesta região</p></div></div>
+    <div class="mapa" id="m1"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (4,34 → 5,2): Mais Locações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo-navy.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (5,25 → 10,3): local, contrato e cobrança de cada container num painel só ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Painel do ativo</span><span class="pill cinza" id="pAt">Sincronizando</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3 id="ctN">Container CT-014</h3><p>Escritório 6 m · Construtora Alfa</p></div><span class="pill azul" id="pCt">1 de 12</span></div>
+    <div class="mapa" id="m3"></div>
+    <div style="margin-top:8px">
+      <div class="row i"><span class="nm">Local<span>Obra Vila Nova · Rua das Palmeiras, 300</span></span><span class="pill cinza">Na obra</span></div>
+      <div class="row i"><span class="nm">Contrato #0927<span>Locação mensal · até 15/12</span></span><span class="pill cinza">Ativo</span></div>
+      <div class="row i"><span class="nm">Cobrança<span>Fatura de outubro · R$ 890,00</span></span><span class="pill cinza">A vencer</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (10,4 → 14,25): acompanha a operação até em viagem ═════ -->
+<div class="p card ins" id="vg" style="left:540px;top:300px">
+  <div class="cabI">Sua operação<span class="pill cinza" id="pVg">Pelo celular</span></div>
+  <div class="li"><span>12 containers em 4 obras</span><span class="pill cinza" id="r1">Sincronizado</span></div>
+  <div class="li"><span>Cobranças do mês</span><span class="pill cinza" id="r2">Em dia</span></div>
+</div>
+
+<!-- ═════ CTA (14,36 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Veja o sistema na prática</span>Fale com a Mais Locações</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Agende uma demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy7/palavras.js"></script>
+<script>
+window.DURACAO = 17.19;
+const ROSTO = [560, 740];
+const FS = [[0.95, 4.2, true], [5.25, 10.3, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+mapa($('#m1'), 17); mapa($('#m3'), 23);
+const P1 = [[140, 150, 'CT-014'], [400, 300, 'CT-022'], [620, 130, 'CT-031'], [760, 380, 'CT-040'], [250, 430, 'CT-052']].map(([x, y, r]) => pino($('#m1'), x, y, '', '#01235C', r));
+const P3 = pino($('#m3'), 446, 130, '', '#0B3A9E', 'Obra Vila Nova');
+const ri = Q('#app2 .row.i'), vg = Q('#vg .li');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.0, [540, 800], 0.92, 3, -3], [2.2, '#m1', 1.0, 2, -1], [3.3, '#m1', 1.06, 1, 2], [4.2, '#win .topo', 1.1, 0, 0, 0, 70]]);
+  camera(t, '#cam2', [[5.3, [540, 810], 0.92, 3, 3], [5.9, ['#m3', ri[0]], 1.04, 2, 1], [6.9, [ri[1], ri[2]], 1.1, 1, -2], [8.2, [540, 810], 0.98, 2, 2], [10.3, '#app2 .bar', 1.06, 0, -1, 0, 260]]);
+
+  /* ── FS1 · 0,95 → 4,2 ── */
+  A($('#win'), t, 1.0, 4.1, { de: 0.88, dy: 120, dout: 0.2 });
+  P1.forEach((p, k) => popPino(p, t, 1.2 + 0.08 * k));
+  // "em qual obra está cada ativo": cada pino perde a obra e vira "?"
+  P1.forEach((p, k) => { const on = t >= 2.48 + 0.2 * k; pinoCor(p, on ? '#9AA3B5' : '#01235C', on ? '?' : ''); if (on) pulsa(p, t, 2.48 + 0.2 * k, 0.12); });
+  vira($('#pos'), t, 3.62, 'Posição agora: ???', 'ruim');
+
+  /* ── logo · 4,34 → 5,2 ── */
+  A($('#logoCard'), t, 4.34, 5.15, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 5,25 → 10,3 ── */
+  A($('#app2'), t, 5.3, 10.2, { de: 0.88, dy: 120, dout: 0.2 });
+  popPino(P3, t, 5.5);
+  cascata(ri, t, 5.45, 0.1);
+  [[5.7, 'Obra Vila Nova'], [6.1, '✓ Ativo'], [6.68, 'Em aberto · vence 10/11']].forEach(([t0, tx], k) => { vira(ri[k].querySelector('.pill'), t, t0, tx, k === 2 ? 'azul' : 'vivo'); acende(ri[k], t, t0); });
+  // "de cada container": o painel passa pelos containers
+  { const n = t >= 7.6 ? 3 : t >= 7.3 ? 2 : 1, nome = ['CT-014', 'CT-022', 'CT-031'][n - 1]; const tx = `${n} de 12`;
+    if ($('#pCt').textContent !== tx) $('#pCt').textContent = tx; if ($('#ctN').textContent !== 'Container ' + nome) $('#ctN').textContent = 'Container ' + nome; if (t >= 7.3) pulsa($('#pCt'), t, n === 3 ? 7.6 : 7.3, 0.1); }
+  vira($('#pAt'), t, 9.08, '● Atualizado agora', 'vivo');
+
+  /* ── inserção · 10,4 → 14,25 ── */
+  A($('#vg'), t, 10.4, 14.25, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(vg, t, 10.5, 0.08, 12);
+  vira($('#r1'), t, 12.32, '● Ao vivo', 'vivo'); vira($('#r2'), t, 12.8, '✓ Em dia', 'vivo');
+  vira($('#pVg'), t, 13.64, '✓ Até em viagem', 'vivo');
+
+  /* ── CTA · 14,36 → fim ── */
+  A($('#cta'), t, 14.36, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 14.9, [1020, 760], t > 14.9 ? centro('#btnCta') : [0, 0], 15.5, 17.1); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 15.65) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 15.65 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

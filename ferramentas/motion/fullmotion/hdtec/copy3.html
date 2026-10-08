@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>HD Tecnologia — Copy 3 (o sistema diz que tem, mas na loja não está)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #est .corpo { height: 530px; }
+  #cam svg { display: block; }
+  .res { margin-top: 18px; border: 1.5px solid var(--linha); border-radius: 15px; padding: 6px 22px; }
+  .res .row:last-child { border-bottom: 0; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,55 → 4,7): consulta de estoque diz 12 — na prateleira, 0 ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="con" style="left:540px;top:810px">
+  <div class="bar"><span class="nm" style="font-size:30px">Consulta de estoque</span><span class="tt">Loja 1</span><span class="pill cinza">Balcão</span></div>
+  <div class="corpo">
+    <div class="campo"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#7A7A7A" stroke-width="2.4"/><path d="M15.5 15.5 L21 21" stroke="#7A7A7A" stroke-width="2.4" stroke-linecap="round"/></svg><span id="dig"></span><i class="cr" id="crs"></i></div>
+    <div class="res" id="res1">
+      <div class="row q"><div class="nm">Cimento CP-II 50 kg<span>cód. 10482 · Votoran</span></div><span class="pill cinza num" id="pSis">Sistema: —</span></div>
+      <div class="row q"><div class="nm">Local<span>depósito · corredor B</span></div><b>Prateleira B3</b></div>
+      <div class="row q"><div class="nm">Na prateleira<span>conferido agora pelo vendedor</span></div><span class="pill cinza num" id="pPra">—</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (4,75 → 8,8): problema comum na loja de material de construção ═════ -->
+<div class="p card ins" id="div" style="left:540px;top:270px">
+  <div class="cabI">Sistema × prateleira<span class="pill cinza" id="pDiv">Loja de material</span></div>
+  <div class="li"><span>Cimento CP-II 50 kg</span><span class="pill cinza num" id="d1">12 × 0</span></div>
+  <div class="li"><span>Argamassa AC-II 20 kg</span><span class="pill cinza num" id="d2">30 × 22</span></div>
+  <div class="li"><span>Tubo PVC 100 mm</span><span class="pill cinza num" id="d3">48 × 41</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (8,85 → 14,95): caminho cliente → sistema → prateleira, que se rompe no fim ═════ -->
+<div class="p card ins" id="cam" style="left:540px;top:270px">
+  <div class="cabI">Cimento CP-II 50 kg<span class="pill cinza" id="pCam">Pedido do cliente</span></div>
+  <svg width="892" height="170" viewBox="0 0 892 170">
+    <path id="c1" d="M110 70 H446" stroke="#FF4A00" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <g id="c2g"><path id="c2" d="M446 70 H700" stroke="#FF4A00" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="c2h"><path id="c2b" d="M700 70 H832" stroke="#FF4A00" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="m1"><circle cx="110" cy="70" r="22" fill="#fff" stroke="#FF4A00" stroke-width="7"/><text class="cx b" x="110" y="140" text-anchor="middle">Cliente pede</text></g>
+    <g id="m2"><circle cx="446" cy="70" r="22" fill="#fff" stroke="#FF4A00" stroke-width="7"/><text class="cx b" x="446" y="140" text-anchor="middle">Sistema: 12 sc</text></g>
+    <g id="m3"><circle cx="832" cy="70" r="22" fill="#fff" stroke="#FF4A00" stroke-width="7" id="m3c"/><text class="cx b" x="800" y="140" text-anchor="middle" id="m3t">Prateleira</text></g>
+    <circle id="pto" r="11" fill="#FF4A00"/>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (15,0 → 19,95): o custo — tempo, venda e a divergência sem registro ═════ -->
+<div class="p card ins" id="cus" style="left:540px;top:270px">
+  <div class="cabI">Atendimento · balcão<span class="pill cinza">Hoje, 10:42</span></div>
+  <div class="li"><span>Tempo procurando</span><span class="pill cinza num" id="u1">—</span></div>
+  <div class="li"><span>Venda de 6 sacos</span><span class="pill cinza num" id="u2">—</span></div>
+  <div class="li"><span>Onde foi a divergência?</span><span class="pill cinza num" id="u3">—</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (20,05 → 32,0): Lírio ERP — entradas e saídas integradas ao estoque ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="est" style="left:540px;top:810px">
+  <div class="bar"><img src="img/simbolo.png"><span class="nm">Lírio ERP</span><span class="tt">Controle de estoque</span><span class="pill cinza" id="pVivo">Movimentações</span></div>
+  <div class="abas"><div class="aba on">Movimentações</div><div class="aba">Estoque</div><div class="aba">Disponível na loja</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista">
+      <table class="tab" style="margin-top:0"><tr><th>Hora</th><th>Movimento</th><th>Qtd.</th></tr>
+        <tr class="mv"><td>08:02</td><td>Entrada · NF-e 4.812</td><td><span class="pill vivo">+40 sc</span></td></tr>
+        <tr class="mv"><td>09:15</td><td>Saída · venda #3.211</td><td><span class="pill ruim">−6 sc</span></td></tr>
+        <tr class="mv"><td>10:20</td><td>Saída · venda #3.219</td><td><span class="pill ruim">−10 sc</span></td></tr>
+        <tr class="mv"><td>10:41</td><td>Transferência · Loja 2</td><td><span class="pill ruim">−12 sc</span></td></tr>
+        <tr class="mv"><td>11:05</td><td>Entrada · devolução</td><td><span class="pill vivo">+2 sc</span></td></tr>
+      </table>
+    </div>
+    <div class="vista">
+      <div class="topo"><div><h3>Cimento CP-II 50 kg</h3><p>Saldo calculado pelas movimentações</p></div><span class="pill vivo num" id="pSal">Saldo 14 sc</span></div>
+      <table class="tab"><tr><th>Origem</th><th>Entradas</th><th>Saídas</th></tr>
+        <tr class="sd"><td>Compras (NF-e)</td><td>+40</td><td>—</td></tr><tr class="sd"><td>Vendas</td><td>—</td><td>−16</td></tr>
+        <tr class="sd"><td>Transferências</td><td>—</td><td>−12</td></tr><tr class="sd"><td>Devoluções</td><td>+2</td><td>—</td></tr></table>
+    </div>
+    <div class="vista">
+      <div class="topo"><div><h3>Disponível na loja</h3><p>Sistema = prateleira</p></div><span class="pill cinza num" id="pConf">Conferindo…</span></div>
+      <table class="tab"><tr><th>Produto</th><th>Sistema</th><th>Loja</th></tr>
+        <tr class="dl"><td>Cimento CP-II 50 kg</td><td>14</td><td><span class="pill vivo">14 ✓</span></td></tr>
+        <tr class="dl"><td>Argamassa AC-II 20 kg</td><td>22</td><td><span class="pill vivo">22 ✓</span></td></tr>
+        <tr class="dl"><td>Tubo PVC 100 mm</td><td>41</td><td><span class="pill vivo">41 ✓</span></td></tr>
+        <tr class="dl"><td>Tinta acrílica 18 L</td><td>9</td><td><span class="pill vivo">9 ✓</span></td></tr></table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (32,05 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:270px">
+  <div class="marca"><img src="img/simbolo.png"><b>Lírio <span>ERP</span></b></div>
+  <div class="t">Mais controle do estoque da sua loja</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Solicitar demonstração <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 37.89;
+// corte refeito ("sistema" inteiro): depois de 11,42 s a base andou +0,32 s → animação no tempo antigo, legenda no novo
+const WARP = T => T < 11.42 ? T : T < 11.74 ? 11.42 : T - 0.32;
+const ROSTO = [585, 690];
+const FS = [[0.55, 4.7, true], [20.05, 32.0, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 30.77, ps: FM.criaConfete(5, 50, 540, 560, 760, 60, 0.7), rgb: [21, 128, 61] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+const rq = Q('#con .row.q'), dv = Q('#div .li'), cu = Q('#cus .li'), ab = Q('#est .aba'), vs = Q('#est .vista'), mv = Q('#est tr.mv'), sd = Q('#est tr.sd'), dl = Q('#est tr.dl');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.6, [540, 810], 0.92, 3, -3], [1.7, ['#con .campo', rq[0]], 1.06, 2, -1], [3.2, [rq[1], rq[2]], 1.08, 1, 2], [4.7, rq[2], 1.14, 0, 1]]);
+  camera(t, '#cam2', [[20.1, [540, 810], 0.92, 3, 3], [21.4, [mv[0], mv[1]], 1.06, 2, 1], [22.8, [mv[1], mv[4]], 1.05, 1, -2], [24.2, [sd[0], sd[3]], 1.06, 1, 2],
+    [26.4, [mv[2], mv[4]], 1.08, 0, -1], [28.4, '#est .abas', 1.04, 1, 1], [30.2, [dl[0], dl[3]], 1.06, 0, -1], [32.0, dl[0], 1.12, 0, 0]]);
+
+  /* ── FS1 · 0,55 → 4,7: o sistema diz que tem… na prateleira não ── */
+  A($('#con'), t, 0.6, 4.6, { de: 0.88, dy: 120, dout: 0.2 });
+  digita($('#dig'), t, 0.72, 0.8, 'cimento cp-ii 50');
+  $('#crs').style.opacity = (t < 1.6 && Math.floor(t * 3) % 2 === 0) ? 1 : 0;
+  { const r = $('#res1'), p = pr(t, 1.5, 0.3); r.style.opacity = p; r.style.transform = `translateY(${(1 - p) * 16}px)`; }
+  cascata(rq, t, 1.55, 0.1, 10);
+  vira($('#pSis'), t, 1.62, 'Sistema: 12 sc', 'vivo'); acende(rq[0], t, t >= 1.62 ? 1.62 : null, '21,128,61', 0.06);
+  acende(rq[1], t, t >= 3.1 ? 3.1 : null);
+  vira($('#pPra'), t, 4.1, '0 sc', 'ruim'); acende(rq[2], t, t >= 4.1 ? 4.1 : null, '203,48,42', 0.07);
+
+  /* ── inserção · 4,75 → 8,8: divergência comum na loja de material ── */
+  A($('#div'), t, 4.75, 8.8, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(dv, t, 4.85, 0.1, 12);
+  [['d1', 6.07], ['d2', 6.27], ['d3', 6.47]].forEach(([id, t0], k) => { vira($('#' + id), t, t0, $('#' + id)._b ?? $('#' + id).innerHTML, 'ruim num'); acende(dv[k], t, t >= t0 ? t0 : null, '203,48,42', 0.05); });
+  vira($('#pDiv'), t, 7.79, '3 divergências', 'ruim');
+
+  /* ── inserção · 8,85 → 14,95: o caminho do pedido, que se rompe na prateleira ── */
+  A($('#cam'), t, 8.85, 14.95, { de: 0.86, dy: -60, dout: 0.25 });
+  [['m1', 9.39], ['m2', 11.09], ['m3', 13.37]].forEach(([id, t0]) => { const g = $('#' + id); g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center'; pop(g, t, t0); });
+  tinta(t, 'c1', 9.79, 1.2); tinta(t, 'c2', 12.14, 0.6); tinta(t, 'c2b', 12.74, 0.5);
+  { const pc = $('#c1'), Lc = pc.getTotalLength(), q = pr(t, 9.79, 1.2, E.cubicInOut), pt = pc.getPointAtLength(Lc * q); $('#pto').setAttribute('cx', pt.x); $('#pto').setAttribute('cy', 70); $('#pto').style.opacity = t >= 9.79 && t < 11.09 ? 1 : 0; }
+  vira($('#pCam'), t, 11.96, 'Sistema: tem', 'vivo');
+  { const q = M.prog(t, 14.07, 0.6, E.spring), cor = t >= 14.07 ? '#CB3030' : '#FF4A00';
+    $('#c2h').setAttribute('transform', `rotate(${26 * q} 832 70)`); $('#c2b').setAttribute('stroke', cor); $('#m3c').setAttribute('stroke', cor);
+    $('#m3t').textContent = t >= 14.35 ? 'Não está lá' : 'Prateleira'; $('#m3t').style.fill = t >= 14.35 ? '#CB3030' : ''; }
+  if (t >= 14.35) vira($('#pCam'), t, 14.35, 'Prateleira: 0', 'ruim');
+
+  /* ── inserção · 15,0 → 19,95: tempo, venda e divergência sem rastro ── */
+  A($('#cus'), t, 15.0, 19.95, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(cu, t, 15.1, 0.1, 12);
+  vira($('#u1'), t, 15.81, '25 min', 'ruim'); acende(cu[0], t, t >= 15.81 ? 15.81 : null, '203,48,42', 0.05);
+  vira($('#u2'), t, 16.63, 'Perdida · R$ 234', 'ruim'); acende(cu[1], t, t >= 16.63 ? 16.63 : null, '203,48,42', 0.05);
+  vira($('#u3'), t, 19.39, 'Sem registro', 'ruim'); acende(cu[2], t, t >= 19.39 ? 19.39 : null, '203,48,42', 0.07);
+
+  /* ── FS2 · 20,05 → 32,0: entradas e saídas no controle de estoque ── */
+  A($('#est'), t, 20.1, 31.9, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(mv.slice(0, 4), t, 20.4, 0.1);
+  [21.01, 21.65].forEach((t0, k) => { acende(mv[k], t, t >= t0 ? t0 : null, k ? '203,48,42' : '21,128,61', 0.05); });
+  if (t >= 22.37) Q('#est tr.mv .pill').slice(0, 2).forEach((e, k) => pulsa(e, t, 22.37 + 0.12 * k, 0.08));
+  cascata(sd, t, 23.6, 0.1);
+  if (t >= 23.99) pulsa($('#pSal'), t, 23.99, 0.1);
+  /* volta às movimentações: o que acontece na operação entra ao vivo (linha nova às 11:05) */
+  abasDe(t, ab, vs, [[23.43, 1], [25.39, 0], [28.9, 2]], $('#car2'));
+  { const r = mv[4], a = 26.29; r.style.opacity = t >= a ? pr(t, a, 0.25) : 0; r.style.transform = `translateY(${(1 - pr(t, a, 0.4)) * -20}px)`; acende(r, t, t >= a ? a : null, '21,128,61', 0.07); }
+  [2, 3].forEach((k, j) => { if (t >= 25.39) acende(mv[k], t, 25.83 + 0.2 * j, '255,74,0', 0.05); });
+  if (t >= 26.01) vira($('#pVivo'), t, 26.01, '<i></i>Ao vivo', 'vivo'); else vira($('#pVivo'), t, 99, '', null);
+  cursorSeq($('#cur2'), t, 22.6, [990, 1480], [[23.43, ab[1], true], [25.39, ab[0], true], [28.9, ab[2], true]], 29.6);
+  cascata(dl, t, 29.05, 0.1);
+  vira($('#pConf'), t, 29.71, '✓ Confiável', 'vivo');
+  dl.forEach((r, k) => r.querySelectorAll('td').forEach(td => td.style.background = t >= 30.77 + 0.08 * k ? 'rgba(21,128,61,.06)' : ''));
+
+  /* ── CTA · 32,05 → fim ── */
+  A($('#cta'), t, 32.05, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 34.6, [1020, 700], t > 34.6 ? centro('#btnCtaI') : [0, 0], 35.77, 37.4); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    $('#btnCta').style.background = t >= 35.77 ? 'var(--larE)' : '';
+    const ciclo = ((t - 36.0) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 36.0 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

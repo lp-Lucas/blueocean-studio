@@ -1,0 +1,87 @@
+/* identidade Neosync (print do site): branco, quase-preto #0B121C, cinza #737B86, azul #1B54D7 só de destaque; Inter em tudo;
+   botões pretos de canto pequeno com chevron. Base comum das Copies 1 e 2 (receita 15). */
+@font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../fontes/Inter.ttf'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+@font-face { font-family: 'Mao'; src: url('../../fontes/Caveat.ttf'); }
+:root { --tinta: #0B121C; --cinza: #737B86; --linha: #E5E7EB; --claro: #F4F5F7; --azul: #1B54D7; --verde: #15803D; --verdec: #E7F5EC; --verm: #C9372A; --vermc: #FCEBE9; }
+html, body { background: transparent !important; }
+body { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; color: var(--tinta); }
+#azul, #leg { display: none !important; }
+.card { background: #fff; border-radius: 22px; box-shadow: 0 1px 0 rgba(11,18,28,.04), 0 18px 44px rgba(0,0,0,.26); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* mesa de papel: grão, luz, tipografia de relatório impresso, marca-texto, caneta, post-it */
+#mesa { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 7; pointer-events: none; display: none; }
+#cam { position: absolute; inset: 0; }
+#tampo { position: absolute; left: -40px; top: -40px; width: 1160px; height: 2000px; background: #3A3631; }
+#tampo .grao { position: absolute; inset: 0; background: url('img/grao.png') 0 0 / 1200px 2000px; opacity: .5; mix-blend-mode: multiply; }
+.folha { position: absolute; overflow: hidden; background: #F7F5EF; box-shadow: 0 1px 3px rgba(0,0,0,.25), 0 26px 60px rgba(0,0,0,.38); }
+.folha .grao { position: absolute; inset: 0; background: url('img/grao.png') 0 0 / 1200px 2000px; pointer-events: none; }
+.folha .luz { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 38%, rgba(60,45,20,.08) 100%); pointer-events: none; }
+.rel { position: absolute; left: 62px; top: 250px; right: 62px; font: 400 29px/1.4 'Courier New', Courier, monospace; color: #23211E; }
+.rel .cab { display: flex; justify-content: space-between; font: 700 25px 'Courier New', monospace; letter-spacing: .04em; }
+.rel .tit { font: 700 66px/1.1 Georgia, serif; letter-spacing: -.01em; margin: 30px 0 10px; color: #1A1916; }
+.rel .sub { font: italic 400 31px Georgia, serif; color: #57524A; margin-bottom: 34px; }
+.rel table { width: 100%; border-collapse: collapse; }
+.rel th { font: 700 23px 'Courier New', monospace; text-align: right; padding: 14px 8px; border-top: 2.5px solid #23211E; border-bottom: 1.5px solid #23211E; letter-spacing: .02em; }
+.rel th:first-child, .rel td:first-child { text-align: left; }
+.rel td { font: 400 29px 'Courier New', monospace; text-align: right; padding: 24px 8px; border-bottom: 1px dashed #B9B3A6; white-space: nowrap; }
+.rel tr.tot td { font-weight: 700; border-top: 2.5px solid #23211E; border-bottom: 3px double #23211E; }
+.rel .nota { margin-top: 34px; font: 400 25px/1.5 'Courier New', monospace; color: #57524A; }
+.rodape { position: absolute; left: 0; right: 0; bottom: 120px; text-align: center; font: italic 22px Georgia, serif; color: #8A8276; }
+.hl { background: linear-gradient(100deg, rgba(247,208,70,.82), rgba(245,201,60,.78)) no-repeat 0 62% / 0% 78%; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+      padding: 0 6px; margin: 0 -6px; border-radius: 4px 10px 5px 8px; }
+.tinta { fill: none; stroke: var(--verm); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; opacity: .92; }
+.postit { position: absolute; width: 470px; height: 470px; transform-origin: 50% 0; opacity: 0;
+          background: linear-gradient(170deg, #FFE98A 0%, #FDE070 55%, #F4D257 100%);
+          box-shadow: 0 1px 1px rgba(0,0,0,.08), 4px 22px 26px -14px rgba(60,40,0,.5), 0 30px 40px -30px rgba(60,40,0,.4); }
+.postit::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 64px; background: linear-gradient(180deg, rgba(160,120,0,.10), rgba(160,120,0,0)); }
+.postit .ln { position: absolute; left: 44px; font: 400 66px/1 'Mao'; color: #1F2A55; white-space: nowrap; }
+.postit svg { position: absolute; inset: 0; overflow: visible; }
+.postit .gr { position: absolute; inset: 0; background: url('img/grao.png') 0 0/1200px 2000px; opacity: .6; }
+#vinheta { position: absolute; inset: 0; z-index: 8; pointer-events: none; opacity: 0;
+           background: radial-gradient(ellipse 85% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(25,18,8,.22) 100%); }
+
+/* inserções e telas do produto (no estilo do site) */
+.chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Inter';
+         white-space: nowrap; box-shadow: 0 18px 44px rgba(0,0,0,.3); color: var(--tinta); letter-spacing: -0.02em; }
+.chipI .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.chipI .bol svg { width: 32px; }
+.chipI.preto { background: var(--tinta); color: #fff; }
+.chipI:not(:has(.bol)) { padding: 0 48px; height: 96px; justify-content: center; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 7px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+.marca { display: flex; align-items: center; gap: 18px; font: 650 64px 'Inter'; letter-spacing: -0.035em; color: var(--tinta); }
+.marca img { height: 72px; }
+#logoCard { padding: 40px 56px; border-radius: 26px; }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 74px; padding: 0 30px; border-radius: 12px; background: var(--tinta); color: #fff; font: 600 30px 'Inter'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn svg { width: 26px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'Inter'; white-space: nowrap; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.vivo i { width: 12px; height: 12px; border-radius: 50%; background: #22C55E; }
+.pill.cinza { background: var(--claro); color: #3F4652; }
+.k { font: 600 21px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* janela do app (tela cheia 2) */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 104px; display: flex; align-items: center; gap: 18px; padding: 0 32px; border-bottom: 1.5px solid var(--linha); background: #fff; position: relative; z-index: 2; }
+.app .bar img { height: 46px; } .app .bar .nm { font: 650 32px 'Inter'; letter-spacing: -0.03em; }
+.app .bar .nav { display: flex; gap: 26px; margin-left: 34px; font: 500 24px 'Inter'; color: var(--cinza); }
+.app .bar .nav b { color: var(--tinta); font-weight: 600; }
+.app .bar .av { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--claro); border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 22px 'Inter'; color: #3F4652; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: #fff; }
+.app h3 { font: 700 40px 'Inter'; letter-spacing: -0.03em; } .app h3 + p { font: 400 25px 'Inter'; color: var(--cinza); margin-top: 6px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+
+/* ícone de marca famosa que expande e vira a tela cheia */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }

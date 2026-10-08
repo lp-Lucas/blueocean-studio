@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 2 V2 (equipamentos: contrato vencido sai caro?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #cel { left: 540px; top: 810px; width: 540px; height: 1000px; }
+  .lista { position: absolute; left: 22px; right: 22px; top: 186px; display: flex; flex-direction: column; gap: 14px; }
+  .cc { background: #fff; border-radius: 20px; padding: 16px 22px; box-shadow: 0 6px 18px rgba(1,35,92,.08); }
+  .cc .k { font-size: 18px; } .cc .t1 { font: 700 26px 'DMS'; color: var(--tinta); margin-top: 6px; } .cc .t2 { font: 400 21px 'DMS'; color: var(--cinza); margin-top: 2px; }
+  .cc .lin { display: flex; align-items: center; margin-top: 12px; } .cc .lin .pill { margin-left: auto; height: 40px; font-size: 20px; }
+  .cc .val { font: 700 30px 'DMS'; color: var(--tinta); }
+  #win .row b { margin-left: auto; font: 700 28px 'DMS'; color: var(--tinta); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 4,65): contrato vencido sai caro pra você? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Contrato #0418</span><span class="pill cinza" id="pSt">Em andamento</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Andaime tubular · 20 peças</h3><p>Obra Vila Nova · venceu em 02/10</p></div></div>
+    <div style="margin-top:18px">
+      <div class="row v"><span class="nm">Status do contrato<span>Prazo final 02/10</span></span><span class="pill cinza" id="pVen">Vence 02/10</span></div>
+      <div class="row v"><span class="nm">Dias sem cobrança<span>Equipamento ainda na obra</span></span><b class="num" id="dias">0</b></div>
+      <div class="row v"><span class="nm">Deixou de entrar<span>Diárias não faturadas</span></span><b class="num" id="perda">R$ 0</b></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (4,82 → 5,9): Mais Locações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo-navy.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (5,95 → 14,4): aviso no celular, boleto emitido sozinho, pagamento confirmado ═════ -->
+<div class="cam" id="cam2">
+<div class="p cel fs" id="cel"><div class="tela2">
+  <div class="topoC" id="cTopo"><img src="img/logo-claro.svg"><div class="tt">Contratos e cobranças<span class="pill vivo"><i></i>Em dia</span></div></div>
+  <div class="lista">
+    <div class="cc" id="cc1"><div class="k">Contrato #0412</div><div class="t1">Betoneira 400 L</div><div class="t2">Construtora Alfa · vence 20/10</div>
+      <div class="lin"><span class="t2" style="margin:0">Renovação</span><span class="pill cinza" id="pRen">Aguardando</span></div></div>
+    <div class="cc" id="cc2"><div class="k">Boleto · Contrato #0412</div><div class="lin" style="margin-top:6px"><span class="val num">R$ 1.480,00</span><span class="pill cinza" id="pBol">A emitir</span></div>
+      <div class="t2">Vencimento 25/10</div></div>
+    <div class="cc" id="cc3"><div class="k">Contrato #0425</div><div class="t1">Gerador 55 kVA</div><div class="t2">Evento Parque · vence 30/10</div>
+      <div class="lin"><span class="t2" style="margin:0">Cobrança</span><span class="pill vivo">✓ Em dia</span></div></div>
+    <div class="cc" id="cc4"><div class="k">Contrato #0431</div><div class="t1">Compactador de solo</div><div class="t2">Reforma Centro · vence 05/11</div>
+      <div class="lin"><span class="t2" style="margin:0">Cobrança</span><span class="pill vivo">✓ Em dia</span></div></div>
+  </div>
+  <div class="notif" id="n1"><div class="ic"><img src="img/simbolo.png"></div>
+    <div class="tx"><b>Contrato #0412 vence em 3 dias</b>Betoneira 400 L · Construtora Alfa</div></div>
+</div></div>
+</div>
+
+<!-- ═════ INSERÇÃO (14,54 → 18,85): parou de descobrir prejuízo depois ═════ -->
+<div class="p card ins" id="mes" style="left:540px;top:300px">
+  <div class="cabI">Contratos deste mês<span class="pill cinza" id="pMes">Outubro</span></div>
+  <div class="li"><span>#0412 · Betoneira 400 L</span><span class="pill cinza" id="r1">Avisado</span></div>
+  <div class="li"><span>#0425 · Gerador 55 kVA</span><span class="pill cinza" id="r2">Avisado</span></div>
+</div>
+
+<!-- ═════ CTA (18,96 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Veja como funciona na sua locadora</span>Peça uma demonstração</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Agende uma demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy5/palavras.js"></script>
+<script>
+window.DURACAO = 23.31;
+const ROSTO = [560, 740];
+const FS = [[0.9, 4.65, true], [5.95, 14.4, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 13.8, ps: FM.criaConfete(5, 60, 540, 700, 700, 60, 0.7), rgb: [177, 232, 58] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const rv = Q('#win .row.v'), ccs = Q('.cc'), ms = Q('#mes .li');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.95, [540, 800], 0.92, 3, -3], [2.4, rv[0], 1.06, 2, -1], [3.4, [rv[1], rv[2]], 1.1, 1, 2], [4.65, rv[2], 1.16, 0, 0]]);
+  camera(t, '#cam2', [[6.0, [540, 810], 0.92, 2, -3], [6.9, [540, 800], 0.96, 2, 2], [8.6, [540, 820], 1.0, 1, -2], [10.6, [540, 830], 1.02, 1, 1],
+    [12.0, '#cc2', 1.04, 1, -1], [13.6, '#cc2', 1.06, 0, 1], [14.4, [540, 810], 1.0, 0, 0]]);
+
+  /* ── FS1 · 0,9 → 4,65 ── */
+  A($('#win'), t, 0.95, 4.55, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(rv, t, 1.15, 0.1);
+  vira($('#pVen'), t, 2.92, 'Vencido há 6 dias', 'ruim'); acende(rv[0], t, 2.92, '201,55,42', 0.06); vira($('#pSt'), t, 2.92, 'Vencido', 'ruim');
+  if (t >= 3.0) conta($('#dias'), t, 3.0, 0.5, 6); else $('#dias').textContent = '0';
+  // "sai caro": o valor que deixou de entrar soma (ilustrativo)
+  if (t >= 3.52) { conta($('#perda'), t, 3.52, 0.7, 1260, v => '−R$ ' + Math.round(v).toLocaleString('pt-BR')); $('#perda').style.color = 'var(--verm)'; acende(rv[2], t, 3.52, '201,55,42', 0.06); }
+  else { $('#perda').textContent = 'R$ 0'; $('#perda').style.color = ''; }
+
+  /* ── logo · 4,82 → 5,9 ── */
+  A($('#logoCard'), t, 4.82, 5.85, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 5,95 → 14,4 ── */
+  A($('#cel'), t, 6.0, 14.3, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(ccs, t, 6.2, 0.1);
+  notif($('#n1'), t, 6.4, 10.2); acende($('#cc1'), t, 8.2);
+  // "antes que o equipamento fique parado sem cobrança": renovação enviada antes do prazo
+  vira($('#pRen'), t, 10.24, '✓ Renovado', 'vivo');
+  // "emite o boleto sozinho": boleto emitido; "pagamento confirmado": pago
+  vira($('#pBol'), t, 12.22, 'Emitido automático', 'azul'); acende($('#cc2'), t, 12.22);
+  vira($('#pBol'), t, 13.74, '✓ Pago', 'vivo');
+
+  /* ── inserção · 14,54 → 18,85 ── */
+  A($('#mes'), t, 14.54, 18.85, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(ms, t, 14.64, 0.08, 12);
+  vira($('#r1'), t, 15.5, '✓ Renovado antes', 'vivo'); vira($('#r2'), t, 16.04, '✓ Devolvido no prazo', 'vivo');
+  vira($('#pMes'), t, 16.48, '0 prejuízos', 'vivo');
+
+  /* ── CTA · 18,96 → fim ── */
+  A($('#cta'), t, 18.96, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 19.9, [1020, 760], t > 19.9 ? centro('#btnCta') : [0, 0], 20.6, 22.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 20.75) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 20.75 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

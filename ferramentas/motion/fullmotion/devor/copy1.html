@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Devor — Copy 1 (você ainda trava quando o cliente coloca uma objeção?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #win .corpo { height: 780px; display: flex; flex-direction: column; gap: 20px; }
+  #win .chat { flex: 1; justify-content: flex-end; overflow: hidden; gap: 0; }
+  #win .bal { box-sizing: border-box; overflow: hidden; margin-top: 14px; flex: none; }
+  #win .campo.trava { border-color: var(--verm); color: var(--verm); }
+  #app2 .corpo { height: 560px; }
+  #tipos { display: flex; gap: 14px; justify-content: center; margin-top: 18px; }
+  #tipos .pill { height: 56px; padding: 0 22px; font-size: 24px; }
+  #sim .br { flex: none; width: 260px; height: 12px; border-radius: 6px; background: rgba(255,255,255,.08); overflow: hidden; margin-left: auto; }
+  #sim .br i { display: block; height: 100%; background: var(--roxo); border-radius: 6px; }
+  #sim .li b { margin-left: 18px; min-width: 84px; text-align: right; }
+  #cedeu { margin-top: 18px; border-left: 4px solid var(--laranja); border-radius: 6px 18px 18px 6px; }
+  #cedeu p { font: 600 26px/1.35 'URB'; color: var(--texto); margin-top: 8px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,95 → 7,85): o round do Desafio Devor — o cliente solta as objeções e você trava ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Desafio Devor</span><span class="pill cinza num" id="pInt">Interação 0:30</span></div>
+  <div class="corpo">
+    <div class="ctx"><div class="k">Contexto</div><h4>Ricardo · apê 2 quartos · R$ 480 mil</h4><p>Visitou o imóvel ontem. Gostou, mas ainda não fechou.</p></div>
+    <div class="chat">
+      <div class="bal c b0"><b>Cliente</b>Oi! Vi o apê ontem.</div>
+      <div class="bal v b0">Que bom, Ricardo! O que achou?</div>
+      <div class="bal c b0"><b>Cliente</b>Gostei muito da varanda.</div>
+      <div class="bal v b0">Vamos fechar a proposta?</div>
+      <div class="bal c on"><b>Cliente</b>Tá caro.<br><span class="pill ruim">Objeção</span></div>
+      <div class="bal c on"><b>Cliente</b>Vou conversar com minha esposa.<br><span class="pill ruim">Objeção</span></div>
+      <div class="bal c on"><b>Cliente</b>Deixa eu pensar e te retorno.<br><span class="pill ruim">Objeção</span></div>
+    </div>
+    <div class="campo" id="campo"><span id="cTx">Sua resposta…</span><span class="env" id="cEnv"></span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,95 → 11,6): você já ouviu todas e ainda improvisa ═════ -->
+<div class="p card ins" id="ouv" style="left:540px;top:300px">
+  <div class="cabI">Objeções deste mês<span class="pill cinza" id="pOuv">Seus atendimentos</span></div>
+  <div class="li"><span>“Tá caro.”</span><b class="num">14×</b></div>
+  <div class="li"><span>“Vou conversar com minha esposa.”</span><b class="num">9×</b></div>
+  <div class="li"><span>“Deixa eu pensar e te retorno.”</span><b class="num">11×</b></div>
+</div>
+
+<!-- ═════ INSERÇÃO (11,7 → 16,55): a Devor treina você a CONTORNAR a objeção (ilustração: o caminho dá a volta no bloqueio) ═════ -->
+<div class="p card ins" id="ilu" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/logo.svg" style="height:40px"><span class="pill roxo" id="pIlu">Treino de objeções</span></div>
+  <svg width="892" height="214" viewBox="0 0 892 214" style="display:block;margin-top:10px">
+    <path id="reta" d="M112 150 H352" stroke="#878C91" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 18" fill="none"/>
+    <path id="volta" d="M112 150 H322 C 372 150, 372 54, 446 54 C 520 54, 520 150, 570 150 H 778" stroke="#7758F1" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <circle cx="80" cy="150" r="24" fill="#131F22" stroke="#A47CF3" stroke-width="7"/><text class="cx" x="80" y="204" text-anchor="middle">Cliente</text>
+    <g id="obj"><rect x="376" y="118" width="140" height="64" rx="14" fill="rgba(229,72,77,.18)" stroke="#FF6B6B" stroke-width="5"/>
+      <text x="446" y="160" text-anchor="middle" style="font:800 25px URB;fill:#FF6B6B">Objeção</text></g>
+    <g id="fim"><circle id="fimC" cx="810" cy="150" r="24" fill="#131F22" stroke="#878C91" stroke-width="7"/>
+      <path id="fimV" d="M798 150 L807 160 L824 140" stroke="#7EE08A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>
+      <text class="cx" x="810" y="204" text-anchor="middle" id="fimT">Venda</text></g>
+  </svg>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (16,6 → 21,65): treinamento real de atendimento → feedback imediato → onde você cedeu ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo.svg"><span class="tt">Desafio Devor</span><span class="pill vivo"><i></i>Round 7</span></div>
+  <div class="abas"><div class="aba on">Atendimento</div><div class="aba" id="abaF">Feedback</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v1">
+      <div class="ctx"><div class="k">Situação real</div><h4>Marina · casa 3 quartos · alto padrão</h4><p>Achou o valor acima do mercado e quer desconto.</p></div>
+      <div class="chat" style="margin-top:22px">
+        <div class="bal c"><b>Cliente</b>Achei caro pra região.</div>
+        <div class="bal v" id="bv2">Entendo. Posso te mostrar o que está incluso no valor?</div>
+        <div class="bal c" id="bc2"><b>Cliente</b>Mas e se baixar 10%?</div>
+      </div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="k">Feedback · agora</div>
+      <div style="margin-top:10px">
+        <div class="hab"><span>Contorno de objeções</span><span class="tag v num">+8</span><span class="nt num" id="n1">72</span></div>
+        <div class="hab"><span>Condução da conversa</span><span class="tag v num">+5</span><span class="nt num" id="n2">81</span></div>
+        <div class="hab" id="hNeg"><span>Negociação</span><span class="tag r num">−6</span><span class="nt num" id="n3">58</span></div>
+      </div>
+      <div class="bloco" id="cedeu"><div class="k lar">Onde você cedeu</div><p id="cedeuP">Ofereceu desconto antes de mostrar o valor do imóvel.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (21,75 → 27,25): o treino se adapta ao seu mercado e ao tipo de imóvel ═════ -->
+<div class="p card ins" id="adap" style="left:540px;top:300px">
+  <div class="cabI">Seu treino<span class="pill cinza" id="pAd">Personalizado</span></div>
+  <div class="li"><span>Mercado</span><span class="pill cinza" id="pMer">Imobiliário</span></div>
+  <div id="tipos"><span class="pill cinza">Minha Casa Minha Vida</span><span class="pill cinza">Médio padrão</span><span class="pill cinza">Alto padrão</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (27,3 → 31,55): quanto mais rounds, mais parecido com o seu cliente ═════ -->
+<div class="p card ins" id="sim" style="left:540px;top:300px">
+  <div class="cabI">Seu cliente simulado<span class="pill roxo num" id="pRd">Round 1</span></div>
+  <div class="li"><span>Parecido com quem senta na sua frente</span><span class="br"><i id="brS"></i></span><b class="num" id="pct">38%</b></div>
+  <div class="li"><span>Objeções que ele costuma usar</span><span class="br"><i id="brO"></i></span><b class="num" id="obN">2 de 8</b></div>
+</div>
+
+<!-- ═════ INSERÇÃO (31,65 → 34,75): quando a objeção vier, você já respondeu ═════ -->
+<div class="p card ins" id="vem" style="left:540px;top:300px">
+  <div class="cabI">Atendimento · Ricardo<span class="pill cinza">Hoje</span></div>
+  <div class="li"><span>“Tá caro.”</span><span class="pill cinza" id="pOb">Cliente</span></div>
+  <div class="li"><span>Sua resposta</span><span class="pill cinza" id="pRes">—</span></div>
+</div>
+
+<!-- ═════ CTA (34,85 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo.svg">
+  <div class="t"><span>App de treino de vendas</span>Contorne <em>qualquer objeção</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div><span id="estr"></span>Baixe grátis</div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 37.5;
+const ROSTO = [520, 700];
+const FS = [[0.95, 7.85, true], [16.6, 21.65, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+const ESTRELA = '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2 C12.9 8.6 15.4 11.1 22 12 C15.4 12.9 12.9 15.4 12 22 C11.1 15.4 8.6 12.9 2 12 C8.6 11.1 11.1 8.6 12 2 Z"/></svg>';
+$('#estr').innerHTML = ESTRELA;
+$('#cEnv').innerHTML = S('sobe', '#fff', 3);
+const bs = Q('#win .bal.on'), ou = Q('#ouv .li'), ad = Q('#adap .li'), tp = Q('#tipos .pill'), sm = Q('#sim .li'), vm = Q('#vem .li'), hb = Q('#app2 .hab');
+const ROXO = '119,88,241', VERM = '229,72,77', VERDE = '67,153,67';
+// balão novo entra por baixo e empurra a conversa para cima (o chat cola no campo de resposta)
+const entraBal = (el, t, t0) => { const p = pr(t, t0, 0.4, E.cubicOut); el.style.maxHeight = (t < t0 ? 0 : p * 170) + 'px';
+  el.style.marginTop = (t < t0 ? 0 : p * 14) + 'px'; el.style.paddingTop = el.style.paddingBottom = (t < t0 ? 0 : p * 16) + 'px';
+  el.style.opacity = pr(t, t0 + 0.08, 0.25, E.cubicOut); el.style.transform = `translateY(${(1 - p) * 24}px)`; };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.0, [540, 800], 0.92, 3, -3], [2.2, '#win .ctx', 1.02, 2, -1], [3.6, Q('#win .chat')[0], 1.05, 1, 2], [5.4, Q('#win .chat')[0], 1.07, -1, 2, 0, 20], [7.85, [540, 790], 1.1, 0, 0]]);
+  camera(t, '#cam2', [[16.65, [540, 810], 0.92, 3, 3], [17.6, '#v1 .ctx', 1.04, 2, 1], [18.5, '#abaF', 1.04, 1, -2, 200, 120], [19.6, hb, 1.08, 1, 2], [20.8, '#cedeu', 1.14, 0, -1], [21.65, '#cedeu', 1.18, 0, 0]]);
+
+  /* ── FS1 · 0,95 → 7,85: as objeções chegam e você trava ── */
+  A($('#win'), t, 1.0, 7.75, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([Q('#win .ctx')[0], ...Q('#win .b0'), $('#campo')], t, 1.15, 0.1);
+  { const tv = t >= 1.38; $('#campo').classList.toggle('trava', tv); const tx = tv ? 'Travou… sem resposta' : 'Sua resposta…'; if ($('#cTx').textContent !== tx) $('#cTx').textContent = tx;
+    if (tv) pulsa($('#campo'), t, 1.38, 0.03); }
+  if (t >= 1.38) { const s = Math.max(0, 30 - Math.floor((t - 1.38) * 2.2)); $('#pInt').textContent = `Interação 0:${String(s).padStart(2, '0')}`; $('#pInt').className = 'pill ruim num'; }
+  else { $('#pInt').textContent = 'Interação 0:30'; $('#pInt').className = 'pill cinza num'; }
+  [4.04, 4.74, 6.28].forEach((t0, k) => entraBal(bs[k], t, t0));
+
+  /* ── inserção · 7,95 → 11,6: você já ouviu todas ── */
+  A($('#ouv'), t, 7.95, 11.6, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(ou, t, 8.05, 0.1, 12);
+  ou.forEach((e, k) => acende(e, t, 8.86 + 0.12 * k, ROXO, 0.16));
+  if (t >= 9.94) vira($('#pOuv'), t, 9.94, 'Resposta: improviso', 'ruim'); else vira($('#pOuv'), t, 8.86, 'Você já ouviu todas', 'roxo');
+
+  /* ── inserção · 11,7 → 16,55: contornar a objeção ── */
+  A($('#ilu'), t, 11.7, 16.55, { de: 0.86, dy: -60, dout: 0.25 });
+  $('#reta').style.opacity = 1 - pr(t, 13.3, 0.4);
+  tinta(t, 'volta', 13.3, 1.6);
+  { const ob = $('#obj'); if (t >= 15.48) ob.style.transform = `translate(446px,150px) scale(${1 + 0.08 * Math.sin(C((t - 15.48) / 0.4) * Math.PI)}) translate(-446px,-150px)`; else ob.style.transform = ''; }
+  { const ok = t >= 16.2; $('#fimC').setAttribute('stroke', ok ? '#7EE08A' : '#878C91'); $('#fimV').setAttribute('opacity', pr(t, 16.2, 0.2));
+    $('#fimT').textContent = ok ? 'Venda ✓' : 'Venda'; $('#fimT').style.fill = ok ? '#7EE08A' : ''; }
+  if (t >= 13.3) vira($('#pIlu'), t, 13.3, 'Contorna a objeção', 'roxo');
+
+  /* ── FS2 · 16,6 → 21,65: atendimento → feedback → onde cedeu ── */
+  A($('#app2'), t, 16.65, 21.55, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#app2 .aba'), [$('#v1'), $('#v2')], [[18.62, 1]], $('#car2'));
+  cascata(Q('#v1 .ctx, #v1 .bal'), t, 16.85, 0.12);
+    cursor($('#cur1'), t, 17.7, [960, 1460], t > 17.7 ? centro('#abaF') : [0, 0], 18.5, 19.1);
+  cascata(hb, t, 18.75, 0.12);
+  conta($('#n1'), t, 18.75, 0.8, 72); conta($('#n2'), t, 18.87, 0.8, 81); conta($('#n3'), t, 18.99, 0.8, 58);
+  cascata([$('#cedeu')], t, 19.56, 0.1);
+  acende(hb[2], t, 20.94, VERM, 0.16);
+  $('#cedeuP').style.color = t >= 21.32 ? '#fff' : ''; acende($('#cedeu'), t, 21.32, '242,163,58', 0.12);
+
+  /* ── inserção · 21,75 → 27,25: mercado e tipo de imóvel ── */
+  A($('#adap'), t, 21.75, 27.25, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata([...ad, $('#tipos')], t, 21.85, 0.12, 12);
+  vira($('#pAd'), t, 22.56, 'Adaptado a você', 'roxo');
+  vira($('#pMer'), t, 23.22, 'Imobiliário', 'cheio');
+  [24.72, 25.98, 26.58].forEach((t0, k) => vira(tp[k], t, t0, tp[k]._b ?? tp[k].innerHTML, 'cheio'));
+
+  /* ── inserção · 27,3 → 31,55: quanto mais rounds, mais parecido ── */
+  A($('#sim'), t, 27.3, 31.55, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(sm, t, 27.4, 0.1, 12);
+  { const r = t < 27.84 ? 1 : Math.round(1 + 23 * E.cubicOut(C((t - 27.84) / 2.6))); $('#pRd').textContent = 'Round ' + r; }
+  { const q = E.cubicInOut(C((t - 28.48) / 2.6)), v = Math.round(L(38, 92, q)); $('#pct').textContent = v + '%'; $('#brS').style.width = v + '%';
+    const o = Math.round(L(2, 8, q)); $('#obN').textContent = o + ' de 8'; $('#brO').style.width = (o / 8 * 100) + '%'; }
+  acende(sm[0], t, 31.06, VERDE, 0.2);
+
+  /* ── inserção · 31,65 → 34,75: quando a objeção vier, você já respondeu ── */
+  A($('#vem'), t, 31.65, 34.75, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(vm, t, 31.75, 0.1, 12);
+  vira($('#pOb'), t, 32.06, 'Objeção', 'ruim'); acende(vm[0], t, 32.06, VERM, 0.14);
+  vira($('#pRes'), t, 33.76, '✓ Treinada 14×', 'vivo'); acende(vm[1], t, 33.76, VERDE, 0.2);
+
+  /* ── CTA · 34,85 → fim ── */
+  A($('#cta'), t, 34.85, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 35.15, [1020, 760], t > 35.15 ? centro('#btnCta') : [0, 0], 35.84, 37.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    $('#btnCta').className = t >= 35.84 ? 'btn roxo' : 'btn';
+    const ciclo = ((t - 36.0) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 36.0 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Uniforce — Copy 2 (Direto: gestor de Customer Success)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .ins { padding: 22px 34px; } .ins .cabI { height: 42px; } .ins .li { height: 56px; } .ins .li:first-of-type { margin-top: 10px; }
+  .cx2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .cx2 > div { border-radius: 16px; padding: 20px 22px; background: var(--fundo); border: 1.5px solid transparent; height: 178px; display: flex; flex-direction: column; }
+  .cx2 p { font: 600 24px/1.3 'INT'; color: var(--tinta); margin-top: 10px; }
+  .cx2 .pill { margin-top: auto; align-self: flex-start; }
+  .mc { font: 600 20px 'INT'; fill: var(--texto); }
+  #w2 .corpo { height: 590px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,7 → 11,95): antes ou depois do pedido de cancelamento? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding-left:0">Linha do tempo</span><span class="sub">Cliente #4821 · plano 600 Mbps</span></div>
+  <div class="corpo">
+    <div class="k">Sinais até o pedido de cancelamento</div>
+    <svg class="ilu" id="lt" width="892" height="214" viewBox="0 0 892 214" style="display:block;margin-top:10px">
+      <rect id="zA" x="20" y="8" width="600" height="150" rx="14" fill="rgba(42,131,232,0)"/>
+      <rect id="zD" x="640" y="8" width="232" height="150" rx="14" fill="rgba(220,38,38,0)"/>
+      <path d="M70 84 H822" stroke="#E3E8EF" stroke-width="8"/>
+      <path id="trA" d="M70 84 H822" stroke="#2A83E8" stroke-width="8"/>
+      <g id="mc0"><circle cx="70" cy="84" r="20" fill="#fff" stroke="#2A83E8" stroke-width="5"/><text class="mc" x="70" y="140" text-anchor="middle">Uso caiu</text></g>
+      <g id="mc1"><circle cx="270" cy="84" r="20" fill="#fff" stroke="#2A83E8" stroke-width="5"/><text class="mc" x="270" y="140" text-anchor="middle">3 chamados</text></g>
+      <g id="mc2"><circle cx="470" cy="84" r="20" fill="#fff" stroke="#2A83E8" stroke-width="5"/><text class="mc" x="470" y="140" text-anchor="middle">NPS 3</text></g>
+      <g id="mc3"><circle id="mc3c" cx="756" cy="84" r="24" fill="#fff" stroke="#DC2626" stroke-width="5"/><path d="M747 75 L765 93 M765 75 L747 93" stroke="#DC2626" stroke-width="5"/>
+        <text class="mc" x="756" y="140" text-anchor="middle" style="fill:#DC2626">Pedido</text></g>
+      <text class="mc" x="70" y="196" style="font-size:17px;fill:#869CB6;letter-spacing:.12em">DIA 1</text>
+      <text class="mc" x="822" y="196" text-anchor="end" style="font-size:17px;fill:#869CB6;letter-spacing:.12em">DIA 21</text>
+    </svg>
+    <div class="cx2">
+      <div id="bA"><div class="k azul">Antes do pedido</div><p>Os sinais aparecem e o time age a tempo</p><span class="pill azul" id="pA">Retenção possível</span></div>
+      <div id="bD"><div class="k verm">Depois do pedido</div><p>O cliente já decidiu e o time corre atrás</p><span class="pill cinza" id="pD">Tarde</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (12,3 → 18,85): muda o comportamento, insatisfação, reduz o uso… e ninguém vê ═════ -->
+<div class="p card ins" id="i1" style="left:540px;top:252px">
+  <div class="cabI">Cliente #4821<span class="pill cinza" id="pI1">Sem alerta</span></div>
+  <div class="li" id="l0"><span class="ico"></span>Comportamento<b class="num">horário de uso mudou</b></div>
+  <div class="li" id="l1"><span class="ico"></span>Insatisfação<b class="num">NPS 9 → 3</b></div>
+  <div class="li" id="l2"><span class="ico"></span>Uso do serviço<b class="num">−38% em 30 dias</b></div>
+</div>
+
+<!-- ═════ INSERÇÃO (18,95 → 23,6): quando alguém percebe… a linha se rompe ═════ -->
+<div class="p card ins" id="i2" style="left:540px;top:240px">
+  <div class="cabI">Retenção<span class="pill cinza" id="pI2">Tentando recuperar</span></div>
+  <svg class="ilu" width="892" height="130" viewBox="0 0 892 130" style="display:block;margin-top:10px">
+    <path d="M150 62 H742" stroke="#E3E8EF" stroke-width="8" stroke-dasharray="2 14"/>
+    <path id="rA" d="M150 62 H446" stroke="#2A83E8" stroke-width="8"/>
+    <path id="rB" d="M446 62 H742" stroke="#2A83E8" stroke-width="8"/>
+    <g><rect x="10" y="30" width="200" height="64" rx="32" fill="#EDF4FD"/><text class="mc" x="110" y="70" text-anchor="middle" style="fill:#2A83E8;font-weight:700">Seu time</text></g>
+    <g><rect id="nC" x="682" y="30" width="200" height="64" rx="32" fill="#F6F7F8" stroke="#E3E8EF" stroke-width="2"/><text id="nCt" class="mc" x="782" y="70" text-anchor="middle" style="font-weight:700">#4821</text></g>
+  </svg>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (23,72 → 33,0): Uniforce — sinais de risco, cancelamento antecipado, ação de retenção ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Customer Success</span><span class="sub">hoje</span></div>
+  <div class="abas"><div class="aba on">Sinais de risco</div><div class="aba" id="abaJ">Jornada</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v1"><div class="k">Clientes com sinais de risco</div><div id="rk" style="margin-top:12px"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px">
+        <span class="pill azul" id="prev" style="height:64px;padding:0 24px;font-size:22px">Cancelamento previsto em 21 dias</span>
+        <div class="btn p2" id="bJ">Criar ação de retenção<span id="bJs"></span></div></div></div>
+    <div class="vista" id="v2"><div style="display:flex;align-items:center;justify-content:space-between"><div class="k">Jornada do assinante</div><span style="font:600 19px 'INT';color:var(--azul)">Cliente #4821 · plano 600 Mbps</span></div>
+      <div style="margin-top:22px" id="jn"></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (33,1 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:252px">
+  <span id="ctaM"></span>
+  <div class="t">Antecipe o <em>churn.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Descobrir oportunidades na minha base<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script src="uniforce.js"></script>
+<script>
+window.DURACAO = 32.66;
+const ROSTO = [555, 675];
+const FS = [[1.69, 10.29, true], [21.47, 28.93, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 26.93, ps: FM.criaConfete(5, 28, 760, 1000, 300, 40, 0.55), rgb: [42, 131, 232] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+['relogio', 'chat', 'desce'].forEach((n, k) => $('#l' + k + ' .ico').innerHTML = ic(n, '#4F6D92', 2));
+$('#mk2').innerHTML = MARCA(34); $('#bJs').innerHTML = ic('seta', '#fff', 1.69);
+$('#rk').innerHTML = ass('r0', 'MC', 'Cliente #4821', 'uso −38% · NPS 3 · 2 chamados', 87) + ass('r1', 'RS', 'Cliente #2290', 'atraso de 12 dias · 3 chamados', 72) + ass('r2', 'LP', 'Cliente #6612', 'reclamação no NPS', 58);
+$('#jn').innerHTML = jornada('j', { ativo: 3 });
+$('#ctaM').innerHTML = MARCA(46); $('#ctaS').innerHTML = ic('seta', '#fff', 1.69);
+const VERM = '220,38,38', VERDE = '22,163,74', AZUL = '42,131,232';
+const mcs = [0, 1, 2, 3].map(k => $('#mc' + k));
+mcs.forEach(g => { g.style.transformBox = 'fill-box'; g.style.transformOrigin = '50% 30%'; });
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  if ((t > 1.69 && t < 10.69) || (t > 21.47 && t < 29.33)) window.PAPEL_TOPO = 0;
+  camera(t, '#cam1', [[1.69, [540, 800], 0.92, 3, -3], [1.94, '#lt', 1.04, 2, -1], [3.74, ['#bA', '#zA'], 1.04, 1, 2], [4.74, ['#bD', '#zD'], 1.08, -1, 1],
+    [7.24, ['#bA', '#bD'], 1.02, 0, -1], [9.24, ['#bA', '#bD'], 1.06, -1, 0], [10.29, ['#bA', '#bD'], 1.1, 0, 0]]);
+  camera(t, '#cam2', [[21.47, [540, 800], 0.92, 3, 3], [22.4, ['#r0', '#r2'], 0.98, 2, 1], [23.13, ['#r0', '#r2'], 1.04, 1, -2], [24.33, '#r0', 1.1, -1, 1],
+    [25.33, '#prev', 1.06, 0, -1, 140, 0], [26.53, '#bJ', 1.06, 1, 1, -120, 0], [27.63, '#jn', 1.02, -1, 0], [28.93, '#jr', 1.06, 0, 0]]);
+
+  /* ── FS1 · 1,7 → 11,95: o caminho até o pedido; antes (azul) ou depois (vermelho)? depois = time reativo ── */
+  A($('#w1'), t, 1.69, 10.19, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#lt'), $('#bA'), $('#bD')], t, 1.69, 0.08);
+  tinta(t, 'trA', 1.69, 2.2);
+  [1.95, 2.25, 2.55].forEach((t0, k) => pop(mcs[k], t, t0)); pop(mcs[3], t, 3.19);
+  { const a = pr(t, 3.63, 0.3, E.cubicOut), d = pr(t, 4.15, 0.3, E.cubicOut);
+    $('#zA').setAttribute('fill', `rgba(42,131,232,${0.08 * a})`); $('#zD').setAttribute('fill', `rgba(220,38,38,${0.08 * d})`);
+    acende($('#bA'), t, 3.63, AZUL, 0.08); acende($('#bD'), t, 4.15, VERM, 0.06); }
+  if (t >= 7.13) pulsa($('#bD'), t, 7.13, 0.04);
+  vira($('#pD'), t, 9.93, 'Time reativo', 'ruim');
+
+  /* ── inserção · 12,3 → 18,85: os sinais acendem… e passam despercebidos ── */
+  A($('#i1'), t, 10.69, 17.14, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#i1 .li'), t, 10.79, 0.1, 12);
+  [11.69, 12.99, 14.37].forEach((t0, k) => { const e = $('#l' + k); acende(e, t, t0, AZUL, 0.07); e.querySelector('b').style.color = t >= t0 ? 'var(--azul)' : '';
+    if (t >= 16.15) e.style.opacity = L(1, 0.4, pr(t, 16.15 + 0.1 * k, 0.4)); });
+  vira($('#pI1'), t, 16.15, 'Ninguém viu', 'ruim');
+
+  /* ── inserção · 18,95 → 23,6: o time percebe tarde… a linha se rompe ── */
+  A($('#i2'), t, 17.4, 21.3, { de: 0.86, dy: -60, dout: 0.25 });
+  tinta(t, 'rA', 17.4, 0.7); tinta(t, 'rB', 17.95, 0.7);
+  { const q = pr(t, 19.46, 0.45, E.cubicOut); $('#rB').setAttribute('transform', `translate(${40 * q} ${4 * q}) rotate(${1.69 * q} 446 62)`);
+    $('#rA').setAttribute('transform', `translate(${-28 * q} 0)`); $('#rB').setAttribute('stroke', t >= 19.46 ? '#DC2626' : '#2A83E8');
+    const r = t >= 20.14; $('#nC').setAttribute('fill', r ? '#FDEDED' : '#F6F7F8'); $('#nC').setAttribute('stroke', r ? '#DC2626' : '#E3E8EF'); $('#nCt').style.fill = r ? '#DC2626' : ''; }
+  vira($('#pI2'), t, 20.8, 'Cliente perdido', 'ruim');
+
+  /* ── FS2 · 23,72 → 33,0: Uniforce identifica os sinais, antecipa o cancelamento e vira ação de retenção ── */
+  A($('#w2'), t, 21.47, 28.83, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#w2 .aba'), [$('#v1'), $('#v2')], [[27.13, 1]], $('#car2'));
+  cascata([...Q('#rk .ass'), $('#prev'), $('#bJ')], t, 21.47, 0.08);
+  score('r0', t, 22.99, 87); score('r1', t, 23.15, 72); score('r2', t, 23.31, 58);
+  acende($('#r0'), t, 23.99, VERM, 0.07);
+  { const on = t >= 24.47; const e = $('#prev'); e.style.opacity = t < 21.47 ? 0 : (on ? 1 : 0.35); if (on) pulsa(e, t, 24.47, 0.08); }
+  { const c = cursor($('#cur1'), t, 25.93, [1000, 1560], t > 25.93 ? centro('#bJ') : [0, 0], 26.83, 27.08); const ok = t >= 26.88;
+    const b = $('#bJ'); b.className = 'btn p2' + (ok ? ' ok' : ''); const h = ok ? ic('check', '#fff', 1.69) + 'Ação criada' : 'Criar ação de retenção<span>' + ic('seta', '#fff', 1.69) + '</span>';
+    if (b._h !== h) { b._h = h; b.innerHTML = h; } b.style.transform = `scale(${1 - 0.05 * c})`; }
+  jornadaAtiva('j', t, 3, 27.43);
+  acende($('#ja'), t, 27.75, AZUL, 0.12); acende($('#jr'), t, 28.25, VERDE, 0.12); if (t >= 28.25) pulsa($('#jr'), t, 28.25, 0.06);
+
+  /* ── CTA · 33,1 → fim ── */
+  A($('#cta'), t, 29.08, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 29.83, [1010, 760], t > 29.83 ? centro('#btnCta') : [0, 0], 30.39, 32.13); $('#btnCta').style.transform = `scale(${1 - 0.05 * c})`;
+    const ciclo = ((t - 30.53) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 30.53 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

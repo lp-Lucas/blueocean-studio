@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Roteiro 5 (algoritmo)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo { padding: 26px 34px 34px; }
+  .plat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .plat .kpi { padding: 20px 22px; }
+  .plat .cab { display: flex; align-items: center; gap: 12px; font: 650 25px 'INT'; }
+  .plat .li { height: 66px; font-size: 22px; } .plat .li .pill { height: 38px; font-size: 18px; padding: 0 12px; }
+  #pub .li .pill { min-width: 200px; justify-content: center; }
+  #w2 .corpo { height: 600px; }
+  #w2 .lead .pill { min-width: 210px; justify-content: center; }
+  .ev { display: flex; align-items: center; gap: 16px; height: 92px; padding: 0 20px; border-radius: 16px; background: rgba(255,255,255,.035); border: 1.5px solid var(--linha); }
+  .ev + .ev { margin-top: 12px; } .ev .tx { font: 600 23px 'INT'; } .ev .utm { display: block; margin-top: 4px; font-size: 17px; } .ev .pill { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,3 → 7,3; entra com o ícone do WhatsApp): vendeu no WhatsApp, mas Meta e Google acham que o lead não deu em nada ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar" style="background:#202C33"><span id="waI"></span><span class="tt" style="color:#E9EDEF">Camila Ribeiro</span><span class="pill vivo"><i></i>Venda fechada · R$ 1.890</span></div>
+  <div class="corpo">
+    <div class="chat" style="background:#0B141A;border-radius:18px;padding:20px 24px">
+      <div class="bal c">Pode fechar! Manda o Pix.<small>16:21</small></div>
+      <div class="bal v">Pagamento recebido ✓<small>16:24</small></div>
+    </div>
+    <div class="plat">
+      <div class="kpi" id="pm"><div class="cab"><span id="mtI"></span>Meta Ads</div>
+        <div class="li" style="margin-top:12px"><span>Camila R.</span><span class="pill cinza" id="sm">Conversa</span></div>
+        <div class="li"><span>Compra</span><b class="num" id="cm">0</b></div></div>
+      <div class="kpi" id="pg"><div class="cab"><span id="ggI"></span>Google Ads</div>
+        <div class="li" style="margin-top:12px"><span>Camila R.</span><span class="pill cinza" id="sg">Clique</span></div>
+        <div class="li"><span>Compra</span><b class="num" id="cg">0</b></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,4 → 13,55): anúncio → atendimento → venda … e a informação fica presa no WhatsApp ═════ -->
+<div class="p card ins" id="cam" style="left:540px;top:300px">
+  <div class="cabI">O caminho do lead<span class="pill cinza" id="pCam">Plataformas</span></div>
+  <div id="camC"></div>
+</div>
+
+<!-- ═════ INSERÇÃO (13,65 → 23,0): sem o retorno, a plataforma procura gente parecida com quem só clicou ou chamou ═════ -->
+<div class="p card ins" id="pub" style="left:540px;top:300px">
+  <div class="cabI"><span id="mtP"></span>Público semelhante<span class="pill cinza" id="pPub">Baseado em</span></div>
+  <div class="li" id="p0"><span>Quem clicou no anúncio</span><span class="pill cinza" id="q0">—</span></div>
+  <div class="li" id="p1"><span>Quem chamou no WhatsApp</span><span class="pill cinza" id="q1">—</span></div>
+  <div class="li" id="p2"><span>Quem realmente comprou</span><span class="pill cinza" id="q2">—</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (23,1 → 38,5): Leadrive — origem de cada oportunidade → avançou / virou venda → Retroalimentação de Ads ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:810px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Painel</span><span class="pill ruim"><i></i>Ao vivo</span></div>
+  <div class="abas"><div class="aba on">Leads</div><div class="aba" id="abaR">Retroalimentação de Ads</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo"><div class="vista" id="v1"></div>
+    <div class="vista" id="v2">
+      <div class="k">Vendas reais enviadas · API oficial</div>
+      <div style="margin-top:14px">
+        <div class="ev" id="e0"><span id="eI0"></span><div><div class="tx">Compra · Camila R. · R$ 1.890</div><span class="utm"><span>fbclid</span> · CAMPANHA-3</span></div><span class="pill cinza" id="es0">Na fila</span></div>
+        <div class="ev" id="e1"><span id="eI1"></span><div><div class="tx">Conversão offline · João M.</div><span class="utm"><span>gclid</span> · SEARCH-BR</span></div><span class="pill cinza" id="es1">Na fila</span></div>
+        <div class="ev" id="e2"><span id="eI2"></span><div><div class="tx">Lead qualificado · Ana P.</div><span class="utm"><span>fbclid</span> · REELS-12</span></div><span class="pill cinza" id="es2">Na fila</span></div>
+      </div>
+      <div class="kpi" id="otm" style="margin-top:18px;display:flex;align-items:center;gap:16px;padding:20px 24px">
+        <div><div class="k">Campanhas otimizando por</div><div style="font:650 30px 'INT';margin-top:6px;position:relative;display:inline-block" id="otT">Cliques e conversas iniciadas</div></div>
+        <span class="pill cinza" id="otP" style="margin-left:auto">Antes</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (38,6 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Mostre às plataformas quais leads<br><em>geram dinheiro.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agende uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy5/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 44.7;
+const ROSTO = [540, 720];
+const FS = [[1.3, 7.3, false], [23.1, 38.5, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 28.53, ps: FM.criaConfete(11, 50, 540, 900, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#waI').innerHTML = WA(40); $('#mtI').innerHTML = mk('meta', 44); $('#ggI').innerHTML = mk('google', 44); $('#mtP').innerHTML = mk('meta', 44);
+$('#mk2').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+['meta', 'google', 'meta'].forEach((m, k) => $('#eI' + k).innerHTML = mk(m, 52));
+Q('.mk').forEach(e => { if (e.style.background.includes('255, 255, 255') || e.style.background === 'rgb(255, 255, 255)') e.style.border = '1.5px solid rgba(255,255,255,.2)'; });
+$('#camC').innerHTML = caminho('c', [['anuncio', 'Anúncio'], ['gente', 'Atendimento'], ['venda', 'Venda'], ['painel', 'Meta · Google']]);
+$('#v1').innerHTML = corpoDe(painelLeads('a', { status: ['Novo', 'Novo', 'Novo', 'Novo'] }));
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const ls = Q('#v1 .lead'), us = Q('#v1 .utm'), ev = Q('#v2 .ev');
+const rOt = riscar('otT');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  marcaExpande(t, 'whatsapp', 0.3);
+  tela(t);
+  camera(t, '#cam1', [[1.35, [540, 800], 0.92, 3, -3], [2.2, ['#pm', '#pg'], 1.0, 2, -1], [3.6, ['#pm', '#pg'], 1.04, 1, 2], [5.4, ['#cm', '#cg'], 1.06, -1, 1], [7.3, ['#pm', '#pg'], 1.08, 0, 0]]);
+  camera(t, '#cam2', [[23.15, [540, 810], 0.92, 3, 3], [24.6, [us[0], us[3]], 1.04, 2, 1, 120, 0], [26.6, [ls[0], ls[2]], 1.06, 1, -2], [28.4, ls[0], 1.08, -1, 1],
+    [29.6, '#abaR', 1.02, 1, 2, 120, 240], [31.2, [ev[0], ev[1]], 1.05, 2, 1], [33.0, [ev[1], ev[2]], 1.06, -1, -1], [35.0, '#otm', 1.08, 0, 1], [36.8, '#otm', 1.12, 0, -1], [38.5, ['#e2', '#otm'], 1.08, 0, 0]]);
+
+  /* ── FS1 · 1,3 → 7,3: vendeu no WhatsApp… Meta e Google acham que o lead não deu em nada ── */
+  A($('#w1'), t, 1.35, 7.2, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w1 .bal'), $('#pm'), $('#pg')], t, 1.4, 0.06);
+  acende($('#pm'), t, 1.52, ROXO, 0.12); acende($('#pg'), t, 2.04, ROXO, 0.12);
+  vira($('#sm'), t, 4.81, 'Sem valor', 'ruim'); vira($('#sg'), t, 4.93, 'Sem valor', 'ruim');
+  ['#cm', '#cg'].forEach((s, k) => { const on = t >= 5.58 + 0.12 * k; $(s).textContent = on ? 'não recebida' : '0'; $(s).style.color = on ? 'var(--verm)' : ''; if (on) pulsa($(s), t, 5.58 + 0.12 * k, 0.1); });
+
+  /* ── inserção · 7,4 → 13,55: anúncio → atendimento → venda… presa no WhatsApp ── */
+  A($('#cam'), t, 7.4, 13.55, { de: 0.86, dy: -60, dout: 0.25 });
+  caminhoAnda('c', t, [7.76, 9.7, 11.04, 99]);
+  { const e = $('#ce3'), on = t >= 12.7; e.style.borderColor = on ? '#FF6B8A' : ''; e.style.background = on ? 'rgba(255,107,138,.14)' : '';
+    e.querySelector('path').setAttribute('stroke', on ? '#FF6B8A' : '#8B8BFF'); $('#cn3').style.color = on ? 'var(--verm)' : ''; brilha(e, t, on ? 12.7 : 99, '255,107,138'); }
+  vira($('#pCam'), t, 12.7, 'Presa no WhatsApp', 'ruim');
+
+  /* ── inserção · 13,65 → 23,0: o público semelhante aprende com quem clicou/chamou, não com quem comprou ── */
+  A($('#pub'), t, 13.65, 23.0, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#pub .li'), t, 13.75, 0.1, 12);
+  vira($('#pPub'), t, 17.0, 'Procurando parecidos', 'roxo');
+  vira($('#q0'), t, 19.74, '✓ Usado', 'roxo'); acende($('#p0'), t, 19.74, ROXO, 0.12);
+  vira($('#q1'), t, 20.62, '✓ Usado', 'roxo'); acende($('#p1'), t, 20.62, ROXO, 0.12);
+  vira($('#q2'), t, 22.16, 'Sem dado', 'ruim'); acende($('#p2'), t, 22.16, VERM, 0.12);
+
+  /* ── FS2 · 23,1 → 38,5: origem de cada oportunidade, avançou/virou venda → as campanhas recebem a venda real ── */
+  A($('#w2'), t, 23.15, 38.4, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#w2 .aba'), [$('#v1'), $('#v2')], [[30.2, 1]], $('#car2'));
+  cascata([...Q('#v1 .kpi'), ...ls], t, 23.2, 0.05);
+  us.forEach((u, k) => { acende(u.parentNode.parentNode, t, 24.79 + 0.12 * k, ROXO, 0.1); if (t >= 24.79 + 0.12 * k) pulsa(u, t, 24.79 + 0.12 * k, 0.08); });
+  vira($('#as1'), t, 27.31, 'Oportunidade', 'roxo'); vira($('#as2'), t, 27.5, 'Oportunidade', 'roxo');
+  vira($('#as0'), t, 28.17, '✓ Venda R$ 1.890', 'vivo'); acende(ls[0], t, 28.53, VERDE, 0.1);
+  { cursor($('#cur1'), t, 29.3, [980, 1600], t > 29.3 ? centro('#abaR') : [0, 0], 30.2, 30.8); }
+  cascata([...ev, $('#otm')], t, 30.3, 0.08);
+  [[31.21, 'Enviado ✓'], [32.03, 'Enviado ✓'], [32.51, 'Enviado ✓']].forEach(([t0, tx], k) => { vira($('#es' + k), t, t0, tx, 'vivo'); acende(ev[k], t, t0, VERDE, 0.08); });
+  rOt(t, 34.87);
+  { const on = t >= 35.31, tx = on ? 'Vendas reais' : 'Cliques e conversas iniciadas'; const el = $('#otT');
+    if (on) { if (el.firstChild.nodeValue !== tx) el.firstChild.nodeValue = tx; el.style.color = 'var(--verde)'; el.querySelector('.risca').style.opacity = 0; }
+    else { if (el.firstChild.nodeValue !== tx) el.firstChild.nodeValue = tx; el.style.color = ''; el.querySelector('.risca').style.opacity = 1; } }
+  vira($('#otP'), t, 35.31, '✓ Agora', 'vivo'); acende($('#otm'), t, 35.31, VERDE, 0.1);
+  if (t >= 36.83) { const r = $('#otm').querySelector('.risca'); }
+
+  /* ── CTA · 38,6 → fim ── */
+  A($('#cta'), t, 38.6, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 42.0, [1020, 760], t > 42.0 ? centro('#btnCta') : [0, 0], 42.9, 44.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 43.0) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 43.0 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

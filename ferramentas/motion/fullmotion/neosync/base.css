@@ -1,13 +1,14 @@
-/* identidade Neosync (print do site): branco, quase-preto #0B121C, cinza #737B86, azul #1B54D7 só de destaque; Inter em tudo;
+/* identidade Neosync (neosync.com.br): fundo #F9FAFB, tinta #1A212D, cinza #586474, verde #157F58 (botões/destaque); Plus Jakarta Sans + JetBrains Mono nos rótulos;
    botões pretos de canto pequeno com chevron. Base comum das Copies 1 e 2 (receita 15). */
-@font-face { font-family: 'Inter'; font-weight: 100 900; src: url('../../fontes/Inter.ttf'); }
+@font-face { font-family: 'Jakarta'; font-weight: 200 800; src: url('../../fontes/PlusJakartaSans.ttf'); }
+@font-face { font-family: 'Mono'; font-weight: 100 800; src: url('../../fontes/JetBrainsMono.ttf'); }
 @font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
 @font-face { font-family: 'Mao'; src: url('../../fontes/Caveat.ttf'); }
-:root { --tinta: #0B121C; --cinza: #737B86; --linha: #E5E7EB; --claro: #F4F5F7; --azul: #1B54D7; --verde: #15803D; --verdec: #E7F5EC; --verm: #C9372A; --vermc: #FCEBE9; }
+:root { --tinta: #1A212D; --cinza: #586474; --linha: #E6E8EB; --claro: #F3F4F6; --azul: #157F58; --verde: #157F58; --verdec: #E8F3EE; --verm: #C9372A; --vermc: #FCEBE9; }
 html, body { background: transparent !important; }
-body { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; color: var(--tinta); }
+body { font-family: 'Jakarta', sans-serif; letter-spacing: -0.015em; color: var(--tinta); }
 #azul, #leg { display: none !important; }
-.card { background: #fff; border-radius: 22px; box-shadow: 0 1px 0 rgba(11,18,28,.04), 0 18px 44px rgba(0,0,0,.26); }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px rgba(26,33,45,.06), 0 18px 44px rgba(0,0,0,.24); }
 
 /* telas cheias */
 #tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
@@ -46,34 +47,34 @@ body { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; color: var(--
            background: radial-gradient(ellipse 85% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(25,18,8,.22) 100%); }
 
 /* inserções e telas do produto (no estilo do site) */
-.chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Inter';
+.chipI { display: flex; align-items: center; gap: 16px; height: 86px; padding: 0 34px 0 16px; border-radius: 999px; background: #fff; font: 700 34px 'Jakarta';
          white-space: nowrap; box-shadow: 0 18px 44px rgba(0,0,0,.3); color: var(--tinta); letter-spacing: -0.02em; }
 .chipI .bol { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
 .chipI .bol svg { width: 32px; }
-.chipI.preto { background: var(--tinta); color: #fff; }
+.chipI.preto { background: var(--verde); color: #fff; }
 .chipI:not(:has(.bol)) { padding: 0 48px; height: 96px; justify-content: center; }
 .risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 7px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
-.marca { display: flex; align-items: center; gap: 18px; font: 650 64px 'Inter'; letter-spacing: -0.035em; color: var(--tinta); }
-.marca img { height: 72px; }
+.marca { display: flex; align-items: center; gap: 18px; font: 650 64px 'Jakarta'; letter-spacing: -0.035em; color: var(--tinta); }
+.marca img { height: 84px; } .marca .wm { height: 34px; }
 #logoCard { padding: 40px 56px; border-radius: 26px; }
-.btn { display: inline-flex; align-items: center; gap: 12px; height: 74px; padding: 0 30px; border-radius: 12px; background: var(--tinta); color: #fff; font: 600 30px 'Inter'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 74px; padding: 0 30px; border-radius: 6px; background: var(--verde); color: #fff; font: 600 30px 'Jakarta'; white-space: nowrap; position: relative; overflow: hidden; }
 .btn svg { width: 26px; }
-.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'Inter'; white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'Jakarta'; white-space: nowrap; }
 .pill.vivo { background: var(--verdec); color: var(--verde); }
 .pill.vivo i { width: 12px; height: 12px; border-radius: 50%; background: #22C55E; }
 .pill.cinza { background: var(--claro); color: #3F4652; }
-.k { font: 600 21px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.k { font: 500 19px 'Mono'; letter-spacing: .06em; color: var(--cinza); text-transform: uppercase; }
 .num { font-variant-numeric: tabular-nums; }
 
 /* janela do app (tela cheia 2) */
-.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app { width: 960px; overflow: hidden; border-radius: 12px; }
 .app .bar { height: 104px; display: flex; align-items: center; gap: 18px; padding: 0 32px; border-bottom: 1.5px solid var(--linha); background: #fff; position: relative; z-index: 2; }
-.app .bar img { height: 46px; } .app .bar .nm { font: 650 32px 'Inter'; letter-spacing: -0.03em; }
-.app .bar .nav { display: flex; gap: 26px; margin-left: 34px; font: 500 24px 'Inter'; color: var(--cinza); }
+.app .bar img { height: 46px; } .app .bar img.wm { height: 22px; margin-left: 2px; } .app .bar .nm { font: 650 32px 'Jakarta'; letter-spacing: -0.03em; }
+.app .bar .nav { display: flex; gap: 26px; margin-left: 34px; font: 500 24px 'Jakarta'; color: var(--cinza); }
 .app .bar .nav b { color: var(--tinta); font-weight: 600; }
-.app .bar .av { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--claro); border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 22px 'Inter'; color: #3F4652; }
+.app .bar .av { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--claro); border: 1.5px solid var(--linha); display: grid; place-items: center; font: 600 22px 'Jakarta'; color: #3F4652; }
 .app .corpo { position: relative; padding: 30px 34px 34px; background: #fff; }
-.app h3 { font: 700 40px 'Inter'; letter-spacing: -0.03em; } .app h3 + p { font: 400 25px 'Inter'; color: var(--cinza); margin-top: 6px; }
+.app h3 { font: 700 40px 'Jakarta'; letter-spacing: -0.03em; } .app h3 + p { font: 400 25px 'Jakarta'; color: var(--cinza); margin-top: 6px; }
 
 .cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
 #legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;

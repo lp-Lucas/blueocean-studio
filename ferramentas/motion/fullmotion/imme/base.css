@@ -1,0 +1,130 @@
+/* identidade IMME (immetecnologia.com.br, 07/10/2026): site CLARO — corpo branco #FFFFFF, seções #F7F7FB / #F2EEFA,
+   texto #0B0B10, secundário #5B5B72, borda #E8E8F0, marca roxa #5B1D6A (#491457 escuro), destaque lilás #C084FC, borda lilás #E6D8FA.
+   Botão do site: degradê 135° #5B1D6A → #C084FC, raio 12, texto branco 700, sombra roxa. Raio dos cards 14–16.
+   Títulos Space Grotesk, corpo Inter (Google Fonts, como no site). Sistema (prints do site): "BI Light · Painel Mestre" com
+   KPIs, listas com bolinha de status, "Insights do período", DRE gerencial, PDV na maquininha — recriados no tema claro do site.
+   Logo: img/logo.png recriado da placa da foto do site (logo.html). Receita 15. */
+@font-face { font-family: 'SG'; font-weight: 300 700; src: url('fonts/SpaceGrotesk.woff2'); }
+@font-face { font-family: 'IN'; font-weight: 100 900; src: url('fonts/Inter.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #F7F7FB; --card: #FFFFFF; --card2: #F7F7FB; --lil: #F2EEFA; --lilb: #E6D8FA; --tinta: #0B0B10; --texto: #3E3E57;
+        --cinza: #5B5B72; --linha: #E8E8F0; --marca: #5B1D6A; --marca2: #491457; --destaque: #C084FC; --roxoc: rgba(91,29,106,.08);
+        --verde: #15803D; --verdec: #E7F5EC; --verm: #C9372A; --vermc: #FCEBE9; --amar: #B45309; --amarc: #FEF3C7; }
+html, body { background: transparent !important; }
+body { font-family: 'IN', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border-radius: 16px; border: 1px solid var(--linha); box-shadow: 0 10px 24px rgba(91,29,106,.14), 0 26px 56px rgba(17,17,34,.10); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes */
+.k { font: 600 20px 'IN'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 21px 'IN'; white-space: nowrap; }
+.pill i { width: 11px; height: 11px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.roxo { background: var(--lil); color: var(--marca); }
+.pill.marca { background: var(--marca); color: #fff; }
+.pill.cinza { background: #EFEFF5; color: var(--cinza); }
+.pill.alerta { background: var(--amarc); color: var(--amar); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 84px; padding: 0 30px 0 36px; border-radius: 12px;
+       background: linear-gradient(135deg, #5B1D6A, #C084FC); color: #fff; font: 700 29px 'IN'; white-space: nowrap; position: relative; overflow: hidden;
+       box-shadow: 0 10px 24px rgba(91,29,106,.18); }
+.btn .bo { width: 30px; height: 30px; display: grid; place-items: center; }
+.btn svg { width: 28px; }
+.btn.ok { background: var(--verde); }
+.btnP { display: inline-flex; align-items: center; height: 48px; padding: 0 18px; border-radius: 10px; background: linear-gradient(135deg, #5B1D6A, #C084FC); color: #fff; font: 700 20px 'IN'; white-space: nowrap; }
+.btnP.ok { background: var(--verde); }
+
+/* inserções (faixa de cima, y 120–400: a cabeça começa em y ≈ 444) */
+.ins { width: 960px; padding: 26px 34px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 700 31px 'SG'; color: var(--tinta); height: 44px; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 66px; border-top: 1.5px solid var(--linha); font: 500 26px 'IN'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 12px; }
+.li .pill, .li b { margin-left: auto; }
+.li b { font: 700 26px 'IN'; color: var(--tinta); }
+#logoCard { padding: 40px 70px; display: flex; align-items: center; justify-content: center; }
+#logoCard img { height: 96px; display: block; }
+
+/* janela do sistema IMME (telas cheias) */
+.app { width: 960px; overflow: hidden; }
+.app .bar { height: 88px; display: flex; align-items: center; gap: 18px; padding: 0 30px; background: #fff; border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.app .bar img { height: 40px; } .app .bar .tt { font: 600 23px 'IN'; color: var(--cinza); padding-left: 18px; border-left: 1.5px solid var(--linha); white-space: nowrap; }
+.app .bar .pill { margin-left: auto; }
+.abas { height: 74px; display: flex; align-items: flex-end; gap: 4px; padding: 0 22px; background: var(--card2); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { height: 60px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-radius: 12px 12px 0 0; font: 600 22px 'IN'; color: var(--cinza); white-space: nowrap; }
+.aba.on { background: var(--card); color: var(--marca); font-weight: 700; box-shadow: inset 0 -4px 0 var(--marca); }
+.carrega { position: absolute; left: 0; bottom: -2px; height: 4px; background: var(--destaque); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 28px 34px 32px; background: var(--card); }
+.app h3 { font: 700 34px 'SG'; color: var(--tinta); } .app h3 + p { font: 400 23px 'IN'; color: var(--cinza); margin-top: 4px; }
+.topo { display: flex; align-items: flex-start; } .topo .pill { margin-left: auto; margin-top: 2px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 28px; }
+
+/* KPIs (cartões do Painel Mestre) */
+.kpis { display: flex; gap: 14px; }
+.kpi { flex: 1; background: var(--card2); border: 1.5px solid var(--linha); border-radius: 14px; padding: 16px 18px; }
+.kpi span { display: block; font: 500 19px 'IN'; color: var(--cinza); white-space: nowrap; }
+.kpi b { display: block; font: 700 36px 'SG'; color: var(--tinta); font-variant-numeric: tabular-nums; margin-top: 4px; white-space: nowrap; }
+.kpi b.v { color: var(--verde); } .kpi b.r { color: var(--verm); } .kpi b.m { color: var(--marca); }
+
+/* listas com bolinha de status (Estoque por Situação, Contas a Receber…) */
+.row { display: flex; align-items: center; gap: 16px; height: 80px; border-bottom: 1.5px solid var(--linha); font: 500 25px 'IN'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.row:last-child { border-bottom: 0; }
+.row .pill, .row > b, .row > .btnP { margin-left: auto; }
+.row > b { font: 700 25px 'IN'; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.row .nm { font: 600 25px 'IN'; color: var(--tinta); } .row .nm span { display: block; font: 400 20px 'IN'; color: var(--cinza); margin-top: 2px; white-space: nowrap; }
+.dot { width: 14px; height: 14px; border-radius: 50%; flex: none; background: var(--destaque); }
+.dot.v { background: #22A05A; } .dot.r { background: var(--verm); } .dot.a { background: #E8B33A; } .dot.c { background: #A0A0B4; }
+.ic { width: 52px; height: 52px; border-radius: 12px; background: var(--lil); color: var(--marca); display: grid; place-items: center; flex: none; font: 700 20px 'SG'; }
+.ic svg { width: 28px; height: 28px; }
+.secT { display: flex; align-items: center; font: 700 26px 'SG'; color: var(--tinta); margin: 22px 0 6px; }
+.secT .pill { margin-left: auto; }
+
+/* barra de progresso */
+.barra { height: 16px; border-radius: 8px; background: #EFEFF5; overflow: hidden; }
+.barra i { display: block; height: 100%; width: 0; border-radius: 8px; background: linear-gradient(90deg, #5B1D6A, #C084FC); }
+.barra.r i { background: var(--verm); }
+
+/* DRE gerencial */
+.tab { width: 100%; border-collapse: collapse; margin-top: 14px; }
+.tab th { font: 700 18px 'IN'; letter-spacing: .06em; text-transform: uppercase; color: var(--cinza); text-align: right; padding: 0 10px 12px; } .tab th:first-child { text-align: left; }
+.tab td { height: 66px; border-top: 1.5px solid var(--linha); font: 500 23px 'IN'; color: var(--texto); text-align: right; padding: 0 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tab td:first-child { text-align: left; }
+.tab tr.tot td { font-weight: 700; color: var(--tinta); background: var(--card2); }
+.tab tr.hl td { background: var(--verdec); color: var(--verde); font-weight: 700; }
+
+/* passos (implantação → treinamento → acompanhamento) */
+.passos { display: flex; gap: 14px; margin-top: 16px; }
+.passo { flex: 1; height: 116px; border: 1.5px solid var(--linha); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font: 600 23px 'IN'; color: var(--texto); }
+.passo .ck { width: 40px; height: 40px; border-radius: 50%; border: 3px solid var(--lilb); display: grid; place-items: center; }
+.passo .ck svg { width: 22px; opacity: 0; }
+
+.notif { position: absolute; left: 34px; right: 34px; bottom: 26px; border-radius: 16px; background: #fff; box-shadow: 0 14px 34px rgba(17,17,34,.18); border: 1.5px solid var(--linha);
+         padding: 18px 22px; display: flex; gap: 16px; align-items: center; z-index: 5; opacity: 0; }
+.notif .tx { font: 500 21px/1.25 'IN'; color: var(--texto); } .notif .tx b { display: block; font: 700 22px 'IN'; color: var(--tinta); margin-bottom: 2px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 4px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* CTA (cartão do site, logo, botão do site) — cabe na faixa acima da cabeça */
+#cta { width: 960px; padding: 30px 40px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .lgc { height: 56px; margin-bottom: 16px; }
+#cta .t { font: 700 36px/1.15 'SG'; color: var(--tinta); }
+#btnCta { margin-top: 20px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); transform: skewX(-20deg); left: -200px; }
+
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+
+/* ilustração da fala */
+.cx { font: 600 22px 'IN'; fill: #5B5B72; }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }

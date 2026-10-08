@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 1 V2 (caçambas: cansou de ligar?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #cel { left: 540px; top: 810px; width: 540px; height: 1000px; }
+  #m2 { position: absolute; left: 0; right: 0; top: 168px; bottom: 0; border-radius: 0; }
+  #ctrl .li span:first-child { font-weight: 600; color: var(--tinta); position: relative; }
+  #btnCta .wa { width: 44px; height: 44px; border-radius: 12px; background: #25D366; } #btnCta .wa img { width: 28px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 4,15): cansou de ligar para saber se a entrega foi feita? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Entregas de hoje</span><span class="pill cinza">Terça, 13/10</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Caçambas a entregar</h3><p>Motorista João · 4 entregas</p></div><span class="pill cinza" id="pTot">Em andamento</span></div>
+    <div style="margin-top:18px">
+      <div class="row e"><span class="id">CB-03</span><span class="nm">Rua das Acácias, 120<span>Obra residencial</span></span><span class="pill cinza">A confirmar</span></div>
+      <div class="row e"><span class="id">CB-07</span><span class="nm">Av. Brasil, 2.310<span>Reforma comercial</span></span><span class="pill cinza">A confirmar</span></div>
+      <div class="row e"><span class="id">CB-11</span><span class="nm">Rua Ipê Roxo, 45<span>Demolição</span></span><span class="pill cinza">A confirmar</span></div>
+      <div class="row e"><span class="id">CB-14</span><span class="nm">Rua do Comércio, 88<span>Obra residencial</span></span><span class="pill cinza">A confirmar</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (4,2 → 5,25): Mais Locações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo-navy.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (5,3 → 10,75): rota do motorista e posição de cada caçamba no mapa, ao vivo, no celular ═════ -->
+<div class="cam" id="cam2">
+<div class="p cel fs" id="cel"><div class="tela2">
+  <div class="topoC" id="cTopo"><img src="img/logo-claro.svg"><div class="tt">Rota de hoje · Motorista João<span class="pill vivo" id="aoVivo"><i></i>Ao vivo</span></div></div>
+  <div class="mapa" id="m2"></div>
+</div></div>
+</div>
+
+<!-- ═════ INSERÇÃO (10,9 → 17,2): da planilha para o sistema ═════ -->
+<div class="p card ins" id="ctrl" style="left:540px;top:300px">
+  <div class="cabI">Controle da operação</div>
+  <div class="li"><span id="xl">controle-cacambas.xlsx</span><span class="pill cinza" id="pXl">Planilha</span></div>
+  <div class="li"><span>Mais Locações</span><span class="pill cinza" id="pSis">Sistema</span></div>
+  <div class="li"><span>Onde está a operação</span><span class="pill cinza" id="pOp">—</span></div>
+</div>
+
+<!-- ═════ CTA (17,34 → fim): chama no WhatsApp ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Veja o sistema funcionando</span>Fale com a Mais Locações</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div><div class="wa" id="waI"><img src="img/whatsapp.svg"></div>Chamar no WhatsApp</div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 20.73;
+const ROSTO = [560, 740];
+const FS = [[0.9, 4.15, true], [5.3, 10.75, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+mapa($('#m2'), 7);
+rota($('#m2'), 'M60 770 C 140 650, 120 560, 230 500 S 380 420, 360 300 S 300 150, 440 70', 'r2');
+const P2 = [[110, 610, 'CB-03'], [300, 470, 'CB-07'], [130, 320, 'CB-11'], [420, 330, 'CB-14'], [250, 170, 'CB-18'], [440, 80, 'CB-21']].map(([x, y, r]) => pino($('#m2'), x, y, '', '#01235C', r));
+const ent = Q('#win .row.e'), cl = Q('#ctrl .li');
+const riscaXl = riscar('xl');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.95, [540, 800], 0.92, 3, -3], [2.0, [ent[0], ent[1]], 1.04, 2, -1], [3.0, [ent[2], ent[3]], 1.08, 1, 2], [4.15, '#win .topo', 1.12, 0, 0, 0, 40]]);
+  camera(t, '#cam2', [[5.35, [540, 810], 0.92, 2, -3], [6.4, '#m2', 1.0, 2, 2], [8.4, '#m2', 1.06, 1, -2], [9.6, [540, 790], 0.96, 1, 1], [10.75, [540, 780], 1.0, 0, 0]]);
+
+  /* ── FS1 · 0,9 → 4,15: cada entrega vira uma ligação ── */
+  A($('#win'), t, 0.95, 4.05, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(ent, t, 1.15, 0.08);
+  ent.forEach((e, k) => { vira(e.querySelector('.pill'), t, 2.18 + 0.2 * k, 'Ligar p/ confirmar', 'ruim'); acende(e, t, 2.18 + 0.2 * k, '201,55,42', 0.06); });
+  vira($('#pTot'), t, 3.48, '4 sem confirmação', 'ruim');
+
+  /* ── logo · 4,2 → 5,25 ── */
+  A($('#logoCard'), t, 4.22, 5.2, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 5,3 → 10,75 ── */
+  A($('#cel'), t, 5.35, 10.65, { de: 0.88, dy: 120, dout: 0.2 });
+  andaRota(t, 'r2', 5.8, 1.9);
+  P2.forEach((p, k) => popPino(p, t, 7.0 + 0.12 * k));
+  P2.forEach((p, k) => { if (t >= 8.62 + 0.06 * k) pinoCor(p, '#0B3A9E'); });
+  $('#aoVivo').style.opacity = pr(t, 9.0, 0.3, E.cubicOut); pulsa($('#aoVivo'), t, 9.1, 0.16);
+
+  /* ── inserção · 10,9 → 17,2: planilha → sistema ── */
+  A($('#ctrl'), t, 10.9, 17.2, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(cl, t, 11.0, 0.08, 12);
+  riscaXl(t, 12.28); vira($('#pXl'), t, 12.28, 'Saiu', 'ruim');
+  vira($('#pSis'), t, 12.94, '✓ Em uso', 'vivo'); acende(cl[1], t, 12.94, '21,128,61');
+  vira($('#pOp'), t, 14.5, '21 caçambas · ao vivo', 'azul'); acende(cl[2], t, 14.72);
+  vira($('#pOp'), t, 15.96, '✓ Ao vivo, de casa', 'vivo');
+
+  /* ── CTA · 17,34 → fim ── */
+  A($('#cta'), t, 17.34, null, { de: 0.86, dy: -60 });
+  pulsa($('#waI'), t, 17.9, 0.2);
+  { const c = cursor($('#cur1'), t, 18.4, [1020, 760], t > 18.4 ? centro('#btnCta') : [0, 0], 19.1, 20.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 19.25) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 19.25 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

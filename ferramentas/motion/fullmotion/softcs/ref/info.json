@@ -1,0 +1,884 @@
+{
+ "cores": [
+  [
+   "bg rgba(0, 0, 0, 0)",
+   85056467.23395257
+  ],
+  [
+   "bg rgb(12, 10, 41)",
+   10397340
+  ],
+  [
+   "bg rgb(255, 255, 255)",
+   2974198.4209611006
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.15)",
+   1802009.421307832
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.2)",
+   1710384.1163639426
+  ],
+  [
+   "bg rgb(19, 16, 66)",
+   1623150
+  ],
+  [
+   "bg rgb(28, 19, 83)",
+   888120
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.25)",
+   649938.28515625
+  ],
+  [
+   "bg rgb(19, 16, 55)",
+   521551.09375
+  ],
+  [
+   "bg oklab(0.248351 0.0207774 -0.106913 / 0.15)",
+   432964
+  ],
+  [
+   "bg rgb(245, 246, 255)",
+   367398.54934181273
+  ],
+  [
+   "bg oklab(0.279503 0.0175026 -0.0526114 / 0.4)",
+   222651
+  ],
+  [
+   "bg oklab(0.205154 0.0136742 -0.0725801 / 0.6)",
+   181221.1875
+  ],
+  [
+   "bg oklab(0.205154 0.0136742 -0.0725801 / 0.7)",
+   135082.91487441957
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.7)",
+   132940.392005302
+  ],
+  [
+   "bg rgb(250, 250, 250)",
+   78109.5
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.05)",
+   74204.72070788592
+  ],
+  [
+   "bg rgb(135, 88, 243)",
+   66054.455619663
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.3)",
+   65536
+  ],
+  [
+   "bg oklab(0.205154 0.0136742 -0.0725801 / 0.95)",
+   40807.77099609375
+  ],
+  [
+   "bg oklab(0.594118 0.0831488 -0.20438 / 0.5)",
+   34979.5
+  ],
+  [
+   "bg oklch(0.984 0.003 247.858)",
+   33583.00749287009
+  ],
+  [
+   "bg rgb(34, 195, 109)",
+   25141.13103324175
+  ],
+  [
+   "bg rgb(241, 236, 254)",
+   6249.82028824091
+  ],
+  [
+   "bg oklab(0.999994 0.0000455678 0.0000200868 / 0.15)",
+   5352.121979176998
+  ],
+  [
+   "bg rgb(40, 36, 66)",
+   3872
+  ],
+  [
+   "bg oklab(0.999994 0.0000455678 0.0000200868 / 0.2)",
+   2352
+  ],
+  [
+   "bg rgb(251, 233, 233)",
+   1905.1218456923962
+  ],
+  [
+   "bg rgb(253, 243, 216)",
+   1905.1172314435244
+  ],
+  [
+   "bg rgb(224, 245, 234)",
+   1905.1126171946526
+  ]
+ ],
+ "fontes": [
+  [
+   "Manrope, sans-serif 700",
+   60
+  ],
+  [
+   "Manrope, sans-serif 400",
+   58
+  ],
+  [
+   "Manrope, sans-serif 600",
+   29
+  ],
+  [
+   "Manrope, sans-serif 500",
+   16
+  ],
+  [
+   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace 400",
+   3
+  ]
+ ],
+ "imgs": [
+  [
+   "https://softcs.com.br/assets/lari-ai-avatar-ScQzaYXp.png",
+   "Lari AI",
+   36
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/9002b788-fe9c-4fc7-b5ac-84d3d673cf42/softcs-logo-dark.svg",
+   "SoftCS",
+   80
+  ],
+  [
+   "https://softcs.com.br/assets/hero-woman-laptop-B-j71YK3.jpg",
+   "Profissional de Customer Success usando a SoftCS",
+   0
+  ],
+  [
+   "https://softcs.com.br/assets/hero-woman-laptop-B-j71YK3.jpg",
+   "Profissional de Customer Success usando a SoftCS",
+   646
+  ],
+  [
+   "https://softcs.com.br/lovable-uploads/55c9f37c-bdaf-4f6c-ba87-a70488af523b-132x76.webp",
+   "Instabuy - E-commerce supermercados",
+   133
+  ],
+  [
+   "https://softcs.com.br/lovable-uploads/dd003f47-784e-407d-ad72-262239922757-132x76.webp",
+   "Urbis - Benefícios que fidelizam",
+   125
+  ],
+  [
+   "https://softcs.com.br/assets/logos/eduvem-logo.png",
+   "Eduvem - Educação online",
+   154
+  ],
+  [
+   "https://softcs.com.br/assets/logos/suri-logo.png",
+   "Suri - Atendimento IA no WhatsApp",
+   101
+  ],
+  [
+   "https://softcs.com.br/assets/logos/linkflow.png",
+   "Linkflow - Gestão de marcas e embalagens",
+   169
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/ddc35dec-df57-4d6a-8ee9-4816ba62fced/nydus-logo.png",
+   "Nydus RH - Gestão de RH",
+   91
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/75394c22-6c1e-40c6-ad00-6f6059609c7a/kedu-logo.png",
+   "Kedu - Plataforma de crescimento e gestão financeira para escolas privadas",
+   184
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/48165a20-b784-4129-8826-2cf3f5099ddb/cohros-logo.png",
+   "Cohros - Plataforma de gestão estratégica de pessoas: cargos, salários e desempenho",
+   53
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/d2f0f9a0-c8b1-46ca-8013-92c4bd846428/greatpages-logo.png",
+   "GreatPages - Editor de landing pages e sites de alta performance",
+   246
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/deb57c6b-0f8b-4abb-bde5-6457c9815dff/iclips-logo.png",
+   "iClips - Software de gestão completo para agências",
+   87
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/e531fc63-ee2e-4f8b-8761-15317aa9224b/beepay-logo.png",
+   "Beepay - Tecnologia para operações autônomas: lojas e eventos 24/7",
+   0
+  ],
+  [
+   "https://softcs.com.br/lovable-uploads/55c9f37c-bdaf-4f6c-ba87-a70488af523b-132x76.webp",
+   "Instabuy - E-commerce supermercados",
+   133
+  ],
+  [
+   "https://softcs.com.br/lovable-uploads/dd003f47-784e-407d-ad72-262239922757-132x76.webp",
+   "Urbis - Benefícios que fidelizam",
+   125
+  ],
+  [
+   "https://softcs.com.br/assets/logos/eduvem-logo.png",
+   "Eduvem - Educação online",
+   154
+  ],
+  [
+   "https://softcs.com.br/assets/logos/suri-logo.png",
+   "Suri - Atendimento IA no WhatsApp",
+   101
+  ],
+  [
+   "https://softcs.com.br/assets/logos/linkflow.png",
+   "Linkflow - Gestão de marcas e embalagens",
+   169
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/ddc35dec-df57-4d6a-8ee9-4816ba62fced/nydus-logo.png",
+   "Nydus RH - Gestão de RH",
+   91
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/75394c22-6c1e-40c6-ad00-6f6059609c7a/kedu-logo.png",
+   "Kedu - Plataforma de crescimento e gestão financeira para escolas privadas",
+   184
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/48165a20-b784-4129-8826-2cf3f5099ddb/cohros-logo.png",
+   "Cohros - Plataforma de gestão estratégica de pessoas: cargos, salários e desempenho",
+   53
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/d2f0f9a0-c8b1-46ca-8013-92c4bd846428/greatpages-logo.png",
+   "GreatPages - Editor de landing pages e sites de alta performance",
+   246
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/deb57c6b-0f8b-4abb-bde5-6457c9815dff/iclips-logo.png",
+   "iClips - Software de gestão completo para agências",
+   87
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/e531fc63-ee2e-4f8b-8761-15317aa9224b/beepay-logo.png",
+   "Beepay - Tecnologia para operações autônomas: lojas e eventos 24/7",
+   0
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/dc47ff97-8a91-4117-b0a5-88b4953e94f1/integrations-catalog.png",
+   "Catálogo de integrações da SoftCS — API, GraphQL, Google Sheets, ClickUp, Conta Azul, Omie, Google Calendar, Gmail, Suri, HubSpot, Pipedrive, Jira e mais",
+   560
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/hubspot-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/rd-crm-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/pipedrive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/ploomes-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/omie-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/conta-azul-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/zendesk.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/movidesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/slack.svg",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/whatsapp/25D366",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/agendor-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/bling-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/mixpanel.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/notion.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-drive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-sheets.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/freshdesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/octadesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/gmail/EA4335",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/hubspot-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/rd-crm-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/pipedrive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/ploomes-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/omie-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/conta-azul-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/zendesk.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/movidesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/slack.svg",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/whatsapp/25D366",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/agendor-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/bling-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/mixpanel.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/notion.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-drive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-sheets.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/freshdesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/octadesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/gmail/EA4335",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/hubspot-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/rd-crm-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/pipedrive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/ploomes-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/omie-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/conta-azul-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/zendesk.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/movidesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/slack.svg",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/whatsapp/25D366",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/agendor-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/bling-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/mixpanel.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/notion.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-drive.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/google-sheets.svg",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/freshdesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/assets/integration-logos/octadesk-96x96.webp",
+   "",
+   72
+  ],
+  [
+   "https://cdn.simpleicons.org/gmail/EA4335",
+   "",
+   72
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/5fb0d6ef-4a62-4215-91c0-c04e2a339a2c/healthscore-dashboard.png",
+   "Dashboard de Health Score da SoftCS com totais de clientes saudáveis, em atenção e críticos",
+   567
+  ],
+  [
+   "https://softcs.com.br/assets/lari-ai-avatar-ScQzaYXp.png",
+   "",
+   827
+  ],
+  [
+   "https://softcs.com.br/assets/lari-ai-logo-BUiNdell.png",
+   "Lari AI",
+   201
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/25d51382-19d2-4e3e-b08a-2fb1b48b1d02/lari-ai-insights.png",
+   "LariAI - Resumo executivo e principais insights de saúde do cliente",
+   0
+  ],
+  [
+   "https://softcs.com.br/__l5e/assets-v1/25d51382-19d2-4e3e-b08a-2fb1b48b1d02/lari-ai-insights.png",
+   "LariAI - Resumo executivo e principais insights de saúde do cliente",
+   694
+  ],
+  [
+   "https://softcs.com.br/assets/logos/suri-logo.png",
+   "Suri",
+   99
+  ],
+  [
+   "https://softcs.com.br/assets/leticia-suri-DTLWvcIT.png",
+   "Letícia",
+   56
+  ],
+  [
+   "https://softcs.com.br/lovable-uploads/e432c4d6-6ad5-4454-a1a8-58d7d1a27c27-192x192.webp",
+   "Logo da SoftCS",
+   224
+  ]
+ ],
+ "btn": [
+  [
+   "Pular para o conteúdo principal",
+   "rgb(135, 88, 243)",
+   "rgb(255, 255, 255)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Fale com a LariAssistente IA • SoftCS",
+   "rgb(135, 88, 243)",
+   "rgb(255, 255, 255)",
+   "3.35544e+07px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Pular para o conteúdo principal",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Início",
+   "rgba(0, 0, 0, 0)",
+   "rgb(255, 255, 255)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Comparativos",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Recursos",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Planos",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Empresa",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "4px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Login",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "6px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Agendar Demo",
+   "rgb(135, 88, 243)",
+   "rgb(255, 255, 255)",
+   "6px",
+   "Manrope, sans-serif",
+   "500"
+  ],
+  [
+   "Agendar demo",
+   "rgb(135, 88, 243)",
+   "rgb(255, 255, 255)",
+   "12px",
+   "Manrope, sans-serif",
+   "600"
+  ],
+  [
+   "PitchYes",
+   "rgba(0, 0, 0, 0)",
+   "rgb(250, 250, 250)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Pedido Eletrônico",
+   "rgba(0, 0, 0, 0)",
+   "rgb(250, 250, 250)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "PitchYes",
+   "rgba(0, 0, 0, 0)",
+   "rgb(250, 250, 250)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Pedido Eletrônico",
+   "rgba(0, 0, 0, 0)",
+   "rgb(250, 250, 250)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Rolar para ver mais",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Resumo inteligente do seu portfólioA Lar",
+   "oklab(0.594118 0.0831488 -0.20438 / 0.05)",
+   "oklch(0.208 0.042 265.755)",
+   "16px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Prioridades do dia em um só painel",
+   "rgb(255, 255, 255)",
+   "oklch(0.208 0.042 265.755)",
+   "16px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Automações inteligentes sem código",
+   "rgb(255, 255, 255)",
+   "oklch(0.208 0.042 265.755)",
+   "16px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Chat contextual por cliente",
+   "rgb(255, 255, 255)",
+   "oklch(0.208 0.042 265.755)",
+   "16px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Agendar demo",
+   "rgb(135, 88, 243)",
+   "rgb(255, 255, 255)",
+   "12px",
+   "Manrope, sans-serif",
+   "600"
+  ],
+  [
+   "Reclame AquiVerificado",
+   "rgb(34, 195, 109)",
+   "rgb(255, 255, 255)",
+   "12px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Início",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Planos",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Empresa",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Blog",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Parceiros",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Segurança",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "LinkedIn",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Instagram",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Email",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Reclame Aqui",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+   "8px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Política de Privacidade",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ],
+  [
+   "Termos de Uso",
+   "rgba(0, 0, 0, 0)",
+   "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+   "0px",
+   "Manrope, sans-serif",
+   "400"
+  ]
+ ],
+ "txt": "Pular para o conteúdo principal\n\nFale com a Lari\n\nAssistente IA • SoftCS\n\nPular para o conteúdo principal\nInício\nComparativos\nRecursos\nPlanos\nEmpresa\nLogin\nAgendar Demo\nReduza churn em até 40% com Health Score + Automações + IA\nSaia do caos de planilhas e ferramentas soltas. Um único lugar para centralizar dados e automatizar processos.\nAgendar demo\n\nNossos clientes:\n\nPitchYes\nPedido Eletrônico\nPitchYes\nPedido Eletrônico\nRolar para ver mais\nNossa Solução\n\nVocê retém sua base, vende mais pra ela, e ainda reduz colaboradores por cliente com um time de CS mais eficiente.\n\nConecte seus sistemas atuais e centralize a visão do seu cliente\n\nEsqueça o caos das planilhas infinitas e das abas acumuladas. Toda informação vive em um só lugar, sempre atualizada, sempre pronta.\n\nsoftcs.com.br / integrações\nCRM\nFinanceiro\nAdoção e uso\nReuniões e agenda\nChamados e suporte\nEmails, WhatsApp e ligações\nCom os dados centralizados e conectados, geramos um Health Score parametrizado e segmentado\n\nVocê configura pesos, indicadores e critérios por segmento, plano ou ciclo de vida. O Health Score da SoftCS reflete a realidade do seu negócio, não um modelo genérico de mercado.\n\nsoftcs.com.br / health-score\n87\nHEALTH SCORE\nSaudável\nAtenção\nCrítico\nA cada mudança de score disparamos automações e alertas inteligentes\n\nVocê configura gatilhos e ações específicas de forma segmentada para cada sinal: queda de uso, NPS negativo, ticket crítico, renovação próxima ou oportunidade de expansão. Cada evento aciona o playbook certo, para a pessoa certa, no momento certo. Sua operação passa a ser proativa, sem depender da memória do CSM.\n\nSOFTCS · AUTOMAÇÕES\nTRIGGER\nQuando o Health Score muda de faixa\nPlaybook combina com 247 contas\n+\nRULES\nDivide em 3 caminhos\nSegmentado por faixa de score\nFAIXA SAUDÁVEL\nSCORE 92\nScore subiu\ncliente engajado\n+\nAÇÃO\nDispara oferta de upsell\ne agenda call de expansão\n+\nRESULTADO\nUpsell & Cross-sell\nPLAYBOOK ATIVO\nFAIXA ATENÇÃO\nSCORE 62\nQueda de uso\nscore em declínio\n+\nAÇÃO\nAlerta CSM + trilha de adoção\ncheck-in proativo agendado\n+\nRESULTADO\nReengajamento & Adoção\nPLAYBOOK ATIVO\nFAIXA CRÍTICO\nSCORE 28\nRisco de churn\nscore crítico\n+\nAÇÃO\nWar room + playbook de save\nescala para liderança de CS\n+\nRESULTADO\nRetenção & Save\nPLAYBOOK ATIVO\nCom a SoftCS você atinge resultados que impactam o negócio\n\n-40%\nde churn\nclientes retidos com atuação proativa e baseada em sinais reais\n+15%\nde upsell / cross-sell\nexpansão de receita gerada dentro da base atual de clientes\n-15h\nde trabalho manual\npor semana, por pessoa, em toda a operação de CS\n\n* Resultados variam conforme contexto, segmento, maturidade da operação e engajamento do time. Referências baseadas na média observada em clientes SoftCS.\n\nSua copiloto de Customer Success\n\nLari AI analisa seus dados automaticamente, identifica riscos de churn e cria planos de ação prontos para executar.\n\nResumo inteligente do seu portfólio\n\nA Lari analisa todos os seus clientes e entrega um resumo executivo com os principais insights, riscos e oportunidades do dia.\n\nPrioridades do dia em um só painel\nAutomações inteligentes sem código\nChat contextual por cliente\napp.softcs.com.br\nO que nossos clientes dizem\n“A Soft trouxe visibilidade que a gente não tinha. Hoje a operação de CS roda com previsibilidade e a gestão consegue agir antes do problema acontecer.”\n\nLetícia\n\nGerente de CS na Suri\n\nHelpdesk\n\ntickets centralizados em um só lugar\n\nJornadas\n\nfluxos automatizados de ponta a ponta\n\nHealth score\n\nstatus claro de cada cliente\n\nPronto para começar?\n\nAgende uma conversa consultiva e veja, com dados da sua própria base, onde estão as maiores oportunidades de retenção e expansão.\n\nAgendar demo\n\nSoftware de Customer Success com IA\n\nLGPD\nConforme\nSSL\nSeguro\nSuporte\n100% BR\nReclame Aqui\nVerificado\nMenu\nInício\nPlanos\nEmpresa\nBlog\nParceiros\nSegurança\nConecte-se\nLinkedIn\nInstagram\nEmail\nReclame Aqui\n© 2026 SoftCS. Todos os direitos reservados.\nSoft CS LTDA | CNPJ: 63.525.415/0001-07\nPolítica de Privacidade\n|\nTermos de Uso\nFeito com\ne",
+ "title": "SoftCS | Software de Customer Success com IA"
+}

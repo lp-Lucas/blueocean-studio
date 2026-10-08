@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>IMME — Copy 1 (Rio: 78% dos restaurantes enfrentam gargalos operacionais)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #ilu svg { display: block; margin-top: 10px; }
+  #app3 .corpo { height: 580px; }
+  .bar .ic { width: 48px; height: 48px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 5,65): 78 % dos restaurantes do Rio com gargalo — onde trava ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win1" style="left:540px;top:800px">
+  <div class="bar"><div class="ic">RJ</div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">Restaurantes no Rio de Janeiro</span><span class="pill cinza">Operação</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Gargalos operacionais</h3><p>Restaurantes que enfrentam hoje</p></div><span class="pill cinza num" id="p78">0%</span></div>
+    <div class="barra r" style="margin-top:18px"><i id="b78"></i></div>
+    <div class="secT">Onde a operação trava</div>
+    <div class="row g"><span class="dot c"></span><div class="nm">Atendimento<span>Mesas cheias, pedidos demorados</span></div><span class="pill cinza">Normal</span></div>
+    <div class="row g"><span class="dot c"></span><div class="nm">Fechamento da conta<span>Cliente esperando no caixa</span></div><span class="pill cinza">Normal</span></div>
+    <div class="row g"><span class="dot c"></span><div class="nm">Estoque<span>Perdas e falta de visibilidade</span></div><span class="pill cinza">Normal</span></div>
+    <div class="row g"><span class="dot c"></span><div class="nm">Fechamento de caixa<span>Conferência feita à mão</span></div><span class="pill cinza">Normal</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,86 → 11,95): estoque, vendas, compras e operação não conectados (ilustração: linha que se rompe) ═════ -->
+<div class="p card ins" id="ilu" style="left:540px;top:262px">
+  <div class="cabI">Sua operação<span class="pill cinza num" id="pAl">0 alertas</span></div>
+  <svg width="892" height="160" viewBox="0 0 892 160">
+    <g id="gl1"><path id="l1" d="M108 56 H332" stroke="#5B1D6A" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="gl2"><path id="l2" d="M338 56 H554" stroke="#5B1D6A" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="gl3"><path id="l3" d="M560 56 H784" stroke="#5B1D6A" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g class="nd"><circle cx="80" cy="56" r="24" fill="#fff" stroke="#5B1D6A" stroke-width="7"/><text class="cx" x="80" y="128" text-anchor="middle">Estoque</text></g>
+    <g class="nd"><circle cx="335" cy="56" r="24" fill="#fff" stroke="#5B1D6A" stroke-width="7"/><text class="cx" x="335" y="128" text-anchor="middle">Vendas</text></g>
+    <g class="nd"><circle cx="557" cy="56" r="24" fill="#fff" stroke="#5B1D6A" stroke-width="7"/><text class="cx" x="557" y="128" text-anchor="middle">Compras</text></g>
+    <g class="nd"><circle cx="812" cy="56" r="24" fill="#fff" stroke="#5B1D6A" stroke-width="7"/><text class="cx" x="812" y="128" text-anchor="middle">Operação</text></g>
+    <g class="bg"><circle cx="104" cy="26" r="15" fill="#C9372A"/><text x="104" y="33" fill="#fff" font-family="IN" font-weight="800" font-size="20" text-anchor="middle">!</text></g>
+    <g class="bg"><circle cx="359" cy="26" r="15" fill="#C9372A"/><text x="359" y="33" fill="#fff" font-family="IN" font-weight="800" font-size="20" text-anchor="middle">!</text></g>
+    <g class="bg"><circle cx="581" cy="26" r="15" fill="#C9372A"/><text x="581" y="33" fill="#fff" font-family="IN" font-weight="800" font-size="20" text-anchor="middle">!</text></g>
+    <g class="bg"><circle cx="836" cy="26" r="15" fill="#C9372A"/><text x="836" y="33" fill="#fff" font-family="IN" font-weight="800" font-size="20" text-anchor="middle">!</text></g>
+  </svg>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (12,0 → 20,3): inventário — excesso, falta, diferença, informação espalhada, retrabalho ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="win2" style="left:540px;top:800px">
+  <div class="bar"><div class="ic" id="icInv"></div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">Estoque da cozinha</span><span class="pill cinza">Inventário de hoje</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Inventário</h3><p>Contagem × o que foi lançado</p></div><span class="pill cinza" id="pCtl">Em conferência</span></div>
+    <div style="margin-top:12px">
+      <div class="row i"><span class="dot c"></span><div class="nm">Óleo de soja<span>Compra da semana</span></div><span class="pill cinza num">18 L</span></div>
+      <div class="row i"><span class="dot c"></span><div class="nm">Muçarela<span>Insumo do cardápio</span></div><span class="pill cinza num">6 kg</span></div>
+      <div class="row i"><span class="dot c"></span><div class="nm">Filé mignon<span>Contado × sistema</span></div><span class="pill cinza num">24 kg</span></div>
+      <div class="row i"><span class="dot c"></span><div class="nm">Preços dos fornecedores<span>Onde estão as informações</span></div><span class="pill cinza">Planilha</span></div>
+      <div class="row i"><span class="dot c"></span><div class="nm">Contagem do estoque<span>Feita pela equipe</span></div><span class="pill cinza">1ª vez</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (20,45 → 21,35): logo IMME ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:262px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 3 (21,4 → 32,75): IMME — tudo integrado, sugestão de compra, perdas e painel (sistema recriado) ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="app3" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">Gestão integrada</span><span class="pill vivo"><i></i>Online</span></div>
+  <div class="abas"><div class="aba">Visão geral</div><div class="aba">Estoque</div><div class="aba">Painel Mestre</div><div class="carrega" id="car3"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v0">
+      <div class="topo"><div><h3>Uma única gestão</h3><p>Das entradas ao financeiro</p></div><span class="pill cinza num" id="pInt">0 de 5 integrados</span></div>
+      <div style="margin-top:10px">
+        <div class="row it"><div class="ic"></div><div class="nm">Entradas<span>Notas dos fornecedores</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Saídas<span>Baixa automática no estoque</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Consumo<span>Pelas fichas técnicas</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Vendas<span>PDV integrado na maquininha</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Financeiro<span>Contas, fluxo de caixa e DRE</span></div><span class="pill cinza">Aguardando</span></div>
+      </div>
+    </div>
+    <div class="vista" id="v1">
+      <div class="topo"><div><h3>Estoque · Painel Mestre</h3><p>Hoje · atualizado agora</p></div><span class="pill roxo">Alerta de estoque crítico</span></div>
+      <div class="secT">Sugestão de compra</div>
+      <div class="row e"><span class="dot a"></span><div class="nm">Muçarela<span>Estoque mínimo: 10 kg</span></div><span class="pill alerta num">Comprar 12 kg</span></div>
+      <div class="row e"><span class="dot a"></span><div class="nm">Tomate italiano<span>Cobertura: 1 dia</span></div><span class="pill alerta num">Comprar 8 kg</span></div>
+      <div class="secT">Perdas identificadas</div>
+      <div class="row e"><span class="dot r"></span><div class="nm">Salmão<span>Vencido no estoque</span></div><span class="pill ruim num">−R$ 420</span></div>
+      <div class="row e"><span class="dot r"></span><div class="nm">Alface americana<span>Descarte na produção</span></div><span class="pill ruim num">−R$ 86</span></div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="topo"><div><h3>Resultados da operação</h3><p>Este mês</p></div><span class="pill vivo">Tudo integrado</span></div>
+      <div class="kpis" style="margin-top:22px">
+        <div class="kpi"><span>Faturamento</span><b class="num" id="k1">R$ 0</b></div>
+        <div class="kpi"><span>CMV real</span><b class="num m" id="k2">0,0%</b></div>
+      </div>
+      <div class="kpis" style="margin-top:14px">
+        <div class="kpi"><span>Perdas no mês</span><b class="num v" id="k3">−0%</b></div>
+        <div class="kpi"><span>Estoque crítico</span><b class="num" id="k4">0 itens</b></div>
+      </div>
+      <div class="secT">Insights do período</div>
+      <div class="row p2"><span class="dot v"></span><div class="nm">Compra de muçarela ajustada<span>Pelo consumo real das fichas</span></div><span class="pill vivo num">+R$ 1.240</span></div>
+      <div class="row p2"><span class="dot v"></span><div class="nm">Salmão com validade no radar<span>Alerta antes de vencer</span></div><span class="pill vivo num">Perda zerada</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (32,85 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:262px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t">Mais controle sobre a sua operação</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conhecer a IMME <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 37.48;
+const ROSTO = [480, 700];
+const FS = [[1.0, 5.65, true], [12.0, 20.3, true], [21.4, 32.75, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 32.25, ps: FM.criaConfete(7, 50, 540, 640, 760, 120, 0.7), rgb: [192, 132, 252] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+$('#icInv').innerHTML = S('agenda', '#5B1D6A');
+Q('#v0 .ic').forEach((e, k) => e.innerHTML = S(['desce', 'sobe', 'funil', 'dolar', 'bars'][k], '#5B1D6A'));
+const g1 = Q('#win1 .row'), r2 = Q('#win2 .row'), it = Q('#v0 .row'), e1 = Q('#v1 .row'), nd = Q('#ilu .nd'), bgs = Q('#ilu .bg');
+const abas3 = Q('#app3 .aba'), vistas3 = [$('#v0'), $('#v1'), $('#v2')];
+const IN = (t, a, b) => t >= a && t < b;
+const brlK = x => 'R$ ' + Math.round(x).toLocaleString('pt-BR');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.2, ['#win1 .topo', '#b78'], 1.04, 2, 1], [3.4, ['#win1 .topo', '#b78'], 1.08, 1, -1],
+    [4.3, [g1[0], g1[1]], 1.06, 1, 2], [5.65, [g1[2], g1[3]], 1.1, 0, -1]]);
+  camera(t, '#cam2', [[12.05, [540, 800], 0.92, 3, 3], [13.0, [r2[0], r2[1]], 1.06, 2, -1], [14.6, [r2[1], r2[2]], 1.1, 1, 2], [16.0, [r2[2], r2[3]], 1.12, 1, -2],
+    [17.4, [r2[3], r2[4]], 1.12, 0, 1], [18.9, ['#win2 .topo', r2[0]], 1.06, 1, -1], [20.3, '#win2 .topo', 1.1, 0, 0, 0, 60]]);
+  camera(t, '#cam3', [[21.45, [540, 800], 0.92, 3, -3], [22.4, [it[0], it[1]], 1.04, 2, 1], [23.6, [it[1], it[3]], 1.06, 1, -2], [24.8, [it[3], it[4]], 1.1, 1, 2],
+    [26.2, '#app3 .abas', 1.04, 0, -1], [27.6, [e1[0], e1[1]], 1.08, 2, 1], [29.6, [e1[2], e1[3]], 1.1, 1, -2], [30.6, '#app3 .abas', 1.02, 0, 1],
+    [31.6, '#v2 .kpis', 1.06, 1, -1], [32.75, '#v2 .kpis', 1.1, 0, 0]]);
+
+  /* ── FS1 · 1,0 → 5,65: 78 % com gargalo; onde trava ── */
+  A($('#win1'), t, 1.05, 5.55, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(g1, t, 1.3, 0.08);
+  if (t >= 2.13) { conta($('#p78'), t, 2.13, 1.0, 78, x => Math.round(x) + '%'); $('#p78').className = 'pill ruim num'; pulsa($('#p78'), t, 3.13, 0.12); }
+  else { $('#p78').textContent = '0%'; $('#p78').className = 'pill cinza num'; }
+  $('#b78').style.width = 78 * pr(t, 2.13, 1.0, E.cubicOut) + '%';
+  [['Fila +14 min', 4.27], ['Demorado', 4.45], ['Não fecha', 4.85], ['2 h por dia', 5.03]].forEach(([tx, t0], k) => {
+    vira(g1[k].querySelector('.pill'), t, t0, tx, 'ruim'); acende(g1[k], t, t >= t0 ? t0 : null, '201,55,42', 0.06);
+    g1[k].querySelector('.dot').className = 'dot ' + (t >= t0 ? 'r' : 'c'); });
+
+  /* ── inserção · 5,86 → 11,95: as 4 áreas se ligam… e não estão conectadas; problemas se acumulam ── */
+  A($('#ilu'), t, 5.86, 11.95, { de: 0.86, dy: -60, dout: 0.25 });
+  [6.3, 7.0, 7.52, 7.96].forEach((t0, k) => pop(nd[k], t, t0));
+  tinta(t, 'l1', 7.0, 0.35); tinta(t, 'l2', 7.52, 0.35); tinta(t, 'l3', 7.96, 0.35);
+  { const q = M.prog(t, 8.9, 0.6, E.spring), cor = t >= 8.9 ? '#C9372A' : '#5B1D6A';
+    [['gl1', 220], ['gl2', 446], ['gl3', 672]].forEach(([id, cx], k) => { $('#' + id).setAttribute('transform', `translate(0 ${(k % 2 ? 7 : -7) * q}) rotate(${(k % 2 ? 5 : -5) * q} ${cx} 56)`);
+      const l = $('#' + id).firstElementChild; l.setAttribute('stroke', cor); if (t >= 8.9) { l.style.strokeDasharray = '34 26'; l.style.strokeDashoffset = 0; } }); }
+  [9.56, 10.02, 10.54, 11.3].forEach((t0, k) => pop(bgs[k], t, t0));
+  { let n = 0; [9.56, 10.02, 10.54, 11.3].forEach((t0, k) => { if (t >= t0) n = [2, 4, 7, 9][k]; });
+    if (n) { $('#pAl').textContent = n + ' alertas'; $('#pAl').className = 'pill ruim num'; pulsa($('#pAl'), t, [9.56, 10.02, 10.54, 11.3][[2, 4, 7, 9].indexOf(n)], 0.1); }
+    else { $('#pAl').textContent = t >= 8.9 ? 'Desconectada' : 'Conectando…'; $('#pAl').className = t >= 8.9 ? 'pill ruim' : 'pill cinza'; } }
+
+  /* ── FS2 · 12,0 → 20,3: inventário com problemas ── */
+  A($('#win2'), t, 12.05, 20.2, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(r2, t, 12.25, 0.08);
+  [['+40 L comprados', 12.54], ['Faltou · 0 kg', 13.56], ['Diferença −6 kg', 14.76], ['4 planilhas', 16.08], ['Retrabalho · 3ª vez', 17.5]].forEach(([tx, t0], k) => {
+    vira(r2[k].querySelector('.pill'), t, t0, tx, 'ruim num'); acende(r2[k], t, t >= t0 ? t0 : null, '201,55,42', 0.06);
+    r2[k].querySelector('.dot').className = 'dot ' + (t >= t0 ? 'r' : 'c'); });
+  vira($('#pCtl'), t, 19.14, 'Sem controle', 'ruim');
+
+  /* ── logo · 20,45 → 21,35 ── */
+  A($('#logoCard'), t, 20.45, 21.3, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS3 · 21,4 → 32,75: tudo integrado → estoque (compra e perdas) → painel ── */
+  A($('#app3'), t, 21.45, 32.65, { de: 0.88, dy: 120, dout: 0.2 });
+  const at3 = abasDe(t, abas3, vistas3, [[0, 0], [26.45, 1], [30.55, 2]], $('#car3'));
+  cascata(it, t, 21.65, 0.08);
+  [22.0, 22.88, 23.4, 24.02, 24.42].forEach((t0, k) => { vira(it[k].querySelector('.pill'), t, t0, '✓ Integrado', 'vivo'); acende(it[k], t, t >= t0 ? t0 : null, '21,128,61', 0.05); });
+  { let n = 0; [22.0, 22.88, 23.4, 24.02, 24.42].forEach(t0 => { if (t >= t0) n++; });
+    $('#pInt').textContent = n + ' de 5 integrados'; $('#pInt').className = n ? (n === 5 && t >= 25.3 ? 'pill vivo num' : 'pill roxo num') : 'pill cinza num'; if (t >= 25.3) pulsa($('#pInt'), t, 25.3, 0.1); }
+  { const c = cursor($('#cur2'), t, 25.75, [1000, 1400], t > 25.75 ? centro(abas3[1]) : [0, 0], 26.45, 26.95); }
+  cascata(e1, t, 26.45, 0.06);
+  [[0, 28.22, '180,83,9'], [1, 28.42, '180,83,9'], [2, 29.94, '201,55,42'], [3, 30.14, '201,55,42']].forEach(([k, t0, rgb]) => { acende(e1[k], t, t >= t0 ? t0 : null, rgb, 0.07); if (t >= t0) pulsa(e1[k].querySelector('.pill'), t, t0, 0.1); });
+  { const c = cursor($('#cur3'), t, 30.0, [1000, 1400], t > 30.0 ? centro(abas3[2]) : [0, 0], 30.55, 31.0); }
+  cascata(Q('#v2 .kpi'), t, 30.55, 0.06);
+  conta($('#k1'), t, 30.8, 1.0, 386750, brlK); conta($('#k2'), t, 31.0, 1.0, 29.8, x => x.toFixed(1).replace('.', ',') + '%');
+  conta($('#k3'), t, 31.2, 0.9, 62, x => '−' + Math.round(x) + '%'); conta($('#k4'), t, 31.3, 0.8, 0, () => '0 itens');
+  cascata(Q('#v2 .row'), t, 30.75, 0.08); if (t >= 32.22) pulsa(Q('#v2 .row')[0].querySelector('.pill'), t, 32.22, 0.12);
+
+  /* ── CTA · 32,85 → fim ── */
+  A($('#cta'), t, 32.85, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 33.1, [1000, 60], t > 33.1 ? centro('#btnCtaI') : [0, 0], 33.62, 37.3); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 33.8) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 33.8 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 1 Black Friday (caçambas: diária sem cobrar)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #res .cabI img { height: 52px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 4,85): cada diária sem cobrar é dinheiro perdido ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Diárias das caçambas</span><span class="pill cinza">Outubro</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Caçambas na rua</h3><p>Diárias corridas × diárias cobradas</p></div><span class="pill cinza num" id="pPerda">Conferindo…</span></div>
+    <div style="margin-top:18px">
+      <div class="row d"><span class="id">CB-03</span><span class="nm">Rua das Acácias, 120<span>14 diárias corridas</span></span><span class="pill vivo">✓ Cobrado</span></div>
+      <div class="row d"><span class="id">CB-07</span><span class="nm">Av. Brasil, 2.310<span>9 diárias corridas</span></span><span class="pill cinza">6 cobradas</span></div>
+      <div class="row d"><span class="id">CB-11</span><span class="nm">Rua Ipê Roxo, 45<span>12 diárias corridas</span></span><span class="pill cinza">7 cobradas</span></div>
+      <div class="row d"><span class="id">CB-14</span><span class="nm">Rua do Comércio, 88<span>6 diárias corridas</span></span><span class="pill cinza">2 cobradas</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (4,96 → 8,7): você já conhece a Mais Locações · dá pra resolver ═════ -->
+<div class="p card ins" id="res" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/logo-navy.svg"><span class="pill cinza" id="pRes">Diárias sem cobrança</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (8,85 → 16,25): oferta Black Friday ═════ -->
+<div id="ofW"></div>
+
+<!-- ═════ CTA (16,38 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Black Friday · por tempo limitado</span>Garanta sua condição agora</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Falar com a gente <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 20.13;
+const ROSTO = [560, 740];
+const FS = [[1.0, 4.85, true], [8.85, 16.25, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 11.95, ps: FM.criaConfete(7, 60, 540, 1060, 760, 60, 0.7), rgb: [177, 232, 58] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#ofW').outerHTML = OFERTA_HTML;
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const ds = Q('#win .row.d');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.3, [ds[0], ds[1]], 1.04, 2, -1], [3.4, [ds[1], ds[3]], 1.08, 1, 2], [4.85, '#win .topo', 1.12, 0, 0, 0, 40]]);
+
+  /* ── FS1 · 1,0 → 4,85 ── */
+  A($('#win'), t, 1.05, 4.75, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(ds, t, 1.25, 0.08);
+  // "cada diária sem cobrar": as diárias que ficaram sem cobrança acendem em vermelho
+  [[1, '3 sem cobrar'], [2, '5 sem cobrar'], [3, '4 sem cobrar']].forEach(([k, tx], j) => {
+    vira(ds[k].querySelector('.pill'), t, 3.32 + 0.18 * j, tx, 'ruim'); acende(ds[k], t, 3.32 + 0.18 * j, '201,55,42', 0.06); });
+  // "é dinheiro perdido": o prejuízo soma (valor ilustrativo)
+  if (t >= 4.0) { const v = Math.round(960 * E.cubicOut(C((t - 4.0) / 0.6))); const tx = '−R$ ' + v + ' perdidos'; const el = $('#pPerda');
+    if (el.className !== 'pill ruim num') el.className = 'pill ruim num'; if (el.textContent !== tx) el.textContent = tx; pulsa(el, t, 4.0, 0.1); }
+
+  /* ── inserção · 4,96 → 8,7 ── */
+  A($('#res'), t, 4.96, 8.7, { de: 0.86, dy: -60, dout: 0.25 });
+  vira($('#pRes'), t, 7.98, '✓ Dá pra resolver', 'vivo');
+
+  /* ── FS2 · 8,85 → 16,25: oferta ── */
+  oferta(t, { ent: 8.9, tag: 9.36, dez: 11.88, jan: 15.3, sai: 16.25 });
+
+  /* ── CTA · 16,38 → fim ── */
+  A($('#cta'), t, 16.38, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 17.0, [1020, 760], t > 17.0 ? centro('#btnCta') : [0, 0], 17.6, 19.8); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 17.75) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 17.75 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

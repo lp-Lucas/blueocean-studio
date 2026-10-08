@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Uniforce — Copy 3 (Direto: gestor de provedor, sinais juntos)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .ins { padding: 22px 34px; } .ins .cabI { height: 42px; }
+  #w1 .ass { height: 118px; } #w1 .ass .chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; height: 34px; padding: 0 12px; border-radius: 999px;
+    font: 600 17px 'INT'; background: var(--fundo); color: var(--cinza); }
+  #w1 .ass .chip svg { width: 18px; height: 18px; }
+  #w2 .li { height: 82px; font-size: 26px; margin: 0 -14px; } #w2 .li .ico { width: 50px; height: 50px; } #w2 .li .ico svg { width: 28px; height: 28px; }
+  #cv { position: relative; height: 176px; margin-top: 12px; }
+  #cv .ch { position: absolute; top: 0; height: 44px; transform: translateX(-50%); }
+  #cv .no { position: absolute; left: 446px; top: 118px; transform: translateX(-50%); height: 54px; padding: 0 24px; font-size: 22px; font-weight: 700; }
+  .fts { display: flex; gap: 10px; margin-top: 12px; } .fts .pill { flex: 1; height: 50px; font-size: 20px; }
+  .sco { display: flex; align-items: center; gap: 20px; height: 120px; padding: 0 24px; border-radius: 16px; border: 1.5px solid #E3E8EF; margin-top: 12px; }
+  .sco .nm { font: 700 26px 'INT'; } .sco .sb { font: 500 19px 'INT'; color: var(--cinza); margin-top: 4px; }
+  .sco .sc { margin-left: auto; width: 220px; text-align: right; } .sco .sc b { font: 800 40px 'INT'; letter-spacing: -0.02em; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 5,2): clientes perdidos que a operação já tinha avisado ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding-left:0">Cancelamentos</span><span class="sub">últimos 30 dias</span></div>
+  <div class="corpo">
+    <div class="k">Clientes que saíram</div>
+    <div id="cs" style="margin-top:12px"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (5,2 → 11,35, colada): os sinais de um cliente ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding-left:0">Cliente #4821</span><span class="sub">plano 600 Mbps · desde 2021</span></div>
+  <div class="corpo">
+    <div class="k">Sinais registrados</div>
+    <div class="li" id="g0"><span class="ico"></span>Usa menos o serviço<b class="num">−38% no mês</b></div>
+    <div class="li" id="g1"><span class="ico"></span>Abre mais chamados<b class="num">+3 em 15 dias</b></div>
+    <div class="li" id="g2"><span class="ico"></span>Reclama<b class="num">NPS 3</b></div>
+    <div class="li" id="g3"><span class="ico"></span>Atrasa pagamentos<b class="num">12 dias</b></div>
+    <div class="li" id="g4"><span class="ico"></span>Muda o comportamento<b class="num">uso só à noite</b></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (11,5 → 20,35): separados parecem pequenos… juntos contam uma história ═════ -->
+<div class="p card ins" id="i1" style="left:540px;top:262px">
+  <div class="cabI">Sinais do Cliente #4821<span class="pill cinza" id="pI1">Separados</span></div>
+  <div id="cv">
+    <svg class="ilu" width="892" height="176" viewBox="0 0 892 176" style="position:absolute;left:0;top:0">
+      <path data-x="0" d="M89 44 C89 100 446 80 446 118" stroke="#D6E4F5" stroke-width="4" stroke-dasharray="3 12"/>
+      <path data-x="1" d="M267 44 C267 96 446 84 446 118" stroke="#D6E4F5" stroke-width="4" stroke-dasharray="3 12"/>
+      <path data-x="2" d="M446 44 V118" stroke="#D6E4F5" stroke-width="4" stroke-dasharray="3 12"/>
+      <path data-x="3" d="M625 44 C625 96 446 84 446 118" stroke="#D6E4F5" stroke-width="4" stroke-dasharray="3 12"/>
+      <path data-x="4" d="M803 44 C803 100 446 80 446 118" stroke="#D6E4F5" stroke-width="4" stroke-dasharray="3 12"/>
+    <path id="v0" d="M89 44 C89 100 446 80 446 118" stroke="#2A83E8" stroke-width="6"/>
+      <path id="v1" d="M267 44 C267 96 446 84 446 118" stroke="#2A83E8" stroke-width="6"/>
+      <path id="v2" d="M446 44 V118" stroke="#2A83E8" stroke-width="6"/>
+      <path id="v3" d="M625 44 C625 96 446 84 446 118" stroke="#2A83E8" stroke-width="6"/>
+      <path id="v4" d="M803 44 C803 100 446 80 446 118" stroke="#2A83E8" stroke-width="6"/>
+    </svg>
+    <span class="pill cinza ch" style="left:89px">Uso −38%</span><span class="pill cinza ch" style="left:267px">+3 chamados</span>
+    <span class="pill cinza ch" style="left:446px">NPS 3</span><span class="pill cinza ch" style="left:625px">Atraso 12 dias</span>
+    <span class="pill cinza ch" style="left:803px">Uso à noite</span>
+    <span class="pill azul no" id="no">Cliente #4821</span>
+  </div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (20,45 → 28,4): Uniforce integra, prevê e o time age antes ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="w3" style="left:540px;top:800px">
+  <div class="bar"><span id="mk3"></span><span class="tt">Visão do assinante</span><span class="sub">Cliente #4821</span></div>
+  <div class="corpo">
+    <div class="k">Dados integrados</div>
+    <div class="fts" id="fts"><span class="pill cinza">ERP</span><span class="pill cinza">Financeiro</span><span class="pill cinza">Chamados</span><span class="pill cinza">NPS</span><span class="pill cinza">Rede</span></div>
+    <div class="k" style="margin-top:24px">Análise preditiva</div>
+    <div class="sco" id="sco"><div><div class="nm">Risco de cancelamento</div><div class="sb">5 sinais combinados · próximos 30 dias</div></div>
+      <div class="sc"><b id="pzv" class="num">0%</b><div class="barra"><i id="pzb"></i></div></div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+      <span class="pill cinza" id="pR" style="height:64px;padding:0 24px;font-size:22px">Analisando…</span>
+      <div class="btn p2" id="bJ">Agir agora<span id="bJs"></span></div></div>
+    <div style="margin-top:26px" id="jn"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (28,5 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:262px">
+  <span id="ctaM"></span>
+  <div class="t">Não espere o <em>cancelamento.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Descobrir oportunidades na minha base<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script src="uniforce.js"></script>
+<script>
+window.DURACAO = 33.37;
+const ROSTO = [600, 690];
+const FS = [[1.0, 5.2, true], [5.2, 11.35, true], [20.45, 28.4, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 26.6, ps: FM.criaConfete(3, 28, 760, 1000, 300, 40, 0.55), rgb: [42, 131, 232] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+const CL = [['MC', 'Cliente #4821', 'plano 600 Mbps'], ['JS', 'Cliente #3307', 'plano 300 Mbps'], ['AP', 'Cliente #5190', 'plano 1 Gbps'], ['RT', 'Cliente #2716', 'plano 500 Mbps']];
+$('#cs').innerHTML = CL.map(([i, n, s], k) => `<div class="ass" id="c${k}"><div class="av">${i}</div><div><div class="nm">${n} <span style="font:500 19px 'INT';color:var(--cinza)">· ${s}</span></div>
+  <span class="chip" id="c${k}c">${ic('alerta', '#869CB6', 2)}<span>sinal registrado há ${[18, 25, 12, 30][k]} dias</span></span></div><span class="pill ruim" style="margin-left:auto">Cancelou</span></div>`).join('');
+['desce', 'fone', 'chat', 'dinheiro', 'relogio'].forEach((n, k) => $('#g' + k + ' .ico').innerHTML = ic(n, '#4F6D92', 2));
+$('#mk3').innerHTML = MARCA(34); $('#bJs').innerHTML = ic('seta', '#fff', 2.4);
+$('#jn').innerHTML = jornada('j', { ativo: 3 });
+$('#ctaM').innerHTML = MARCA(46); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+const VERM = '220,38,38', VERDE = '22,163,74', AZUL = '42,131,232';
+const gs = Q('#w2 .li'), chs = Q('#cv .ch'), fts = Q('#fts .pill');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  if ((t > 1.0 && t < 11.75) || (t > 20.45 && t < 28.8)) window.PAPEL_TOPO = 0;
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.6, ['#c0', '#c3'], 0.98, 2, -1], [4.0, ['#c0', '#c1'], 1.06, 1, 2], [5.2, ['#c0', '#c1'], 1.1, 0, 0]]);
+  camera(t, '#cam2', [[5.2, [540, 810], 0.94, 3, 3], [6.4, [gs[0], gs[1]], 1.06, 2, 1], [8.0, [gs[1], gs[2]], 1.08, 1, -2], [9.6, [gs[2], gs[3]], 1.08, -1, 1], [11.35, [gs[3], gs[4]], 1.1, 0, 0]]);
+  camera(t, '#cam3', [[20.5, [540, 800], 0.92, 3, 3], [21.6, '#fts', 1.06, 2, 1], [23.2, '#sco', 1.1, 1, -2], [25.0, '#sco', 1.14, -1, 1], [26.3, '#bJ', 1.06, 1, 1, -200, 0],
+    [27.4, '#jn', 1.02, -1, 0], [28.4, '#jr', 1.06, 0, 0]]);
+
+  /* ── FS1 · 1,0 → 5,2: clientes perdidos… a operação já tinha avisado que estavam em risco ── */
+  A($('#w1'), t, 1.05, 5.2, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(Q('#cs .ass'), t, 1.15, 0.08); Q('#cs .ass').forEach((e, k) => acende(e, t, 2.18 + 0.1 * k, VERM, 0.05));
+  CL.forEach((_, k) => { const e = $('#c' + k + 'c'), on = t >= 3.92 + 0.08 * k, r = t >= 4.84;
+    e.style.background = r ? 'var(--vermc)' : on ? 'var(--azulc)' : ''; e.style.color = r ? 'var(--verm)' : on ? 'var(--azul)' : '';
+    const h = ic('alerta', r ? '#DC2626' : on ? '#2A83E8' : '#869CB6', 2); if (e._h !== h) { e._h = h; e.firstElementChild.outerHTML = h; }
+    if (on && t < 4.84) pulsa(e, t, 3.92 + 0.08 * k, 0.1); else if (r) pulsa(e, t, 4.84, 0.1); });
+
+  /* ── FS2 · 5,2 → 11,35 (colada, troca tela a tela): cada sinal acende na palavra ── */
+  A($('#w2'), t, 5.2, 11.25, { de: 1, dy: 0, dout: 0.2 });
+  passa(t, '#w1', '#w2', 5.2);
+  [5.96, 7.8, 8.34, 9.44, 10.7].forEach((t0, k) => { acende(gs[k], t, t0, AZUL, 0.07); gs[k].querySelector('b').style.color = t >= t0 ? 'var(--azul)' : '';
+    if (t >= t0) pulsa(gs[k].querySelector('.ico'), t, t0, 0.15); });
+
+  /* ── inserção · 11,5 → 20,35: separados, pequenos… juntos, as linhas convergem: o cliente está se afastando ── */
+  A($('#i1'), t, 11.5, 20.3, { de: 0.86, dy: -60, dout: 0.25 });
+  chs.forEach((e, k) => { e.style.opacity = pr(t, 11.6 + 0.1 * k, 0.25); e.style.transform = `translateX(-50%) translateY(${(1 - pr(t, 11.6 + 0.1 * k, 0.4)) * 10}px)`; });
+  [0, 1, 2, 3, 4].forEach(k => { tinta(t, 'v' + k, 15.6 + 0.12 * k, 0.8); $('#v' + k).setAttribute('stroke', t >= 19.4 ? '#DC2626' : '#2A83E8'); });
+  chs.forEach((e, k) => { const on = t >= 15.6 + 0.12 * k; e.className = 'pill ch ' + (t >= 19.4 ? 'ruim' : on ? 'azul' : 'cinza'); });
+  { const n = $('#no'); n.style.opacity = pr(t, 11.9, 0.3); const r = t >= 19.4;
+    n.className = 'pill no ' + (r ? 'ruim' : 'azul'); const h = r ? 'Risco de cancelamento · 87%' : 'Cliente #4821'; if (!r && t < 15.6) n.className = 'pill no cinza'; if (n.textContent !== h) n.textContent = h;
+    n.style.transform = `translateX(-50%) scale(${t >= 17.92 && !r ? 1 + 0.08 * Math.sin(C((t - 17.92) / 0.4) * Math.PI) : r ? 1 + 0.1 * Math.sin(C((t - 19.4) / 0.4) * Math.PI) : 1})`; }
+  vira($('#pI1'), t, 15.6, 'Juntos', 'azul');
+
+  /* ── FS3 · 20,45 → 28,4: Uniforce integra, prevê e o time age antes de o cliente decidir sair ── */
+  A($('#w3'), t, 20.5, 28.3, { de: 0.88, dy: 120, dout: 0.2 });
+  fts.forEach((e, k) => { const t0 = 21.13 + 0.1 * k, on = t >= t0; const h = (on ? ic('check', '#15803D', 2.6) : '') + ['ERP', 'Financeiro', 'Chamados', 'NPS', 'Rede'][k];
+    if (e._h !== h) { e._h = h; e.innerHTML = h; } e.className = 'pill ' + (on ? 'vivo' : 'cinza'); if (on) pulsa(e, t, t0, 0.08); });
+  { const q = t < 22.91 ? 0 : E.cubicOut(C((t - 22.91) / 1.2)); $('#pzv').textContent = Math.round(87 * q) + '%'; $('#pzv').style.color = t >= 22.91 ? 'var(--verm)' : 'var(--mute)';
+    $('#pzb').style.width = 87 * q + '%'; acende($('#sco'), t, 25.65, VERM, 0.07); }
+  vira($('#pR'), t, 25.65, ic('alerta', '#DC2626', 2.2) + 'Alto risco · agir agora', 'ruim');
+  { const c = cursor($('#cur1'), t, 25.6, [1000, 1580], t > 25.6 ? centro('#bJ') : [0, 0], 26.41, 26.7); const ok = t >= 26.45;
+    const b = $('#bJ'); b.className = 'btn p2' + (ok ? ' ok' : ''); const h = ok ? ic('check', '#fff', 2.6) + 'Plano de ação criado' : 'Agir agora<span>' + ic('seta', '#fff', 2.4) + '</span>';
+    if (b._h !== h) { b._h = h; b.innerHTML = h; } b.style.transform = `scale(${1 - 0.05 * c})`; }
+  jornadaAtiva('j', t, 3, 26.79);
+  acende($('#ja'), t, 26.79, AZUL, 0.12); acende($('#jr'), t, 27.79, VERDE, 0.12); if (t >= 27.79) pulsa($('#jr'), t, 27.79, 0.06);
+
+  /* ── CTA · 28,5 → fim ── */
+  A($('#cta'), t, 28.55, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 30.6, [1010, 760], t > 30.6 ? centro('#btnCta') : [0, 0], 31.18, 33.0); $('#btnCta').style.transform = `scale(${1 - 0.05 * c})`;
+    const ciclo = ((t - 31.3) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 31.3 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

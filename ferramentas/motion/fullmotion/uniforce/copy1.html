@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Uniforce — Copy 1 (Direto: gestor de provedor)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  .sins { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .sin { position: relative; height: 150px; border: 1.5px solid #E3E8EF; border-radius: 16px; padding: 20px 22px; background: #fff; }
+  .sin .ico { width: 48px; height: 48px; border-radius: 12px; background: var(--fundo); display: grid; place-items: center; }
+  .sin .ico svg { width: 26px; height: 26px; }
+  .sin h5 { font: 700 26px 'INT'; letter-spacing: -0.01em; margin-top: 14px; white-space: nowrap; }
+  .sin .k { position: absolute; right: 22px; top: 32px; font-size: 15px; }
+  .sin p { font: 500 20px 'INT'; color: var(--cinza); margin-top: 4px; white-space: nowrap; }
+  #w2 .corpo { height: 560px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,05 → 11,45): os dados já mostram quem vai cancelar… mas estão espalhados ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding-left:0">Base de assinantes</span><span class="sub">5.214 clientes ativos</span></div>
+  <div class="corpo">
+    <div class="k">Assinante</div>
+    <div class="ass" id="a1" style="margin-top:12px"><div class="av">MC</div><div><div class="nm">Cliente #4821</div><div class="sb">plano 600 Mbps · desde 2022</div></div>
+      <span class="pill cinza" id="pQ" style="margin-left:auto">Vai cancelar?</span></div>
+    <div class="k" style="margin-top:26px">Sinais</div>
+    <div class="sins">
+      <div class="sin" id="s0"><div class="ico"></div><span class="k">no ERP</span><h5>Inadimplência</h5><p>2 faturas em atraso</p></div>
+      <div class="sin" id="s1"><div class="ico"></div><span class="k">no helpdesk</span><h5>Chamados</h5><p>4 abertos em 15 dias</p></div>
+      <div class="sin" id="s2"><div class="ico"></div><span class="k">na rede</span><h5>Utilização</h5><p>−38% no último mês</p></div>
+      <div class="sin" id="s3"><div class="ico"></div><span class="k">no NPS</span><h5>Reclamações</h5><p>nota 3 · “internet caindo”</p></div>
+    </div>
+    <div class="xi" id="x1" style="margin-top:24px"><span class="m"></span>dados espalhados entre ERP, financeiro e atendimento</div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (11,55 → 14,75): quando o pedido chega, o sinal já virou problema ═════ -->
+<div class="p card ins" id="i1" style="left:540px;top:262px">
+  <div class="cabI">Cliente #4821<span class="pill cinza" id="pI1">Ativo</span></div>
+  <div class="li" id="l0"><span class="ico"></span><span id="l0t">Sinais nos sistemas</span><b class="num" id="l0b" style="color:var(--cinza)">há 21 dias</b></div>
+  <div class="li" id="l1"><span class="ico"></span>Pedido de cancelamento<span class="pill ruim">hoje</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (14,85 → 18,45): o time corre atrás de quem já decidiu sair ═════ -->
+<div class="p card ins" id="i2" style="left:540px;top:262px">
+  <div class="cabI">Fila de retenção<span class="pill cinza" id="pI2">3 pedidos de saída</span></div>
+  <div class="li" id="f0">Cliente #4821 · 600 Mbps<span class="pill azul" id="f0p">Tentando reter</span></div>
+  <div class="li" id="f1">Cliente #3307 · 300 Mbps<span class="pill azul" id="f1p">Tentando reter</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (18,55 → 27,2): Uniforce — integra os dados, prevê o risco, inicia a jornada antes do cancelamento ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Retenção</span><span class="sub">5.214 assinantes</span></div>
+  <div class="abas"><div class="aba on">Integrações</div><div class="aba" id="abaR">Risco preditivo</div><div class="aba" id="abaJ">Jornada</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v1"><div class="k">Fontes da sua operação</div><div id="fts" style="display:grid;gap:12px;margin-top:12px"></div></div>
+    <div class="vista" id="v2"><div class="k">Clientes em risco · próximos 30 dias</div><div id="rk" style="margin-top:12px"></div>
+      <div style="display:flex;justify-content:center;margin-top:24px"><div class="btn p2" id="bJ">Iniciar jornada de retenção<span id="bJs"></span></div></div></div>
+    <div class="vista" id="v3"><div style="display:flex;align-items:center;justify-content:space-between"><div class="k">Jornada do assinante</div><span class="sub" style="font:600 19px 'INT';color:var(--azul)">Cliente #4821 · plano 600 Mbps</span></div>
+      <div style="margin-top:22px" id="jn"></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (27,3 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:262px">
+  <span id="ctaM"></span>
+  <div class="t">Veja a Uniforce <em>na prática.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Descobrir oportunidades na minha base<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script src="uniforce.js"></script>
+<script>
+window.DURACAO = 32.23;
+const ROSTO = [525, 705];
+const FS = [[1.05, 11.45, true], [18.55, 27.2, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 26.0, ps: FM.criaConfete(7, 28, 540, 1010, 360, 40, 0.55), rgb: [42, 131, 232] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+['dinheiro', 'fone', 'wifi', 'chat'].forEach((n, k) => $('#s' + k + ' .ico').innerHTML = ic(n, '#4F6D92', 2));
+$('#x1 .m').innerHTML = ic('x', '#DC2626', 2.6);
+$('#l0 .ico').innerHTML = ic('alerta', '#4F6D92', 2); $('#l1 .ico').innerHTML = ic('x', '#DC2626', 2.4);
+$('#mk2').innerHTML = MARCA(34); $('#bJs').innerHTML = ic('seta', '#fff', 2.4);
+$('#fts').innerHTML = [['contrato', 'Cadastro e contrato', 'quem é o cliente e o que ele assinou'], ['dinheiro', 'Financeiro e cobrança', 'vencimentos, atrasos e pagamentos'],
+  ['fone', 'Atendimento e chamados', 'histórico de atrito e reincidência'], ['chat', 'NPS e conversas', 'a fala do cliente, não só a nota']].map(([i, n, d], k) => fonte('ft' + k, i, n, d)).join('');
+$('#rk').innerHTML = ass('r0', 'MC', 'Cliente #4821', '2 faturas em atraso · 4 chamados', 87) + ass('r1', 'JS', 'Cliente #3307', 'uso −42% · NPS 3', 74) + ass('r2', 'AP', 'Cliente #5190', '3 reclamações no mês', 61);
+$('#jn').innerHTML = jornada('j', { ativo: 3 });
+$('#ctaM').innerHTML = MARCA(46); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+const VERM = '220,38,38', VERDE = '22,163,74', AZUL = '42,131,232';
+const sins = Q('.sin');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  if ((t > 1.05 && t < 11.85) || (t > 18.55 && t < 27.6)) window.PAPEL_TOPO = 0;
+  camera(t, '#cam1', [[1.1, [540, 800], 0.92, 3, -3], [3.3, '#a1', 1.06, 2, -1], [5.1, [sins[0], sins[1]], 1.05, 1, 2], [7.0, [sins[2], sins[3]], 1.05, -1, 1],
+    [9.0, [sins[0], sins[3]], 0.98, 0, -1], [10.9, [sins[0], '#x1'], 0.96, -1, 0], [11.45, [sins[0], '#x1'], 0.98, 0, 0]]);
+  camera(t, '#cam2', [[18.6, [540, 800], 0.92, 3, 3], [19.7, ['#ft0', '#ft1'], 1.04, 2, 1], [21.0, ['#ft2', '#ft3'], 1.04, 1, -2], [22.3, ['#r0', '#r2'], 1.0, -1, 1],
+    [24.2, '#r0', 1.1, 0, -1], [25.6, '#bJ', 1.06, 1, 1], [26.5, '#jn', 1.02, -1, 0], [27.2, '#jr', 1.06, 0, 0]]);
+
+  /* ── FS1 · 1,05 → 11,45: os dados já mostram quem vai cancelar… espalhados em 4 sistemas ── */
+  A($('#w1'), t, 1.1, 11.35, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#a1'), ...sins, $('#x1')], t, 1.15, 0.07);
+  vira($('#pQ'), t, 3.66, '? Vai cancelar', 'ruim'); acende($('#a1'), t, 3.66, VERM, 0.06);
+  [5.24, 5.96, 6.82, 7.9].forEach((t0, k) => { const on = acende(sins[k], t, t0, AZUL, 0.07); sins[k].querySelector('h5').style.color = on > 0.5 ? 'var(--azul)' : '';
+    if (t >= t0) pulsa(sins[k].querySelector('.ico'), t, t0, 0.15); });
+  // "espalhadas": cada sinal se afasta para o seu canto (sistemas separados) e o ✕ acende
+  { const p = pr(t, 10.7, 0.6, E.cubicInOut); [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([dx, dy], k) => {
+      if (t >= 10.7) sins[k].style.transform = `translateX(${dx * 22 * p}px) rotate(${dx * dy * 1.4 * p}deg)`; });
+    acende($('#x1'), t, 10.98, VERM, 0.08); $('#x1').style.color = t >= 10.98 ? 'var(--verm)' : ''; if (t >= 10.98) pulsa($('#x1 .m'), t, 10.98, 0.2); }
+
+  /* ── inserção · 11,55 → 14,75: o pedido de cancelamento chega; o sinal estava lá há 21 dias ── */
+  A($('#i1'), t, 11.6, 14.7, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#i1 .li'), t, 11.7, 0.12, 12);
+  vira($('#pI1'), t, 12.74, 'Cancelamento pedido', 'ruim'); acende($('#l1'), t, 12.74, VERM, 0.07);
+  { const on = t >= 13.9; acende($('#l0'), t, 13.9, VERM, 0.07); $('#l0b').style.color = on ? 'var(--verm)' : 'var(--cinza)'; $('#l0t').textContent = on ? 'Sinal ignorado → virou problema' : 'Sinais nos sistemas';
+    if (on) pulsa($('#l0b'), t, 13.9, 0.12); }
+
+  /* ── inserção · 14,85 → 18,45: o time corre atrás de quem já decidiu sair ── */
+  A($('#i2'), t, 14.9, 18.4, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(Q('#i2 .li'), t, 15.0, 0.12, 12);
+  if (t >= 16.0) pulsa($('#pI2'), t, 16.0, 0.1);
+  vira($('#f0p'), t, 17.58, 'Já decidiu sair', 'ruim'); vira($('#f1p'), t, 17.78, 'Já decidiu sair', 'ruim');
+  acende($('#f0'), t, 17.58, VERM, 0.07); acende($('#f1'), t, 17.78, VERM, 0.07);
+
+  /* ── FS2 · 18,55 → 27,2: Uniforce integra os dados → análise preditiva → jornada antes do cancelamento ── */
+  A($('#w2'), t, 18.6, 27.1, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, Q('#w2 .aba'), [$('#v1'), $('#v2'), $('#v3')], [[22.0, 1], [26.2, 2]], $('#car2'));
+  cascata(Q('#fts .fonte'), t, 18.7, 0.06);
+  [19.46, 19.98, 20.5, 20.8].forEach((t0, k) => { vira($('#ft' + k + 's'), t, t0, ic('check', '#15803D', 2.6) + 'Conectado', 'vivo'); acende($('#ft' + k), t, t0, VERDE, 0.05); });
+  cursor($('#cur1'), t, 21.2, [990, 1500], t > 21.2 ? centro('#abaR') : [0, 0], 21.85, 22.4);
+  cascata(Q('#rk .ass'), t, 22.05, 0.08);
+  score('r0', t, 23.24, 87); score('r1', t, 23.4, 74); score('r2', t, 23.56, 61);
+  acende($('#r0'), t, 24.32, VERM, 0.07);
+  { const c = cursor($('#cur2'), t, 24.9, [1000, 1560], t > 24.9 ? centro('#bJ') : [0, 0], 25.85, 26.05); const ok = t >= 25.98;
+    const b = $('#bJ'); b.className = 'btn p2' + (ok ? ' ok' : ''); const h = ok ? ic('check', '#fff', 2.6) + 'Jornada iniciada' : 'Iniciar jornada de retenção<span>' + ic('seta', '#fff', 2.4) + '</span>';
+    if (b._h !== h) { b._h = h; b.innerHTML = h; } b.style.transform = `scale(${1 - 0.05 * c})`; }
+  jornadaAtiva('j', t, 3, 26.3);
+  acende($('#jr'), t, 26.62, VERDE, 0.12); if (t >= 26.62) pulsa($('#jr'), t, 26.62, 0.06);
+
+  /* ── CTA · 27,3 → fim ── */
+  A($('#cta'), t, 27.35, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur3'), t, 28.9, [1010, 760], t > 28.9 ? centro('#btnCta') : [0, 0], 29.56, 31.6); $('#btnCta').style.transform = `scale(${1 - 0.05 * c})`;
+    const ciclo = ((t - 29.7) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 29.7 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

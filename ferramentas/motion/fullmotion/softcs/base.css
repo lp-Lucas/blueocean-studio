@@ -1,0 +1,96 @@
+/* identidade Soft CS (softcs.com.br, capturado 07/10/2026): site ESCURO — fundo navy #0C0A29 (seções #131042/#1C1353),
+   roxo #8758F3 em botões e nas caixas de destaque atrás das palavras ("Health Score", "automações"), lilás #CDD6FF do logo,
+   Manrope em tudo. As telas do produto no site são CLARAS (#F7F7FC, cartões brancos, barra com 3 bolinhas e
+   "softcs.com.br / health-score" em mono): KPIs Total/Saudáveis/Em atenção/Críticos, tabela de configurações com pílula
+   "Ativo", fluxo de automação TRIGGER → RULES → faixas (Saudável/Atenção/Crítico), painel da Lari AI (Resumo executivo,
+   insights com "Atenção"/"Positivo"). Vídeo 100% motion (sem modelo): o fundo do vídeo é o navy do site, chapado. */
+@font-face { font-family: 'MAN'; font-weight: 200 800; src: url('fonts/Manrope.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #0C0A29; --fundo2: #131042; --fundo3: #1C1353; --roxo: #8758F3; --roxo2: #6B3FE0; --roxoT: rgba(135,88,243,.78);
+        --lilas: #CDD6FF; --branco: #fff; --texto: rgba(255,255,255,.72);
+        --app: #F7F7FC; --tinta: #0F172A; --cinza: #64748B; --cinza2: #94A3B8; --linha: #E7E8F1;
+        --verde: #16A34A; --verdeF: #22C36D; --verdec: #E0F5EA; --amar: #B7791F; --amarF: #EAB308; --amarc: #FDF3D8;
+        --verm: #DC2626; --vermF: #EF4444; --vermc: #FBE9E9; --roxoc: #F1ECFE; --azul: #3B82F6; }
+html, body { background: var(--fundo) !important; }
+body { font-family: 'MAN', sans-serif; color: #fff; letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+#tela { display: none; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: ui-monospace, 'Consolas', monospace; }
+
+/* título no estilo do site: Manrope 800 branco, palavra-chave na caixa roxa */
+.tit { width: 960px; text-align: center; font: 800 86px/1.12 'MAN'; letter-spacing: -0.035em; color: #fff; }
+.tit .ln { display: block; white-space: nowrap; }
+.tit .w { display: inline-block; }
+.tit .hl { position: relative; display: inline-block; padding: 0 18px; margin: 6px 4px; }
+.tit .hl > i { position: absolute; inset: 0; border-radius: 12px; background: var(--roxoT); transform-origin: 0 50%; z-index: -1; box-shadow: 0 10px 30px rgba(135,88,243,.35); }
+.tit .hl > .w { position: relative; }
+.tit.menor { font-size: 74px; }
+
+/* janela do app (as telas do site): clara, barra com 3 bolinhas + caminho em mono */
+.win { width: 960px; border-radius: 22px; background: var(--app); overflow: hidden; color: var(--tinta);
+       box-shadow: 0 40px 90px rgba(3,2,20,.65), 0 0 0 1.5px rgba(135,88,243,.35); }
+.win .bar { height: 72px; display: flex; align-items: center; gap: 12px; padding: 0 28px; background: #fff; border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.win .bar i { width: 16px; height: 16px; border-radius: 50%; background: #EF6A62; flex: none; } .win .bar i + i { background: #F2BD4C; } .win .bar i + i + i { background: #5DC774; }
+.win .bar .url { margin-left: 16px; font: 500 22px ui-monospace, Consolas, monospace; color: var(--cinza); white-space: nowrap; }
+.win .bar .dir { margin-left: auto; font: 600 18px ui-monospace, Consolas, monospace; letter-spacing: .14em; color: var(--cinza2); text-transform: uppercase; white-space: nowrap; }
+.win .corpo { position: relative; padding: 28px 30px 30px; }
+.win h4 { font: 700 32px 'MAN'; letter-spacing: -0.02em; color: var(--tinta); }
+.win .sub { font: 500 22px 'MAN'; color: var(--cinza); margin-top: 4px; }
+
+/* KPI (Total de clientes · Saudáveis · Em atenção · Críticos) */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.kc { background: #fff; border-radius: 16px; padding: 18px 18px 16px; box-shadow: 0 2px 12px rgba(15,23,42,.06); border: 1.5px solid #EEF0F6; position: relative; }
+.kc .r { font: 500 18px 'MAN'; color: #475569; white-space: nowrap; }
+.kc .v { font: 800 38px 'MAN'; letter-spacing: -0.02em; margin-top: 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kc svg { position: absolute; right: 14px; top: 14px; width: 32px; height: 32px; }
+
+/* pílulas de status (iguais às do produto) */
+.pill { display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 16px; border-radius: 999px; font: 700 20px 'MAN'; white-space: nowrap; letter-spacing: 0; }
+.pill i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.ok { background: var(--verdec); color: var(--verde); }
+.pill.at { background: var(--amarc); color: var(--amar); }
+.pill.cr { background: var(--vermc); color: var(--verm); }
+.pill.rx { background: var(--roxoc); color: var(--roxo2); }
+.pill.cz { background: #EEF0F6; color: var(--cinza); }
+.pill.cheio { background: var(--roxo); color: #fff; }
+/* nota do Health Score (quadrado colorido) */
+.sc { display: inline-grid; place-items: center; min-width: 64px; height: 46px; padding: 0 10px; border-radius: 12px; font: 800 24px 'MAN'; font-variant-numeric: tabular-nums; }
+.sc.ok { background: var(--verdec); color: var(--verde); } .sc.at { background: var(--amarc); color: var(--amar); } .sc.cr { background: var(--vermc); color: var(--verm); }
+
+/* tabela de contas */
+.tb .hd, .tb .ln { display: grid; align-items: center; gap: 12px; }
+.tb .hd { padding: 0 18px 12px; font: 600 18px 'MAN'; color: var(--cinza); }
+.tb .ln { height: 84px; padding: 0 18px; background: #fff; border-top: 1.5px solid var(--linha); font: 600 24px 'MAN'; color: var(--tinta); white-space: nowrap; }
+.tb .ln:first-of-type { border-radius: 14px 14px 0 0; } .tb .ln:last-child { border-radius: 0 0 14px 14px; }
+.tb .ln small { display: block; font: 500 18px 'MAN'; color: var(--cinza); margin-top: 2px; }
+.tb .ln .dir { justify-self: end; }
+.av { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; font: 800 19px 'MAN'; color: #fff; flex: none; }
+.av.a1 { background: #8758F3; } .av.a2 { background: #0EA5E9; } .av.a3 { background: #F59E0B; } .av.a4 { background: #10B981; } .av.a5 { background: #EC4899; } .av.a6 { background: #6366F1; }
+.cl { display: flex; align-items: center; gap: 14px; }
+
+/* botão do site: roxo, raio 12, Manrope 600, seta */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 18px; height: 96px; padding: 0 54px; border-radius: 14px;
+       background: var(--roxo); color: #fff; font: 700 34px 'MAN'; white-space: nowrap; position: relative; overflow: hidden; letter-spacing: -0.01em;
+       box-shadow: 0 16px 44px rgba(135,88,243,.45); }
+.btn svg { width: 32px; height: 32px; }
+.btn.ok { background: #16A34A; box-shadow: 0 16px 44px rgba(34,195,109,.35); }
+.bt2 { display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 24px; border-radius: 12px; background: var(--roxo); color: #fff; font: 700 22px 'MAN'; white-space: nowrap; }
+.bt2.ok { background: #16A34A; }
+
+/* CTA final: logo + título + botão */
+#cta { width: 960px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .logo { height: 104px; display: block; margin-bottom: 54px; }
+#cta .tit { font-size: 80px; }
+#btnCta { margin-top: 60px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1520px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 5px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }

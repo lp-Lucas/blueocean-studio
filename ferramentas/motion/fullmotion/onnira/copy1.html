@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Onnira — Copy 1 (conversar com os dados do ERP)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* gancho: ERP ⟷ Onnira IA se conectando (ilustração "conecta") */
+  #liga { height: 250px; }
+  #liga > svg { position: absolute; left: 0; top: 0; }
+  .no { position: absolute; top: 70px; width: 300px; height: 112px; border-radius: 16px; border: 1.5px solid var(--linha); background: var(--card2);
+        display: flex; align-items: center; justify-content: center; gap: 16px; font: 600 27px 'Sora'; color: var(--cinza); }
+  .no svg, .no img { width: 40px; height: 40px; }
+  #noA { left: 40px; } #noB { right: 40px; }
+  .no.on { border-color: rgba(96,165,250,.6); color: var(--tinta); background: #0B1728; }
+  .pac { position: absolute; top: 106px; width: 40px; height: 40px; margin-left: -20px; border-radius: 12px; background: var(--azul); display: grid; place-items: center; opacity: 0; }
+  .pac svg { width: 24px; height: 24px; }
+
+  #erp { height: 804px; }
+  #erp .ilu { position: relative; height: 140px; background: var(--card); border-bottom: 1.5px solid var(--linha); }
+  #erp .ilu svg { position: absolute; left: 0; top: 0; }
+  #erp .corpo { height: 500px; }
+  .mod { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .mod div { height: 96px; border-radius: 14px; border: 1.5px solid var(--linha); background: var(--card2); display: flex; align-items: center; gap: 16px; padding: 0 24px; font: 500 25px 'Sora'; color: var(--texto); }
+  .mod svg { width: 30px; height: 30px; color: var(--cinza2); }
+  #pedido { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 100px; border-radius: 16px; border: 1.5px solid var(--linha); background: var(--card2);
+            display: flex; align-items: center; gap: 18px; padding: 0 24px; opacity: 0; }
+  #pedido .av { width: 56px; height: 56px; border-radius: 50%; background: var(--vermc); color: var(--verm); display: grid; place-items: center; font: 600 21px 'Sora'; flex: none; }
+  #pedido .nm { font: 600 24px 'Sora'; } #pedido .nm span { display: block; font: 400 20px 'Sora'; color: var(--cinza); margin-top: 2px; }
+  #pedido .pill { margin-left: auto; }
+
+  #integ .li img { height: 30px; }
+
+  #chat1 { height: 880px; }
+  #chat1 .msgs { padding-top: 28px; }
+  #bolIA { padding-bottom: 18px; }
+  #opera { display: flex; gap: 10px; margin: 0 30px 18px; }
+  #opera .pill { flex: 1; justify-content: center; font-size: 19px; height: 46px; padding: 0 8px; }
+  #modo { position: relative; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ GANCHO · inserção (0,25 → 5,0): "conversar com os dados do seu ERP usando IA" — os dois se conectam ═════ -->
+<div class="p card ins" id="liga" style="left:540px;top:275px">
+  <svg width="960" height="250" class="ilu"><path class="base" d="M380 126 H580"/><path class="tr" id="ligaTr" d="M380 126 H580"/></svg>
+  <div class="no" id="noA"><span id="icA"></span>ERP</div>
+  <div class="no" id="noB"><img src="img/simbolo.png">Onnira IA</div>
+  <div class="pac" id="pac1"></div><div class="pac" id="pac2"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 1 (5,15 → 17,1): o caminho até a informação dentro do ERP ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="erp" style="left:540px;top:820px">
+  <div class="bar"><span id="icE"></span><span class="tt">ERP</span><span class="sub">Gestão industrial</span><span class="pill cinza">Diretoria</span></div>
+  <div class="ilu">
+    <svg width="960" height="140"><path class="base" d="M120 52 H840"/><path class="tr" id="camTr" d="M120 52 H600"/><path class="rompe" id="camR" d="M600 52 H700 M740 52 H840"/></svg>
+    <div class="marco" style="left:120px;top:39px"><div class="o"></div><span>Entrar no ERP</span></div>
+    <div class="marco" style="left:360px;top:39px"><div class="o"></div><span>Relatório</span></div>
+    <div class="marco" style="left:600px;top:39px"><div class="o"></div><span>Filtros</span></div>
+    <div class="marco" style="left:840px;top:39px"><div class="o"></div><span>Pedir ajuda</span></div>
+  </div>
+  <div class="abas"><div class="aba">Módulos</div><div class="aba">Relatórios</div><div class="aba">Filtros</div></div>
+  <div class="carrega" id="carrega1" style="top:304px"></div>
+  <div class="corpo">
+    <div class="vista" id="vMod">
+      <h3>Módulos</h3><p>Escolha por onde começar</p>
+      <div class="mod"><div><span class="mi" data-g="bars"></span>Produção</div><div><span class="mi" data-g="banco"></span>Estoque</div>
+        <div><span class="mi" data-g="dolar"></span>Financeiro</div><div><span class="mi" data-g="agenda"></span>Compras</div>
+        <div><span class="mi" data-g="check"></span>Qualidade</div><div><span class="mi" data-g="doc"></span>Fiscal</div></div>
+    </div>
+    <div class="vista" id="vRel" style="opacity:0">
+      <h3>Relatórios</h3><p>48 relatórios disponíveis</p>
+      <div style="margin-top:12px">
+        <div class="row r"><span class="h">PRD-12</span>Produção por linha · mensal</div>
+        <div class="row r"><span class="h">EST-04</span>Estoque por depósito</div>
+        <div class="row r"><span class="h">FIN-21</span>Faturamento por cliente</div>
+        <div class="row r"><span class="h">PRD-07</span>Ordens em atraso</div>
+      </div>
+    </div>
+    <div class="vista" id="vFil" style="opacity:0">
+      <h3>PRD-12 · Produção por linha</h3><p>Defina os filtros para gerar</p>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px">
+        <div class="campo fi"><span class="k">Período</span>01/09 – 30/09</div>
+        <div class="campo fi"><span class="k">Unidade</span>Fábrica 2</div>
+        <div class="campo fi"><span class="k">Linha</span>Todas</div>
+      </div>
+    </div>
+    <div id="pedido"><div class="av">CT</div><div class="nm">Controladoria<span>“Consegue me passar o custo por lote?”</span></div><span class="pill ruim" id="pedSt"><i></i>Aguardando</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÕES (17,25 → 23,1) ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:275px"><img src="img/logo.png"></div>
+<div class="p card ins" id="integ" style="left:540px;top:275px">
+  <div class="cabI"><img src="img/simbolo.png">Integrações<span class="pill az" id="nInt">Onnira IA</span></div>
+  <div class="li"><span id="icI"></span>ERP da empresa<span class="pill cinza" id="stERP">Conectar</span></div>
+  <div class="li">Acesso da IA<b id="acesso">Consulta aos dados</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (23,2 → 34,95): a Onnira em uso — pergunta, consulta ao ERP, resposta para a gestão ═════ -->
+<div class="cam" id="cam2">
+<div class="p chat fs" id="chat1" style="left:540px;top:830px">
+  <div class="side"><div class="sic top"><span class="gi" data-g="brilho"></span></div><div class="sic"><span class="gi" data-g="grade"></span></div><div class="sic on"><span class="gi" data-g="chat"></span></div><div class="sic"><span class="gi" data-g="doc"></span></div></div>
+  <div class="main">
+    <div class="head"><span class="tt">Onnira</span><span id="modoW" style="position:relative;margin-left:auto"><span class="pill cinza" id="modo">Assistente de texto</span></span></div>
+    <div class="msgs">
+      <div id="g1"><div class="rot"><span class="gi" data-g="pessoa"></span>Você</div>
+        <div class="bol eu">Qual linha ficou abaixo da meta em setembro?</div></div>
+      <div id="g2"><div class="rot ia"><span class="gi" data-g="brilho"></span>Onnira IA</div>
+        <div class="consulta" id="cons"><span class="sp" id="sp"></span><span id="consT">Consultando ERP · Produção</span></div>
+        <div class="bol ia" id="bolIA"><b>Linha 3</b> ficou <em>18% abaixo</em> da meta.
+          <div class="tab"><div class="lt">Linha 1<b id="n1">0</b><span class="pill vivo">+4%</span></div>
+            <div class="lt">Linha 2<b id="n2">0</b><span class="pill vivo">+1%</span></div>
+            <div class="lt" id="lt3">Linha 3<b id="n3">0</b><span class="pill ruim">−18%</span></div></div>
+        </div></div>
+    </div>
+    <div id="opera"><span class="pill cinza">Produção</span><span class="pill cinza">Estoque</span><span class="pill cinza">Financeiro</span><span class="pill cinza">Compras</span></div>
+    <div class="entrada"><span class="mais">+</span><span class="txt" id="digi"></span><span class="env" id="env"></span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (35,1 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:275px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t">Quer ver como isso funciona <span>na prática?</span></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conheça a Onnira <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script src="copy1/warp.js"></script>
+<script>
+window.DURACAO = 38.32;
+const ROSTO = [540, 650];
+const FS = [[5.15, 17.1, true], [23.2, 34.95, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script>
+for (const e of Q('.gi, .mi')) e.innerHTML = S(e.dataset.g, 'currentColor', 2);
+$('#icA').innerHTML = S('banco', '#A1A1AA', 2); $('#icE').innerHTML = S('banco', '#60A5FA', 2); $('#icE').firstChild.style.width = '30px';
+$('#icI').innerHTML = S('banco', '#A1A1AA', 2); $('#icI').firstChild.style.width = '30px';
+$('#pac1').innerHTML = S('chat', '#fff', 2.2); $('#pac2').innerHTML = S('bars', '#fff', 2.2);
+$('#env').innerHTML = S('raio', '#fff', 2.2);
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const marcos = Q('#erp .marco'), rel = Q('#vRel .row'), fil = Q('#vFil .fi'), abas1 = Q('#erp .aba'), vistas1 = [$('#vMod'), $('#vRel'), $('#vFil')];
+const ops = Q('#opera .pill'), lts = Q('#bolIA .lt'), mods = Q('.mod div');
+const rModo = riscar('modoW', '#EF4444'), riscaM = $('#modoW .risca');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  const T = t; t = warpT(t);   // animação no tempo antigo, legenda no novo
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[5.2, [540, 820], 0.92, 3, -4], [7.4, ['#erp .ilu', '#vMod'], 1.0, 2, -2], [9.6, ['#erp .ilu', '#erp .abas'], 1.06, 2, 2],
+    [11.6, ['#erp .abas', '#vFil'], 1.06, 1, -2], [13.8, '#vFil', 1.1, 1, 2], [15.6, '#pedido', 1.12, 0, -2, 0, -80], [17.1, '#pedido', 1.18, 0, 1, 0, -60]]);
+  camera(t, '#cam2', [[23.2, [540, 830], 0.92, 3, 4], [24.4, '#g1', 1.06, 2, 2, 0, 60], [26.4, ['#cons', '#bolIA'], 1.04, 2, -2], [28.6, '#bolIA', 1.1, 1, 2],
+    [30.6, ['#chat1 .head', '#g1'], 1.06, 1, -2, 0, 40], [32.6, ['#opera', '#bolIA'], 1.06, 1, 2], [34.95, ['#opera', '#bolIA'], 1.12, 0, 0]]);
+
+  /* ── gancho · 0,25 → 5,0 ── */
+  A($('#liga'), t, 0.25, 4.95, { de: 0.86, dy: -60, dout: 0.2 });
+  tinta(t, 'ligaTr', 2.06, 0.6);                                    // "conversar": a linha liga os dois
+  $('#noA').classList.toggle('on', t >= 3.4); pulsa($('#noA'), t, 3.4, 0.08);                                       // "ERP"
+  $('#noB').classList.toggle('on', t >= 4.64); pulsa($('#noB'), t, 4.64, 0.08);                                     // "IA"
+  [['#pac1', 2.8, 1], ['#pac2', 3.9, -1]].forEach(([id, t0, dir]) => { const el = $(id), p = pr(t, t0, 0.7, E.cubicInOut);
+    el.style.opacity = t >= t0 && p < 1 ? 1 : 0; el.style.left = (dir > 0 ? L(380, 580, p) : L(580, 380, p)) + 'px'; });
+
+  /* ── FS1 · 5,15 → 17,1 ── */
+  A($('#erp'), t, 5.2, 17.0, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(mods, t, 5.5, 0.08);
+  caminho(t, $('#camTr'), marcos.slice(0, 3), [9.22, 10.7, 11.5], 0.5);
+  tinta(t, 'camR', 15.5, 0.5); marcos[3].classList.toggle('ruim', t >= 16.03); if (t >= 16.03) pulsa(marcos[3], t, 16.03, 0.18); else marcos[3].style.transform = '';
+  mods.forEach((e, k) => acende(e, t, k === 0 ? 9.3 : null));
+  abasDe(t, abas1, vistas1, [[10.1, 1], [11.6, 2]], $('#carrega1'));
+  cursor($('#cur1'), t, 9.4, [980, 1500], t > 9.4 ? centro(abas1[1]) : [0, 0], 9.95, 10.3);
+  cascata(rel, t, 10.15, 0.08); acende(rel[0], t, 11.14);           // "o relatório certo"
+  cursor($('#cur2'), t, 10.85, t > 10.85 ? centro(abas1[1]) : [0, 0], t > 10.85 ? centro(abas1[2]) : [0, 0], 11.45, 11.8);
+  cascata(fil, t, 11.65, 0.12); fil.forEach((e, k) => acende(e, t, 12.04 + k * 0.2));   // "filtrar os dados"
+  // "dependendo da informação, ainda precisa pedir ajuda para alguém"
+  { const p = M.prog(t, 14.3, 0.5, E.spring); $('#pedido').style.opacity = pr(t, 14.3, 0.2); $('#pedido').style.transform = `translateY(${(1 - p) * 30}px)`; }
+  acende($('#pedido'), t, 16.03, '239,68,68', 0.1); pulsa($('#pedSt'), t, 16.53, 0.12);
+
+  /* ── inserções · 17,25 → 23,1 ── */
+  A($('#logoCard'), t, 17.25, 18.95, { de: 0.82, dy: -60, dout: 0.25 });
+  A($('#integ'), t, 19.0, 23.05, { de: 0.86, dy: -60, dout: 0.2 });
+  cascata(Q('#integ .li'), t, 19.05, 0.08, 12);
+  vira($('#stERP'), t, 19.77, '<i></i>Conectado', 'vivo'); acende(Q('#integ .li')[0], t, 20.01, '74,222,128', 0.08);   // "conectada ao ERP"
+  acende(Q('#integ .li')[1], t, 21.39);                                                                                  // "consultar os dados"
+
+  /* ── FS2 · 23,2 → 34,95 ── */
+  A($('#chat1'), t, 23.25, 34.85, { de: 0.88, dy: 120, dout: 0.2 });
+  digita($('#digi'), t, 23.3, 0.6, 'Qual linha ficou abaixo da meta em setembro?'); if (t >= 24.0) $('#digi').textContent = '';
+  pulsa($('#env'), t, 23.95, 0.15);
+  { const c4 = cursor($('#cur3'), t, 23.45, [990, 1500], t > 23.45 ? centro('#env') : [0, 0], 23.9, 24.25); }
+  bolha($('#g1'), t, 24.0);
+  bolha($('#g2'), t, 24.57);                                        // "a IA consulta as informações"
+  { const ok = t >= 26.0; $('#consT').textContent = ok ? '3 tabelas consultadas no ERP' : 'Consultando ERP · Produção';
+    $('#sp').style.display = ok ? 'none' : ''; $('#sp').style.transform = `rotate(${t * 400}deg)`; $('#cons').style.color = ok ? 'var(--verde)' : ''; }
+  { const p = pr(t, 26.2, 0.3, E.cubicOut); $('#bolIA').style.opacity = p; $('#bolIA').style.transform = `translateY(${(1 - p) * 20}px)`; }
+  conta($('#n1'), t, 27.3, 0.9, 12480); conta($('#n2'), t, 27.4, 0.9, 9310); conta($('#n3'), t, 27.5, 0.9, 4020);   // "esses dados"
+  acende($('#lt3'), t, 28.4, '239,68,68', 0.1);                     // "resposta para sua gestão"
+  rModo(t, 30.99);                                                  // "não é só uma IA para escrever textos"
+  riscaM.style.opacity = t >= 32.19 ? 0 : 1; vira($('#modo'), t, 32.19, '<i></i>Operação · ERP', 'az');
+  ops.forEach((e, k) => { vira(e, t, 33.05 + k * 0.18, e.textContent, 'az'); });   // "dentro da operação da sua empresa"
+
+  /* ── CTA · 35,1 → fim ── */
+  A($('#cta'), t, 35.1, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur4'), t, 36.2, [1000, 700], t > 36.2 ? centro('#btnCta') : [0, 0], 37.0, 38.2); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 37.15) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 37.15 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Roteiro 3 (trabalho repetitivo)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .li { height: 82px; }
+  #w1 .li .pill { min-width: 200px; justify-content: center; }
+  #tar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  #tar .duv { justify-content: center; height: 62px; font-size: 21px; }
+  #fila .li .pill { min-width: 230px; justify-content: center; }
+  /* CRM Kanban (funcionalidade do site) */
+  #kb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .col { background: rgba(255,255,255,.03); border: 1.5px solid var(--linha); border-radius: 16px; padding: 14px 12px; min-height: 430px; }
+  .col .k { display: flex; justify-content: space-between; font-size: 16px; margin: 2px 4px 12px; }
+  .kc { background: var(--card2); border: 1.5px solid var(--linha2); border-radius: 14px; padding: 14px 14px 12px; margin-bottom: 10px; }
+  .kc .nm { display: flex; align-items: center; gap: 10px; font: 600 21px 'INT'; white-space: nowrap; }
+  .kc .av { width: 38px; height: 38px; font-size: 14px; }
+  .kc .utm { font-size: 14px; display: block; margin-top: 8px; }
+  .kc .pill { height: 32px; font-size: 15px; padding: 0 10px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,85 → 6,0): o dia do time comercial — tarefa manual atrás de tarefa manual → o Leadrive resolve ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span class="tt" style="border:0;padding:0;color:#fff;font-size:27px">Rotina do comercial · hoje</span><span class="pill ruim num" id="pTempo"><i></i>2h 40min perdidas</span></div>
+  <div class="corpo">
+    <div class="li"><span>Mover lead de etapa</span><span class="pill cinza">Manual · 32×</span></div>
+    <div class="li"><span>Criar tarefa de retorno</span><span class="pill cinza">Manual · 18×</span></div>
+    <div class="li"><span>Procurar a conversa no WhatsApp</span><span class="pill cinza">Manual · 41×</span></div>
+    <div class="li"><span>Cobrar o vendedor</span><span class="pill cinza">Manual · 9×</span></div>
+    <div class="li"><span>Fazer follow-up</span><span class="pill cinza">Manual · 27×</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (6,2 → 13,85): a lista que ela fala, tarefa por tarefa ═════ -->
+<div class="p card ins" id="lis" style="left:540px;top:300px">
+  <div class="cabI">Feito à mão, todo dia<span class="pill ruim" id="pLis">6 tarefas</span></div>
+  <div id="tar"><span class="duv">? organizar lead</span><span class="duv">? criar tarefa</span><span class="duv">? atualizar etapa</span>
+    <span class="duv">? cobrar vendedor</span><span class="duv">? procurar conversa</span><span class="duv">? fazer follow-up</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (13,95 → 19,8): processo manual → os leads se perdem e o time perde tempo ═════ -->
+<div class="p card ins" id="fila" style="left:540px;top:300px">
+  <div class="cabI">Fila de atendimento<span class="pill cinza" id="pFila">Processo manual</span></div>
+  <div class="li" id="f0"><span>Camila Ribeiro</span><span class="pill cinza" id="s0">Aguardando</span></div>
+  <div class="li" id="f1"><span>João Mendes</span><span class="pill cinza" id="s1">Aguardando</span></div>
+  <div class="li" id="f2"><span>Ana Paula</span><span class="pill cinza" id="s2">Aguardando</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (19,85 → 27,2): CRM Kanban do Leadrive — centraliza, organiza a fila, automatiza ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:810px">
+  <div class="bar"><span id="mk2"></span><span class="tt">CRM Kanban</span><span class="pill cinza" id="pAuto">Automações</span></div>
+  <div class="corpo">
+    <div id="kb">
+      <div class="col"><div class="k"><span>Novo</span><span class="num" id="q0">4</span></div><div id="c0"></div></div>
+      <div class="col"><div class="k"><span>Atendimento</span><span class="num" id="q1">0</span></div><div id="c1"></div></div>
+      <div class="col"><div class="k"><span>Proposta</span><span class="num" id="q2">1</span></div><div class="kc" id="kx2"><div class="nm"><div class="av a2">MT</div>Marcos T.</div><span class="utm"><span>utm:</span> META_ADS</span><span class="pill roxo">Diego A.</span></div><div id="c2"></div></div>
+      <div class="col"><div class="k"><span>Venda</span><span class="num" id="q3">1</span></div><div class="kc" id="kx3"><div class="nm"><div class="av a3">BL</div>Bia L.</div><span class="utm"><span>utm:</span> GOOGLE_ADS</span><span class="pill vivo">✓ R$ 2.400</span></div><div id="c3"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (27,3 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Menos tarefa manual.<br><em>Mais tempo vendendo.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agende uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 31.6;
+const ROSTO = [540, 720];
+const FS = [[0.85, 6.0, true], [19.85, 27.2, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#mk2').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+// cartões do Kanban: [nome, iniciais, cor, utm, coluna inicial]
+const KC = [['Camila R.', 'CR', 'a1', 'META_ADS'], ['João M.', 'JM', 'a2', 'GOOGLE_ADS'], ['Ana Paula', 'AP', 'a3', 'INSTAGRAM'], ['Ricardo S.', 'RS', 'a4', 'TIKTOK']];
+$('#c0').innerHTML = KC.map(([n, i, c, u], k) => `<div class="kc" id="kc${k}"><div class="nm"><div class="av ${c}">${i}</div>${n}</div><span class="utm"><span>utm:</span> ${u}</span><span class="pill cinza" id="kp${k}">Sem dono</span></div>`).join('');
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const l1 = Q('#w1 .li'), p1 = Q('#w1 .li .pill'), tr = Q('#tar .duv'), fl = Q('#fila .li');
+// risco nas linhas que se perdem
+const rf = [riscar('f1'), riscar('f2')];
+// cartão que muda de coluna: anda da posição antiga para a nova (medidas com o Kanban parado)
+const move = (k, t, passos) => { const el = $('#kc' + k); let de = 0, para = 0, t0 = -9;
+  for (const [tt, c] of passos) if (t >= tt) { de = para; para = c; t0 = tt; }
+  if (el.parentNode.id !== 'c' + para) $('#c' + para).appendChild(el);
+  if (t0 < 0) { el.style.transform = ''; return; }
+  const key = de + '>' + para; el._d = el._d || {};
+  if (!el._d[key]) { const cam = $('#cam2'), tr = cam.style.transform; cam.style.transform = ''; $('#c' + de).appendChild(el); const a = el.getBoundingClientRect();
+    $('#c' + para).appendChild(el); const b = el.getBoundingClientRect(); el._d[key] = [a.left - b.left, a.top - b.top]; cam.style.transform = tr; }
+  const p = E.cubicInOut(pr(t, t0, 0.55)), d = el._d[key];
+  el.style.transform = p < 1 ? `translate(${d[0] * (1 - p)}px, ${d[1] * (1 - p)}px) rotate(${2 * Math.sin(p * Math.PI)}deg)` : ''; };
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.9, [540, 800], 0.92, 3, -3], [2.2, [l1[0], l1[2]], 1.04, 2, -1], [3.8, '#pTempo', 1.06, 1, 2, -250, 120], [5.0, [l1[2], l1[4]], 1.06, -1, 1], [6.0, [l1[1], l1[4]], 1.08, 0, 0]]);
+  camera(t, '#cam2', [[19.9, [540, 810], 0.92, 3, 3], [21.0, '#c0', 1.02, 2, 1, 280, 0], [22.6, ['#c0', '#c1'], 1.06, 1, -2], [24.2, ['#c1', '#c2'], 1.08, -1, 1], [25.6, ['#c2', '#c3'], 1.08, 0, -1], [27.2, ['#c1', '#c3'], 1.04, 0, 0]]);
+
+  /* ── FS1 · 0,85 → 6,0: ninguém aguenta mais o trabalho repetitivo → o Leadrive resolve boa parte ── */
+  A($('#w1'), t, 0.9, 5.9, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(l1, t, 0.98, 0.05);
+  { const m = t < 1.36 ? 160 : Math.round(160 + 40 * E.cubicOut(C((t - 1.36) / 1.3))); const ok = t >= 4.29;
+    const v = ok ? Math.round(L(m, 25, E.cubicInOut(C((t - 4.29) / 1.2)))) : m; $('#pTempo').innerHTML = `<i></i>${Math.floor(v / 60)}h ${String(v % 60).padStart(2, '0')}min ${ok ? 'por dia' : 'perdidas'}`;
+    $('#pTempo').className = 'pill num ' + (t >= 5.2 ? 'vivo' : 'ruim'); }
+  p1.forEach((p, k) => { vira(p, t, 4.29 + 0.13 * k, '✓ Automático', 'vivo'); if (t >= 4.29 + 0.13 * k) acende(l1[k], t, 4.29 + 0.13 * k, VERDE, 0.08); else acende(l1[k], t, 1.36 + 0.12 * k, VERM, 0.1); });
+
+  /* ── inserção · 6,2 → 13,85: organizar, criar tarefa, atualizar etapa, cobrar, procurar, follow-up ── */
+  A($('#lis'), t, 6.2, 13.85, { de: 0.86, dy: -60, dout: 0.25 });
+  [6.31, 8.12, 9.48, 10.5, 11.6, 12.86].forEach((t0, k) => { const e = tr[k]; e.style.opacity = 0.35 + 0.65 * pr(t, t0, 0.2); if (t >= t0) pulsa(e, t, t0, 0.08); else e.style.transform = ''; });
+
+  /* ── inserção · 13,95 → 19,8: os leads se perdem e o time perde tempo ── */
+  A($('#fila'), t, 13.95, 19.8, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(fl, t, 14.05, 0.1, 12);
+  vira($('#s0'), t, 15.56, 'Aguardando 2 dias', 'ruim');
+  vira($('#s1'), t, 17.6, 'Perdido', 'ruim'); rf[0](t, 17.6); acende(fl[1], t, 17.6, VERM, 0.1);
+  vira($('#s2'), t, 17.85, 'Perdido', 'ruim'); rf[1](t, 17.85); acende(fl[2], t, 17.85, VERM, 0.1);
+  vira($('#pFila'), t, 18.9, 'Time: 2h/dia na mão', 'ruim');
+
+  /* ── FS2 · 19,85 → 27,2: centraliza as oportunidades, organiza a fila, automatiza o repetitivo ── */
+  A($('#w2'), t, 19.9, 27.1, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(Q('#w2 .col'), t, 19.98, 0.05); cascata([...Q('#c0 .kc'), $('#kx2'), $('#kx3')], t, 20.0, 0.06); Q('#c0 .kc').forEach((e, k) => acende(e, t, 21.71 + 0.1 * k, ROXO, 0.12));
+  // "organiza a fila de atendimento": cada lead ganha dono pelo roteamento
+  ['Letícia M.', 'Diego A.', 'Paula T.', 'Letícia M.'].forEach((v, k) => vira($('#kp' + k), t, 22.71 + 0.14 * k, v, 'roxo'));
+  // "automatiza tarefas repetitivas": os cartões andam sozinhos de etapa
+  move(0, t, [[24.27, 1], [25.47, 2]]); move(1, t, [[24.45, 1]]);
+  if (t >= 25.47) vira($('#kp0'), t, 25.47, '✓ Follow-up agendado', 'vivo');
+  move(2, t, [[26.1, 1]]); move(3, t, []);
+  { const n = [4 - (t >= 24.27) - (t >= 24.45) - (t >= 26.1), (t >= 24.27) + (t >= 24.45) - (t >= 25.47) + (t >= 26.1), +(t >= 25.47) + 1, 1];
+    n.forEach((v, k) => $('#q' + k).textContent = v); }
+  vira($('#pAuto'), t, 24.27, '✓ Automações ativas', 'vivo');
+
+  /* ── CTA · 27,3 → fim ── */
+  A($('#cta'), t, 27.3, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 29.2, [1020, 760], t > 29.2 ? centro('#btnCta') : [0, 0], 30.06, 31.5); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 30.2) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 30.2 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Anonify — Copy 2 (Dono de empresa: vai esperar um processo?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #sis2 .main { height: 720px; }
+  .linhaB { display: flex; align-items: center; gap: 14px; }
+  .linhaB .btn { height: 62px; font-size: 22px; border-radius: 10px; padding: 0 26px; }
+  #bSalvar { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 5,45): vai esperar um processo para descobrir que precisava de um canal de denúncias? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><span class="tt">Diretoria <span>· Sua empresa</span></span><span class="pill cinza">Dono</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Riscos trabalhistas</h3><p>O que a diretoria precisa saber</p></div><span class="pill cinza" id="pRisco">Sem alertas</span></div>
+    <div class="tab" style="margin-top:22px">
+      <div class="row g"><span class="nm">Processo judicial<span>Ministério Público do Trabalho</span></span><span class="pill cinza">Nenhum</span></div>
+      <div class="row g"><span class="nm">Denúncias internas<span>Sem canal oficial</span></span><span class="pill cinza">Sem registro</span></div>
+      <div class="row g"><span class="nm">Canal de denúncias<span>Lei 14.457/2022 e NR-1</span></span><span class="pill cinza">Não tem</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,65 → 17,0): o caso da concessionária famosa — linha do tempo ═════ -->
+<div class="p card ins" id="caso" style="left:540px;top:300px">
+  <div class="cabI">Caso real · concessionária famosa<span class="pill azul" id="pMpt">MPT</span></div>
+  <div id="lt1" style="margin-top:14px"></div>
+</div>
+
+<!-- ═════ INSERÇÃO (17,4 → 23,7): o resultado ═════ -->
+<div class="p card ins" id="res" style="left:540px;top:300px">
+  <div class="cabI">Resultado do processo<span class="pill cinza" id="pRes">Em julgamento</span></div>
+  <div class="li"><span>Canal de denúncias</span><span class="pill cinza" id="pCanal">Exigido</span></div>
+  <div class="li"><span>Dano moral coletivo</span><b class="num" id="vInd">R$ 0</b></div>
+</div>
+
+<!-- ═════ INSERÇÃO (23,75 → 31,95): estruturar antes — receber, acompanhar e tratar (caminho se completando) ═════ -->
+<div class="p card ins" id="antes" style="left:540px;top:300px">
+  <div class="cabI">Canal de denúncias<span class="pill cinza" id="pAntes">Esperar o problema</span></div>
+  <div id="lt2" style="margin-top:14px"></div>
+</div>
+
+<!-- ═════ INSERÇÃO (32,2 → 33,75): Anonify ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 2 (33,85 → 40,75): simples, estruturada, em 5 minutos e personalizada ═════ -->
+<div class="cam" id="cam2">
+<div class="p card sis fs" id="sis2" data-lateral="empresa" style="left:540px;top:810px">
+  <div class="main">
+    <div class="abasS" id="abas2"><div class="abaS">Visão Geral</div><div class="abaS">Customizações</div><div class="abaS">Status e Categorias</div></div>
+    <div class="vista" id="vCus" style="top:104px">
+      <div class="topo"><div><h3>Página de denúncia</h3><p>Do jeito da sua empresa</p></div><span class="pill cinza" id="pNoAr">Rascunho</span></div>
+      <div class="bloco" id="bUrl2">
+        <div class="rt">Link da sua página de denúncia</div>
+        <div class="campo"><span class="pre">anonify.com.br/complaint/</span><span id="dUrl"></span></div>
+      </div>
+      <div class="bloco" id="bLogo">
+        <div class="rt">Logo da empresa</div>
+        <div class="linhaB"><div class="ava" id="ava"><img src="img/simbolo.png"></div>
+          <div class="dots" style="margin-left:auto"><span class="dot" style="background:#155EEF"></span><span class="dot" style="background:#475467"></span><span class="dot" style="background:#7F56D9"></span><span class="dot" style="background:#D92D20"></span><span class="dot" style="background:#E04F16"></span><span class="dot" style="background:#079455"></span></div></div>
+      </div>
+      <div class="bloco" id="bBot">
+        <div class="rt">Cor do botão</div>
+        <div class="linhaB"><div class="btn" id="bDen">Fazer uma denúncia</div><div class="btn" id="bSalvar">Salvar</div></div>
+      </div>
+    </div>
+    <div class="vista" id="vCat" style="top:104px;opacity:0">
+      <h3>Status e Categorias</h3><p>Para o escopo da sua empresa</p>
+      <div class="tabela">
+        <div class="row c"><span class="nm">Assédio moral<span>Categoria</span></span><span class="pill vivo">Ativa</span></div>
+        <div class="row c"><span class="nm">Assédio sexual<span>Categoria</span></span><span class="pill vivo">Ativa</span></div>
+        <div class="row c"><span class="nm">Discriminação<span>Categoria</span></span><span class="pill vivo">Ativa</span></div>
+        <div class="row c"><span class="nm">Corrupção<span>Categoria</span></span><span class="pill vivo">Ativa</span></div>
+        <div class="row c"><span class="nm"><b id="dCat" style="font:inherit;color:inherit">Nova categoria</b><span>Categoria personalizada</span></span><span class="pill cinza" id="pCat">Nova</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (40,91 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px;padding:34px 40px">
+  <img class="lgc" src="img/logo.png" style="height:56px;margin-bottom:22px">
+  <div class="t"><span>Prepare sua empresa antes</span>Conheça a Anonify</div>
+  <div class="btn" id="btnCta" style="margin-top:26px"><div id="brilho"></div>Agendar demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 45.15;
+const ROSTO = [530, 800];
+const FS = [[0.9, 5.45, true], [33.85, 40.75, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+linhaTempo('lt1', [['Denúncias de assédio', 'já conhecidas'], ['Ação judicial', 'ajuizada'], ['Canal terceirizado', 'só depois']]);
+linhaTempo('lt2', [['Receber', 'denúncia anônima'], ['Acompanhar', 'status e prazos'], ['Tratar', 'plano de ação']]);
+const gs = Q('#win .row.g'), rl = Q('#res .li'), rc = Q('#vCat .row.c'), abas2 = Q('#abas2 .abaS'), dots = Q('#bLogo .dot');
+const IN = (t, a, b) => t >= a && t < b;
+
+// corte de 0,43 s na pausa antes do "Mas" (pedido da pessoa): animação no tempo antigo, legenda no novo
+// + corte de 0,48 s na pausa e no "E" respirado antes de "é exatamente"
+const WARP = T => T < 11.19 ? T : T < 31.64 ? T + 0.43 : T + 0.91;
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.95, [540, 800], 0.92, 3, -3], [1.6, gs[0], 1.04, 2, -1], [2.6, [gs[0], gs[1]], 1.06, 1, 2], [3.7, [gs[1], gs[2]], 1.06, 2, -1],
+    [4.6, gs[2], 1.12, 1, 1], [5.45, gs[2], 1.15, 0, 0]]);
+  camera(t, '#cam2', [[33.9, [540, 810], 0.92, 3, 3], [34.9, '#bUrl2', 1.06, 2, -1], [35.8, '#bLogo', 1.08, 1, 2], [36.9, '#bBot', 1.08, 2, -1],
+    [37.7, ['#vCus .topo', '#bUrl2'], 1.04, 1, 1], [38.5, ['#abas2', '#vCat h3'], 1.02, 2, -1], [39.4, [rc[3], rc[4]], 1.08, 1, 2], [40.75, rc[4], 1.15, 0, 0]]);
+
+  /* ── FS1 · 0,9 → 5,45 ── */
+  A($('#win'), t, 0.95, 5.35, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(gs, t, 1.15, 0.1);
+  vira(gs[0].querySelector('.pill'), t, 1.64, 'Processo aberto', 'ruim'); acende(gs[0], t, 1.64, '217,45,32', 0.06);
+  vira(gs[1].querySelector('.pill'), t, 2.2, 'Ninguém viu', 'ruim'); acende(gs[1], t, 2.2, '217,45,32', 0.06);
+  vira(gs[2].querySelector('.pill'), t, 4.7, 'Precisava', 'ruim'); acende(gs[2], t, 4.7, '217,45,32', 0.06);
+  vira($('#pRisco'), t, 4.85, 'Tarde demais', 'ruim');
+
+  /* ── inserção · 5,65 → 17,0: linha do tempo do caso ── */
+  A($('#caso'), t, 5.65, 17.0, { de: 0.86, dy: -60, dout: 0.25 });
+  pulsa($('#pMpt'), t, 7.17, 0.16);
+  subMarco('lt1', 0, t, 8.53, 'azul'); marco('lt1', 0, t, 9.85, 'azul');
+  marco('lt1', 2, t, 12.26, 'azul', false);
+  tinta(t, 'lt1a', 15.1, 0.9); marco('lt1', 1, t, 16.0, 'verm'); subMarco('lt1', 1, t, 16.0, 'verm');
+  corLinha('lt1', 'b', 'verm'); tinta(t, 'lt1b', 16.05, 0.65); if (t >= 16.74) marco('lt1', 2, t, 16.74, 'verm'); subMarco('lt1', 2, t, 16.74, 'verm');
+  $('#lt1r2').style.fill = t >= 16.74 ? '#D92D20' : '';
+
+  /* ── inserção · 17,4 → 23,7: resultado ── */
+  A($('#res'), t, 17.4, 23.7, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(rl, t, 17.5, 0.08, 12);
+  vira($('#pCanal'), t, 18.88, 'Obrigatório', 'azul'); acende(rl[0], t, 18.88);
+  vira($('#pRes'), t, 20.46, 'Condenada', 'ruim');
+  if (t >= 21.4) conta($('#vInd'), t, 21.4, 0.9, 200000, v => 'R$ ' + Math.round(v).toLocaleString('pt-BR')); else $('#vInd').textContent = 'R$ 0';
+  $('#vInd').style.color = t >= 21.8 ? '#D92D20' : ''; acende(rl[1], t, 22.76, '217,45,32', 0.06);
+
+  /* ── inserção · 23,75 → 31,95: não esperar; estruturar antes ── */
+  A($('#antes'), t, 23.75, 31.8, { de: 0.86, dy: -60, dout: 0.25 });
+  if (t < 27.64) vira($('#pAntes'), t, 25.04, 'Esperar o problema', 'ruim'); else vira($('#pAntes'), t, 27.64, 'Estruturar antes', 'vivo');
+  marco('lt2', 0, t, 29.1, 'azul'); subMarco('lt2', 0, t, 29.1, 'azul'); tinta(t, 'lt2a', 29.25, 0.5);
+  marco('lt2', 1, t, 29.8, 'azul'); subMarco('lt2', 1, t, 29.8, 'azul'); tinta(t, 'lt2b', 29.95, 0.8);
+  marco('lt2', 2, t, 30.8, 'verde'); subMarco('lt2', 2, t, 30.8, 'verde'); $('#lt2r2').style.fill = t >= 30.8 ? '#067647' : '';
+  $('#lt2ok').style.opacity = pr(t, 31.06, 0.2, E.cubicOut);
+
+  /* ── logo · 32,2 → 33,75 ── */
+  A($('#logoCard'), t, 32.55, 33.7, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 33,85 → 40,75: sistema Anonify ── */
+  A($('#sis2'), t, 33.9, 40.65, { de: 0.88, dy: 120, dout: 0.2 });
+  digita($('#dUrl'), 'suaempresa', t, 34.93, 18);
+  // logo e cor: o cursor escolhe a cor e o botão da página muda junto
+  { const c = cursor($('#cur2'), t, 35.4, [1000, 1500], t > 35.4 ? centro(dots[2]) : [0, 0], 35.99, 36.5); dots[2].style.transform = `scale(${1 - 0.12 * c})`;
+    const roxo = t >= 36.05; dots.forEach((d, k) => d.classList.toggle('on', k === (roxo ? 2 : 0)));
+    const cor = roxo ? '#7F56D9' : '#155EEF'; $('#bDen').style.background = cor; $('#ava').style.background = roxo ? '#EBE9FE' : '#D1E0FF';
+    if (roxo) pulsa($('#bDen'), t, 36.05, 0.06); }
+  { const c = cursor($('#cur3'), t, 36.75, [1000, 1500], t > 36.75 ? centro('#bSalvar') : [0, 0], 37.35, 37.85);
+    const ok = t >= 37.45; $('#bSalvar').className = ok ? 'btn ok' : 'btn'; const tx = ok ? 'Salvo ✓' : 'Salvar'; if ($('#bSalvar').textContent !== tx) $('#bSalvar').textContent = tx;
+    if (!ok) $('#bSalvar').style.transform = `scale(${1 - 0.06 * c})`; else pulsa($('#bSalvar'), t, 37.45, 0.08); }
+  vira($('#pNoAr'), t, 37.83, '✓ No ar em 5 min', 'vivo');
+  { const c = cursor($('#cur4'), t, 37.95, [980, 1450], t > 37.95 ? centro(abas2[2]) : [0, 0], 38.4, 38.9); abas2[2].style.transform = `scale(${1 - 0.05 * c})`;
+    const at = t >= 38.47 ? 2 : 1; abas2.forEach((e, k) => e.classList.toggle('on', k === at));
+    const p = pr(t, 38.47, 0.3, E.cubicOut), on = t >= 38.47;
+    $('#vCus').style.opacity = on ? 1 - p : 1; $('#vCat').style.opacity = on ? p : 0; $('#vCat').style.transform = `translateY(${(1 - p) * 24}px)`; }
+  { const tx = 'Segurança do trabalho', n = Math.floor(C((t - 39.3) / 0.7) * tx.length), h = t < 39.3 ? 'Nova categoria' : tx.slice(0, Math.max(1, n)); if ($('#dCat').textContent !== h) $('#dCat').textContent = h; }
+  vira($('#pCat'), t, 40.23, 'Ativa', 'vivo'); acende(rc[4], t, 39.59);
+
+  /* ── CTA · 40,91 → fim ── */
+  A($('#cta'), t, 40.91, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 41.6, [1020, 760], t > 41.6 ? centro('#btnCta') : [0, 0], 42.3, 43.1); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 42.45) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 42.45 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

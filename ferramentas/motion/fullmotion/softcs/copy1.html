@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Soft CS — Peça 01 (planilha vs. alerta)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* planilha (o jeito antigo: 500 linhas, ninguém acha o risco) */
+  #w1 .fx { height: 58px; display: flex; align-items: center; gap: 16px; padding: 0 24px; background: #fff; border-bottom: 1.5px solid var(--linha); font: 500 21px ui-monospace, Consolas, monospace; color: var(--cinza); }
+  #w1 .fx b { font: italic 700 22px 'MAN'; color: var(--cinza2); }
+  .gr .r { display: grid; grid-template-columns: 76px 1fr 150px 190px 200px; height: 56px; border-bottom: 1px solid #E3E5EE; background: #fff; }
+  .gr .r > div { display: flex; align-items: center; padding: 0 14px; border-right: 1px solid #E3E5EE; font: 500 21px 'MAN'; color: #334155; white-space: nowrap; overflow: hidden; }
+  .gr .r > div:first-child { justify-content: center; background: #F3F4F8; color: var(--cinza2); font: 600 18px ui-monospace, Consolas, monospace; }
+  .gr .r.h > div { background: #F3F4F8; font: 700 18px 'MAN'; color: var(--cinza); text-transform: uppercase; letter-spacing: .06em; }
+  .gr .vp { height: 560px; overflow: hidden; position: relative; }
+  .gr .r .pill { height: 36px; font-size: 18px; padding: 0 12px; }
+  #w1 .rod { height: 54px; display: flex; align-items: center; gap: 8px; padding: 0 18px; background: #F3F4F8; border-top: 1.5px solid var(--linha); font: 600 19px 'MAN'; color: var(--cinza); }
+  #w1 .rod span { padding: 8px 16px; border-radius: 8px 8px 0 0; } #w1 .rod span.on { background: #fff; color: #15803D; box-shadow: inset 0 -3px 0 #15803D; }
+  #w1 .rod b { margin-left: auto; font: 600 19px ui-monospace, Consolas, monospace; color: var(--cinza); }
+  /* painel Health Score */
+  #w2 .tb .hd, #w2 .tb .ln { grid-template-columns: 1fr 170px 190px 170px; }
+  #w2 .tb .hd span:nth-child(n+2) { text-align: center; } #w2 .tb .ln > :nth-child(n+2) { justify-self: center; }
+  #w2 .tb .hd .on { color: var(--roxo2); }
+  #al { width: 960px; display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 18px; background: #fff; color: var(--tinta);
+        box-shadow: 0 24px 60px rgba(3,2,20,.5), inset 6px 0 0 var(--vermF); }
+  #al .alic { width: 64px; height: 64px; border-radius: 16px; background: var(--vermc); display: grid; place-items: center; flex: none; } #al .alic svg { width: 36px; height: 36px; }
+  #al h5 { font: 800 27px 'MAN'; letter-spacing: -0.015em; } #al p { font: 500 21px 'MAN'; color: var(--cinza); margin-top: 3px; }
+  #al .pill { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- GANCHO (0 → 4,35): "Seu cliente vai cancelar. Você vai descobrir quando?" -->
+<div class="p tit" id="h1" style="left:540px;top:390px" data-tx="Seu cliente|vai [cancelar.]|Você vai descobrir|[quando?]"></div>
+
+<!-- PLANILHA (0 → 8,2): 500 linhas, o cursor procura e só acha na renovação -->
+<div class="cam" id="cam1">
+<div class="p win" id="w1" style="left:540px;top:1075px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">planilhas / clientes_base_2026.xlsx</span></div>
+  <div class="fx"><b>fx</b><span id="fxT">=PROCV(A2;Clientes!A:E;5;0)</span></div>
+  <div class="gr">
+    <div class="r h"><div></div><div>Cliente</div><div>MRR</div><div id="hUlt">Últ. contato</div><div id="hRen">Renovação</div></div>
+    <div class="vp" id="vp"></div>
+  </div>
+  <div class="rod"><span class="on">Clientes 2026</span><span>Renovações</span><span>Tickets</span><b id="rodT">500 linhas</b></div>
+</div>
+</div>
+
+<!-- HEALTH SCORE (8,2 → 12,5): a conta vira vermelha no primeiro sinal e o alerta dispara -->
+<div class="cam" id="cam2">
+<div class="p win" id="w2" style="left:540px;top:900px">
+  <div class="bar"><i></i><i></i><i></i><span class="url">softcs.com.br / health-score</span><span class="dir">Soft CS</span></div>
+  <div class="corpo">
+    <div class="kpis">
+      <div class="kc"><div class="r">Total de clientes</div><div class="v">107</div><span id="k0"></span></div>
+      <div class="kc"><div class="r">Saudáveis</div><div class="v">55</div><span id="k1"></span></div>
+      <div class="kc" id="kAt"><div class="r">Em atenção</div><div class="v" id="vAt">27</div><span id="k2"></span></div>
+      <div class="kc" id="kCr"><div class="r">Críticos</div><div class="v" id="vCr">25</div><span id="k3"></span></div>
+    </div>
+    <div class="tb" style="margin-top:26px">
+      <div class="hd"><span>Cliente</span><span id="hHS">Health Score</span><span>Renovação</span><span>Status</span></div>
+      <div class="ln"><div class="cl"><span class="av a2">KE</span><div>Kora Educação<small>MRR R$ 9.800</small></div></div><span class="sc ok">92</span><span>em 210 dias</span><span class="pill ok"><i></i>Saudável</span></div>
+      <div class="ln" id="rV"><div class="cl"><span class="av a1">GV</span><div>Grupo Vértice<small>MRR R$ 12.400</small></div></div><span class="sc at" id="scV">74</span><span>em 92 dias</span><span class="pill at" id="pV"><i></i>Atenção</span></div>
+      <div class="ln"><div class="cl"><span class="av a4">OS</span><div>Orbe Saúde<small>MRR R$ 18.400</small></div></div><span class="sc ok">81</span><span>em 145 dias</span><span class="pill ok"><i></i>Saudável</span></div>
+      <div class="ln"><div class="cl"><span class="av a3">LT</span><div>Lumen Tech<small>MRR R$ 6.900</small></div></div><span class="sc at">63</span><span>em 38 dias</span><span class="pill at"><i></i>Atenção</span></div>
+    </div>
+  </div>
+</div>
+<div class="p" id="al" style="left:540px;top:385px">
+  <span class="alic"></span>
+  <div><h5>Alerta · Grupo Vértice ficou crítico</h5><p>1º sinal: uso caiu 45% em 2 semanas</p></div>
+  <span class="pill cz" id="pAl">Novo</span>
+</div>
+</div>
+
+<!-- CTA (12,55 → fim) -->
+<div class="p" id="cta" style="left:540px;top:880px">
+  <span class="logo" id="ctaL"></span>
+  <div class="tit" id="ctaT" data-tx="Veja o risco|na [sua base.]"></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Ver com meus dados<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="curC" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="c1/palavras.js"></script>
+<script>
+window.DURACAO = 17.25;
+const ROSTO = [540, 960], FS = [];
+const OCULTA = [[0, 4.6], [12.5, 99]];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script src="softcs.js"></script>
+<script>
+$('#ctaL').innerHTML = LOGO(104); $('#ctaS').innerHTML = ic('seta', '#fff', 2.6);
+$('#k0').innerHTML = ic('users', '#8758F3'); $('#k1').innerHTML = ic('pulso', '#22C36D'); $('#k2').innerHTML = ic('alerta', '#EAB308'); $('#k3').innerHTML = ic('partido', '#EF4444');
+$('#al .alic').innerHTML = ic('alerta', '#EF4444', 2.4);
+const VERM = '239,68,68', ROXO = '135,88,243';
+
+/* planilha: 500 linhas geradas (exemplo), viewport de 10 linhas que rola */
+const NA = ['Grupo', 'Rede', 'Instituto', 'Clínica', 'Studio', 'Agência', 'Colégio', 'Loja', 'Escritório', 'Hub', 'Centro', 'Casa', 'Mercado'];
+const NB = ['Aurora', 'Pratika', 'Nexo', 'Fluxa', 'Brava', 'Delta', 'Prisma', 'Solar', 'Vale', 'Atlas', 'Lumi', 'Ponto', 'Mira', 'Sigma'];
+const lin = r => r === 484 ? ['Grupo Vértice', 'R$ 12.400', '14/06', '07/10'] :
+  [NA[(r * 7) % 13] + ' ' + NB[(r * 5 + 3) % 14], 'R$ ' + (1200 + (r * 937) % 16800).toLocaleString('pt-BR'), String(1 + r % 28).padStart(2, '0') + '/0' + (1 + r % 9), String(1 + (r * 3) % 28).padStart(2, '0') + '/' + String(1 + (r * 5) % 12).padStart(2, '0')];
+const vp = $('#vp'); vp.innerHTML = Array.from({ length: 11 }, () => '<div class="r"><div></div><div></div><div></div><div></div><div></div></div>').join('');
+const VR = [...vp.children];
+function planilha(t) {
+  // rola de 1 a ~480 enquanto ele fala "Na planilha…", para na linha do Grupo Vértice (484) em "renovação"
+  const s = L(0, 477, E.cubicInOut(C((t - 4.75) / 1.75)));
+  const s0 = Math.floor(s), fr = s - s0;
+  VR.forEach((row, k) => { const r = s0 + k + 1, d = lin(r), cs = row.children;
+    row.style.transform = `translateY(${-fr * 56}px)`;
+    cs[0].textContent = r + 1; cs[1].textContent = d[0]; cs[2].textContent = d[1]; cs[3].textContent = d[2];
+    const achou = r === 484 && t >= 6.95;
+    const h = achou ? '<span class="pill cr"><i></i>Cancelou</span>' : d[3]; if (cs[4].innerHTML !== h) cs[4].innerHTML = h;
+    row.id = r === 484 ? 'rVt' : ''; acende(row, t, r === 484 ? 6.95 : null, VERM, 0.1); });
+  // borrão de rolagem leve (máx. 1 px)
+  const v = Math.abs(477 * (E.cubicInOut(C((t - 4.73) / 1.75)) - E.cubicInOut(C((t - 4.77) / 1.75))) / 0.04);
+  vp.style.filter = v > 60 ? `blur(${Math.min(1, v / 400)}px)` : 'none';
+  $('#rodT').textContent = t < 4.75 ? '500 linhas' : `Linha ${s0 + 2} de 500`;
+  acende($('#hRen'), t, 6.41, VERM, 0.14);
+}
+
+window.quadro = function (t) {
+  FM.antes(t);
+  camera(t, '#cam1', [[0, [540, 820], 1, 2, -2], [4.3, [540, 830], 1.0, 1, -1], [5.1, [540, 1075], 1.03, -1, 1], [6.6, [540, 1100], 1.05, 1, 1], [8.2, [540, 1110], 1.07, 0, 0]]);
+  camera(t, '#cam2', [[8.2, [540, 860], 0.98, 2, -2], [9.3, '#hHS', 1.06, 1, 1, -60, 160], [10.4, '#rV', 1.1, -1, 1], [11.3, ['#al', '#rV'], 1.04, 1, -1], [12.6, ['#al', '#rV'], 1.07, 0, 0]]);
+
+  /* gancho */
+  tit('#h1', t, PAL.slice(0, 8).map(w => w[0]), 4.35);
+
+  /* planilha */
+  A($('#w1'), t, -0.35, 8.2, { de: 0.9, dy: 160 });
+  planilha(t);
+  passeia($('#cur1'), t, [[4.75, 300, 700], [5.2, 760, 760], [5.6, 420, 980], [6.0, 820, 860], [6.4, 880, 640], [6.95, ...(t > 6.5 ? centro($('#rVt') || '#vp') : [800, 900])], [7.9, 860, 1010]], [6.95]);
+
+  /* painel Health Score */
+  A($('#w2'), t, 8.2, 12.5, { de: 1, dy: 0, dout: 0.3 });
+  passa(t, '#w1', '#w2', 8.2);
+  cascata(Q('#w2 .kc, #w2 .tb .ln'), t, 8.3, 0.06);
+  acende($('#hHS'), t, T0(15), ROXO, 0.14); $('#hHS').classList.toggle('on', t >= T0(15));
+  { const p = E.cubicInOut(C((t - T0(20)) / 0.6)), v = Math.round(L(74, 38, p)); $('#scV').textContent = v;
+    $('#scV').className = 'sc ' + (v < 50 ? 'cr' : 'at'); if (t >= T0(20) + 0.6) pulsa($('#scV'), t, T0(20) + 0.6, 0.12); }
+  vira($('#pV'), t, T0(21), '<i></i>Crítico', 'cr'); acende($('#rV'), t, T0(20), VERM, 0.1);
+  { const on = t >= T0(21); $('#vCr').textContent = on ? 26 : 25; $('#vAt').textContent = on ? 26 : 27; acende($('#kCr'), t, on ? T0(21) : null, VERM, 0.1); }
+  notif($('#al'), t, T0(21) + 0.25, 12.4); $('#al').style.transform = 'translate(-50%,-50%) ' + $('#al').style.transform;
+  vira($('#pAl'), t, 11.75, '✓ CSM avisado', 'ok');
+
+  /* CTA */
+  cta(t, 12.55, PAL.slice(22, 28).map(w => w[0]), T0(28) + 0.05, window.DURACAO);
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

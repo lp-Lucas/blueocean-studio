@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NimoChat — Copy 2 (escritório perde clientes por falta de retorno no WhatsApp?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #ilu svg { display: block; margin-top: 8px; }
+  #ilu .cx { font-size: 25px; }
+  .kc { height: 166px; border: 1.5px solid #D3E0F5; border-left: 6px solid var(--azul); box-shadow: 0 6px 16px rgba(21,47,99,.14); }
+  .kcol { height: 400px; background: #E6F0FD; border-color: #CFDDF3; }
+  .kcol:nth-child(3) .kc { border-left-color: var(--verde); }
+  .kcol:nth-child(3) .kh { background: var(--verde); }
+  .kc .mini { background: var(--azul); color: #fff; }
+  .kc .t { font-size: 23px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,35 → 7,05): WhatsApp do escritório, clientes sem retorno, tudo desorganizado ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><div class="wa" style="width:52px;height:52px;border-radius:13px"><img src="img/whatsapp.svg" style="width:32px"></div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">WhatsApp do escritório</span><span class="pill cinza">1 número</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Clientes</h3><p>Conversas desta semana</p></div><span class="pill cinza num" id="pSem">0 sem retorno</span></div>
+    <div style="margin-top:14px">
+      <div class="conv c"><div class="av">PA<i class="w"></i></div><div class="nm">Sr. Paulo Andrade<span>Declaração do IRPF 2026</span></div><div class="dir"><span class="pill cinza">Seg 09:12</span></div></div>
+      <div class="conv c"><div class="av">AM<i class="w"></i></div><div class="nm">Dra. Ana Martins<span>Alteração do contrato social</span></div><div class="dir"><span class="pill cinza">Seg 14:30</span></div></div>
+      <div class="conv c"><div class="av">BP<i class="w"></i></div><div class="nm">Mercado Bom Preço<span>Folha de pagamento de outubro</span></div><div class="dir"><span class="pill cinza">Ter 08:05</span></div></div>
+      <div class="conv c"><div class="av">CV<i class="w"></i></div><div class="nm">Clínica Vida<span>Abertura de filial</span></div><div class="dir"><span class="pill cinza">Ter 11:47</span></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,13 → 11,95): o retorno depende da memória da equipe (ilustração: caminho que se rompe) ═════ -->
+<div class="p card ins" id="ilu" style="left:540px;top:300px">
+  <div class="cabI">Retorno do Sr. Paulo<span class="pill cinza" id="pRet">Em aberto</span></div>
+  <svg width="892" height="170" viewBox="0 0 892 170">
+    <circle cx="90" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m1"/><text class="cx" x="90" y="134" text-anchor="middle">Cliente pediu</text>
+    <circle cx="446" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m2"/><text class="cx" x="446" y="134" text-anchor="middle" id="tm2">Memória da equipe</text>
+    <circle cx="802" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m3"/><text class="cx" x="802" y="134" text-anchor="middle" id="tm3">Retorno</text>
+    <path id="la" d="M116 60 H420" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <g id="gb1"><path id="lb1" d="M472 60 H624" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="gb2"><path id="lb2" d="M624 60 H776" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (12,19 → 13,35): logo NimoChat ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 2 (13,45 → 19,25): CRM Kanban com responsável, etapa e prazo (tela do site recriada) ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">CRM Kanban</span><span class="pill cinza">Escritório</span></div>
+  <div class="abas"><div class="aba on">Kanban</div><div class="aba">Etiquetas</div></div>
+  <div class="corpo">
+    <div class="kb">
+      <div class="kcol"><div class="kh">Novo contato <span class="num">2</span></div>
+        <div class="kc" id="kFix"><div class="t">Sr. Paulo Andrade</div><div class="s">IRPF 2026</div><div class="s rs"><span class="mini">?</span><b>Sem responsável</b></div><span class="pz">Sem prazo</span></div>
+        <div class="kc" id="kDrag"><div class="t">Clínica Vida</div><div class="s">Abertura de filial</div><div class="s rs"><span class="mini">?</span><b>Sem responsável</b></div><span class="pz">Sem prazo</span></div>
+      </div>
+      <div class="kcol"><div class="kh">Em andamento <span class="num">1</span></div>
+        <div class="kc"><div class="t">Dra. Ana Martins</div><div class="s">Contrato social</div><div class="s rs"><span class="mini">?</span><b>Sem responsável</b></div><span class="pz">Sem prazo</span></div>
+      </div>
+      <div class="kcol"><div class="kh">Concluído <span class="num">1</span></div>
+        <div class="kc"><div class="t">Mercado Bom Preço</div><div class="s">Folha de outubro</div><div class="s rs"><span class="mini">?</span><b>Sem responsável</b></div><span class="pz">Sem prazo</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (19,41 → 26,8): controle da operação, nada esquecido, próxima ação ═════ -->
+<div class="p card ins" id="op" style="left:540px;top:300px">
+  <div class="cabI">Operação do escritório<span class="pill cinza">Esta semana</span></div>
+  <div class="li"><span>Atendimentos com responsável</span><span class="pill ruim num" id="p1">40%</span></div>
+  <div class="li"><span>Retornos esquecidos</span><span class="pill ruim num" id="p2">6</span></div>
+  <div class="li"><span>Próxima ação · Sr. Paulo</span><span class="pill cinza" id="p3">—</span></div>
+</div>
+
+<!-- ═════ CTA (27,0 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t"><span>CRM Kanban do NimoChat</span>Veja o Kanban na prática</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conhecer agora <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 31.83;
+const ROSTO = [640, 800];
+const FS = [[1.35, 7.05, false], [13.45, 19.25, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 18.35, ps: FM.criaConfete(5, 50, 540, 520, 760, 60, 0.7), rgb: [36, 98, 242] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+const cs = Q('#win .conv'), kc = Q('#app2 .kc'), kh = Q('#app2 .kh'), op = Q('#op .li');
+const IN = (t, a, b) => t >= a && t < b;
+const NOMES = ['Lucas', 'Fernanda', 'Lucas', 'Marcos'], PRAZO = ['Prazo 15/10', 'Prazo 18/10', 'Prazo 10/10', 'Entregue 03/10'];
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  marcaExpande(t, 'whatsapp', 0.35);
+  tela(t);
+  camera(t, '#cam1', [[1.4, [540, 800], 0.92, 3, -3], [2.2, [cs[0], cs[2]], 1.04, 2, -1], [3.6, [cs[0], cs[3]], 1.0, 1, 2], [5.2, [cs[1], cs[3]], 1.06, 1, -2], [7.05, '#win .topo', 1.1, 0, 1, 0, 60]]);
+  camera(t, '#cam2', [[13.5, [540, 810], 0.92, 3, 3], [14.5, [kc[1], kc[2]], 1.02, 2, 1], [15.8, kh, 1.06, 1, -2], [17.0, [kc[0], kc[2]], 1.1, 1, 2],
+    [18.4, [kc[0], kc[3]], 1.06, 0, -1], [19.25, [kc[0], kc[3]], 1.1, 0, 0]]);
+
+  /* ── FS1 · 1,35 → 7,05: clientes sem retorno, desorganizados, pendências ── */
+  A($('#win'), t, 1.4, 6.95, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(cs, t, 1.6, 0.08);
+  [[0, 'Aguardando retorno'], [2, 'Aguardando retorno']].forEach(([k, tx], j) => { vira(cs[k].querySelector('.dir .pill'), t, 2.0 + 0.25 * j, tx, 'ruim'); acende(cs[k], t, 2.0 + 0.25 * j, '229,55,43', 0.06); });
+  if (t >= 2.0) { conta($('#pSem'), t, 2.0, 1.0, 9, x => Math.round(x) + ' sem retorno'); $('#pSem').className = 'pill ruim num'; }
+  else { $('#pSem').textContent = '0 sem retorno'; $('#pSem').className = 'pill cinza num'; }
+  { const q = M.prog(t, 4.55, 0.7, E.spring), d = [[-16, 10, -1.4], [22, -8, 1.2], [-10, 6, 0.9], [18, -12, -1.6]];
+    if (t >= 4.55) cs.forEach((e, k) => e.style.transform = `translate(${d[k][0] * q}px, ${d[k][1] * q}px) rotate(${d[k][2] * q}deg)`); }
+  [[1, 'Pendência sem dono'], [3, 'Pendência sem dono']].forEach(([k, tx], j) => { vira(cs[k].querySelector('.dir .pill'), t, 6.01 + 0.64 * j, tx, 'ruim'); acende(cs[k], t, 6.01 + 0.64 * j, '229,55,43', 0.06); });
+
+  /* ── inserção · 7,13 → 11,95: pedido → memória da equipe → retorno (o caminho se rompe) ── */
+  A($('#ilu'), t, 7.13, 11.95, { de: 0.86, dy: -60, dout: 0.25 });
+  tinta(t, 'la', 7.4, 1.1); pop($('#m2'), t, 8.59); $('#m2').style.transformOrigin = '446px 60px'; $('#m2').style.transformBox = 'view-box';
+  $('#m2').setAttribute('fill', t >= 8.59 ? '#DCEBFF' : '#fff');
+  tinta(t, 'lb1', 9.15, 0.5); tinta(t, 'lb2', 9.65, 0.5);
+  { const q = M.prog(t, 10.55, 0.6, E.spring), cor = t >= 10.55 ? '#E5372B' : '#2462F2';
+    $('#gb1').setAttribute('transform', `translate(${-8 * q} ${6 * q}) rotate(${-5 * q} 472 60)`); $('#gb2').setAttribute('transform', `translate(${8 * q} ${-6 * q}) rotate(${5 * q} 776 60)`);
+    $('#lb1').setAttribute('stroke', cor); $('#lb2').setAttribute('stroke', cor);
+    $('#m3').setAttribute('stroke', t >= 11.45 ? '#E5372B' : '#2462F2'); $('#tm3').style.fill = t >= 11.45 ? '#E5372B' : ''; $('#tm3').textContent = t >= 11.45 ? 'Sem resposta' : 'Retorno'; }
+  vira($('#pRet'), t, 11.45, 'Esperando há 3 dias', 'ruim');
+
+  /* ── logo · 12,19 → 13,35 ── */
+  A($('#logoCard'), t, 12.19, 13.3, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 13,45 → 19,25: Kanban (arrasta card, responsável, etapa, prazo) ── */
+  A($('#app2'), t, 13.5, 19.15, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(kc, t, 13.75, 0.1);
+  { // arrasto com o cursor segurando: da 2ª posição da coluna 1 para a 2ª posição da coluna 2 (medido sem câmera: offsets)
+    const cols = Q('#app2 .kcol'), dg = $('#kDrag'), ref = cols[1].querySelector('.kc');
+    const dx = cols[1].offsetLeft - cols[0].offsetLeft, dy = ref.offsetTop - cols[0].querySelector('.kc').offsetTop;
+    const g = t >= 14.8 ? E.cubicInOut(C((t - 14.8) / 0.8)) : 0, lev = t >= 14.7 ? Math.sin(Math.PI * C((t - 14.7) / 1.0)) : 0;
+    dg.style.transform = `translate(${dx * g}px, ${dy * g - 10 * lev}px) rotate(${2.5 * lev}deg) scale(${1 + 0.04 * lev})`;
+    dg.style.zIndex = 3; dg.style.boxShadow = lev > 0.02 ? `0 ${6 + 18 * lev}px ${16 + 22 * lev}px rgba(21,47,99,${0.14 + 0.16 * lev})` : '';
+    kh[0].querySelector('span').textContent = t >= 15.6 ? '1' : '2'; kh[1].querySelector('span').textContent = t >= 15.6 ? '2' : '1';
+    if (t >= 15.6) pulsa(kh[1].querySelector('span'), t, 15.6, 0.3);
+    cursor($('#cur2'), t, 14.2, [980, 1500], t > 14.2 ? centro('#kDrag .t') : [0, 0], 14.7, 15.95); }
+  kh.forEach((e, k) => { pulsa(e, t, 15.3 + 0.2 * k, 0.08); });
+  kh.forEach((e, k) => { e.style.boxShadow = t >= 17.57 ? `0 0 0 ${3 * pr(t, 17.57 + 0.1 * k, 0.3)}px rgba(36,98,242,.25)` : ''; });
+  kc.forEach((e, k) => { const r = e.querySelector('.rs'), on = t >= 16.81 + 0.12 * k;
+    const h = on ? `<span class="mini">${NOMES[k].slice(0, 2).toUpperCase()}</span><b style="color:#152F63">${NOMES[k]}</b>` : '<span class="mini">?</span><b>Sem responsável</b>';
+    if (r.innerHTML !== h) r.innerHTML = h; if (on) pulsa(r, t, 16.81 + 0.12 * k, 0.06);
+    const z = e.querySelector('.pz'), on2 = t >= 18.27 + 0.12 * k; z.textContent = on2 ? PRAZO[k] : 'Sem prazo'; z.className = on2 ? 'pz ok' : 'pz'; if (on2) pulsa(z, t, 18.27 + 0.12 * k, 0.1); });
+
+  /* ── inserção · 19,41 → 26,8: controle, sem esquecimentos, próxima ação ── */
+  A($('#op'), t, 19.41, 26.8, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(op, t, 19.51, 0.1, 12);
+  if (t >= 21.21) { conta($('#p1'), t, 21.21, 0.6, 60, x => Math.round(40 + x) + '%'); $('#p1').className = 'pill vivo num'; acende(op[0], t, 21.21, '21,128,61', 0.06); }
+  else { $('#p1').textContent = '40%'; $('#p1').className = 'pill ruim num'; acende(op[0], t, null); }
+  vira($('#p2'), t, 23.17, '0', 'vivo num'); acende(op[1], t, t >= 23.17 ? 23.17 : null, '21,128,61', 0.06);
+  vira($('#p3'), t, 25.69, 'Ligar 14/10 · 10h', 'azul'); acende(op[2], t, t >= 25.69 ? 25.69 : null);
+
+  /* ── CTA · 27,0 → fim ── */
+  A($('#cta'), t, 27.0, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 27.7, [1020, 760], t > 27.7 ? centro('#btnCtaI') : [0, 0], 28.42, 31.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 28.6) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 28.6 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

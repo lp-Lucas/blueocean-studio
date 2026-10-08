@@ -1,0 +1,546 @@
+{
+ "cores": [
+  [
+   "bg rgba(0, 0, 0, 0)",
+   59133099.974817
+  ],
+  [
+   "bg rgb(249, 250, 251)",
+   10925731.6875
+  ],
+  [
+   "bg rgb(255, 255, 255)",
+   1894086.578125
+  ],
+  [
+   "bg rgb(21, 24, 30)",
+   1336680
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.62)",
+   453105.015625
+  ],
+  [
+   "bg rgba(240, 242, 244, 0.2)",
+   368842
+  ],
+  [
+   "bg rgb(28, 31, 38)",
+   318980.765625
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.03)",
+   226726.9921875
+  ],
+  [
+   "bg rgba(37, 41, 49, 0.3)",
+   214656
+  ],
+  [
+   "bg rgba(240, 242, 244, 0.3)",
+   130906.125
+  ],
+  [
+   "bg rgba(255, 255, 255, 0.4)",
+   127680
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.04)",
+   89600
+  ],
+  [
+   "bg rgba(37, 41, 49, 0.4)",
+   49536
+  ],
+  [
+   "bg rgba(240, 242, 244, 0.4)",
+   38889
+  ],
+  [
+   "bg rgb(21, 127, 88)",
+   36592.489607516676
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.05)",
+   36156.75
+  ],
+  [
+   "bg rgb(240, 242, 244)",
+   6832
+  ],
+  [
+   "bg rgb(26, 33, 45)",
+   5070
+  ],
+  [
+   "bg rgba(249, 250, 251, 0.6)",
+   4030.3125
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.16)",
+   2820.09375
+  ],
+  [
+   "bg rgba(45, 190, 137, 0.1)",
+   2352
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.15)",
+   2100.2890625
+  ],
+  [
+   "bg rgba(220, 46, 40, 0.16)",
+   1680
+  ],
+  [
+   "bg rgb(220, 46, 40)",
+   1344
+  ],
+  [
+   "bg rgba(21, 127, 88, 0.2)",
+   1152
+  ],
+  [
+   "bg rgb(206, 133, 9)",
+   879.9375
+  ],
+  [
+   "bg rgba(206, 133, 9, 0.18)",
+   539.625
+  ],
+  [
+   "bg rgb(224, 229, 235)",
+   300
+  ],
+  [
+   "tx rgb(88, 100, 116)",
+   141
+  ],
+  [
+   "tx rgb(26, 33, 45)",
+   119
+  ]
+ ],
+ "fontes": [
+  [
+   "\"Plus Jakarta Sans\", system-ui, -apple-system, sans-serif 400",
+   146
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, -apple-system, sans-serif 500",
+   46
+  ],
+  [
+   "\"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace 400",
+   31
+  ],
+  [
+   "\"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace 500",
+   25
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, -apple-system, sans-serif 600",
+   22
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, -apple-system, sans-serif 700",
+   18
+  ],
+  [
+   "\"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace 600",
+   15
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, sans-serif 700",
+   14
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, sans-serif 600",
+   7
+  ],
+  [
+   "\"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace 700",
+   4
+  ],
+  [
+   "\"Plus Jakarta Sans\", system-ui, sans-serif 900",
+   2
+  ]
+ ],
+ "imgs": [
+  [
+   "https://neosync.com.br/logos/neosync-mark.png",
+   "",
+   0
+  ],
+  [
+   "https://neosync.com.br/logos/neosync-mark.png",
+   "",
+   42
+  ],
+  [
+   "https://neosync.com.br/logos/neosync-mark.png",
+   "",
+   0
+  ],
+  [
+   "https://neosync.com.br/logos/neosync-mark.png",
+   "",
+   56
+  ],
+  [
+   "https://neosync.com.br/logos/claude.png",
+   "Claude, da Anthropic",
+   114
+  ],
+  [
+   "https://neosync.com.br/logos/gemini.png",
+   "Gemini, do Google",
+   108
+  ],
+  [
+   "https://neosync.com.br/logos/openai-icon.png",
+   "",
+   40
+  ],
+  [
+   "https://neosync.com.br/logos/openai.png",
+   "GPT, da OpenAI",
+   117
+  ],
+  [
+   "https://neosync.com.br/logos/perplexity.png",
+   "Perplexity",
+   104
+  ],
+  [
+   "https://neosync.com.br/logos/neosync-mark.png",
+   "",
+   38
+  ]
+ ],
+ "btn": [
+  [
+   "Produto",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Planos",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Suporte",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Entrar",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Começar trial Pro",
+   "rgb(21, 127, 88)",
+   "rgb(255, 255, 255)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Começar 7 dias grátis",
+   "rgb(21, 127, 88)",
+   "rgb(255, 255, 255)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Ver como funciona",
+   "rgba(255, 255, 255, 0.62)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Ver planos e preços",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Visão geral",
+   "rgba(0, 0, 0, 0)",
+   "rgb(21, 127, 88)",
+   "9999px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Prejuízo no anúncio",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "9999px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Estoque rompendo",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "9999px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Devolução alta",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "9999px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Lucro real por produto",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Estoque e reposição",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Metas e viabilidade",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Campanhas e palavras",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Automações",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Chat com IA",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Análise de anúncio",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Painel e relatórios",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Só sugerirsuggest",
+   "rgba(0, 0, 0, 0)",
+   "rgb(141, 150, 165)",
+   "12px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Pedir aprovaçãoapproval",
+   "rgba(0, 0, 0, 0)",
+   "rgb(240, 242, 244)",
+   "12px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Executar sozinhoauto",
+   "rgba(0, 0, 0, 0)",
+   "rgb(141, 150, 165)",
+   "12px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "400"
+  ],
+  [
+   "Mensal",
+   "rgba(0, 0, 0, 0)",
+   "rgb(88, 100, 116)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Anual",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Começar grátis",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Começar grátis",
+   "rgb(21, 127, 88)",
+   "rgb(255, 255, 255)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Começar grátis",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Falar com especialista",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Assinar",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Assinar",
+   "rgb(21, 127, 88)",
+   "rgb(255, 255, 255)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Assinar",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "Falar",
+   "rgb(249, 250, 251)",
+   "rgb(26, 33, 45)",
+   "6px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "500"
+  ],
+  [
+   "É seguro conectar minha conta da Amazon?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "O NeoSync mexe nas minhas campanhas sozi",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Funciona com FBA e com envio próprio (FB",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Preciso conectar Amazon Ads e Seller Cen",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Preciso de cartão para testar?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Como cancelo?",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ],
+  [
+   "Meus dados treinam IA ou são compartilha",
+   "rgba(0, 0, 0, 0)",
+   "rgb(26, 33, 45)",
+   "0px",
+   "\"Plus Jakarta Sans\", system-ui",
+   "600"
+  ]
+ ],
+ "txt": "Produto\nPlanos\nSuporte\nEntrar\nComeçar trial Pro\nOtimize por lucro\n.\nNão só por ACoS.\n\nA IA calcula o lucro real de cada produto e corta o anúncio que vende no prejuízo. Você aprova em um clique.\n\nComeçar 7 dias grátis\nVer como funciona\nVer planos e preços\n\nCada produto tem um teto de ACoS antes do prejuízo. O NeoSync conhece o seu.\n\nALVO E TETO DE ACOS POR PRODUTO\nexemplo\n\nSuporte de notebook\n\nR$ 129\n\n18,0% · alvo 27,0% · teto 32,0%\n\nKit rastreador Bluetooth\n\nR$ 59\n\n22,0% · alvo 20,0% · teto 24,0%\n\nEscova elétrica\n\nR$ 69\n\n28,0% · alvo 17,0% · teto 20,0%\nO QUE VOCÊ PODE PERGUNTAR\n\nMeu ACoS está saudáve\n\nTermos que desperdiçam verba\nQuais produtos escalar?\nOnde estou perdendo dinheiro\nMeu ACoS está saudável?\nQuanto reponho de estoque?\nResumo da semana\nPOR DENTRO\nA mesma conta que a Amazon não te mostra\n\nUma ferramenta que persegue meta de ACoS não sabe quanto custa o seu produto. Ela otimiza o gasto do anúncio e chama isso de margem. O NeoSync desce até o lucro que sobra depois do CMV, da embalagem, do imposto e da taxa da Amazon.\n\napp.neosync.com.br/lucro\nLucro por produto\n\nÚltimos 30 dias\n\nR$ 4.231\n\nlucro líquido no período\n\nPRODUTO\tPREÇO\tMARGEM\tACOS · TETO\tLUCRO 30D\nSuporte de notebook alumínio\tR$ 129,00\t31%\t\n18,0% · alvo 27,0% · teto 32,0%\n\tR$ 2.847\nKit rastreador Bluetooth 4un\tR$ 59,90\t22%\t\n22,0% · alvo 20,0% · teto 24,0%\n\tR$ 612\nEscova elétrica facial\tR$ 69,00\t19%\t\n28,0% · alvo 17,0% · teto 20,0%\n\t-R$ 431\nOrganizador de gavetas 6pç\tR$ 89,90\t27%\t\n12,0% · alvo 23,0% · teto 28,0%\n\tR$ 1.203\n\nExemplo ilustrativo. Na sua conta, cada linha usa o CMV, a embalagem, o imposto e a taxa que a Amazon realmente cobrou de você.\n\nRepare na terceira linha: 28% de ACoS parece aceitável, e é o tipo de número que passa batido numa meta de 30%. Só que o teto daquele produto é 20%. Cada venda ali sai do seu bolso, e o relatório de ACoS continua verde.\n\nUMA OPERAÇÃO, UM CÉREBRO\nTudo que entra vira uma decisão\n\nLucro, estoque, Ads e metas entram do mesmo lado. Do outro sai a ação, o porquê e a execução, medida sete dias depois.\n\nVISÃO GERAL · CLIQUE NUM CENÁRIO PARA VER UMA DECISÃO\n\nLucro\nmargem e teto de ACoS por produto\nEstoque\ncobertura em dias e prazo de reposição\nAds\nACoS, lances e termos de busca\nMetas\nalvo do mês e viabilidade\nAnúncios\na ação certa em cada campanha\nIA\no porquê, em português, com os seus números\nAutomação\nvocê aprova, executa na Amazon, mede em 7 dias\nVisão geral\nPrejuízo no anúncio\nEstoque rompendo\nDevolução alta\nO que o NeoSync faz pela sua operação\n\nDo custo do produto até a execução na Amazon, com a mesma conta ligando as pontas. Ao lado, a conta de um produto: é dela que sai toda decisão do sistema.\n\nLUCRO E CATÁLOGO\n\nO dinheiro antes do anúncio\n\nLucro real por produto\nEstoque e reposição\nMetas e viabilidade\nAMAZON ADS\n\nOnde a verba vira venda\n\nCampanhas e palavras\nAutomações\nINTELIGÊNCIA\n\nO que lê tudo isso por você\n\nChat com IA\nAnálise de anúncio\nPainel e relatórios\nUM PRODUTO, A CONTA INTEIRA\nexemplo\nComposição do lucro de um produto e o teto de ACoS que ele suporta\nItem\tValor\tOrigem do número\nPreço de venda\ndo seu catálogo, sincronizado da Amazon\n\tR$ 129,00\t\n\n\nCusto do produto\nvocê informa uma vez e vale para sempre\n\t− R$ 47,00\t\n\n\nTaxa da Amazon\nlida do seu extrato financeiro, não estimada\n\t− R$ 21,80\t\n\n\nImposto\na sua alíquota, não uma média de mercado\n\t− R$ 10,32\t\n\n\nEmbalagem e envio\ncustos do negócio, rateados por venda\n\t− R$ 6,00\t\n\n\nSobra por venda\nmargem real de 34,0%\n\tR$ 43,88\t\n\nLogo, o anúncio deste produto pode gastar até 34,0% antes de vender no prejuízo.\n\nÉ esse número que o NeoSync usa para decidir o que escalar, o que reduzir e o que pausar. Uma meta de ACoS chutada no lugar dele trata como problema a campanha que dá lucro, e como saudável a que não dá.\n\nPILOTO AUTOMÁTICO\nEle trabalha no horário em que você não está olhando\n\nOtimizar Amazon Ads é uma rotina diária, e é por isso que quase ninguém faz. O NeoSync roda essa rotina por você, e quem decide o quanto ele pode agir sozinho é você.\n\nSó sugerir\nsuggest\nPedir aprovação\napproval\nExecutar sozinho\nauto\n\nA IA prepara a ação pronta. Você confirma, e ela executa.\n\nDO STARTER EM DIANTE\n\nNo horário do piloto, a IA analisa e prepara as ações.\n\nCada uma chega com o que foi medido, por que importa e o impacto em reais.\n\nVocê aprova em um clique e o NeoSync executa na Amazon por você.\n\nSem a sua aprovação nenhuma ação sai da fila, por mais óbvia que pareça.\n\nLIMITES QUE O PILOTO NÃO PASSA\npadrão, ajustável por você\nMudança de lance\n30%\npor ação\nMudança de orçamento\n30%\npor ação\nLance máximo\nR$ 5,00\nteto absoluto\nOrçamento diário\nR$ 300\nteto absoluto\nAções por dia\n20\nno total\n\nNo plano Autopilot a IA também escreve as próprias automações e você escolhe a hora em que o piloto roda. Nos demais, as regras são suas e o piloto roda em horário fixo.\n\nVocê provavelmente vai se dar bem com o NeoSync se...\n\nO NeoSync não é pra todo vendedor. Ele foi feito pra quem decide por número, não por achismo.\n\nVocê já se cansou de adivinhar se uma campanha está dando lucro de verdade, ou só parece boa pelo ACoS\n\nVocê tem produtos demais pra acompanhar taxa, estoque e campanha abrindo cinco abas ao mesmo tempo\n\nVocê prefere decidir com o número real da sua conta, não com benchmark genérico de outro nicho\n\nVocê quer entender o motivo por trás da recomendação, não só receber uma ordem pra clicar\n\nVocê escolhe o modelo\nAs melhores IAs do mercado, dentro do NEOSYNC\n\nNenhum outro gestor de Amazon Ads deixa você escolher qual inteligência analisa a sua conta. Aqui você usa a mais rápida no dia a dia e a mais forte quando a decisão é cara, sem trocar de ferramenta — e, quando a resposta depende do que acontece fora da Amazon, a busca vem com a fonte junto.\n\nPARA DECIDIR\n\nRaciocínio mais profundo. É o modelo para quando a decisão envolve dinheiro: reestruturar campanha, mexer em preço, cortar produto do catálogo.\n\nPARA O DIA A DIA\n\nRápido e barato em créditos. Dá conta das perguntas frequentes e das análises de rotina sem consumir seu saldo à toa.\n\nP",
+ "title": "NEOSYNC · Gestão Inteligente de Amazon Ads"
+}

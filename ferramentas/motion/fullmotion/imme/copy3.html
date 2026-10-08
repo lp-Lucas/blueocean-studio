@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>IMME — Copy 3 (Rio: o que acontece com o dinheiro depois que o cliente paga a conta?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #cam1 svg { display: block; margin-top: 6px; }
+  #app2 .corpo { height: 500px; }
+  #bi .corpo { padding-bottom: 30px; }
+  .bar .ic { width: 48px; height: 48px; }
+  .row.tot { border-bottom: 0; }
+  .row.tot .nm { font: 700 27px 'SG'; }
+  .passo.on { border-color: rgba(21,128,61,.45); background: var(--verdec); color: var(--verde); }
+  .passo.on .ck { border-color: var(--verde); background: var(--verde); }
+  .passo.on .ck svg { opacity: 1; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,95 → 6,85): a conta da mesa e o caminho do dinheiro depois do pagamento (ilustração) ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win1" style="left:540px;top:800px">
+  <div class="bar"><div class="ic" id="ic1"></div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">Mesa 12 · Rio de Janeiro</span><span class="pill cinza">Fechamento</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Conta da mesa</h3><p>4 pessoas · 5 itens</p></div><span class="pill cinza" id="pConta">Aberta</span></div>
+    <div style="margin-top:8px">
+      <div class="row m"><div class="nm">Risoto de camarão × 2<span>Cozinha</span></div><b>R$ 138,00</b></div>
+      <div class="row m"><div class="nm">Bebidas × 3<span>Bar</span></div><b>R$ 48,00</b></div>
+      <div class="row m tot"><div class="nm">Total</div><b id="tot" style="margin-left:auto;margin-right:18px">R$ 186,00</b><span class="btnP" id="bPagar" style="margin-left:0">Pagar</span></div>
+    </div>
+    <div class="secT" style="margin-top:10px">E depois, para onde vai o dinheiro?</div>
+    <svg width="892" height="150" viewBox="0 0 892 150">
+      <path id="caminho" d="M60 52 H832" stroke="#5B1D6A" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <circle id="pto" cx="60" cy="52" r="9" fill="#5B1D6A"/>
+      <g class="mc"><circle cx="60" cy="52" r="20" fill="#fff" stroke="#5B1D6A" stroke-width="6"/><text class="cx" x="60" y="118" text-anchor="middle">Taxas</text></g>
+      <g class="mc"><circle cx="317" cy="52" r="20" fill="#fff" stroke="#5B1D6A" stroke-width="6"/><text class="cx" x="317" y="118" text-anchor="middle">Insumos</text></g>
+      <g class="mc"><circle cx="574" cy="52" r="20" fill="#fff" stroke="#5B1D6A" stroke-width="6"/><text class="cx" x="574" y="118" text-anchor="middle">Despesas</text></g>
+      <g class="mc"><circle cx="832" cy="52" r="20" fill="#fff" stroke="#5B1D6A" stroke-width="6"/><text class="cx" x="832" y="118" text-anchor="middle">Lucro</text></g>
+      <g class="qq"><rect x="88" y="10" width="40" height="32" rx="16" fill="#C9372A"/><text x="108" y="34" fill="#fff" font-family="IN" font-weight="800" font-size="21" text-anchor="middle">?</text></g>
+      <g class="qq"><rect x="345" y="10" width="40" height="32" rx="16" fill="#C9372A"/><text x="365" y="34" fill="#fff" font-family="IN" font-weight="800" font-size="21" text-anchor="middle">?</text></g>
+      <g class="qq"><rect x="602" y="10" width="40" height="32" rx="16" fill="#C9372A"/><text x="622" y="34" fill="#fff" font-family="IN" font-weight="800" font-size="21" text-anchor="middle">?</text></g>
+      <g class="qq"><rect x="790" y="-2" width="84" height="32" rx="16" fill="#C9372A"/><text x="832" y="22" fill="#fff" font-family="IN" font-weight="800" font-size="21" text-anchor="middle">???</text></g>
+    </svg>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,0 → 9,65): logo IMME ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:262px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 2 (9,75 → 19,0): PDV → estoque e ficha técnica → financeiro → DRE (sistema recriado dos prints do site) ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">Do PDV ao DRE</span><span class="pill vivo"><i></i>Online</span></div>
+  <div class="abas"><div class="aba">Vendas · PDV</div><div class="aba">Estoque</div><div class="aba">Financeiro</div><div class="aba">DRE</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v0">
+      <div class="topo"><div><h3>Vendas de hoje</h3><p>PDV integrado na maquininha</p></div><span class="pill roxo num" id="pV">R$ 0</span></div>
+      <div style="margin-top:10px">
+        <div class="row s"><span class="dot v"></span><div class="nm">Mesa 12<span>Crédito · 20:41</span></div><b>R$ 186,00</b></div>
+        <div class="row s"><span class="dot v"></span><div class="nm">Comanda 31<span>Pix · 20:38</span></div><b>R$ 92,50</b></div>
+        <div class="row s"><span class="dot v"></span><div class="nm">Mesa 4<span>Débito · 20:35</span></div><b>R$ 64,00</b></div>
+        <div class="row s"><span class="dot v"></span><div class="nm">Balcão<span>Crédito · 20:31</span></div><b>R$ 41,90</b></div>
+      </div>
+    </div>
+    <div class="vista" id="v1">
+      <div class="topo"><div><h3>Ficha técnica</h3><p>Risoto de camarão · 1 porção</p></div><span class="pill roxo">Baixa automática</span></div>
+      <div style="margin-top:6px">
+        <div class="row f"><span class="dot c"></span><div class="nm">Camarão<span>150 g</span></div><b>R$ 14,20</b></div>
+        <div class="row f"><span class="dot c"></span><div class="nm">Parmesão<span>30 g</span></div><b>R$ 3,80</b></div>
+        <div class="row f"><span class="dot c"></span><div class="nm">Arroz arbóreo<span>120 g</span></div><b>R$ 3,10</b></div>
+        <div class="row f tot"><div class="nm">Custo do prato</div><span class="pill cinza num" id="pCusto">R$ 21,10</span></div>
+      </div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="topo"><div><h3>Financeiro</h3><p>Contas e fluxo de caixa</p></div><span class="pill vivo">Conciliado</span></div>
+      <div style="margin-top:10px">
+        <div class="row n"><span class="dot v"></span><div class="nm">Contas a receber<span>Próximos 30 dias</span></div><b>R$ 48.200</b></div>
+        <div class="row n"><span class="dot r"></span><div class="nm">Contas a pagar<span>Fornecedores e folha</span></div><b>R$ 31.900</b></div>
+        <div class="row n"><span class="dot a"></span><div class="nm">Impostos<span>SEFAZ automatizado</span></div><b>R$ 6.400</b></div>
+        <div class="row n tot"><div class="nm">Caixa projetado</div><span class="pill vivo num">+R$ 9.900</span></div>
+      </div>
+    </div>
+    <div class="vista" id="v3">
+      <div class="topo"><div><h3>DRE gerencial</h3><p>Este mês</p></div><span class="pill roxo">Tudo integrado</span></div>
+      <table class="tab">
+        <tr><th>Descrição</th><th>Valor</th><th>%</th></tr>
+        <tr><td>Receitas</td><td>R$ 321.509</td><td>100%</td></tr>
+        <tr><td>(−) Custos (CMV)</td><td>R$ 90.216</td><td>28,1%</td></tr>
+        <tr class="tot"><td>(=) Lucro bruto</td><td>R$ 231.293</td><td>71,9%</td></tr>
+        <tr><td>(−) Despesas operacionais</td><td>R$ 180.275</td><td>56,1%</td></tr>
+        <tr id="trRes"><td>(=) Resultado operacional</td><td>R$ 51.018</td><td>15,9%</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (19,15 → 25,0): não fica só no sistema — implantação, treinamento, acompanhamento ═════ -->
+<div class="p card ins" id="ajuda" style="left:540px;top:262px">
+  <div class="cabI">Além do sistema<span class="pill roxo">Implantação em até 5 dias</span></div>
+  <div class="passos">
+    <div class="passo"><span class="ck"></span>Implantação</div>
+    <div class="passo"><span class="ck"></span>Treinamento</div>
+    <div class="passo"><span class="ck"></span>Acompanhamento</div>
+  </div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (25,15 → 31,0): BI · visão completa e decisão pelos números ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="bi" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">BI · Painel Mestre</span><span class="pill cinza">Este mês</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Resultados da operação</h3><p>Vendas, estoque e financeiro</p></div><span class="pill vivo">Atualizado agora</span></div>
+    <div class="kpis" style="margin-top:20px">
+      <div class="kpi"><span>Faturamento</span><b class="num" id="k1">R$ 0</b></div>
+      <div class="kpi" id="kL"><span>Lucro</span><b class="num v" id="k2">0,0%</b></div>
+    </div>
+    <div class="kpis" style="margin-top:14px">
+      <div class="kpi"><span>Despesas</span><b class="num" id="k3">R$ 0</b></div>
+      <div class="kpi"><span>CMV real</span><b class="num m" id="k4">0,0%</b></div>
+    </div>
+    <div class="secT">Insights do período</div>
+    <div class="row d"><span class="dot a"></span><div class="nm">Camarão subiu 18%<span>Revisar preço do risoto</span></div><span class="btnP" id="bAplicar">Ajustar preço</span></div>
+    <div class="row d"><span class="dot v"></span><div class="nm">Sexta é o dia mais lucrativo<span>Reforçar a equipe das 20h às 22h</span></div><span class="pill vivo">+31%</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (31,15 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:262px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t">Mais controle sobre a operação</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conhecer a IMME <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur4" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur5" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur6" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 36.39;
+const ROSTO = [555, 690];
+const FS = [[0.95, 6.85, true], [9.75, 19.0, true], [25.15, 31.0, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 18.45, ps: FM.criaConfete(13, 50, 540, 1080, 760, 120, 0.7), rgb: [192, 132, 252] },
+                  { t0: 30.54, ps: FM.criaConfete(17, 50, 540, 760, 760, 120, 0.7), rgb: [192, 132, 252] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+$('#ic1').innerHTML = S('dolar', '#5B1D6A');
+Q('.passo .ck').forEach(e => e.innerHTML = S('check', '#fff', 3.2));
+const m1 = Q('#win1 .row'), mc = Q('#win1 .mc'), qq = Q('#win1 .qq'), sv = Q('#v0 .row'), fv = Q('#v1 .row'), nv = Q('#v2 .row'), tr = Q('#v3 tr');
+const ps = Q('#ajuda .passo'), kb = Q('#bi .kpi'), ib = Q('#bi .row');
+const abas2 = Q('#app2 .aba'), vistas2 = [$('#v0'), $('#v1'), $('#v2'), $('#v3')];
+const IN = (t, a, b) => t >= a && t < b;
+const brlK = x => 'R$ ' + Math.round(x).toLocaleString('pt-BR');
+const pct = x => x.toFixed(1).replace('.', ',') + '%';
+
+// corte de 0,42 s do "fich…" repetido antes de "ficha técnica" (pedido da pessoa): animação no tempo antigo, legenda no novo
+const WARP = T => T < 13.73 ? T : T + 0.42;
+window.quadro = function (T) {
+  const t = WARP(T);
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.0, [540, 800], 0.92, 3, -3], [2.3, [m1[0], m1[2]], 1.04, 2, 1], [3.6, ['#win1 .secT', '#caminho'], 1.06, 1, -2], [4.9, '#caminho', 1.08, 1, 2],
+    [5.8, [m1[2], '#caminho'], 1.06, 0, -1], [6.85, '#caminho', 1.1, 0, 1]]);
+  camera(t, '#cam2', [[9.8, [540, 800], 0.92, 3, 3], [10.9, [sv[0], sv[1]], 1.06, 2, -1], [12.3, [sv[0], sv[3]], 1.04, 1, 2], [13.6, [fv[0], fv[1]], 1.08, 1, -2],
+    [15.2, [fv[2], fv[3]], 1.1, 1, 2], [16.4, '#app2 .abas', 1.04, 0, -1], [17.4, [nv[0], nv[3]], 1.06, 1, 1], [18.3, [tr[3], tr[5]], 1.1, 1, -1], [19.0, [tr[4], tr[5]], 1.14, 0, 0]]);
+  camera(t, '#cam3', [[25.2, [540, 800], 0.92, 3, -3], [26.4, kb, 1.04, 2, 1], [27.6, [kb[0], kb[1]], 1.1, 1, -2], [28.6, [ib[0], ib[1]], 1.08, 1, 2],
+    [29.8, [kb[0], kb[1]], 1.08, 1, -1], [31.0, [kb[0], kb[1]], 1.12, 0, 0]]);
+
+  /* ── FS1 · 0,95 → 6,85: conta paga; e o dinheiro? ── */
+  A($('#win1'), t, 1.0, 6.75, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(m1, t, 1.25, 0.08);
+  [1.5, 1.6, 1.7, 1.8].forEach((t0, k) => pop(mc[k], t, t0)); [3.92, 4.45, 4.98, 5.52].forEach((t0, k) => { const c = mc[k].querySelector('circle'); c.setAttribute('fill', t >= t0 ? '#5B1D6A' : '#fff'); if (t >= t0) pulsa(mc[k], t, t0, 0.0); });
+  tinta(t, 'caminho', 3.92, 1.6); { const p = pr(t, 3.92, 1.6, E.cubicInOut), P = $('#caminho'), q = P.getPointAtLength(P._L * p); $('#pto').setAttribute('cx', q.x); }
+  acende(m1[2], t, t >= 4.7 ? 4.7 : null, '91,29,106', 0.07);
+  { const c = cursor($('#cur1'), t, 5.2, [1000, 1500], t > 5.2 ? centro('#bPagar') : [0, 0], 5.82, 6.3); $('#bPagar').style.transform = `scale(${1 - 0.06 * c})`; }
+  { const pago = t >= 5.82; $('#bPagar').textContent = pago ? 'Pago ✓' : 'Pagar'; $('#bPagar').className = pago ? 'btnP ok' : 'btnP'; }
+  vira($('#pConta'), t, 5.82, 'Paga', 'vivo');
+  [6.0, 6.1, 6.2, 6.3].forEach((t0, k) => pop(qq[k], t, t0));
+
+  /* ── logo · 7,0 → 9,65 ── */
+  A($('#logoCard'), t, 7.0, 9.6, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 9,75 → 19,0: PDV → ficha técnica → financeiro → DRE ── */
+  A($('#app2'), t, 9.8, 18.9, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, vistas2, [[0, 0], [12.8, 1], [16.2, 2], [17.28, 3]], $('#car2'));
+  cascata(sv, t, 10.0, 0.08);
+  if (t >= 11.32) { conta($('#pV'), t, 11.32, 0.9, 8420, brlK); } else $('#pV').textContent = 'R$ 0';
+  if (t >= 11.92) pulsa($('#pV'), t, 11.92, 0.1);
+  cursor($('#cur2'), t, 12.3, [1000, 1400], t > 12.3 ? centro(abas2[1]) : [0, 0], 12.8, 13.2);
+  cascata(fv, t, 12.8, 0.06);
+  [13.88, 14.08, 14.28].forEach((t0, k) => { acende(fv[k], t, t >= t0 ? t0 : null, '91,29,106', 0.06); fv[k].querySelector('.dot').className = 'dot ' + (t >= t0 ? '' : 'c'); });
+  vira($('#pCusto'), t, 15.66, 'R$ 21,10 · CMV 30%', 'roxo num');
+  cursor($('#cur3'), t, 15.75, [1000, 1400], t > 15.75 ? centro(abas2[2]) : [0, 0], 16.2, 16.6);
+  cascata(nv, t, 16.2, 0.05);
+  cursor($('#cur4'), t, 16.85, [1000, 1400], t > 16.85 ? centro(abas2[3]) : [0, 0], 17.28, 17.7);
+  cascata(tr, t, 17.28, 0.06);
+  { const on = t >= 18.45; tr[5].classList.toggle('hl', on); if (on) pulsa(tr[5], t, 18.45, 0.03); }
+
+  /* ── inserção · 19,15 → 25,0: implantação, treinamento, acompanhamento ── */
+  A($('#ajuda'), t, 19.15, 25.0, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(ps, t, 19.3, 0.1, 12);
+  [21.76, 22.6, 23.54].forEach((t0, k) => { ps[k].classList.toggle('on', t >= t0); if (t >= t0) pulsa(ps[k], t, t0, 0.06); });
+
+  /* ── FS3 · 25,15 → 31,0: visão completa; decisão pelos números ── */
+  A($('#bi'), t, 25.2, 30.9, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(kb, t, 25.35, 0.08); cascata(ib, t, 25.6, 0.1);
+  conta($('#k1'), t, 25.4, 1.3, 386750, brlK); conta($('#k2'), t, 25.5, 1.3, 23.7, pct); conta($('#k3'), t, 25.6, 1.3, 81250, brlK); conta($('#k4'), t, 25.7, 1.3, 29.8, pct);
+  [0, 1, 2, 3].forEach(k => acende(kb[k], t, t >= 26.74 + 0.12 * k && k !== 1 ? 26.74 + 0.12 * k : null, '91,29,106', 0.05));
+  { const c = cursor($('#cur5'), t, 28.3, [1000, 1500], t > 28.3 ? centro('#bAplicar') : [0, 0], 28.82, 29.3); $('#bAplicar').style.transform = `scale(${1 - 0.06 * c})`; }
+  { const ok = t >= 28.82; $('#bAplicar').textContent = ok ? 'Preço ajustado ✓' : 'Ajustar preço'; $('#bAplicar').className = ok ? 'btnP ok' : 'btnP'; ib[0].querySelector('.dot').className = 'dot ' + (ok ? 'v' : 'a'); }
+  acende(ib[0], t, t >= 28.82 ? 28.82 : null, '21,128,61', 0.05);
+  if (t >= 30.54) { pulsa(kb[1], t, 30.54, 0.05); acende(kb[1], t, 30.54, '21,128,61', 0.06); } else acende(kb[1], t, null);
+
+  /* ── CTA · 31,15 → fim ── */
+  A($('#cta'), t, 31.15, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur6'), t, 35.3, [1000, 60], t > 35.3 ? centro('#btnCtaI') : [0, 0], 35.92, 36.6); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 33.4) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 33.4 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

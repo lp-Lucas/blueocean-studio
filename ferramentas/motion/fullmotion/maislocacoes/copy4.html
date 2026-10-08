@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 2 (equipamentos: contratos vencidos passam despercebidos?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #av svg { display: block; margin-top: 10px; }
+  .cx { font: 600 22px 'DMS'; fill: #7A8294; }
+  #app2 .corpo { height: 420px; }
+  #app2 .notif { top: 18px; left: 34px; right: 34px; border: 1.5px solid var(--linha); }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 5,55): seus contratos vencidos passam despercebidos? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Contratos de locação</span><span class="pill cinza">Outubro</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Equipamentos alugados</h3><p>Contratos em andamento</p></div><span class="pill cinza" id="pAv">Sem alertas</span></div>
+    <div style="margin-top:18px">
+      <div class="row c"><span class="id">#0412</span><span class="nm">Betoneira 400 L<span>Construtora Alfa</span></span><span class="pill cinza">Vence 20/10</span></div>
+      <div class="row c"><span class="id">#0418</span><span class="nm">Andaime tubular · 20 peças<span>Obra Vila Nova</span></span><span class="pill cinza">Vence 02/10</span></div>
+      <div class="row c"><span class="id">#0421</span><span class="nm">Compactador de solo<span>Reforma Centro</span></span><span class="pill cinza">Vence 28/09</span></div>
+      <div class="row c"><span class="id">#0425</span><span class="nm">Gerador 55 kVA<span>Evento Parque</span></span><span class="pill cinza">Vence 30/10</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,68 → 10,45): 21 equipamentos alugados, um contrato vence e ninguém percebe ═════ -->
+<div class="p card ins" id="v1" style="left:540px;top:300px">
+  <div class="cabI">Equipamentos alugados<span class="pill azul num" id="p21">0</span></div>
+  <div class="li"><span>#0418 · Andaime tubular</span><span class="pill cinza" id="pVen">Vence hoje</span></div>
+  <div class="li"><span>Aviso para a equipe</span><span class="pill cinza" id="pAviso">—</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (10,6 → 13,25): uma avaria acontece sem deixar registro (ilustração: linha que se rompe) ═════ -->
+<div class="p card ins" id="av" style="left:540px;top:300px">
+  <div class="cabI">Compactador de solo<span class="pill cinza" id="pAva">Em uso</span></div>
+  <svg width="892" height="150" viewBox="0 0 892 150">
+    <circle cx="80" cy="62" r="20" fill="#fff" stroke="#0B3A9E" stroke-width="7"/><text class="cx" x="80" y="130" text-anchor="middle">Retirada</text>
+    <circle cx="812" cy="62" r="20" fill="#fff" stroke="#0B3A9E" stroke-width="7" id="mDev"/><text class="cx" x="812" y="130" text-anchor="middle">Devolução</text>
+    <g id="ga"><path id="la" d="M104 62 H446" stroke="#0B3A9E" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="gb"><path id="lb" d="M446 62 H788" stroke="#0B3A9E" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <text class="cx" x="446" y="130" text-anchor="middle" id="tReg" style="fill:#C9372A;opacity:0">Sem registro</text>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (13,34 → 14,45): Mais Locações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo-navy.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (14,5 → 19,95): contratos + condição de cada equipamento + aviso no celular ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Gestão de contratos</span><span class="pill vivo"><i></i>Em dia</span></div>
+  <div class="abas"><div class="aba">Contratos</div><div class="aba">Equipamentos</div></div>
+  <div class="carrega" id="carrega2" style="top:166px"></div>
+  <div class="corpo">
+    <div class="vista" id="vCon">
+      <h3>Todos os contratos</h3><p>Guardados e assinados no sistema</p>
+      <div style="margin-top:10px">
+        <div class="row a"><span class="id">#0412</span><span class="nm">Betoneira 400 L<span>Vence 20/10</span></span><span class="pill cinza">Ativo</span></div>
+        <div class="row a"><span class="id">#0425</span><span class="nm">Gerador 55 kVA<span>Vence 30/10</span></span><span class="pill cinza">Ativo</span></div>
+        <div class="row a"><span class="id">#0431</span><span class="nm">Compactador de solo<span>Vence 05/11</span></span><span class="pill cinza">Ativo</span></div>
+      </div>
+    </div>
+    <div class="vista" id="vEq" style="opacity:0">
+      <h3>Condição dos equipamentos</h3><p>Fotos na saída e na volta de cada locação</p>
+      <div style="margin-top:10px">
+        <div class="row q"><span class="nm">Betoneira 400 L<span>6 fotos · saída 01/10</span></span><span class="pill vivo">✓ Bom estado</span></div>
+        <div class="row q"><span class="nm">Compactador de solo<span>4 fotos · volta 08/10</span></span><span class="pill ruim">Avaria registrada</span></div>
+        <div class="row q"><span class="nm">Gerador 55 kVA<span>5 fotos · saída 03/10</span></span><span class="pill vivo">✓ Bom estado</span></div>
+      </div>
+    </div>
+    <div class="notif" id="n1"><div class="ic"><img src="img/simbolo.png"></div>
+      <div class="tx"><b>Contrato #0412 vence em 3 dias</b>Betoneira 400 L · Construtora Alfa</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (20,06 → 23,75): parou de descobrir o prejuízo depois ═════ -->
+<div class="p card ins" id="aviso" style="left:540px;top:300px">
+  <div class="cabI">Avisados antes de vencer<span class="pill cinza" id="pVenc">Esta semana</span></div>
+  <div class="li"><span>#0412 · Betoneira 400 L</span><span class="pill cinza" id="r1">Avisado</span></div>
+  <div class="li"><span>#0425 · Gerador 55 kVA</span><span class="pill cinza" id="r2">Avisado</span></div>
+</div>
+
+<!-- ═════ CTA (23,89 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Não perca mais contratos</span>Siga a Mais Locações</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Seguir <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy4/palavras.js"></script>
+<script>
+window.DURACAO = 30.38;
+const ROSTO = [560, 740];
+const FS = [[1.0, 5.55, true], [14.5, 19.95, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const cs = Q('#win .row.c'), v1 = Q('#v1 .li'), ra = Q('#vCon .row'), rq = Q('#vEq .row'), av = Q('#aviso .li');
+const abas2 = Q('#app2 .aba'), vistas2 = [$('#vCon'), $('#vEq')];
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.6, [cs[0], cs[3]], 1.02, 2, -1], [3.6, [cs[1], cs[2]], 1.08, 1, 2], [4.6, '#win .topo', 1.08, 0, 1, 0, 60], [5.55, '#win .topo', 1.12, 0, 0, 0, 60]]);
+  camera(t, '#cam2', [[14.55, [540, 810], 0.92, 3, 3], [15.4, ['#app2 .abas', '#vCon'], 1.04, 2, 1], [16.6, ['#app2 .abas', '#vEq'], 1.08, 1, -2],
+    [17.8, '#n1', 1.1, 1, 2, 0, 80], [19.95, '#n1', 1.16, 0, 0, 0, 80]]);
+
+  /* ── FS1 · 1,0 → 5,55 ── */
+  A($('#win'), t, 1.05, 5.45, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(cs, t, 1.25, 0.08);
+  [[1, 'Vencido há 4 dias'], [2, 'Vencido há 8 dias']].forEach(([k, tx], j) => { vira(cs[k].querySelector('.pill'), t, 3.5 + 0.2 * j, tx, 'ruim'); acende(cs[k], t, 3.5 + 0.2 * j, '201,55,42', 0.06); });
+  vira($('#pAv'), t, 4.5, 'Ninguém foi avisado', 'ruim');
+
+  /* ── inserção · 5,68 → 10,45 ── */
+  A($('#v1'), t, 5.68, 10.45, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(v1, t, 5.78, 0.08, 12);
+  if (t >= 6.42) conta($('#p21'), t, 6.42, 0.5, 21); else $('#p21').textContent = '0';
+  vira($('#pVen'), t, 9.02, 'Venceu', 'ruim'); acende(v1[0], t, 9.02, '201,55,42', 0.06);
+  vira($('#pAviso'), t, 9.52, 'Ninguém percebeu', 'ruim');
+
+  /* ── inserção · 10,6 → 13,25: a linha da locação se rompe na avaria ── */
+  A($('#av'), t, 10.6, 13.25, { de: 0.86, dy: -60, dout: 0.25 });
+  tinta(t, 'la', 10.7, 0.3); tinta(t, 'lb', 10.95, 0.3);
+  { const q = M.prog(t, 11.52, 0.6, E.spring); $('#ga').setAttribute('transform', `translate(${-12 * q} ${6 * q}) rotate(${-4 * q} 104 62)`); $('#gb').setAttribute('transform', `translate(${12 * q} ${-6 * q}) rotate(${4 * q} 788 62)`);
+    const cor = t >= 11.52 ? '#C9372A' : '#0B3A9E'; $('#la').setAttribute('stroke', cor); $('#lb').setAttribute('stroke', cor); $('#mDev').setAttribute('stroke', t >= 11.52 ? '#C9372A' : '#0B3A9E'); }
+  vira($('#pAva'), t, 11.18, 'Avaria', 'ruim');
+  $('#tReg').style.opacity = pr(t, 12.26, 0.3, E.cubicOut);
+
+  /* ── logo · 13,34 → 14,45 ── */
+  A($('#logoCard'), t, 13.34, 14.4, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 14,5 → 19,95 ── */
+  A($('#app2'), t, 14.55, 19.85, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, vistas2, [[16.28, 1]], $('#carrega2'));
+  cascata(ra, t, 14.75, 0.08);
+  ra.forEach((e, k) => vira(e.querySelector('.pill'), t, 15.08 + 0.16 * k, '✓ Guardado', 'vivo'));
+  { const c2 = cursor($('#cur2'), t, 15.5, [1000, 1500], t > 15.5 ? centro(abas2[1]) : [0, 0], 16.15, 16.5); }
+  cascata(rq, t, 16.4, 0.1); acende(rq[1], t, 17.14, '201,55,42', 0.06);
+  notif($('#n1'), t, 17.98); if (t >= 19.02) pulsa($('#n1'), t, 19.02, 0.05);
+
+  /* ── inserção · 20,06 → 23,75 ── */
+  A($('#aviso'), t, 20.06, 23.75, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(av, t, 20.16, 0.08, 12);
+  vira($('#r1'), t, 20.8, '✓ Renovado', 'vivo'); vira($('#r2'), t, 21.24, '✓ Devolvido no prazo', 'vivo');
+  vira($('#pVenc'), t, 21.8, '0 prejuízos', 'vivo');
+
+  /* ── CTA · 23,89 → fim ── */
+  A($('#cta'), t, 23.89, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 26.3, [1020, 760], t > 26.3 ? centro('#btnCta') : [0, 0], 27.0, 29.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 27.15) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 27.15 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

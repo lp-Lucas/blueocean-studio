@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 1 (caçambas: onde está cada uma?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #m1 { width: 892px; height: 560px; margin-top: 22px; }
+  #lig svg { display: block; margin-top: 14px; }
+  .cx { font: 700 26px 'DMS'; fill: #01235C; } .cxs { font: 500 20px 'DMS'; fill: #7A8294; }
+  #cel { left: 540px; top: 810px; width: 540px; height: 1000px; }
+  #m2 { position: absolute; left: 0; right: 0; top: 168px; bottom: 0; border-radius: 0; }
+  #wa .li { border-top: 0; margin-top: 0 !important; height: auto; padding: 4px 0; }
+  #wa .nm2 { font: 700 30px 'DMS'; color: var(--tinta); } #wa .nm2 span { display: block; font: 400 22px 'DMS'; color: var(--cinza); margin-top: 4px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 6,2): onde está cada caçamba neste exato momento? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Caçambas na rua</span><span class="pill cinza" id="pos">Atualizado ontem, 17:40</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Mapa da operação</h3><p>21 caçambas alugadas · 6 nesta região</p></div></div>
+    <div class="mapa" id="m1"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (6,3 → 12,2): toda entrega vira uma ligação (ilustração: seta indo e voltando) ═════ -->
+<div class="p card ins" id="lig" style="left:540px;top:300px">
+  <div class="cabI">Entregas de hoje<span class="pill cinza" id="p21">Caçambas na rua</span></div>
+  <svg width="892" height="196" viewBox="0 0 892 196">
+    <rect x="2" y="58" width="236" height="96" rx="15" fill="#F6F7F9" stroke="rgba(1,35,92,.14)" stroke-width="2"/>
+    <text class="cx" x="120" y="102" text-anchor="middle">Escritório</text><text class="cxs" x="120" y="132" text-anchor="middle">“Já entregou?”</text>
+    <rect x="654" y="58" width="236" height="96" rx="15" fill="#F6F7F9" stroke="rgba(1,35,92,.14)" stroke-width="2"/>
+    <text class="cx" x="772" y="102" text-anchor="middle">Motorista</text><text class="cxs" x="772" y="132" text-anchor="middle">em rota</text>
+    <path d="M250 106 H642" stroke="rgba(1,35,92,.18)" stroke-width="4" stroke-dasharray="10 12"/>
+    <path id="s1" d="M250 82 C 380 10, 520 10, 642 82" fill="none" stroke="#0B3A9E" stroke-width="7" stroke-linecap="round"/>
+    <path id="s2" d="M642 130 C 520 196, 380 196, 250 130" fill="none" stroke="#0B3A9E" stroke-width="7" stroke-linecap="round"/>
+    <path id="s3" d="M250 96 C 400 40, 470 160, 642 112" fill="none" stroke="#C9372A" stroke-width="7" stroke-linecap="round"/>
+  </svg>
+  <div style="display:flex;justify-content:center;margin-top:6px"><span class="pill cinza" id="pLig">1 ligação</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (12,3 → 13,6): Mais Locações ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo-navy.svg"></div>
+
+<!-- ═════ TELA CHEIA 2 (13,65 → 21,3): rota do motorista + posição de cada caçamba, ao vivo, no celular ═════ -->
+<div class="cam" id="cam2">
+<div class="p cel fs" id="cel"><div class="tela2">
+  <div class="topoC" id="cTopo"><img src="img/logo-claro.svg"><div class="tt">Rota de hoje · Motorista João<span class="pill vivo" id="aoVivo"><i></i>Ao vivo</span></div></div>
+  <div class="mapa" id="m2"></div>
+  <div class="notif" id="n1" style="top:190px"><div class="ic"><img src="img/simbolo.png"></div>
+    <div class="tx"><b>Entrega confirmada ✓</b>Caçamba CB-07 · Rua das Acácias, 120</div></div>
+</div></div>
+</div>
+
+<!-- ═════ INSERÇÃO (21,4 → 24,0): parou de viver no grupo do WhatsApp ═════ -->
+<div class="p card ins" id="wa" style="left:540px;top:300px">
+  <div class="li"><div class="wa" id="waI"><img src="img/whatsapp.svg"></div><div class="nm2">Grupo “Entregas”<span>Motoristas e escritório</span></div><span class="pill ruim" id="pWa">128 mensagens</span></div>
+</div>
+
+<!-- ═════ CTA (24,12 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Logística da sua locadora</span>Siga a Mais Locações</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Seguir <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 28.6;
+const ROSTO = [560, 740];
+const FS = [[1.0, 6.22, true], [13.65, 21.3, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+mapa($('#m1'), 5); mapa($('#m2'), 11);
+const P1 = [[120, 140, 'CB-03'], [300, 260, 'CB-07'], [520, 120, 'CB-11'], [700, 300, 'CB-14'], [210, 440, 'CB-18'], [610, 470, 'CB-21']].map(([x, y, r]) => pino($('#m1'), x, y, '', '#01235C', r));
+rota($('#m2'), 'M70 760 C 120 640, 220 600, 200 500 S 300 330, 380 300 S 470 160, 420 80', 'r2');
+const P2 = [[80, 600, 'CB-03'], [330, 520, 'CB-07'], [160, 330, 'CB-11'], [430, 250, 'CB-14'], [260, 160, 'CB-18'], [420, 70, 'CB-21']].map(([x, y, r]) => pino($('#m2'), x, y, '', '#01235C', r));
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.6, '#m1', 1.0, 2, -1], [4.3, '#m1', 1.06, 1, 2], [5.4, '#win .topo', 1.08, 0, 1, 0, 70], [6.2, '#win .topo', 1.12, 0, 0, 0, 70]]);
+  camera(t, '#cam2', [[13.7, [540, 810], 0.92, 2, -3], [14.6, '#m2', 1.0, 2, 2], [16.4, '#m2', 1.06, 1, -2], [17.5, [540, 790], 0.96, 1, 1],
+    [19.3, '#n1', 1.08, 1, -1, 0, 160], [21.3, '#n1', 1.12, 0, 0, 0, 160]]);
+
+  /* ── FS1 · 1,0 → 6,2 ── */
+  A($('#win'), t, 1.05, 6.1, { de: 0.88, dy: 120, dout: 0.2 });
+  P1.forEach((p, k) => popPino(p, t, 1.35 + 0.08 * k));
+  // "onde está cada uma das suas caçambas": cada pino perde a posição e vira "?"
+  P1.forEach((p, k) => { const on = t >= 2.88 + 0.22 * k; pinoCor(p, on ? '#9AA3B5' : '#01235C', on ? '?' : ''); if (on) pulsa(p, t, 2.88 + 0.22 * k, 0.12); });
+  // "neste exato momento?": a posição atual é ???
+  vira($('#pos'), t, 5.12, 'Posição agora: ???', 'ruim');
+
+  /* ── inserção · 6,3 → 12,2: toda entrega vira uma ligação ── */
+  A($('#lig'), t, 6.32, 12.15, { de: 0.86, dy: -60, dout: 0.25 });
+  vira($('#p21'), t, 7.08, '21 caçambas na rua', 'azul');
+  tinta(t, 's1', 8.9, 0.5); tinta(t, 's2', 9.7, 0.5); tinta(t, 's3', 10.4, 0.6);
+  { const n = t >= 10.4 ? 3 : t >= 9.7 ? 2 : 1; const tx = n + (n > 1 ? ' ligações' : ' ligação'); if ($('#pLig').textContent !== tx) $('#pLig').textContent = tx;
+    $('#pLig').style.opacity = pr(t, 8.9, 0.3, E.cubicOut); if (t > 9.7) pulsa($('#pLig'), t, n === 3 ? 10.4 : 9.7, 0.1); }
+  vira($('#pLig'), t, 11.86, 'Entrega feita? Sem confirmação', 'ruim');
+
+  /* ── logo · 12,3 → 13,6 ── */
+  A($('#logoCard'), t, 12.3, 13.55, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 13,65 → 21,3: celular com a rota e as caçambas ao vivo ── */
+  A($('#cel'), t, 13.7, 21.2, { de: 0.88, dy: 120, dout: 0.2 });
+  andaRota(t, 'r2', 14.5, 2.2);
+  P2.forEach((p, k) => popPino(p, t, 15.96 + 0.12 * k));
+  P2.forEach((p, k) => { if (t >= 16.88 + 0.06 * k) { pinoCor(p, '#0B3A9E'); } });
+  $('#aoVivo').style.opacity = pr(t, 17.44, 0.3, E.cubicOut); pulsa($('#aoVivo'), t, 17.54, 0.16);
+  // "sem ligar pra ninguém": a confirmação chega sozinha
+  notif($('#n1'), t, 19.8); if (t >= 19.8) { pinoCor(P2[1], '#15803D', '✓'); pulsa(P2[1], t, 19.9, 0.2); }
+
+  /* ── WhatsApp · 21,4 → 24,0 ── */
+  A($('#wa'), t, 21.4, 24.0, { de: 0.86, dy: -60, dout: 0.25 });
+  vira($('#pWa'), t, 22.36, 'Silenciado', 'cinza');
+  pulsa($('#waI'), t, 23.52, 0.18);
+
+  /* ── CTA · 24,12 → fim ── */
+  A($('#cta'), t, 24.12, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur1'), t, 25.6, [1020, 760], t > 25.6 ? centro('#btnCta') : [0, 0], 26.3, 28.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 26.45) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 26.45 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

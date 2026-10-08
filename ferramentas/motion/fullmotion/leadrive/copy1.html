@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Roteiro 1 (leads desqualificados)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #cpl .li b { margin-left: auto; min-width: 150px; text-align: right; }
+  #cpl .li .pill { margin-left: 22px; min-width: 170px; justify-content: center; }
+  #w1 .lead .pill { min-width: 210px; justify-content: center; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 7,55): Painel · Leads — um monte de lead desqualificado, sem origem → descobrir de onde vêm ═════ -->
+<div class="cam" id="cam1"><div class="p card app fs" id="w1" style="left:540px;top:790px"></div></div>
+
+<!-- ═════ INSERÇÃO (7,65 → 10,5): não adianta olhar só o custo por lead ═════ -->
+<div class="p card ins" id="cpl" style="left:540px;top:300px">
+  <div class="cabI">Campanhas · custo por lead<span class="pill cinza" id="pCpl">Meta Ads</span></div>
+  <div class="li"><span class="utm">META_ADS <span>·</span> CAMPANHA-3</span><b class="num" id="cplA">CPL R$ 8</b><span class="pill cinza" id="vA">Vendas —</span></div>
+  <div class="li"><span class="utm">GOOGLE_ADS <span>·</span> SEARCH-BR</span><b class="num" id="cplB">CPL R$ 21</b><span class="pill cinza" id="vB">Vendas —</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (10,6 → 19,6): o caminho do lead — campanha → contato → atendimento → venda ═════ -->
+<div class="p card ins" id="cam" style="left:540px;top:300px">
+  <div class="cabI">O caminho do lead<span class="pill cinza" id="pCam">Precisa saber</span></div>
+  <div id="camC"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (19,85 → 24,65): extensão no WhatsApp Web — origem do lead + resultado comercial ═════ -->
+<div class="cam" id="cam2"><div class="p card app fs" id="w2" style="left:540px;top:800px"></div></div>
+
+<!-- ═════ CTA (24,75 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Pare de otimizar campanha <em>no escuro.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agende uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 30.0;
+const ROSTO = [540, 720];
+const FS = [[0.9, 7.55, true], [19.85, 24.65, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 23.2, ps: FM.criaConfete(3, 50, 540, 1150, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#w1').innerHTML = painelLeads('a', { kpis: [['Leads hoje', '312'], ['Desqualificados', '0'], ['Com origem', '0%']], status: ['Novo', 'Novo', 'Novo', 'Novo'] });
+$('#camC').innerHTML = caminho('c');
+$('#w2').innerHTML = extensao('x');
+$('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const ls = Q('#w1 .lead'), us = Q('#w1 .utm'), ss = [0, 1, 2, 3].map(i => $('#as' + i)), cl = Q('#cpl .li');
+const UTM = us.map(u => u.innerHTML);
+const xf = Q('#w2 .li'), xb = Q('#w2 .bal');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.95, [540, 790], 0.92, 3, -3], [2.0, '#ak1', 1.05, 2, -1], [3.4, [ls[0], ls[3]], 1.04, 1, 2], [5.4, [us[0], us[3]], 1.08, -1, 2, 120, 0], [7.55, [ls[0], ls[3]], 1.1, 0, 0]]);
+  camera(t, '#cam2', [[19.9, [540, 800], 0.92, 3, 3], [21.2, '#xlado', 1.02, 2, 1], [22.4, ['#xf0', '#xf1'], 1.05, 1, -2], [23.6, '#xlado', 1.05, 0, -1, 0, 40], [24.65, '#xlado', 1.07, 0, 0, 0, 30]]);
+
+  /* ── FS1 · 0,9 → 7,55: um monte de lead desqualificado… de onde vêm? ── */
+  A($('#w1'), t, 0.95, 7.45, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w1 .kpi'), ...ls], t, 0.98, 0.05);
+  conta($('#av1'), t, 2.21, 1.0, 214); $('#ak1').style.color = t >= 2.21 ? 'var(--verm)' : ''; acende($('#ak1'), t, 2.21, VERM, 0.12);
+  [[0, 'Desqualificado', 'ruim'], [1, 'Desqualificado', 'ruim'], [2, 'Qualificado', 'vivo'], [3, 'Desqualificado', 'ruim']].forEach(([i, tx, c], k) => {
+    vira(ss[i], t, 2.21 + 0.14 * k, tx, c); if (c === 'ruim') acende(ls[i], t, 2.21 + 0.14 * k, VERM, 0.08); });
+  // até "descobrir": utm vazia (sem origem); na fala, a origem de cada lead aparece
+  us.forEach((u, i) => { const on = t >= 5.63 + 0.18 * i, h = on ? UTM[i] : '<span>utm:</span> sem origem';
+    if (u.innerHTML !== h) u.innerHTML = h; u.style.color = on ? '' : 'var(--verm)'; if (on) pulsa(u, t, 5.63 + 0.18 * i, 0.08); });
+  { const p = C((t - 5.63) / 1.0); $('#av2').textContent = t < 5.63 ? '0%' : Math.round(100 * E.cubicOut(p)) + '%'; $('#av2').style.color = t >= 6.6 ? 'var(--verde)' : ''; acende($('#ak2'), t, 6.6, VERDE, 0.12); }
+
+  /* ── inserção · 7,65 → 10,5: só o custo por lead não diz qual vendeu ── */
+  A($('#cpl'), t, 7.65, 10.5, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(cl, t, 7.75, 0.1, 12);
+  ['#cplA', '#cplB'].forEach((s, k) => { $(s).style.color = t >= 9.52 + 0.12 * k ? 'var(--lilas)' : ''; if (t >= 9.52 + 0.12 * k) pulsa($(s), t, 9.52 + 0.12 * k, 0.1); });
+  vira($('#vA'), t, 10.06, 'Vendas ?', 'ruim'); vira($('#vB'), t, 10.18, 'Vendas ?', 'ruim');
+
+  /* ── inserção · 10,6 → 19,6: campanha → contato → atendimento → oportunidade de venda ── */
+  A($('#cam'), t, 10.6, 19.6, { de: 0.86, dy: -60, dout: 0.25 });
+  caminhoAnda('c', t, [12.02, 12.5, 13.02, 14.46, 17.44]);
+  vira($('#pCam'), t, 18.98, '✓ Venda atribuída', 'vivo');
+
+  /* ── FS2 · 19,85 → 24,65: o Leadrive conecta a origem ao resultado comercial, dentro do WhatsApp ── */
+  A($('#w2'), t, 19.9, 24.55, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...xb, $('#xlado')], t, 20.05, 0.12);
+  acende($('#xlado'), t, 20.13, ROXO, 0.1);
+  xf.forEach((f, i) => { cascata([f], t, 20.6 + 0.1 * i, 0.1, 10); acende(f, t, 21.55 + 0.15 * Math.min(i, 1), ROXO, i < 2 ? 0.16 : 0); });
+  { const c = cursor($('#cur1'), t, 22.3, [980, 1700], t > 22.3 ? centro('#xbtn') : [0, 0], 23.15, 24.4); const b = $('#xbtn');
+    b.style.transform = `scale(${1 - 0.06 * c})`; const ok = t >= 23.15, h = ok ? '✓ Venda R$ 2.400 · CAMPANHA-3' : 'Registrar venda';
+    if (b.textContent !== h) b.textContent = h; b.className = ok ? 'btn ok' : 'btn'; }
+
+  /* ── CTA · 24,75 → fim ── */
+  A($('#cta'), t, 24.75, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 27.0, [1020, 760], t > 27.0 ? centro('#btnCta') : [0, 0], 27.85, 29.9); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 28.0) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 28.0 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

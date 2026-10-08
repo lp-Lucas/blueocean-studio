@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Criativo 03 (qual campanha está gerando venda no WhatsApp?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo, #w2 .corpo { padding: 26px 34px 32px; }
+  #anu .ev { height: 84px; } #anu .ev .pill { min-width: 190px; justify-content: center; }
+  #ret .ev { height: 76px; } #ret .ev .mk { width: 46px; height: 46px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,5 → 6,85): qual campanha vende? sem a origem, não dá pra saber onde cortar verba ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span id="mt1"></span><span class="tt" style="border:0;padding-left:0">Campanhas · WhatsApp</span><span class="pill cinza">Este mês</span></div>
+  <div class="corpo tab">
+    <div class="hd"><span class="k">Campanha</span><span class="k">Verba</span><span class="k">Leads</span><span class="k">Vendas</span></div>
+    <div class="ln" id="r0"><span class="utm">CAMPANHA-3</span><b class="vb">R$ 4.200</b><b>412</b><b class="vd">—</b></div>
+    <div class="ln" id="r1"><span class="utm">SEARCH-BR</span><b class="vb">R$ 2.100</b><b>96</b><b class="vd">—</b></div>
+    <div class="ln" id="r2"><span class="utm">REELS-12</span><b class="vb">R$ 1.600</b><b>158</b><b class="vd">—</b></div>
+    <div class="li" id="corte" style="margin-top:16px"><span>Onde cortar verba</span><span class="pill cinza" id="pCorte">—</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (6,95 → 16,3): o Leadrive rastreia campanha → anúncio → criativo → venda e mostra quem traz fit ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mk2"></span><span class="tt">Rastreamento</span><span class="pill ruim"><i></i>Ao vivo</span></div>
+  <div class="corpo">
+    <div class="k">Camila Ribeiro · do clique à venda</div>
+    <div id="camC"></div>
+    <div id="anu" style="margin-top:4px">
+      <div class="ev" id="a0"><span class="mk" style="background:#1A1D5C" id="ai0"></span><div><div class="tx">Vídeo 02 · depoimento</div><span class="utm"><span>leads</span> 128 · <span>qualidade</span> ★★★★★</span></div><span class="pill cinza" id="ap0">—</span></div>
+      <div class="ev" id="a1" style="margin-top:12px"><span class="mk" style="background:#1A1D5C" id="ai1"></span><div><div class="tx">Carrossel 01 · promoção</div><span class="utm"><span>leads</span> 284 · <span>qualidade</span> ★★</span></div><span class="pill cinza" id="ap1">—</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (16,4 → 22,45): o dado volta pro Meta e Google → a mídia busca comprador, não só contato ═════ -->
+<div class="p card ins" id="ret" style="left:540px;top:300px">
+  <div class="cabI">Retroalimentação de Ads<span class="pill cinza" id="pRet">Otimizando por: contato</span></div>
+  <div style="margin-top:14px">
+    <div class="ev" id="e0"><span id="eI0"></span><div><div class="tx">Venda · Camila R. · Vídeo 02</div></div><span class="pill cinza" id="es0">Na fila</span></div>
+    <div class="ev" id="e1"><span id="eI1"></span><div><div class="tx">Venda · João M. · SEARCH-BR</div></div><span class="pill cinza" id="es1">Na fila</span></div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (22,5 → 27,8): painel único com CRM próprio — cada lead até o fechamento ═════ -->
+<div class="p card ins" id="crm" style="left:540px;top:300px">
+  <div class="cabI">CRM Leadrive · Camila Ribeiro<span class="pill cinza" id="pCrm">Novo</span></div>
+  <div id="crmC"></div>
+</div>
+
+<!-- ═════ CTA (27,85 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Pare de perder tempo<br><em>rastreando venda no WhatsApp.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Agende uma demonstração<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="cr3/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 33.3;
+const ROSTO = [540, 720];
+const FS = [[0.5, 6.85, true], [6.85, 16.3, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 9.94, ps: FM.criaConfete(31, 50, 540, 760, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#mt1').innerHTML = mk('meta', 48); $('#mk2').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+$('#ai0').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#8B8BFF" stroke-width="2"><path d="M4 5h16v14H4z M10 9l5 3-5 3z"/></svg>`;
+$('#ai1').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#8B8BFF" stroke-width="2"><path d="M3 6h7v12H3z M14 6h7v12h-7z"/></svg>`;
+$('#eI0').innerHTML = mk('meta', 46); $('#eI1').innerHTML = mk('google', 46); Q('#ret .mk')[1].style.border = '1.5px solid rgba(255,255,255,.2)';
+$('#camC').innerHTML = caminho('c', [['anuncio', 'Campanha'], ['clique', 'Anúncio'], ['painel', 'Criativo'], ['venda', 'Venda']]);
+$('#crmC').innerHTML = caminho('k', [['chat', 'Novo'], ['gente', 'Atendimento'], ['painel', 'Proposta'], ['venda', 'Fechado']]);
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const rl = Q('#w1 .ln'), an = Q('#anu .ev'), ev = Q('#ret .ev');
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.55, [540, 800], 0.92, 3, -3], [1.6, rl, 1.04, 2, -1], [2.6, Q('#w1 .vd'), 1.06, 1, 2, -260, 0], [4.4, [rl[0], '#corte'], 1.04, -1, 1], [6.85, '#corte', 1.08, 0, 0, 0, -60]]);
+  camera(t, '#cam2', [[6.85, [540, 800], 0.94, 3, 3], [8.6, '#camC', 1.02, 2, 1], [10.4, '#ce3', 1.06, 1, -2, -200, 0], [12.4, [an[0], an[1]], 1.04, -1, 1], [14.6, an[0], 1.08, 1, -1], [16.3, an[1], 1.1, 0, 0]]);
+
+  /* ── FS1 · 0,5 → 6,85: qual campanha vende? sem a origem, onde cortar? ── */
+  A($('#w1'), t, 0.55, 6.85, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...Q('#w1 .hd'), ...rl, $('#corte')], t, 0.6, 0.06);
+  Q('#w1 .vd').forEach((e, k) => { const on = t >= 1.78 + 0.12 * k; e.textContent = on ? '?' : '—'; e.style.color = on ? 'var(--verm)' : ''; if (on) pulsa(e, t, 1.78 + 0.12 * k, 0.15); });
+  rl.forEach((e, k) => acende(e, t, 3.24 + 0.1 * k, VERM, 0.08));
+  Q('#w1 .vb').forEach((e, k) => { e.style.color = t >= 5.44 ? 'var(--lilas)' : ''; });
+  vira($('#pCorte'), t, 6.18, 'Impossível saber', 'ruim'); acende($('#corte'), t, 6.18, VERM, 0.12);
+
+  /* ── FS2 · 6,95 → 16,3: rastreia campanha → anúncio → criativo → venda; quem traz fit e quem só traz volume ── */
+  A($('#w2'), t, 6.85, 16.2, { de: 1, dy: 0, dout: 0.2 });
+  passa(t, '#w1', '#w2', 6.85);
+  cascata([...Q('#w2 .k'), $('#camC'), ...an], t, 6.85, 0.04);
+  caminhoAnda('c', t, [7.86, 8.62, 9.02, 9.7]);
+  acende(an[0], t, 11.14, ROXO, 0.08); acende(an[1], t, 11.3, ROXO, 0.08);
+  vira($('#ap0'), t, 14.42, '✓ Gente com fit', 'vivo'); if (t >= 14.42) acende(an[0], t, 14.42, VERDE, 0.1);
+  vira($('#ap1'), t, 15.76, 'Só volume', 'ruim'); if (t >= 15.76) acende(an[1], t, 15.76, VERM, 0.1);
+
+  /* ── inserção · 16,4 → 22,45: o dado volta pro Meta e Google → a mídia aprende a buscar comprador ── */
+  A($('#ret'), t, 16.4, 22.45, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(ev, t, 16.5, 0.1, 12);
+  [[18.8, 0], [19.22, 1]].forEach(([t0, k]) => { vira($('#es' + k), t, t0, 'Enviado ✓', 'vivo'); acende(ev[k], t, t0, VERDE, 0.08); });
+  vira($('#pRet'), t, 20.66, '✓ Otimizando por: comprador', 'vivo');
+
+  /* ── inserção · 22,5 → 27,8: tudo num painel único, com CRM — o lead até o fechamento ── */
+  A($('#crm'), t, 22.5, 27.8, { de: 0.86, dy: -60, dout: 0.25 });
+  caminhoAnda('k', t, [22.96, 24.5, 25.8, 27.5]);
+  vira($('#pCrm'), t, t >= 27.5 ? 27.5 : 24.5, t >= 27.5 ? '✓ Fechado · R$ 2.400' : 'Em atendimento', t >= 27.5 ? 'vivo' : 'roxo');
+
+  /* ── CTA · 27,85 → fim ── */
+  A($('#cta'), t, 27.85, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 30.3, [1020, 760], t > 30.3 ? centro('#btnCta') : [0, 0], 31.1, 33.2); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 31.3) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 31.3 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

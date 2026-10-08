@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mais Locações — Copy 2 Black Friday (equipamentos: máquina parada no pátio)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #org .cabI img { height: 52px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 5,95): quanto custa uma máquina parada no pátio? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo-claro.svg"><span class="tt">Pátio · equipamentos</span><span class="pill cinza">Hoje</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Parados no pátio</h3><p>Sem contrato ativo</p></div><span class="pill cinza" id="pCusto">Custo parado</span></div>
+    <div style="margin-top:18px">
+      <div class="row p2"><span class="nm">Retroescavadeira<span>Última locação 26/09</span></span><span class="pill cinza">No pátio</span></div>
+      <div class="row p2"><span class="nm">Plataforma elevatória 12 m<span>Última locação 02/10</span></span><span class="pill cinza">No pátio</span></div>
+      <div class="row p2"><span class="nm">Gerador 55 kVA<span>Última locação 05/10</span></span><span class="pill cinza">No pátio</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (6,18 → 8,85): você já viu como a Mais Locações organiza isso ═════ -->
+<div class="p card ins" id="org" style="left:540px;top:300px">
+  <div class="cabI"><img src="img/logo-navy.svg"><span class="pill cinza" id="pOrg">Equipamentos no pátio</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (8,95 → 15,75): oferta Black Friday ═════ -->
+<div id="ofW"></div>
+
+<!-- ═════ CTA (15,84 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo-claro.svg" style="height:56px;margin-bottom:20px">
+  <div class="t"><span>Condição de Black Friday</span>Comece 2027 sem prejuízo parado</div>
+  <div class="btn" id="btnCta" style="margin-top:22px"><div id="brilho"></div>Garantir minha condição <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy6/palavras.js"></script>
+<script>
+window.DURACAO = 21.17;
+const ROSTO = [560, 740];
+const FS = [[1.0, 5.95, true], [8.95, 15.75, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 11.65, ps: FM.criaConfete(9, 60, 540, 1060, 760, 60, 0.7), rgb: [177, 232, 58] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#ofW').outerHTML = OFERTA_HTML;
+$('#btnCtaI').innerHTML = S('chev', '#01235C', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const ps = Q('#win .row.p2');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.6, [ps[0], ps[2]], 1.02, 2, -1], [4.2, [ps[0], ps[2]], 1.08, 1, 2], [5.0, '#win .topo', 1.1, 0, 1, 0, 60], [5.95, '#win .topo', 1.14, 0, 0, 0, 60]]);
+
+  /* ── FS1 · 1,0 → 5,95 ── */
+  A($('#win'), t, 1.05, 5.85, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(ps, t, 1.25, 0.1);
+  // "uma máquina parada no pátio": os dias parados acendem
+  [['Parada há 18 dias'], ['Parada há 12 dias'], ['Parado há 9 dias']].forEach(([tx], k) => { vira(ps[k].querySelector('.pill'), t, 4.38 + 0.2 * k, tx, 'ruim'); acende(ps[k], t, 4.38 + 0.2 * k, '201,55,42', 0.06); });
+  vira($('#pCusto'), t, 3.44, 'Custo parado: calculando…', 'cinza');
+  vira($('#pCusto'), t, 5.36, 'Custo parado: ???', 'ruim');
+
+  /* ── inserção · 6,18 → 8,85 ── */
+  A($('#org'), t, 6.18, 8.85, { de: 0.86, dy: -60, dout: 0.25 });
+  vira($('#pOrg'), t, 8.1, '✓ Pátio organizado', 'vivo');
+
+  /* ── FS2 · 8,95 → 15,75: oferta ── */
+  oferta(t, { ent: 9.0, tag: 9.3, dez: 11.58, jan: 14.88, sai: 15.75 });
+
+  /* ── CTA · 15,84 → fim ── */
+  A($('#cta'), t, 15.84, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 16.3, [1020, 760], t > 16.3 ? centro('#btnCta') : [0, 0], 16.95, 20.8); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 17.1) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 17.1 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

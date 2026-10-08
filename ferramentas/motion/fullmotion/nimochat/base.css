@@ -1,0 +1,138 @@
+/* identidade NimoChat (nimochat.com.br): site CLARO — corpo branco, seções #F0F9FF, títulos navy #152F63, texto #677288,
+   bordas #E5E7EB, destaque azul #2462F2 / #058ECB (cor do logo), botão = pílula em degradê #2462F2 → #24E4F2 (.btn-blue do site).
+   Sistema (prints do site): barra branca com logo, abas ABERTOS / PENDENTES / CHATBOT com contador vermelho, balões de
+   conversa azul-claro, Kanban com cabeçalho de coluna azul, KPIs navy, tabela "Desempenho da Equipe". Fonte DM Sans. Receita 15. */
+@font-face { font-family: 'DMS'; font-weight: 100 1000; src: url('fonts/DMSans.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #F0F9FF; --card: #FFFFFF; --card2: #F7F9FC; --tinta: #152F63; --texto: #3F4A5E; --cinza: #677288; --linha: #E5E7EB;
+        --navy: #152F63; --logo: #058ECB; --azul: #2462F2; --azulc: rgba(36,98,242,.09); --ciano: #24E4F2;
+        --verde: #15803D; --verdec: #E7F5EC; --verm: #E5372B; --vermc: #FDECEA; --wa: #25D366; --chat: #EFEAE2; --balC: #DCEBFF; }
+html, body { background: transparent !important; }
+body { font-family: 'DMS', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border-radius: 22px; box-shadow: 0 18px 44px rgba(21,47,99,.16); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes */
+.k { font: 600 21px 'DMS'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 22px 'DMS'; white-space: nowrap; }
+.pill i { width: 11px; height: 11px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); }
+.pill.ruim { background: var(--vermc); color: var(--verm); }
+.pill.azul { background: var(--azulc); color: var(--azul); }
+.pill.navy { background: var(--navy); color: #fff; }
+.pill.cinza { background: #EEF1F5; color: #5B6274; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 18px; height: 88px; padding: 0 22px 0 44px; border-radius: 999px;
+       background: linear-gradient(90deg, #2462F2, #24E4F2); color: #fff; font: 700 30px 'DMS'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn .bo { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,.22); display: grid; place-items: center; }
+.btn svg { width: 26px; }
+.btn.ok { background: var(--verde); }
+
+/* inserções (faixa de cima, y 120–470) */
+.ins { width: 960px; padding: 28px 34px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 700 32px 'DMS'; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 72px; border-top: 1.5px solid var(--linha); font: 500 27px 'DMS'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 14px; }
+.li .pill, .li b { margin-left: auto; }
+.li b { font: 700 27px 'DMS'; color: var(--tinta); }
+#logoCard { padding: 44px 70px; display: flex; align-items: center; justify-content: center; }
+#logoCard img { height: 92px; display: block; }
+
+/* janela do sistema (telas cheias) — barra branca com logo, como o sistema do site */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 30px; background: #fff; border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.app .bar img { height: 38px; } .app .bar .tt { font: 600 24px 'DMS'; color: var(--cinza); padding-left: 18px; border-left: 1.5px solid var(--linha); }
+.app .bar .pill { margin-left: auto; }
+.abas { height: 78px; display: flex; align-items: flex-end; gap: 6px; padding: 0 22px; background: var(--card2); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { height: 62px; display: flex; align-items: center; gap: 10px; padding: 0 24px; border-radius: 14px 14px 0 0; font: 600 22px 'DMS'; letter-spacing: .04em; color: var(--cinza); white-space: nowrap; text-transform: uppercase; }
+.aba.on { background: var(--card); color: var(--tinta); font-weight: 700; box-shadow: inset 0 4px 0 var(--azul); }
+.bdg { min-width: 30px; height: 30px; padding: 0 8px; border-radius: 15px; background: var(--verm); color: #fff; font: 700 18px 'DMS'; display: grid; place-items: center; }
+.bdg.z { background: #C7CDD8; }
+.carrega { position: absolute; left: 0; height: 4px; background: var(--azul); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: var(--card); }
+.app h3 { font: 700 36px 'DMS'; } .app h3 + p { font: 400 25px 'DMS'; color: var(--cinza); margin-top: 6px; }
+.topo { display: flex; align-items: flex-start; } .topo .pill { margin-left: auto; margin-top: 4px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+
+/* lista de conversas (aba ABERTOS do sistema) */
+.conv { display: flex; align-items: center; gap: 18px; height: 104px; border-bottom: 1.5px solid var(--linha); border-radius: 12px; margin: 0 -14px; padding: 0 14px; }
+.av { width: 62px; height: 62px; border-radius: 50%; background: #DCE6F5; color: var(--navy); font: 700 23px 'DMS'; display: grid; place-items: center; flex: none; position: relative; }
+.av .w { position: absolute; right: -3px; bottom: -3px; width: 24px; height: 24px; border-radius: 50%; background: var(--wa); border: 3px solid #fff; }
+.conv .nm { font: 700 26px 'DMS'; color: var(--tinta); } .conv .nm span { display: block; font: 400 21px 'DMS'; color: var(--cinza); margin-top: 3px; white-space: nowrap; }
+.conv .dir { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.conv .dir .pill { height: 38px; font-size: 19px; padding: 0 14px; }
+.row { display: flex; align-items: center; gap: 16px; height: 84px; border-bottom: 1.5px solid var(--linha); font: 500 26px 'DMS'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.row .pill { margin-left: auto; }
+.row .nm { font: 600 26px 'DMS'; color: var(--tinta); } .row .nm span { display: block; font: 400 21px 'DMS'; color: var(--cinza); margin-top: 2px; }
+
+/* conversa (fundo do chat do sistema) */
+.chat { position: relative; background: var(--chat); border-radius: 16px; padding: 22px 22px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+.bal { max-width: 74%; border-radius: 16px; padding: 14px 20px; font: 500 24px/1.3 'DMS'; color: #263042; box-shadow: 0 2px 4px rgba(0,0,0,.06); }
+.bal b { display: block; font: 700 19px 'DMS'; color: var(--cinza); margin-bottom: 4px; }
+.bal.c { background: var(--balC); align-self: flex-start; } .bal.s { background: #fff; align-self: flex-end; }
+.bal.bot { background: #fff; align-self: flex-end; border: 1.5px solid rgba(36,98,242,.25); }
+.bal .h { display: block; text-align: right; font: 500 16px 'DMS'; color: #8A93A5; margin-top: 4px; }
+.opc { display: block; font: 600 23px/1.55 'DMS'; color: var(--tinta); }
+
+/* Kanban */
+.kb { display: flex; gap: 16px; }
+.kcol { flex: 1; background: var(--card2); border: 1.5px solid var(--linha); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+.kcol .kh { height: 50px; border-radius: 10px; background: var(--azul); color: #fff; font: 700 21px 'DMS'; display: flex; align-items: center; padding: 0 14px; }
+.kcol .kh span { margin-left: auto; background: rgba(255,255,255,.25); border-radius: 12px; padding: 0 10px; font-size: 18px; }
+.kc { background: #fff; border-radius: 12px; box-shadow: 0 3px 10px rgba(21,47,99,.10); padding: 14px 14px; position: relative; }
+.kc .t { font: 700 22px 'DMS'; color: var(--tinta); }
+.kc .s { font: 500 18px 'DMS'; color: var(--cinza); margin-top: 6px; display: flex; align-items: center; gap: 8px; }
+.kc .mini { width: 30px; height: 30px; border-radius: 50%; background: #DCE6F5; font: 700 13px 'DMS'; color: var(--navy); display: grid; place-items: center; }
+.kc .pz { display: inline-flex; margin-top: 8px; height: 32px; padding: 0 12px; border-radius: 16px; font: 600 17px 'DMS'; align-items: center; background: #EEF1F5; color: #5B6274; }
+.kc .pz.ok { background: var(--verdec); color: var(--verde); } .kc .pz.ruim { background: var(--vermc); color: var(--verm); }
+
+/* painel (KPIs navy + tabela Desempenho da Equipe) */
+.kpis { display: flex; gap: 14px; }
+.kpi { flex: 1; background: var(--navy); color: #fff; border-radius: 16px; padding: 18px 20px; }
+.kpi b { display: block; font: 700 44px 'DMS'; font-variant-numeric: tabular-nums; } .kpi span { font: 500 19px 'DMS'; opacity: .85; }
+.tab { width: 100%; border-collapse: collapse; margin-top: 18px; }
+.tab th { font: 700 19px 'DMS'; color: var(--navy); text-align: right; padding: 0 8px 12px; } .tab th:first-child { text-align: left; }
+.tab td { height: 76px; border-top: 1.5px solid var(--linha); font: 500 23px 'DMS'; color: var(--texto); text-align: right; padding: 0 8px; font-variant-numeric: tabular-nums; }
+.tab td:first-child { text-align: left; font-weight: 700; color: var(--tinta); }
+.tab tr.hl td { background: var(--vermc); color: var(--verm); }
+
+/* celular (WhatsApp do atendente) */
+.notif { position: absolute; left: 34px; right: 34px; top: 22px; border-radius: 22px; background: #fff; box-shadow: 0 14px 34px rgba(21,47,99,.22); border: 1.5px solid var(--linha);
+         padding: 20px 22px; display: flex; gap: 16px; align-items: center; z-index: 5; opacity: 0; }
+.notif .ic { width: 58px; height: 58px; border-radius: 14px; background: #fff; border: 1.5px solid var(--linha); display: grid; place-items: center; flex: none; }
+.notif .ic img { width: 30px; }
+.notif .tx { font: 500 21px/1.25 'DMS'; color: var(--texto); } .notif .tx b { display: block; font: 700 22px 'DMS'; color: var(--tinta); margin-bottom: 2px; }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 5px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* CTA (cartão branco do site, logo original, botão do site) */
+#cta { width: 960px; padding: 40px 40px 44px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .lgc { height: 64px; margin-bottom: 22px; }
+#cta .t { font: 700 40px/1.15 'DMS'; color: var(--tinta); } #cta .t span { color: var(--logo); font: 600 21px 'DMS'; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 12px; }
+#btnCta { margin-top: 26px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); left: -200px; }
+
+/* ícone de marca famosa */
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+#marcaX .bg { position: absolute; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+#marcaX .gl { position: absolute; width: 160px; height: 160px; } #marcaX .gl svg { width: 160px; height: 160px; display: block; }
+.wa { width: 64px; height: 64px; border-radius: 16px; background: var(--wa); display: grid; place-items: center; flex: none; }
+.wa img { width: 40px; filter: brightness(0) invert(1); }
+.mk { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; flex: none; }
+.mk svg { width: 32px; height: 32px; }
+
+/* ilustração da fala */
+.cx { font: 600 22px 'DMS'; fill: #677288; }
+
+/* câmera 3D das telas cheias */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }

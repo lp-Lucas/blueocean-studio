@@ -1,0 +1,140 @@
+/* identidade Onnira (onnira.com): site ESCURO — corpo #030303, cartões/janelas grafite #0E1014 com borda #27272A, texto #F8FAFC,
+   secundário #A1A1AA, azul primário hsl(216 62% 46%) = #2D6ABE (botão "Começar Agora", ícone ativo da barra lateral, botão de
+   enviar), azul claro #60A5FA (rótulos dos modelos "CLAUDE OPUS · GPT", destaques), bolha da IA #080E17 com borda #12233D,
+   bolha do usuário #111111; verde #4ADE80 e vermelho #EF4444 do tema; raio .75rem nos botões; fonte Sora (body do site).
+   Sistema (print do site): janela de chat com barra lateral de ícones, cabeçalho "Onnira" + pílula do modelo, rótulo "VOCÊ",
+   respostas com o nome do modelo em azul, campo de mensagem com botão redondo azul. Base copiada da FF Tech (receita 15). */
+@font-face { font-family: 'Sora'; font-weight: 100 800; src: url('fonts/Sora.woff2'); }
+@font-face { font-family: 'MontB'; font-weight: 700; src: url('../../../../fontes/Montserrat-Bold.ttf'); }
+:root { --fundo: #030303; --card: #0E1014; --card2: #08090B; --bolha: #111111; --bolhaIA: #080E17; --bordaIA: #12233D; --tinta: #F8FAFC; --texto: #D4D4D8;
+        --cinza: #A1A1AA; --cinza2: #71717A; --linha: #27272A; --linha2: rgba(255,255,255,.07);
+        --azul: #2D6ABE; --azulc: rgba(45,106,190,.18); --claro: #60A5FA; --verde: #4ADE80; --verdec: rgba(74,222,128,.12); --verm: #EF4444; --vermc: rgba(239,68,68,.13); }
+html, body { background: transparent !important; }
+body { font-family: 'Sora', sans-serif; color: var(--tinta); letter-spacing: -0.01em; }
+#azul, #leg { display: none !important; }
+.card { background: var(--card); border: 1.5px solid var(--linha); border-radius: 22px; box-shadow: 0 18px 44px rgba(0,0,0,.5); }
+
+/* telas cheias */
+#tela { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; pointer-events: none; overflow: visible; }
+.fs { z-index: 6; }
+
+/* componentes do site */
+.k { font: 600 20px 'Sora'; letter-spacing: .08em; color: var(--cinza2); text-transform: uppercase; }
+.k.az { color: var(--claro); }
+.num { font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; font: 600 21px 'Sora'; white-space: nowrap;
+        border: 1.5px solid var(--linha); background: var(--card2); color: var(--texto); }
+.pill i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.vivo { background: var(--verdec); color: var(--verde); border-color: rgba(74,222,128,.3); }
+.pill.ruim { background: var(--vermc); color: var(--verm); border-color: rgba(239,68,68,.35); }
+.pill.az { background: var(--azulc); color: var(--claro); border-color: rgba(96,165,250,.3); }
+.pill.cinza { color: var(--cinza); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 14px; height: 84px; padding: 0 40px; border-radius: 14px; background: var(--azul); color: #fff;
+       font: 600 30px 'Sora'; white-space: nowrap; position: relative; overflow: hidden; }
+.btn svg { width: 26px; }
+.btn.ok { background: #15803D; }
+#logoCard { padding: 44px 70px; display: flex; align-items: center; justify-content: center; }
+#logoCard img { height: 64px; display: block; }
+
+/* inserções (faixa de cima, y 120–420: a cabeça começa em y ≈ 440) */
+.ins { width: 960px; padding: 28px 34px; }
+.cabI { display: flex; align-items: center; gap: 14px; font: 600 30px 'Sora'; }
+.cabI img { height: 34px; }
+.cabI .pill { margin-left: auto; }
+.li { display: flex; align-items: center; gap: 16px; height: 66px; border-top: 1.5px solid var(--linha2); font: 500 26px 'Sora'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.li:first-of-type { margin-top: 14px; }
+.li .pill, .li b { margin-left: auto; }
+.li b { font: 600 26px 'Sora'; color: var(--tinta); }
+
+/* janela genérica de sistema (ERP, reuniões) */
+.app { width: 960px; overflow: hidden; border-radius: 22px; }
+.app .bar { height: 88px; display: flex; align-items: center; gap: 16px; padding: 0 30px; border-bottom: 1.5px solid var(--linha); background: var(--card2); position: relative; z-index: 2; }
+.app .bar .lg { height: 30px; } .app .bar .tt { font: 600 24px 'Sora'; color: var(--tinta); }
+.app .bar .sub { font: 400 21px 'Sora'; color: var(--cinza); }
+.app .bar .pill { margin-left: auto; }
+.abas { height: 76px; display: flex; align-items: flex-end; gap: 8px; padding: 0 22px; background: var(--card2); border-bottom: 1.5px solid var(--linha); position: relative; z-index: 2; }
+.aba { height: 60px; display: flex; align-items: center; gap: 10px; padding: 0 24px; border-radius: 12px 12px 0 0; font: 500 23px 'Sora'; color: var(--cinza); white-space: nowrap; }
+.aba.on { background: var(--card); color: var(--tinta); font-weight: 600; box-shadow: inset 0 3px 0 var(--azul); }
+.carrega { position: absolute; left: 0; height: 4px; background: var(--azul); width: 0; z-index: 3; }
+.app .corpo { position: relative; padding: 30px 34px 34px; background: var(--card); }
+.app h3 { font: 600 34px 'Sora'; } .app h3 + p { font: 400 23px 'Sora'; color: var(--cinza); margin-top: 6px; }
+.topo { display: flex; align-items: flex-start; } .topo .pill { margin-left: auto; margin-top: 2px; }
+.vista { position: absolute; left: 34px; right: 34px; top: 30px; }
+.row { display: flex; align-items: center; gap: 16px; height: 78px; border-bottom: 1.5px solid var(--linha2); font: 500 25px 'Sora'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; }
+.row .pill, .row b { margin-left: auto; }
+.row b { font: 600 25px 'Sora'; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.row .h { font: 500 21px 'Sora'; color: var(--cinza2); width: 92px; flex: none; }
+.sec { margin-top: 22px; margin-bottom: 2px; }
+.campo { height: 70px; border-radius: 12px; border: 1.5px solid var(--linha); background: var(--card2); display: flex; align-items: center; gap: 14px; padding: 0 20px; font: 500 24px 'Sora'; color: var(--texto); }
+.campo .k { width: 150px; flex: none; }
+
+/* chat da Onnira (recriado do print do site) */
+.chat { width: 960px; overflow: hidden; border-radius: 26px; display: flex; background: #040404; border: 1.5px solid #1C1C1F; }
+.chat .side { width: 112px; flex: none; border-right: 1.5px solid #141416; display: flex; flex-direction: column; align-items: center; gap: 26px; padding-top: 30px; background: #050505; }
+.chat .side .sic { position: static; margin: 0; z-index: auto; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; color: var(--cinza2); }
+.chat .side .sic svg { width: 30px; height: 30px; stroke: currentColor; }
+.chat .side .sic.top { background: #0B1728; border: 1.5px solid #15294A; color: var(--claro); }
+.chat .side .sic.on { background: var(--azul); color: #fff; }
+.chat .main { flex: 1; display: flex; flex-direction: column; position: relative; }
+.chat .head { height: 92px; display: flex; align-items: center; padding: 0 30px; border-bottom: 1.5px solid #141416; }
+.chat .head .tt { font: 600 28px 'Sora'; } .chat .head .pill { margin-left: auto; height: 46px; font-size: 20px; }
+.chat .msgs { position: relative; padding: 26px 30px 0; flex: 1; }
+.rot { display: flex; align-items: center; gap: 10px; font: 600 19px 'Sora'; letter-spacing: .1em; text-transform: uppercase; color: var(--cinza2); margin: 0 0 12px 4px; }
+.rot svg { width: 22px; height: 22px; } .rot.ia { color: var(--claro); }
+.bol { border-radius: 18px; padding: 22px 26px; font: 500 25px/1.4 'Sora'; margin-bottom: 24px; }
+.bol.eu { background: var(--bolha); border: 1.5px solid var(--linha); color: var(--tinta); }
+.bol.ia { background: var(--bolhaIA); border: 1.5px solid var(--bordaIA); color: var(--texto); }
+.bol.ia b { color: var(--tinta); font-weight: 600; } .bol.ia em { color: var(--claro); font-style: normal; font-weight: 600; }
+.tab { margin-top: 12px; }
+.tab .lt { display: flex; align-items: center; height: 58px; border-top: 1.5px solid var(--linha2); font: 500 24px 'Sora'; color: var(--texto); border-radius: 8px; padding: 0 10px; margin: 0 -10px; }
+.tab .lt b { margin-left: auto; font: 600 24px 'Sora'; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.tab .lt .pill { margin-left: 16px; height: 38px; font-size: 18px; padding: 0 12px; }
+.consulta { display: inline-flex; align-items: center; gap: 12px; height: 50px; padding: 0 18px; border-radius: 12px; background: #0B1728; border: 1.5px solid #15294A; font: 500 21px 'Sora'; color: var(--claro); margin-bottom: 24px; }
+.consulta .sp { width: 22px; height: 22px; border-radius: 50%; border: 3px solid rgba(96,165,250,.25); border-top-color: var(--claro); }
+.entrada { margin: 0 30px 28px; height: 86px; border-radius: 43px; background: var(--bolha); border: 1.5px solid var(--linha); display: flex; align-items: center; padding: 0 12px 0 30px; gap: 18px; font: 500 24px 'Sora'; color: var(--tinta); }
+.entrada .mais { color: var(--cinza2); font: 300 36px 'Sora'; }
+.entrada .txt { flex: 1; white-space: nowrap; overflow: hidden; }
+.entrada .txt:empty::before { content: 'Pergunte para a Onnira…'; color: var(--cinza2); }
+.entrada .env { width: 62px; height: 62px; border-radius: 50%; background: var(--azul); display: grid; place-items: center; flex: none; }
+.entrada .env svg { width: 28px; height: 28px; }
+
+/* ilustrações da fala (1ª parte): traço na cor de destaque, marcos em contorno */
+.ilu path.tr { fill: none; stroke: var(--claro); stroke-width: 8; stroke-linecap: round; }
+.ilu path.base { fill: none; stroke: #222226; stroke-width: 8; stroke-linecap: round; }
+.ilu path.rompe { fill: none; stroke: var(--verm); stroke-width: 8; stroke-linecap: round; }
+.marco { position: absolute; width: 240px; margin-left: -120px; display: flex; flex-direction: column; align-items: center; gap: 12px; transform-origin: 50% 13px; }
+.marco .o { width: 26px; height: 26px; border-radius: 50%; border: 4px solid #3F3F46; background: var(--card); }
+.marco.on .o { border-color: var(--claro); background: var(--claro); }
+.marco.ruim .o { border-color: var(--verm); background: var(--card); }
+.marco span { font: 500 22px 'Sora'; color: var(--cinza); white-space: nowrap; }
+.marco.on span { color: var(--tinta); } .marco.ruim span { color: var(--verm); }
+
+.cursor { position: absolute; width: 76px; height: 96px; z-index: 40; opacity: 0; }
+#legenda { position: absolute; left: 0; top: 1500px; width: 1080px; text-align: center; z-index: 60; font: 700 60px 'MontB'; color: #fff; letter-spacing: -0.005em;
+           text-shadow: 0 3px 4px rgba(0,0,0,.55), 0 6px 26px rgba(0,0,0,.5); white-space: nowrap; }
+#legenda span { display: inline-block; margin: 0 9px; }
+#confT { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.risca { position: absolute; left: -3%; right: -3%; top: 50%; height: 5px; border-radius: 4px; background: var(--verm); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* CTA */
+#cta { width: 960px; padding: 40px 36px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+#cta .lgc { height: 46px; margin-bottom: 24px; }
+#cta .t { font: 600 38px/1.2 'Sora'; } #cta .t span { color: var(--claro); }
+#btnCta { margin-top: 28px; } #btnCta svg { width: 28px; }
+#brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+
+#marcaX { position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none; }
+
+/* câmera 3D das telas cheias (receita 13): a janela vive num "mundo" do tamanho da tela */
+.cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 6; transform-origin: 0 0; pointer-events: none; }
+
+/* reuniões (copies 3 e 4): participantes, linhas de transcrição, tarefas com responsável e prazo */
+.avs { display: flex; gap: 12px; margin-top: 16px; }
+.av { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font: 600 22px 'Sora'; color: var(--texto); background: #18181B; border: 1.5px solid var(--linha); }
+.tl { display: flex; align-items: center; gap: 16px; height: 76px; border-bottom: 1.5px solid var(--linha2); font: 400 24px 'Sora'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; white-space: nowrap; }
+.tl .h { font: 500 20px 'Sora'; color: var(--cinza2); width: 70px; flex: none; font-variant-numeric: tabular-nums; }
+.tl b { font-weight: 600; color: var(--claro); width: 92px; flex: none; }
+.tk { display: flex; align-items: center; gap: 14px; height: 76px; border-bottom: 1.5px solid var(--linha2); font: 500 24px 'Sora'; color: var(--texto); border-radius: 10px; margin: 0 -14px; padding: 0 14px; white-space: nowrap; }
+.tk .n { flex: 1; } .tk .pill { width: 172px; justify-content: center; padding: 0 10px; font-size: 19px; height: 42px; }
+.tk.cab { height: 46px; font: 600 18px 'Sora'; letter-spacing: .08em; text-transform: uppercase; color: var(--cinza2); border-bottom: 1.5px solid var(--linha); }
+.tk.cab span:not(.n) { width: 172px; text-align: center; }

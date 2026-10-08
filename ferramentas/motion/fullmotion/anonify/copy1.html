@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Anonify — Copy 1 (Gestor de RH: canal de denúncias só depois do processo?)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #sis1 .main { height: 640px; }
+  .seg .li { height: 74px; font-size: 24px; }
+  .seg .li:first-of-type { margin-top: 0; border-top: none; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,0 → 5,55): sua empresa só terá um canal de denúncias depois que o problema virar processo? ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><span class="tt">Compliance <span>· Sua empresa</span></span><span class="pill cinza">RH</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Riscos do RH</h3><p>Situação atual da sua empresa</p></div><span class="pill cinza" id="pRisco">Sem alertas</span></div>
+    <div class="tab" style="margin-top:22px">
+      <div class="row g"><span class="nm">Canal de denúncias<span>Lei 14.457/2022</span></span><span class="pill cinza">Não implantado</span></div>
+      <div class="row g"><span class="nm">Denúncias de assédio<span>Chegam por e-mail e no corredor</span></span><span class="pill cinza">Sem registro</span></div>
+      <div class="row g"><span class="nm">Processo trabalhista<span>Ministério Público do Trabalho</span></span><span class="pill cinza">Nenhum</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (5,7 → 16,95): o caso da concessionária — linha do tempo (ilustração: caminho se completando) ═════ -->
+<div class="p card ins" id="caso" style="left:540px;top:300px">
+  <div class="cabI">Caso real · concessionária<span class="pill azul" id="pMpt">MPT</span></div>
+  <div id="lt1" style="margin-top:14px"></div>
+</div>
+
+<!-- ═════ INSERÇÃO (17,2 → 26,35): a decisão do julgamento ═════ -->
+<div class="p card ins" id="dec" style="left:540px;top:300px">
+  <div class="cabI">Decisão judicial<span class="pill cinza" id="pJul">Em julgamento</span></div>
+  <div class="li"><span>Canal efetivo de denúncias</span><span class="pill cinza" id="pCanal">Exigido</span></div>
+  <div class="li"><span>Indenização · dano moral coletivo</span><b class="num" id="vInd">R$ 0</b></div>
+</div>
+
+<!-- ═════ INSERÇÃO (26,4 → 32,85): não espere a denúncia virar problema jurídico ═════ -->
+<div class="p card ins" id="apr" style="left:540px;top:300px">
+  <div class="cabI">O aprendizado para o RH</div>
+  <div id="lt2" style="margin-top:14px"></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (33,0 → 38,85): a Anonify cria o canal seguro, anônimo e estruturado; receber e acompanhar ═════ -->
+<div class="cam" id="cam2">
+<div class="p card sis fs" id="sis1" data-lateral="empresa" style="left:540px;top:810px">
+  <div class="main">
+    <div class="vista" id="vPag">
+      <div class="abasS"><div class="abaS">Visão Geral</div><div class="abaS on">Página de denúncia</div><div class="abaS">Plano</div></div>
+      <h3>Página de denúncia</h3><p>O canal da sua empresa, pronto para receber</p>
+      <div class="bloco" id="bUrl">
+        <div class="rt">Esse será o link do seu canal de denúncias</div>
+        <div class="campo"><span class="pre">anonify.com.br/complaint/</span><span id="dUrl"></span></div>
+        <div class="bts"><div class="btn sec">Abrir link</div><div class="btn" id="bCopia">Copiar link</div></div>
+      </div>
+      <div class="bloco seg" id="bSeg">
+        <div class="li" id="lCripto"><span>Dados criptografados</span><span class="tog" id="tg1"><i></i></span></div>
+        <div class="li" id="lAnon"><span>Denunciante anônimo</span><span class="tog" id="tg2"><i></i></span></div>
+      </div>
+    </div>
+    <div class="vista" id="vDen" style="opacity:0">
+      <h3>Denúncias</h3><p>Todas as denúncias do seu espaço de trabalho</p>
+      <div class="busca"><div class="campo">Procurar por protocolo, status, categoria…</div><div class="fil">Filtros</div></div>
+      <div class="tabela">
+        <div class="row d"><span class="id">7KQ2PL</span><span class="nm">Assédio moral<span>Hoje · Anônima</span></span><span class="pill azul" id="pNova">Nova</span></div>
+        <div class="row d"><span class="id">8E7CMN</span><span class="nm">Corrupção<span>10/9 · Anônima</span></span><span class="pill cinza">Pendente</span></div>
+        <div class="row d"><span class="id">9IZ3ED</span><span class="nm">Práticas anticompetitivas<span>03/9 · Identificada</span></span><span class="pill azul">Em Análise</span></div>
+        <div class="row d"><span class="id">NTETVW</span><span class="nm">Conflito de interesses<span>03/9 · Anônima</span></span><span class="pill azul">Em Investigação</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (38,97 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px;padding:34px 40px">
+  <img class="lgc" src="img/logo.png" style="height:56px;margin-bottom:22px">
+  <div class="t"><span>Canal de denúncias e compliance</span>Conheça a Anonify</div>
+  <div class="btn" id="btnCta" style="margin-top:26px"><div id="brilho"></div>Agendar demonstração <span id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur3" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 41.75;
+const ROSTO = [530, 800];
+const FS = [[1.0, 5.55, true], [33.0, 38.85, true]];
+const OCULTA = [];
+const ESTOUROS = [];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+linhaTempo('lt1', [['Denúncias de assédio', 'já conhecidas'], ['Ação judicial', 'ajuizada'], ['Canal terceirizado', 'só depois']]);
+linhaTempo('lt2', [['Denúncia', 'recebida'], ['Processo estruturado', 'antes'], ['Problema jurídico', 'evitado']]);
+const gs = Q('#win .row.g'), dl = Q('#dec .li'), rd = Q('#vDen .row.d'), mDen = $('#sis1 .mi[data-k="denuncias"]');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[1.05, [540, 800], 0.92, 3, -3], [2.4, [gs[0], gs[2]], 1.0, 2, -1], [3.2, gs[0], 1.08, 1, 2], [4.3, [gs[1], gs[2]], 1.08, 2, -1],
+    [5.0, gs[2], 1.12, 1, 1], [5.55, gs[2], 1.15, 0, 0]]);
+  camera(t, '#cam2', [[33.05, [540, 810], 0.92, 3, 3], [33.6, '#bUrl', 1.06, 2, -1], [34.3, '#bCopia', 1.1, 1, 2, -150, 0], [35.0, '#bSeg', 1.08, 2, -1],
+    [35.8, [mDen, '#vDen h3'], 1.0, 1, 2], [36.7, [rd[0], rd[1]], 1.08, 2, -1], [37.7, rd[0], 1.14, 1, 1], [38.85, rd[0], 1.18, 0, 0]]);
+
+  /* ── FS1 · 1,0 → 5,55 ── */
+  A($('#win'), t, 1.05, 5.45, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(gs, t, 1.25, 0.1);
+  vira(gs[0].querySelector('.pill'), t, 3.3, 'Não implantado', 'ruim'); acende(gs[0], t, 3.3, '217,45,32', 0.06);
+  vira(gs[1].querySelector('.pill'), t, 4.32, 'Sem tratamento', 'ruim'); acende(gs[1], t, 4.32, '217,45,32', 0.06);
+  vira(gs[2].querySelector('.pill'), t, 4.96, 'Processo aberto', 'ruim'); acende(gs[2], t, 4.96, '217,45,32', 0.06);
+  vira($('#pRisco'), t, 5.06, 'Em risco', 'ruim');
+
+  /* ── inserção · 5,7 → 16,95: linha do tempo do caso ── */
+  A($('#caso'), t, 5.7, 16.95, { de: 0.86, dy: -60, dout: 0.25 });
+  pulsa($('#pMpt'), t, 8.42, 0.16);
+  subMarco('lt1', 0, t, 10.24, 'azul'); marco('lt1', 0, t, 11.0, 'azul');
+  marco('lt1', 2, t, 13.74, 'azul', false);
+  tinta(t, 'lt1a', 14.46, 1.1); marco('lt1', 1, t, 15.58, 'verm'); subMarco('lt1', 1, t, 15.58, 'verm');
+  corLinha('lt1', 'b', 'verm'); tinta(t, 'lt1b', 15.62, 0.7); if (t >= 16.36) marco('lt1', 2, t, 16.36, 'verm'); subMarco('lt1', 2, t, 16.36, 'verm');
+  $('#lt1r2').style.fill = t >= 16.36 ? '#D92D20' : '';
+
+  /* ── inserção · 17,2 → 26,35: a decisão ── */
+  A($('#dec'), t, 17.2, 26.35, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(dl, t, 17.3, 0.08, 12);
+  vira($('#pJul'), t, 18.29, 'Julgado', 'azul');
+  vira($('#pCanal'), t, 20.11, 'Obrigatório', 'azul'); acende(dl[0], t, 20.11);
+  if (t >= 23.83) conta($('#vInd'), t, 23.83, 0.9, 200000, v => 'R$ ' + Math.round(v).toLocaleString('pt-BR')); else $('#vInd').textContent = 'R$ 0';
+  $('#vInd').style.color = t >= 24.21 ? '#D92D20' : ''; acende(dl[1], t, 25.49, '217,45,32', 0.06);
+
+  /* ── inserção · 26,4 → 32,85: denúncia → problema jurídico; estruturar antes ── */
+  A($('#apr'), t, 26.4, 32.85, { de: 0.86, dy: -60, dout: 0.25 });
+  marco('lt2', 0, t, 29.69, 'azul'); subMarco('lt2', 0, t, 29.69, 'azul');
+  { const ok = t >= 31.53; corLinha('lt2', 'a', ok ? 'verde' : 'verm'); corLinha('lt2', 'b', ok ? 'verde' : 'verm');
+    // antes de estruturar: a denúncia corre direto até o problema (vermelho); no "estruturar" o caminho refaz em verde pelo processo
+    if (!ok) { tinta(t, 'lt2a', 29.85, 0.45); tinta(t, 'lt2b', 30.3, 0.4); } else { tinta(t, 'lt2a', 31.53, 0.4); tinta(t, 'lt2b', 31.95, 0.4); }
+    marco('lt2', 1, t, 31.53, 'verde'); subMarco('lt2', 1, t, 31.53, 'verde');
+    if (t < 32.39) marco('lt2', 2, t, 30.71, 'verm'); else marco('lt2', 2, t, 32.39, 'verde');
+    $('#lt2r2').style.fill = t >= 32.39 ? '#067647' : t >= 30.71 ? '#D92D20' : ''; subMarco('lt2', 2, t, 32.39, 'verde');
+    $('#lt2ok').style.opacity = pr(t, 32.45, 0.2, E.cubicOut); }
+
+  /* ── FS2 · 33,0 → 38,85: sistema Anonify ── */
+  A($('#sis1'), t, 33.05, 38.75, { de: 0.88, dy: 120, dout: 0.2 });
+  digita($('#dUrl'), 'suaempresa', t, 33.3, 18);
+  { const c = cursor($('#cur2'), t, 33.45, [1000, 1500], t > 33.45 ? centro('#bCopia') : [0, 0], 34.09, 34.6); $('#bCopia').style.transform = `scale(${1 - 0.06 * c})`;
+    const ok = t >= 34.2; $('#bCopia').className = ok ? 'btn ok' : 'btn'; const tx = ok ? 'Canal ativo ✓' : 'Copiar link'; if ($('#bCopia').textContent !== tx) $('#bCopia').textContent = tx; }
+  liga($('#tg1'), t, 34.31); acende($('#lCripto'), t, 34.31, '6,118,71', 0.07);
+  liga($('#tg2'), t, 34.97); acende($('#lAnon'), t, 34.97, '6,118,71', 0.07);
+  { const c = cursor($('#cur3'), t, 35.2, [900, 1450], t > 35.2 ? centro(mDen) : [0, 0], 35.75, 36.3); mDen.style.transform = `scale(${1 - 0.04 * c})`;
+    menuAtivo('#sis1', t >= 35.82 ? 'denuncias' : 'empresa'); }
+  { const on = t >= 35.85, p = pr(t, 35.85, 0.3, E.cubicOut);
+    $('#vPag').style.opacity = on ? 1 - p : 1; $('#vDen').style.opacity = on ? p : 0; $('#vDen').style.transform = `translateY(${(1 - p) * 24}px)`; }
+  // denúncia nova chega no topo da lista ("receber") e muda de status ("acompanhar")
+  { const p = M.prog(t, 37.1, 0.6, E.spring); rd[0].style.opacity = pr(t, 37.1, 0.22, E.cubicOut); rd[0].style.transform = `translateX(${(1 - C(p)) * 60}px)`;
+    rd.slice(1).forEach(r => r.style.transform = `translateY(${L(-88, 0, pr(t, 36.89, 0.3, E.cubicInOut))}px)`); }
+  vira($('#pNova'), t, 37.51, 'Em Análise', 'azul'); acende(rd[0], t, 36.89);
+
+  /* ── CTA · 38,97 → fim ── */
+  A($('#cta'), t, 38.97, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 39.6, [1020, 760], t > 39.6 ? centro('#btnCta') : [0, 0], 40.3, 41.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 40.45) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 40.45 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Leadrive — Criativo 04 (campanha de WhatsApp otimizando no escuro)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #w1 .corpo, #w2 .corpo { padding: 26px 34px 32px; }
+  #w1 .ev .pill, #w2 .lead .pill { min-width: 200px; justify-content: center; }
+  #hoje .li b { min-width: 160px; text-align: right; }
+  #w3 .corpo { height: 390px; }
+  #res .li b { min-width: 150px; text-align: right; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (1,1 → 6,05; entra com o ícone do WhatsApp): a campanha não devolve lead qualificado pro Meta ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="w1" style="left:540px;top:800px">
+  <div class="bar"><span id="mt1"></span><span class="tt" style="border:0;padding-left:0">Eventos recebidos pelo Meta</span><span class="pill cinza" id="pEsc">Campanha WhatsApp</span></div>
+  <div class="corpo">
+    <div class="ev" id="e0"><span id="ei0"></span><div><div class="tx">Conversa iniciada</div><span class="utm">412 hoje</span></div><span class="pill vivo">✓ Recebido</span></div>
+    <div class="ev" id="e1"><span id="ei1"></span><div><div class="tx">Lead qualificado</div><span class="utm">quem tem fit</span></div><span class="pill cinza" id="ep1">—</span></div>
+    <div class="ev" id="e2"><span id="ei2"></span><div><div class="tx">Venda fechada</div><span class="utm">quem comprou</span></div><span class="pill cinza" id="ep2">—</span></div>
+    <div class="li" id="otz" style="margin-top:16px"><span>A campanha otimiza por</span><span class="pill cinza" id="pOtz">Conversas</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (6,15 → 15,55): volume, WhatsApp lotado, lead frio… no painel funciona, no caixa não ═════ -->
+<div class="p card ins" id="hoje" style="left:540px;top:300px">
+  <div class="cabI">Campanha · hoje<span class="pill cinza" id="pHoje">Meta Ads</span></div>
+  <div class="li" id="h0"><span>Leads</span><b class="num" id="hv0">0</b></div>
+  <div class="li" id="h1"><span>Conversas no WhatsApp</span><b class="num" id="hv1">0</b></div>
+  <div class="li" id="h2"><span>Vendas no caixa</span><b class="num" id="hv2">—</b></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (16,4 → 22,95; entra com o ícone da Meta): o Meta não sabe quem virou receita → busca mais do mesmo ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="w2" style="left:540px;top:800px">
+  <div class="bar"><span id="mt2"></span><span class="tt" style="border:0;padding-left:0">Público semelhante</span><span class="pill cinza" id="pPub">Aprendendo com</span></div>
+  <div class="corpo">
+    <div id="lsW"></div>
+    <div class="li" id="rec" style="margin-top:14px"><span>Receita de cada lead</span><span class="pill cinza" id="pRec">—</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (23,05 → 32,4): Leadrive — campanha/anúncio/criativo que vendeu → devolve pro Meta via CAPI ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="w3" style="left:540px;top:800px">
+  <div class="bar"><span id="mk3"></span><span class="tt">Painel</span><span class="pill ruim"><i></i>Ao vivo</span></div>
+  <div class="abas"><div class="aba on">Vendas por origem</div><div class="aba" id="abaR">Retroalimentação</div><div class="carrega" id="car3"></div></div>
+  <div class="corpo">
+    <div class="vista tab" id="v1">
+      <div class="hd"><span class="k">Origem</span><span class="k">Leads</span><span class="k">Vendas</span><span class="k">Receita</span></div>
+      <div class="ln" id="o0"><span class="utm">Campanha <span>· CAMPANHA-3</span></span><b>412</b><b class="vd">—</b><b class="rc">—</b></div>
+      <div class="ln" id="o1"><span class="utm">Anúncio <span>· Oferta Outubro</span></span><b>188</b><b class="vd">—</b><b class="rc">—</b></div>
+      <div class="ln" id="o2"><span class="utm">Criativo <span>· Vídeo 02</span></span><b>128</b><b class="vd">—</b><b class="rc">—</b></div>
+    </div>
+    <div class="vista" id="v2">
+      <div class="k">Enviado ao Meta via CAPI</div>
+      <div style="margin-top:14px">
+        <div class="ev" id="r0"><span id="ri0"></span><div><div class="tx">Lead qualificado · Camila R.</div><span class="utm">CAMPANHA-3 · Vídeo 02</span></div><span class="pill cinza" id="rp0">Na fila</span></div>
+        <div class="ev" id="r1"><span id="ri1"></span><div><div class="tx">Venda fechada · R$ 2.400</div><span class="utm">CAMPANHA-3 · Vídeo 02</span></div><span class="pill cinza" id="rp1">Na fila</span></div>
+      </div>
+      <div class="li" id="otz2" style="margin-top:16px"><span>A campanha otimiza por</span><span class="pill cinza" id="pOtz2">Conversas</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (32,5 → 36,95): menos lead ruim, mais venda rastreada, orçamento onde dá retorno ═════ -->
+<div class="p card ins" id="res" style="left:540px;top:300px">
+  <div class="cabI">Com o Leadrive<span class="pill vivo">Resultado</span></div>
+  <div class="li" id="s0"><span>Lead ruim</span><b class="num" id="sv0">—</b></div>
+  <div class="li" id="s1"><span>Venda rastreada</span><b class="num" id="sv1">—</b></div>
+  <div class="li" id="s2"><span>Orçamento onde dá retorno</span><b class="num" id="sv2">—</b></div>
+</div>
+
+<!-- ═════ CTA (37,0 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <span id="ctaM"></span>
+  <div class="t">Pare de otimizar <em>no escuro.</em></div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conheça o Leadrive<span id="ctaS"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="cr4/palavras.js"></script>
+<script src="leadrive.js"></script>
+<script>
+window.DURACAO = 38.45;
+const ROSTO = [540, 720];
+const FS = [[1.1, 6.05, false], [16.4, 22.95, false], [22.95, 32.4, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 26.82, ps: FM.criaConfete(41, 50, 540, 760, 520, 60, 0.7), rgb: [111, 111, 255] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+['#mt1', '#mt2', '#ei0', '#ei1', '#ei2', '#ri0', '#ri1'].forEach(s => $(s).innerHTML = mk('meta', s.startsWith('#mt') ? 48 : 52));
+$('#mk3').innerHTML = MARCA(38); $('#ctaM').innerHTML = MARCA(50); $('#ctaS').innerHTML = ic('seta', '#fff', 2.4);
+const pl = painelLeads('a', { leads: [['Lucas P.', 'LP', 'a2', 'META_ADS', 'CAMPANHA-3', 2], ['Rita S.', 'RS', 'a4', 'META_ADS', 'CAMPANHA-3', 1], ['Bruno T.', 'BT', 'a3', 'META_ADS', 'REELS-12', 2]], status: ['Lead', 'Lead', 'Lead'] });
+$('#lsW').innerHTML = (() => { const d = document.createElement('div'); d.innerHTML = pl; return [...d.querySelectorAll('.lead')].map(e => e.outerHTML).join(''); })();
+const VERM = '255,107,138', VERDE = '37,211,102', ROXO = '111,111,255';
+const e1 = Q('#w1 .ev'), hl = Q('#hoje .li'), ls = Q('#lsW .lead'), ol = Q('#v1 .ln'), rv = Q('#v2 .ev'), sl = Q('#res .li');
+const VD = [14, 9, 11], RC = [33600, 18900, 26400];
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = 9999;
+  marcaExpande(t, 'whatsapp', 0.1); marcaExpande2(t);
+  tela(t);
+  camera(t, '#cam1', [[1.15, [540, 800], 0.92, 3, -3], [2.4, [e1[1], e1[2]], 1.04, 2, -1], [4.0, e1[1], 1.08, 1, 2], [5.2, '#otz', 1.06, -1, 1], [6.05, '#otz', 1.08, 0, 0]]);
+  camera(t, '#cam2', [[16.45, [540, 800], 0.92, 3, 3], [17.8, '#rec', 1.06, 2, 1], [19.6, [ls[0], ls[2]], 1.04, 1, -2], [21.4, ls[1], 1.08, -1, 1], [22.95, [ls[1], ls[2]], 1.08, 0, 0]]);
+  camera(t, '#cam3', [[22.95, [540, 800], 0.94, 3, 3], [24.4, ol, 1.04, 2, 1], [26.4, Q('#v1 .vd'), 1.06, 1, -2, -160, 0], [27.6, '#abaR', 1.02, -1, 1, 140, 220], [29.2, [rv[0], rv[1]], 1.06, 1, 1], [31.0, '#otz2', 1.08, 0, -1], [32.4, '#otz2', 1.1, 0, 0]]);
+
+  /* ── FS1 · 1,1 → 6,05: não devolve lead qualificado pro Meta → otimiza no escuro ── */
+  A($('#w1'), t, 1.15, 5.95, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...e1, $('#otz')], t, 1.2, 0.06);
+  vira($('#ep1'), t, 2.9, 'Não enviado', 'ruim'); acende(e1[1], t, 2.9, VERM, 0.1);
+  vira($('#ep2'), t, 3.92, 'Não enviado', 'ruim'); acende(e1[2], t, 3.92, VERM, 0.1);
+  vira($('#pOtz'), t, 4.9, 'Conversas · sem qualidade', 'ruim');
+  { const p = pr(t, 5.66, 0.4); $('#w1').querySelector('.corpo').style.filter = p > 0.01 ? `brightness(${1 - 0.35 * p})` : ''; }
+
+  /* ── inserção · 6,15 → 15,55: volume, WhatsApp lotado, curioso… painel bonito, caixa vazio ── */
+  A($('#hoje'), t, 6.15, 15.4, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(hl, t, 6.25, 0.1, 12);
+  conta($('#hv0'), t, 6.66, 0.8, 1248, x => Math.round(x).toLocaleString('pt-BR')); acende(hl[0], t, 6.94, ROXO, 0.12);
+  conta($('#hv1'), t, 7.66, 0.8, 866, x => Math.round(x).toLocaleString('pt-BR')); acende(hl[1], t, 7.98, ROXO, 0.12);
+  vira($('#pHoje'), t, t >= 13.18 ? 13.18 : 9.56, t >= 13.18 ? '✓ No painel, funcionando' : 'Lead frio · curioso', t >= 13.18 ? 'vivo' : 'ruim');
+  { const on = t >= 15.02; $('#hv2').textContent = on ? 'R$ 0' : '—'; $('#hv2').style.color = on ? 'var(--verm)' : ''; acende(hl[2], t, 14.2, VERM, 0.14); if (on) pulsa($('#hv2'), t, 15.02, 0.15); }
+
+  /* ── FS2 · 16,4 → 22,95: o Meta não sabe quem virou receita → busca mais lead barato e desqualificado ── */
+  A($('#w2'), t, 16.45, 22.95, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([...ls, $('#rec')], t, 16.5, 0.06);
+  vira($('#pRec'), t, 18.2, 'Não informada', 'ruim'); acende($('#rec'), t, 18.2, VERM, 0.12);
+  vira($('#pPub'), t, 20.0, 'Buscando mais do mesmo', 'roxo');
+  [['Lead barato', 21.08], ['Desqualificado', 21.64], ['Sem compra', 22.56]].forEach(([tx, t0], k) => { vira($('#as' + k), t, t0, tx, 'ruim'); acende(ls[k], t, t0, VERM, 0.08); });
+
+  /* ── FS3 · 23,05 → 32,4: o que vendeu de verdade → de volta pro Meta via CAPI ── */
+  A($('#w3'), t, 22.95, 32.3, { de: 1, dy: 0, dout: 0.2 });
+  passa(t, '#w2', '#w3', 22.95);
+  abasDe(t, Q('#w3 .aba'), [$('#v1'), $('#v2')], [[28.0, 1]], $('#car3'));
+  cascata([...Q('#v1 .hd'), ...ol], t, 22.95, 0.04);
+  [24.32, 25.06, 25.66].forEach((t0, k) => acende(ol[k], t, t0, ROXO, 0.12));
+  ol.forEach((e, k) => { const vd = e.querySelector('.vd'), rc = e.querySelector('.rc'), t0 = 26.54 + 0.1 * k;
+    vd.textContent = t < t0 ? '—' : Math.round(VD[k] * E.cubicOut(C((t - t0) / 0.6))); rc.textContent = t < t0 + 0.2 ? '—' : 'R$ ' + Math.round(RC[k] * E.cubicOut(C((t - t0 - 0.2) / 0.8))).toLocaleString('pt-BR');
+    vd.style.color = rc.style.color = t >= t0 ? 'var(--verde)' : ''; });
+  cursor($('#cur1'), t, 27.3, [980, 1600], t > 27.3 ? centro('#abaR') : [0, 0], 28.0, 28.5);
+  cascata([...rv, $('#otz2')], t, 28.1, 0.08);
+  vira($('#rp0'), t, 30.66, 'Enviado ✓', 'vivo'); acende(rv[0], t, 30.66, VERDE, 0.08);
+  vira($('#rp1'), t, 31.68, 'Enviado ✓', 'vivo'); acende(rv[1], t, 31.68, VERDE, 0.08);
+  vira($('#pOtz2'), t, 29.38, '✓ Lead qualificado e venda', 'vivo'); acende($('#otz2'), t, 29.38, VERDE, 0.1);
+
+  /* ── inserção · 32,5 → 36,95: menos lead ruim, mais venda rastreada, mais orçamento onde dá retorno ── */
+  A($('#res'), t, 32.5, 36.95, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(sl, t, 32.6, 0.1, 12);
+  [[0, 32.9, '−42%'], [1, 33.86, '100%'], [2, 35.88, '+R$ 3.500']].forEach(([k, t0, v]) => { const e = $('#sv' + k), on = t >= t0;
+    e.textContent = on ? v : '—'; e.style.color = on ? 'var(--verde)' : ''; acende(sl[k], t, t0, VERDE, 0.12); if (on) pulsa(e, t, t0, 0.12); });
+
+  /* ── CTA · 37,0 → fim ── */
+  A($('#cta'), t, 37.0, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur2'), t, 37.05, [1020, 760], t > 37.05 ? centro('#btnCta') : [0, 0], 37.6, 38.4); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 37.7) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 37.7 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+// 2º ícone de marca (Meta, entrada da 2ª tela cheia): o marcaExpande do base.js guarda um só ícone por página
+function marcaExpande2(t) {
+  const t0 = 15.4; let el = document.getElementById('marcaX2');
+  if (!el) { el = document.createElement('div'); el.id = 'marcaX2'; el.className = 'mxx'; el.innerHTML = `<div class="bg"></div><div class="gl">${MARCAS.meta.svg}</div>`;
+    Object.assign(el.style, { position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none', display: 'none' });
+    el.querySelector('.bg').style.cssText = 'position:absolute;background:' + MARCAS.meta.cor; el.querySelector('.gl').style.cssText = 'position:absolute;width:160px;height:160px';
+    el.querySelector('svg').style.cssText = 'width:160px;height:160px;display:block'; $('#tela').after(el); }
+  if (t < t0 || t > t0 + 1.45) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  const ps = M.prog(t, t0, 0.55, E.spring), pe = pr(t, t0 + 0.6, 0.5, E.cubicInOut), sai = pr(t, t0 + 1.08, 0.32, E.cubicOut);
+  const w = L(260, 1500, pe), h = L(260, 2400, pe), x = L(540, 540, pe), y = L(330, 960, pe), bg = el.querySelector('.bg'), gl = el.querySelector('.gl');
+  Object.assign(bg.style, { left: (x - w / 2) + 'px', top: (y - h / 2) + 'px', width: w + 'px', height: h + 'px', borderRadius: L(56, 0, pe) + 'px', transform: `scale(${L(0.3, 1, ps)})`, opacity: C(pr(t, t0, 0.12, E.linear)) * (1 - sai) });
+  Object.assign(gl.style, { left: (x - 80) + 'px', top: (y - 80) + 'px', transform: `scale(${L(0.3, 1, ps) * (1 + pe * 0.8)})`, opacity: C(pr(t, t0, 0.12, E.linear)) * (1 - C(pe * 2)) });
+}
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Neosync — Copy 1 (tela cheia + inserções + CTA)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* FS1 · layout: Amazon Ads — campanhas do mês */
+  #win { height: 980px; }
+  #win .abas { height: 84px; display: flex; align-items: flex-end; gap: 6px; padding: 0 22px; background: #E9EBEE; position: relative; z-index: 2; }
+  #win .aba { width: 290px; height: 64px; border-radius: 14px 14px 0 0; display: flex; align-items: center; gap: 12px; padding: 0 20px; font: 500 23px 'Inter'; color: #5B6370; white-space: nowrap; overflow: hidden; }
+  #win .aba i { width: 26px; height: 26px; border-radius: 7px; flex: none; }
+  #win .aba.on { background: #fff; color: var(--tinta); font-weight: 600; }
+  #win .corpo { height: 896px; }
+  #vCamp { position: absolute; left: 34px; right: 34px; top: 30px; }
+  #vCamp .topo { display: flex; align-items: flex-start; } #fechado { margin-left: auto; background: var(--vermc); color: var(--verm); opacity: 0; }
+  .tb { position: relative; margin-top: 24px; }
+  .tr2 { display: grid; grid-template-columns: 1.7fr .8fr .9fr 1fr .9fr; align-items: center; height: 92px; border-bottom: 1.5px solid var(--linha); font: 500 27px 'Inter'; opacity: 0; margin: 0 -14px; padding: 0 14px; border-radius: 12px; }
+  .tr2 > :not(:first-child) { justify-self: end; } .tr2.h { height: 56px; opacity: 1; }
+  .tr2.h span { font: 600 20px 'Inter'; letter-spacing: .08em; color: var(--cinza); text-transform: uppercase; }
+  .tr2.tot { font-weight: 700; border-bottom: none; }
+  .cel { display: inline-flex; align-items: center; gap: 6px; height: 46px; padding: 0 14px; margin-right: -14px; border-radius: 999px; }
+  .cel svg { width: 22px; display: none; }
+  #colAc { position: absolute; top: -8px; bottom: 84px; right: -12px; width: 160px; border-radius: 16px; border: 3px solid var(--azul); background: rgba(27,84,215,.06); opacity: 0; }
+  #toast { position: absolute; left: 34px; right: 34px; bottom: 34px; height: 112px; border-radius: 16px; background: var(--tinta); color: #fff; display: flex; align-items: center; gap: 20px; padding: 0 26px; opacity: 0; }
+  #toast .ic { width: 60px; height: 60px; border-radius: 14px; background: rgba(255,255,255,.12); display: grid; place-items: center; flex: none; } #toast .ic svg { width: 32px; }
+  #toast b { font: 650 28px 'Inter'; display: block; } #toast small { font: 500 23px 'Inter'; color: rgba(255,255,255,.65); }
+
+  /* inserções */
+  #monit { width: 960px; padding: 26px 32px 18px; }
+  .cabI { display: flex; align-items: center; gap: 14px; font: 700 32px 'Inter'; letter-spacing: -0.02em; }
+  .cabI .pill { margin-left: auto; }
+  .lin { display: flex; align-items: center; gap: 20px; height: 74px; border-top: 1.5px solid var(--linha); font: 500 27px 'Inter'; opacity: 0; }
+  .lin:first-of-type { margin-top: 14px; }
+  .lin .nm { width: 360px; } .lin svg { flex: 1; height: 44px; overflow: visible; }
+  .lin .v { width: 120px; text-align: right; font: 700 30px 'Inter'; }
+  #ajuste { width: 960px; padding: 28px 32px; }
+  .troca { display: flex; align-items: center; height: 82px; border-top: 1.5px solid var(--linha); font: 500 28px 'Inter'; color: #3F4652; }
+  .troca:first-of-type { margin-top: 16px; }
+  .troca .de { margin-left: auto; position: relative; color: var(--cinza); font-weight: 600; }
+  .troca .seta { width: 34px; margin: 0 16px; opacity: 0; } .troca .para { font: 700 32px 'Inter'; color: var(--tinta); opacity: 0; min-width: 160px; text-align: right; }
+  #regra { width: 960px; padding: 28px 32px 32px; }
+  .toks { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+  .tok { height: 62px; padding: 0 20px; border-radius: 12px; border: 1.5px solid var(--linha); background: var(--claro); display: flex; align-items: center; font: 600 28px 'Inter'; opacity: 0; white-space: nowrap; }
+  .tok.pal { background: none; border: none; padding: 0 4px; color: var(--cinza); font-weight: 500; }
+  .tok.az { background: #EAF0FC; border-color: #C7D6F6; color: var(--azul); }
+  #para1, #para2 { display: flex; } #para2 { margin-top: 0; }
+
+  /* plataforma */
+  #app1 { height: 1010px; }
+  #form, #log { position: absolute; left: 34px; right: 34px; top: 30px; }
+  .campo { margin-top: 26px; } .campo .k { margin-bottom: 10px; }
+  .campo .cx { height: 76px; border: 1.5px solid var(--linha); border-radius: 12px; display: flex; align-items: center; padding: 0 22px; font: 500 29px 'Inter'; gap: 12px; }
+  .campo .cx .ph { color: #B0B5BD; } .campo .cx .vl { font-weight: 600; } .campo .cx svg { width: 26px; margin-left: auto; }
+  .tg { display: flex; align-items: center; gap: 18px; margin-top: 30px; font: 500 28px 'Inter'; }
+  .tg .sw { width: 76px; height: 44px; border-radius: 22px; background: #D5D8DD; position: relative; } .tg .sw i { position: absolute; left: 4px; top: 4px; width: 36px; height: 36px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.2); }
+  #ativar { position: absolute; left: 34px; right: 34px; top: 860px; height: 92px; justify-content: center; font-size: 32px; }
+  #log .item { display: flex; align-items: center; gap: 20px; height: 92px; border-bottom: 1.5px solid var(--linha); opacity: 0; }
+  #log .h { width: 104px; font: 600 26px 'Inter'; color: var(--cinza); } #log .tx { flex: 1; font: 500 27px 'Inter'; } #log .tx b { font-weight: 650; }
+  #log .ic { width: 50px; height: 50px; border-radius: 12px; display: grid; place-items: center; flex: none; } #log .ic svg { width: 28px; }
+  #relog { margin-left: auto; font: 700 30px 'Inter'; }
+  #acessos { display: flex; align-items: center; justify-content: space-between; margin-top: 26px; height: 92px; padding: 0 26px; border-radius: 14px; background: var(--claro); font: 500 28px 'Inter'; opacity: 0; }
+  #acessos b { font: 800 44px 'Inter'; }
+
+  #pub1, #pub2 { }
+  #cta { width: 990px; padding: 34px 36px; display: flex; align-items: center; gap: 30px; }
+  #cta .lg { width: 150px; height: 150px; border-radius: 26px; background: var(--claro); display: grid; place-items: center; flex: none; } #cta .lg img { width: 104px; }
+  #cta .t { font: 700 38px/1.15 'Inter'; letter-spacing: -0.03em; } #cta .t span { color: var(--cinza); font-weight: 500; font-size: 28px; display: block; margin-bottom: 4px; letter-spacing: -0.01em; }
+  #btnCta { margin-top: 18px; height: 80px; font-size: 32px; } #btnCta svg { width: 28px; }
+  #brilho { position: absolute; top: -20px; bottom: -20px; width: 120px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); left: -200px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,93 → 12,55): layout — campanhas do mês na Amazon Ads ═════ -->
+<div class="p card app fs" id="win" style="left:540px;top:790px">
+  <div class="abas"><div class="aba on"><i style="background:#232F3E"></i>Amazon Ads</div><div class="aba"><i style="background:#FF9900"></i>Seller Central</div></div>
+  <div class="corpo">
+    <div id="vCamp">
+      <div class="topo"><div><h3>Campanhas · setembro</h3><p>Sponsored Products · Loja Casa Prática</p></div><span class="pill" id="fechado">Mês fechado</span></div>
+      <div class="tb"><div id="colAc"></div>
+        <div class="tr2 h"><span>Campanha</span><span>Lance</span><span>Orç./dia</span><span>Gasto</span><span style="text-transform:none">ACoS</span></div>
+        <div class="tr2"><span>Fone BT – Exata</span><span class="cel" id="L1">R$ 3,80</span><span class="cel" id="O1">R$ 300</span><span>R$ 4.120</span><span class="cel ac">48,0%</span></div>
+        <div class="tr2"><span>Garrafa Térmica</span><span>R$ 0,95</span><span class="cel" id="O2">R$ 20</span><span>R$ 590</span><span class="cel ac">14,0%</span></div>
+        <div class="tr2"><span>Kit Facas – Ampla</span><span>R$ 2,60</span><span>R$ 150</span><span>R$ 2.870</span><span class="cel ac">56,1%</span></div>
+        <div class="tr2"><span>Luminária LED</span><span>R$ 1,10</span><span>R$ 40</span><span>R$ 1.050</span><span class="cel ac">17,0%</span></div>
+        <div class="tr2"><span>Organizador</span><span>R$ 1,90</span><span>R$ 120</span><span>R$ 2.240</span><span class="cel ac">50,0%</span></div>
+        <div class="tr2 tot"><span>Total do mês</span><span></span><span></span><span class="cel" id="GT">R$ 10.870</span><span>38,0%</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="toast"><div class="ic" id="toastI"></div><div><b>Relatório de setembro disponível</b><small>30/09 às 23:58 · Amazon Ads</small></div></div>
+</div>
+
+<!-- ═════ INSERÇÕES (12,7 → 21,6) — faixa acima da cabeça ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><div class="marca"><img src="img/logo.png">Neosync</div></div>
+<div class="p card" id="monit" style="left:540px;top:310px">
+  <div class="cabI">ACoS das campanhas<span class="pill vivo"><i id="pisca"></i>Ao vivo</span></div>
+  <div class="lin"><div class="nm">Fone BT – Exata</div><svg viewBox="0 0 300 44" preserveAspectRatio="none"><path fill="none" stroke-width="3"/></svg><div class="v num"></div></div>
+  <div class="lin"><div class="nm">Kit Facas – Ampla</div><svg viewBox="0 0 300 44" preserveAspectRatio="none"><path fill="none" stroke-width="3"/></svg><div class="v num"></div></div>
+  <div class="lin"><div class="nm">Garrafa Térmica</div><svg viewBox="0 0 300 44" preserveAspectRatio="none"><path fill="none" stroke-width="3"/></svg><div class="v num"></div></div>
+</div>
+<div class="p card" id="ajuste" style="left:540px;top:300px">
+  <div class="cabI">Fone BT – Exata<span class="pill vivo" id="autoP" style="opacity:0"><i></i>Ajustado automaticamente</span></div>
+  <div class="troca">Lance<span class="de" id="deL">R$ 3,80</span><span class="seta" id="sL"></span><span class="para num" id="paL">R$ 2,45</span></div>
+  <div class="troca">Orçamento por dia<span class="de" id="deO">R$ 300</span><span class="seta" id="sO"></span><span class="para num" id="paO">R$ 140</span></div>
+</div>
+<div class="p card" id="regra" style="left:540px;top:290px">
+  <div class="cabI">Sua regra<span class="pill cinza">definida por você</span></div>
+  <div class="toks"><div class="tok pal">Se</div><div class="tok">ACoS</div><div class="tok">maior que</div><div class="tok az">30%</div></div>
+  <div class="toks" style="margin-top:12px"><div class="tok pal">então</div><div class="tok">reduzir lance</div><div class="tok az">15%</div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (21,6 → 28,6): a Neosync em uso — cria a regra, ativa, e ela trabalha o dia todo ═════ -->
+<div class="p card app fs" id="app1" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="nm">Neosync</span><div class="nav"><span>Campanhas</span><b>Regras</b><span>Relatórios</span></div><div class="av">VC</div></div>
+  <div class="corpo" style="height:906px">
+    <div id="form">
+      <h3>Nova regra</h3><p>Vale para todas as campanhas da loja</p>
+      <div class="campo"><div class="k">Métrica</div><div class="cx" id="f1"><span class="ph">Escolha a métrica</span></div></div>
+      <div class="campo"><div class="k">Condição</div><div class="cx" id="f2"><span class="ph">Ex.: maior que 30%</span></div></div>
+      <div class="campo"><div class="k">Ação</div><div class="cx" id="f3"><span class="ph">O que fazer</span></div></div>
+      <div class="tg"><div class="sw" id="sw"><i></i></div>Rodar 24 horas por dia</div>
+    </div>
+    <div id="log" style="opacity:0">
+      <div style="display:flex;align-items:center"><div><h3>Ajustes de hoje</h3><p>Feitos pela Neosync, sem você entrar</p></div><span id="relog" class="num">06:00</span></div>
+      <div style="margin-top:18px" id="itens"></div>
+      <div id="acessos">Vezes que você abriu o painel hoje<b class="num">0</b></div>
+    </div>
+  </div>
+  <div class="btn" id="ativar"><span id="ativarT">Ativar regra</span></div>
+</div>
+
+<!-- ═════ (28,7 → 32,2) para quem é ═════ -->
+<div class="p chipI" id="pub1" style="left:540px;top:250px"><div class="bol" style="background:var(--tinta)" id="pub1I"></div>Vendedores Amazon</div>
+<div class="p chipI" id="pub2" style="left:540px;top:362px"><div class="bol" style="background:var(--tinta)" id="pub2I"></div>Empresas que vendem na Amazon</div>
+
+<!-- ═════ CTA (32,25 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:320px">
+  <div class="lg"><img src="img/logo.png"></div>
+  <div><div class="t"><span>Neosync</span>Suas campanhas no automático</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Saiba mais <span id="btnCtaI"></span></div></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy1/palavras.js"></script>
+<script>
+window.DURACAO = 34.88;
+// corte do tropeço "ai, af…" (0,60 s em 23,08): a animação continua no tempo antigo, a legenda já está no novo
+const WARP = T => T < 23.08 ? T : T + 0.60;
+const ROSTO = [590, 800];
+const FS = [[1.86, 12.55, false], [21.62, 28.6, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 22.8, ps: FM.criaConfete(11, 60, 540, 1200, 800, 60, 0.7), rgb: [27, 84, 215] }];
+</script>
+<script src="base.js"></script>
+<script>
+$('#pub1I').innerHTML = S('check', '#fff', 3); $('#pub2I').innerHTML = S('check', '#fff', 3);
+$('#sL').innerHTML = S('seta', '#0B121C', 2.6); $('#sO').innerHTML = S('seta', '#0B121C', 2.6);
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3); $('#btnCtaI').firstChild.style.width = '28px';
+const rDeL = riscar('deL', '#737B86'), rDeO = riscar('deO', '#737B86');
+// linhas ao vivo: ACoS oscilando
+const VIVO = [[48.0, '#C9372A'], [56.1, '#C9372A'], [14.0, '#15803D']];
+const lins = [...document.querySelectorAll('#monit .lin')].map((e, k) => { e.querySelector('path').setAttribute('stroke', VIVO[k][1]); return e; });
+const onda = (k, x) => VIVO[k][0] + 1.6 * Math.sin(x * 0.9 + k * 2) + 0.9 * Math.sin(x * 2.3 + k);
+// log do dia
+const LOG = [['06:00', 'sobe', '#15803D', '<b>Lance +10%</b> · Luminária LED'], ['09:20', 'desce', '#C9372A', '<b>Lance −15%</b> · Kit Facas'], ['12:45', 'dolar', '#0B121C', '<b>Orçamento</b> → Garrafa Térmica'],
+             ['16:10', 'desce', '#C9372A', '<b>Lance −15%</b> · Organizador'], ['19:30', 'desce', '#C9372A', '<b>Lance −15%</b> · Fone BT'], ['23:55', 'sobe', '#15803D', '<b>Orçamento +R$ 40</b> · Luminária']];
+const itens = LOG.map(([h, g, cor, tx]) => { const d = document.createElement('div'); d.className = 'item';
+  d.innerHTML = `<div class="h num">${h}</div><div class="ic" style="background:${cor}14">${S(g, cor, 2.6)}</div><div class="tx">${tx}</div>`; $('#itens').appendChild(d); return d; });
+
+const linhasC = [...document.querySelectorAll('#vCamp .tr2:not(.h)')];
+const acs = [...document.querySelectorAll('#vCamp .ac')].map(e => { const v = parseFloat(e.textContent.replace(',', '.')); e.innerHTML = `<span>${e.textContent}</span>` + S('sobe', '#C9372A', 3); return [e, v]; });
+$('#toastI').innerHTML = S('agenda', '#fff', 2.4);
+const cel = (id, t, t0, ruim) => { const e = $('#' + id), on = t >= t0; e.style.background = on ? (ruim ? 'var(--vermc)' : 'var(--verdec)') : 'transparent'; e.style.color = on ? (ruim ? 'var(--verm)' : 'var(--verde)') : '';
+  e.style.fontWeight = on ? 700 : ''; e.style.transform = on ? `scale(${1 + 0.12 * Math.sin(C((t - t0) / 0.35) * Math.PI)})` : ''; };
+
+window.quadro = function (T) {
+  const t = WARP(T);
+  window.PAPEL_TOPO = 9999;   // legenda branca sobre o vídeo; as telas cheias põem 0
+  FM.antes(t);
+  tela(t);
+  marcaExpande(t, 'amazon', 0.86);
+
+  /* ── FS1 · 0,93 → 12,55: layout das campanhas ── */
+  A($('#win'), t, 1.9, 12.45, { de: 0.88, dy: 120, dout: 0.2 });
+  if (t > 1.95 && t < 12.9) window.PAPEL_TOPO = 0;
+  linhasC.forEach((e, k) => { const a = k < 5 ? 1.5 + k * 0.1 : 2.8; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * 22}px)`; });
+  // "perdido dinheiro": o total gasto acende
+  cel('GT', t, 2.9, true);
+  // "campanha com lance errado": a linha do Fone BT e o lance
+  linhasC[0].style.background = t >= 4.95 ? 'rgba(201,55,42,.06)' : 'transparent'; cel('L1', t, 5.85, true);
+  // "orçamento mal distribuído": R$ 300 na pior campanha, R$ 20 na melhor
+  cel('O1', t, 6.55, true); cel('O2', t, 7.25, false);
+  // "ACoS subindo": a coluna acende e os valores sobem
+  { const pc = pr(t, 8.6, 0.35, E.cubicOut); $('#colAc').style.opacity = pc;
+    acs.forEach(([e, v], k) => { const ruim = v > 30, on = t >= 8.7 + k * 0.08, s = ruim ? pr(t, 8.7 + k * 0.08, 0.9, E.cubicOut) : 1;
+      e.firstChild.textContent = (ruim ? v - 14 * (1 - s) : v).toFixed(1).replace('.', ',') + '%';
+      e.style.background = on ? (ruim ? 'var(--vermc)' : 'var(--verdec)') : 'transparent'; e.style.color = on ? (ruim ? 'var(--verm)' : 'var(--verde)') : '';
+      e.style.fontWeight = on ? 700 : ''; e.querySelector('svg').style.display = on && ruim ? 'block' : 'none'; }); }
+  // "só percebe no fim do mês": chega o relatório; "quando já era": mês fechado
+  { const p = pr(t, 10.2, 0.45, E.cubicOut); $('#toast').style.opacity = pr(t, 10.2, 0.2, E.cubicOut); $('#toast').style.transform = `translateY(${(1 - p) * 60}px)`;
+    pop($('#fechado'), t, 11.62); if (t >= 11.62) $('#fechado').style.transform += tranco(t, 11.62); }
+
+  /* ── inserções · 12,7 → 21,6 ── */
+  A($('#logoCard'), t, 12.72, 13.9, { de: 0.82, dy: -60 });
+  // "monitora o ACoS das suas campanhas em tempo real"
+  A($('#monit'), t, 13.95, 16.42, { de: 0.86, dy: -60 });
+  $('#pisca').style.opacity = 0.35 + 0.65 * Math.abs(Math.sin(t * 3.2));
+  lins.forEach((e, k) => { const a = 14.2 + k * 0.12; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateY(${(1 - pr(t, a, 0.5)) * 18}px)`;
+    const x1 = C((t - 14.3) / 2.0) * 300; let d = '';
+    for (let x = 0; x <= x1; x += 6) d += (x ? ' L' : 'M') + x + ' ' + (22 - (onda(k, (x / 300) * 6) - VIVO[k][0]) * 7).toFixed(1);
+    e.querySelector('path').setAttribute('d', d || 'M0 22');
+    e.querySelector('.v').textContent = onda(k, (x1 / 300) * 6).toFixed(1).replace('.', ',') + '%'; e.querySelector('.v').style.color = VIVO[k][1]; });
+  // "ajusta o lance em orçamento automaticamente"
+  A($('#ajuste'), t, 16.48, 19.35, { de: 0.86, dy: -60 });
+  rDeL(t, 17.4); pop($('#sL'), t, 17.55); pop($('#paL'), t, 17.65);
+  rDeO(t, 17.85); pop($('#sO'), t, 18.0); pop($('#paO'), t, 18.1);
+  pop($('#autoP'), t, 18.5);
+  // "com base nas regras que você mesmo define"
+  A($('#regra'), t, 19.4, 21.5, { de: 0.86, dy: -60 });
+  [...document.querySelectorAll('#regra .tok')].forEach((e, k) => pop(e, t, 19.6 + k * 0.17));
+
+  /* ── FS2 · 21,62 → 28,6: cria a regra e ativa ("configura uma vez") → o log do dia ("cuida do resto") ── */
+  A($('#app1'), t, 21.9, 28.5, { de: 0.88, dy: 120, dout: 0.2 });
+  if (t > 22.0 && t < 29.05) window.PAPEL_TOPO = 0;   // fundo claro da tela cheia: legenda escura
+  { const campo = (id, t0, txt, g) => { const el = $('#' + id); if (t >= t0) { if (el.dataset.v !== txt) { el.innerHTML = `<span class="vl">${txt}</span>`; el.dataset.v = txt; } el.style.borderColor = t < t0 + 0.3 ? '#0B121C' : ''; }
+      else if (el.dataset.v) { el.innerHTML = '<span class="ph">…</span>'; el.dataset.v = ''; } };
+    campo('f1', 22.05, 'ACoS'); campo('f2', 22.2, 'Maior que 30%'); campo('f3', 22.35, 'Reduzir lance em 15%');
+    const on = pr(t, 22.45, 0.25, E.cubicOut); $('#sw').style.background = on > 0.5 ? '#0B121C' : '#D5D8DD'; $('#sw i').style.transform = `translateX(${on * 32}px)`;
+    const cl = cursor($('#cur1'), t, 22.1, [1000, 1500], [560, 1215], 22.66, 23.3);
+    const ok = t >= 22.72; $('#ativar').style.transform = `scale(${1 - 0.04 * cl})`; $('#ativar').style.background = ok ? '#15803D' : '#0B121C';
+    $('#ativarT').textContent = ok ? 'Regra ativa ✓' : 'Ativar regra';
+    const tr = pr(t, 23.55, 0.5, E.cubicInOut); $('#form').style.opacity = 1 - tr; $('#log').style.opacity = tr; $('#log').style.transform = `translateY(${(1 - tr) * 30}px)`;
+    $('#ativar').style.opacity = 1 - tr;
+    itens.forEach((e, k) => { const a = 24.1 + k * 0.32; e.style.opacity = pr(t, a, 0.25, E.cubicOut); e.style.transform = `translateX(${(1 - pr(t, a, 0.5)) * 40}px)`; });
+    const min = 360 + C((t - 24.0) / 2.2) * (1439 - 360); $('#relog').textContent = String(Math.floor(min / 60)).padStart(2, '0') + ':' + String(Math.floor(min % 60)).padStart(2, '0');
+    pop($('#acessos'), t, 27.6); }
+
+  /* ── 28,7 → 32,2: para quem é ── */
+  A($('#pub1'), t, 28.78, 32.1, { de: 0.82, dy: -50 });
+  A($('#pub2'), t, 30.6, 32.1, { de: 0.82, dy: -50, extra: tranco(t, 31.8) });
+
+  /* ── CTA · 32,25 → fim ── */
+  A($('#cta'), t, 32.25, null, { de: 0.86, dy: -60 });
+  { const cl = cursor($('#cur2'), t, 32.5, [1020, 700], [450, 400], 33.0, 34.0); $('#btnCta').style.transform = `scale(${1 - 0.06 * cl})`;
+    const ciclo = ((t - 33.3) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 33.3 ? -200 : L(-200, 520, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>IMME — Copy 2 (Fortaleza: quando o movimento aumenta, tudo sai do controle)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #graf { display: block; margin-top: 14px; }
+  #app2 .corpo { height: 548px; }
+  .bar .ic { width: 48px; height: 48px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .tile { height: 72px; border: 1.5px solid var(--linha); border-radius: 12px; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 18px; font: 600 25px 'IN'; color: var(--tinta); }
+  .tile .pill { margin-left: auto; height: 42px; font-size: 20px; padding: 0 14px; }
+  #prob .li > span:first-child { position: relative; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,9 → 6,95): movimento aumenta (gráfico subindo) e os pedidos saem do controle ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win1" style="left:540px;top:800px">
+  <div class="bar"><div class="ic" id="ic1"></div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">Salão · Fortaleza</span><span class="pill cinza">Sexta · 20:40</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Movimento do salão</h3><p>Pedidos por hora</p></div><span class="pill cinza num" id="pMov">12 pedidos/h</span></div>
+    <svg id="graf" width="892" height="170" viewBox="0 0 892 170">
+      <path d="M0 160 H892" stroke="#E8E8F0" stroke-width="2"/>
+      <path d="M0 80 H892 M0 20 H892" stroke="#F0F0F5" stroke-width="2"/>
+      <path id="lg1" d="M10 150 C 120 148, 200 140, 300 128 S 470 110, 560 84 S 720 40, 860 22" stroke="#5B1D6A" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <circle id="pt1" cx="860" cy="22" r="11" fill="#fff" stroke="#5B1D6A" stroke-width="6"/>
+      <text class="cx" x="10" y="122">18h</text><text class="cx" x="420" y="152">19h</text><text class="cx" x="800" y="72">20h</text>
+    </svg>
+    <div class="row o"><span class="dot c"></span><div class="nm">Mesa 12<span>2 pratos · 1 bebida</span></div><span class="pill cinza num">8 min</span></div>
+    <div class="row o"><span class="dot c"></span><div class="nm">Delivery #318<span>Saindo da cozinha</span></div><span class="pill cinza num">12 min</span></div>
+    <div class="row o"><span class="dot c"></span><div class="nm">Mesa 7<span>Pediu a conta</span></div><span class="pill cinza num">2 min</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,04 → 13,05): pedido, equipe, estoque e você — tudo ao mesmo tempo ═════ -->
+<div class="p card ins" id="pico" style="left:540px;top:262px">
+  <div class="cabI">No horário de pico<span class="pill cinza num" id="pPico">Tudo em ordem</span></div>
+  <div class="tiles">
+    <div class="tile">Pedido<span class="pill cinza">No prazo</span></div>
+    <div class="tile">Equipe<span class="pill cinza">5 no turno</span></div>
+    <div class="tile">Estoque<span class="pill cinza">Atualizado</span></div>
+    <div class="tile">Você<span class="pill cinza">No salão</span></div>
+  </div>
+</div>
+
+<!-- ═════ INSERÇÃO (13,22 → 17,85): não é falta de cliente, é falta de integração ═════ -->
+<div class="p card ins" id="prob" style="left:540px;top:262px">
+  <div class="cabI">Onde está o problema</div>
+  <div class="li"><span id="sCli">Falta de cliente</span><span class="pill cinza" id="pCli">Analisando</span></div>
+  <div class="li"><span>Falta de integração na operação</span><span class="pill cinza" id="pInt2">Analisando</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (17,95 → 18,7): logo IMME ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:262px"><img src="img/logo.png"></div>
+
+<!-- ═════ TELA CHEIA 2 (18,75 → 29,25): IMME — tudo conectado → operação ao vivo no pico ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="app2" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">Gestão integrada</span><span class="pill vivo"><i></i>Online</span></div>
+  <div class="abas"><div class="aba">Integrações</div><div class="aba">Operação ao vivo</div><div class="carrega" id="car2"></div></div>
+  <div class="corpo">
+    <div class="vista" id="v0">
+      <div class="topo"><div><h3>Tudo conectado</h3><p>Do pedido ao financeiro</p></div><span class="pill cinza num" id="pCon">0 de 4 conectados</span></div>
+      <div style="margin-top:10px">
+        <div class="row it"><div class="ic"></div><div class="nm">Pedidos<span>Comandas digitais</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Vendas<span>PDV integrado na maquininha</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Estoque<span>Baixa automática pela ficha técnica</span></div><span class="pill cinza">Aguardando</span></div>
+        <div class="row it"><div class="ic"></div><div class="nm">Financeiro<span>Conciliação e fluxo de caixa</span></div><span class="pill cinza">Aguardando</span></div>
+      </div>
+    </div>
+    <div class="vista" id="v1">
+      <div class="topo"><div><h3>Operação ao vivo</h3><p>Sexta · horário de pico</p></div><span class="pill roxo" id="pPk">20h – 22h</span></div>
+      <div class="kpis" style="margin-top:20px">
+        <div class="kpi"><span>Retrabalho no turno</span><b class="num" id="k1">14 ajustes</b></div>
+        <div class="kpi"><span>Pedidos no prazo</span><b class="num" id="k2">72%</b></div>
+      </div>
+      <div class="secT">Acontecendo agora</div>
+      <div class="row a"><span class="dot v"></span><div class="nm">Mesa 12<span>Prato saiu da cozinha</span></div><span class="pill vivo num">9 min</span></div>
+      <div class="row a"><span class="dot v"></span><div class="nm">Delivery #318<span>Saiu para entrega</span></div><span class="pill vivo num">18 min</span></div>
+      <div class="row a"><span class="dot a" id="dPk"></span><div class="nm">Horário de pico<span>48 pedidos/h</span></div><span class="pill alerta" id="pCtl">Monitorando</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (29,4 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:262px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t">Organize a operação do seu restaurante</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conhecer a IMME <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy2/palavras.js"></script>
+<script>
+window.DURACAO = 33.90;
+const ROSTO = [525, 690];
+const FS = [[0.9, 6.95, true], [18.75, 29.25, true]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 28.95, ps: FM.criaConfete(11, 50, 540, 1000, 760, 120, 0.7), rgb: [192, 132, 252] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+$('#ic1').innerHTML = S('gente', '#5B1D6A');
+Q('#v0 .ic').forEach((e, k) => e.innerHTML = S(['agenda', 'dolar', 'funil', 'bars'][k], '#5B1D6A'));
+const o1 = Q('#win1 .row'), tl = Q('#pico .tile'), pl = Q('#prob .li'), it = Q('#v0 .row'), av = Q('#v1 .row'), kp = Q('#v1 .kpi');
+const abas2 = Q('#app2 .aba'), vistas2 = [$('#v0'), $('#v1')];
+const riscaCli = riscar('sCli');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (t) {
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  tela(t);
+  camera(t, '#cam1', [[0.95, [540, 800], 0.92, 3, -3], [2.2, ['#win1 .topo', '#graf'], 1.04, 2, 1], [3.6, '#graf', 1.08, 1, -2], [4.8, ['#graf', o1[0]], 1.06, 1, 2],
+    [6.0, [o1[0], o1[2]], 1.08, 0, -1], [6.95, [o1[0], o1[2]], 1.12, 0, 1]]);
+  camera(t, '#cam2', [[18.8, [540, 800], 0.92, 3, 3], [19.7, [it[0], it[1]], 1.04, 2, -1], [21.0, [it[1], it[3]], 1.08, 1, 2], [22.4, '#v0 .topo', 1.06, 1, -1],
+    [23.2, '#app2 .abas', 1.02, 0, 1], [24.4, kp[0], 1.08, 2, -1], [25.6, kp, 1.1, 1, 2], [27.0, [av[0], av[2]], 1.06, 1, -2], [28.4, [av[1], av[2]], 1.08, 0, 1], [29.25, [av[1], av[2]], 1.11, 0, 0]]);
+
+  /* ── FS1 · 0,9 → 6,95: o movimento sobe; pedidos atrasam ── */
+  A($('#win1'), t, 0.95, 6.85, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(o1, t, 1.2, 0.08);
+  tinta(t, 'lg1', 1.2, 3.2); { const p = pr(t, 1.2, 3.2, E.cubicInOut), P = $('#lg1'), q = P.getPointAtLength(P._L * p); $('#pt1').setAttribute('cx', q.x); $('#pt1').setAttribute('cy', q.y); }
+  if (t >= 3.7) { conta($('#pMov'), t, 3.7, 0.9, 38, x => Math.max(12, Math.round(x)) + ' pedidos/h'); $('#pMov').className = t >= 6.08 ? 'pill ruim num' : 'pill roxo num'; pulsa($('#pMov'), t, 4.02, 0.1); }
+  else { $('#pMov').textContent = '12 pedidos/h'; $('#pMov').className = 'pill cinza num'; }
+  [['+22 min', 6.08], ['+31 min', 6.24], ['Esperando', 6.4]].forEach(([tx, t0], k) => { vira(o1[k].querySelector('.pill'), t, t0, tx, 'ruim num');
+    acende(o1[k], t, t >= t0 ? t0 : null, '201,55,42', 0.06); o1[k].querySelector('.dot').className = 'dot ' + (t >= t0 ? 'r' : 'c'); });
+
+  /* ── inserção · 7,04 → 13,05: tudo ao mesmo tempo ── */
+  A($('#pico'), t, 7.04, 13.05, { de: 0.86, dy: -60, dout: 0.25 });
+  [['Atrasando', 7.56], ['Sobrecarregada', 8.62], ['Sem baixa', 10.1], ['Resolvendo tudo', 11.66]].forEach(([tx, t0], k) => { vira(tl[k].querySelector('.pill'), t, t0, tx, 'ruim'); acende(tl[k], t, t >= t0 ? t0 : null, '201,55,42', 0.06); });
+  { let n = 0; [7.56, 8.62, 10.1, 11.66].forEach(t0 => { if (t >= t0) n++; });
+    $('#pPico').textContent = n ? n + (n > 1 ? ' problemas' : ' problema') : 'Tudo em ordem'; $('#pPico').className = n ? 'pill ruim num' : 'pill cinza num'; if (t >= 12.44) pulsa($('#pPico'), t, 12.44, 0.12); }
+
+  /* ── inserção · 13,22 → 17,85: não é falta de cliente; é integração ── */
+  A($('#prob'), t, 13.22, 17.85, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(pl, t, 13.32, 0.1, 12);
+  vira($('#pCli'), t, 15.34, 'Salão cheio', 'vivo'); riscaCli(t, 14.46);
+  vira($('#pInt2'), t, 16.58, 'Aqui', 'ruim'); acende(pl[1], t, t >= 16.58 ? 16.58 : null, '201,55,42', 0.06);
+
+  /* ── logo · 17,95 → 18,7 ── */
+  A($('#logoCard'), t, 17.95, 18.65, { de: 0.82, dy: -60, dout: 0.25 });
+
+  /* ── FS2 · 18,75 → 29,25: conectado → operação ao vivo ── */
+  A($('#app2'), t, 18.8, 29.15, { de: 0.88, dy: 120, dout: 0.2 });
+  abasDe(t, abas2, vistas2, [[0, 0], [23.3, 1]], $('#car2'));
+  cascata(it, t, 18.95, 0.08);
+  [18.84, 19.48, 19.98, 20.48].forEach((t0, k) => { vira(it[k].querySelector('.pill'), t, t0 + 0.12, '✓ Conectado', 'vivo'); acende(it[k], t, t >= t0 + 0.12 ? t0 + 0.12 : null, '21,128,61', 0.05); });
+  { let n = 0; [18.84, 19.48, 19.98, 20.48].forEach(t0 => { if (t >= t0 + 0.12) n++; });
+    if (t >= 22.12) { vira($('#pCon'), t, 22.12, 'Uma única gestão', 'vivo'); } else { $('#pCon').textContent = n + ' de 4 conectados'; $('#pCon').className = n ? 'pill roxo num' : 'pill cinza num'; } }
+  cursor($('#cur2'), t, 22.7, [1000, 1400], t > 22.7 ? centro(abas2[1]) : [0, 0], 23.3, 23.8);
+  cascata(kp, t, 23.2, 0.05); cascata(av, t, 23.25, 0.06);
+  if (t >= 24.36) { conta($('#k1'), t, 24.36, 0.8, 12, x => Math.round(14 - x) + ' ajustes'); $('#k1').className = 'num v'; } else { $('#k1').textContent = '14 ajustes'; $('#k1').className = 'num r'; }
+  if (t >= 25.12) { conta($('#k2'), t, 25.12, 0.9, 25, x => Math.round(72 + x) + '%'); $('#k2').className = 'num v'; } else { $('#k2').textContent = '72%'; $('#k2').className = 'num'; }
+  acende(av[0], t, t >= 26.02 ? 26.02 : null, '21,128,61', 0.05); acende(av[1], t, t >= 26.2 ? 26.2 : null, '21,128,61', 0.05);
+  vira($('#pCtl'), t, 27.38, '✓ Sob controle', 'vivo'); $('#dPk').className = 'dot ' + (t >= 27.38 ? 'v' : 'a'); acende(av[2], t, t >= 27.38 ? 27.38 : null, '21,128,61', 0.06);
+  if (t >= 28.44) vira($('#pPk'), t, 28.44, 'Pico sem atraso', 'vivo');
+
+  /* ── CTA · 29,4 → fim ── */
+  A($('#cta'), t, 29.4, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 29.7, [1000, 60], t > 29.7 ? centro('#btnCtaI') : [0, 0], 30.15, 33.7); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 30.3) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 30.3 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(t);
+};
+fim();
+</script>
+</body>
+</html>

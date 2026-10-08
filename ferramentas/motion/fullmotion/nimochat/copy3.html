@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NimoChat — Copy 3 (agências: mesmo número, quantos atendentes precisar)</title>
+<link rel="stylesheet" href="../fm.css">
+<link rel="stylesheet" href="base.css">
+<style>
+  #ilu svg { display: block; margin-top: 8px; }
+  #ilu .cx { font-size: 25px; }
+  .sub { display: flex; align-items: center; margin: 22px 0 6px; font: 700 28px 'DMS'; } .sub .pill { margin-left: auto; }
+  .busca { height: 66px; border: 1.5px solid var(--linha); border-radius: 33px; padding: 0 26px; display: flex; align-items: center; gap: 14px; font: 500 24px 'DMS'; color: var(--cinza); margin-bottom: 8px; }
+  .busca b { color: var(--tinta); font-weight: 600; } .busca i { width: 2px; height: 30px; background: var(--azul); }
+  #can .ics { display: flex; justify-content: center; gap: 70px; margin-top: 20px; }
+  #can .icm { display: flex; flex-direction: column; align-items: center; gap: 10px; font: 600 23px 'DMS'; color: var(--texto); opacity: 0; }
+  .conv .dir { flex-direction: row; align-items: center; gap: 12px; }
+</style>
+</head>
+<body>
+<svg id="tela" viewBox="0 0 1080 1920"></svg>
+
+<!-- ═════ TELA CHEIA 1 (0,8 → 6,95): o mesmo número com quantos atendentes precisar (Canais recriado) ═════ -->
+<div class="cam" id="cam1">
+<div class="p card app fs" id="win" style="left:540px;top:800px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">Canais de Comunicação</span><span class="pill cinza">Agência</span></div>
+  <div class="corpo">
+    <div class="row" style="border:1.5px solid var(--linha);border-radius:16px;margin:0;height:100px;padding:0 20px"><div class="wa" style="width:56px;height:56px;border-radius:14px"><img src="img/whatsapp.svg" style="width:34px"></div><span class="nm">Comercial<span>(11) 4000-1234 · Conexão estabelecida</span></span><span class="pill vivo"><i></i>Conectado</span></div>
+    <div class="sub">Atendentes neste número<span class="pill azul num" id="pN">1 atendente</span></div>
+    <div class="conv a"><div class="av">AN</div><div class="nm">Ana<span>Atendimento</span></div><div class="dir"><span class="pill vivo">Online</span></div></div>
+    <div class="conv a"><div class="av">BR</div><div class="nm">Bruno<span>Social media</span></div><div class="dir"><span class="pill cinza">Convidado</span></div></div>
+    <div class="conv a"><div class="av">CA</div><div class="nm">Carla<span>Comercial</span></div><div class="dir"><span class="pill cinza">Convidado</span></div></div>
+    <div class="conv a"><div class="av">+5</div><div class="nm">Mais 5 atendentes<span>Tráfego, design e suporte</span></div><div class="dir"><span class="pill cinza">Convidados</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (7,12 → 8,0): logo ═════ -->
+<div class="p card" id="logoCard" style="left:540px;top:300px"><img src="img/logo.png"></div>
+
+<!-- ═════ INSERÇÃO (8,05 → 13,4): caixa única + distribuição ═════ -->
+<div class="p card ins" id="cx" style="left:540px;top:300px">
+  <div class="cabI">Caixa de entrada única<span class="pill azul num" id="pCx">12 abertos</span></div>
+  <div class="li"><span>Marina Rocha · orçamento de site</span><span class="pill cinza x">Na fila</span></div>
+  <div class="li"><span>Loja Aurora · campanha de outubro</span><span class="pill cinza x">Na fila</span></div>
+  <div class="li"><span>Dr. Henrique · novo cliente</span><span class="pill cinza x">Na fila</span></div>
+</div>
+
+<!-- ═════ INSERÇÃO (13,5 → 17,8): resposta rápida + chatbot de triagem ═════ -->
+<div class="p card ins" id="bot" style="left:540px;top:300px">
+  <div class="cabI">Primeiro contato<span class="pill cinza" id="pTri">Novo</span></div>
+  <div class="li"><span>/boasvindas · resposta rápida</span><span class="pill cinza" id="pRr">Pronta</span></div>
+  <div class="li"><span>Chatbot: “Qual setor você procura?”</span><span class="pill cinza" id="pCb">Aguardando</span></div>
+</div>
+
+<!-- ═════ TELA CHEIA 2 (20,1 → 25,25): limite de aparelhos vinculados, novo atendente fica de fora ═════ -->
+<div class="cam" id="cam2">
+<div class="p card app fs" id="dev" style="left:540px;top:800px">
+  <div class="bar"><div class="wa" style="width:52px;height:52px;border-radius:13px"><img src="img/whatsapp.svg" style="width:32px"></div><span class="tt" style="border:0;padding:0;color:var(--tinta);font-weight:700">Aparelhos conectados</span><span class="pill cinza num" id="pLim">4 de 4</span></div>
+  <div class="corpo">
+    <div class="topo"><div><h3>Comercial · (11) 4000-1234</h3><p>Aparelhos vinculados a este número</p></div></div>
+    <div style="margin-top:12px">
+      <div class="row d"><span class="nm">Notebook da Ana<span>Ativo agora</span></span><span class="pill vivo">Ativo</span></div>
+      <div class="row d"><span class="nm">PC do Bruno<span>Ativo agora</span></span><span class="pill vivo">Ativo</span></div>
+      <div class="row d"><span class="nm">Notebook da Carla<span>Há 5 min</span></span><span class="pill vivo">Ativo</span></div>
+      <div class="row d"><span class="nm">PC da recepção<span>Há 12 min</span></span><span class="pill vivo">Ativo</span></div>
+      <div class="row d" id="rNovo"><span class="nm">Diego · novo atendente<span>Celular sem acesso</span></span><span class="pill azul" id="pNovo">Conectar aparelho</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ INSERÇÃO (25,35 → 29,1): a conversa se perde na troca e o cliente repete tudo (ilustração) ═════ -->
+<div class="p card ins" id="ilu" style="left:540px;top:300px">
+  <div class="cabI">Conversa do Rafael<span class="pill cinza" id="pRaf">Em atendimento</span></div>
+  <svg width="892" height="200" viewBox="0 0 892 200">
+    <path id="vol" d="M790 92 C 700 196, 190 196, 96 96" stroke="#E5372B" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 14" fill="none" opacity="0"/>
+    <path id="volS" d="M790 92 C 700 196, 190 196, 96 96" stroke="#E5372B" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <circle cx="90" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m1"/><text class="cx" x="90" y="22" text-anchor="middle">Cliente</text>
+    <circle cx="446" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m2"/><text class="cx" x="446" y="22" text-anchor="middle">Atendente 1</text>
+    <circle cx="802" cy="60" r="22" fill="#fff" stroke="#2462F2" stroke-width="7" id="m3"/><text class="cx" x="802" y="22" text-anchor="middle">Atendente 2</text>
+    <path id="la" d="M116 60 H420" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <g id="gb1"><path id="lb1" d="M472 60 H624" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+    <g id="gb2"><path id="lb2" d="M624 60 H776" stroke="#2462F2" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+  </svg>
+</div>
+
+<!-- ═════ INSERÇÃO (29,3 → 30,8): WhatsApp e Instagram (o Facebook expande e vira a tela cheia) ═════ -->
+<div class="p card ins" id="can" style="left:540px;top:300px">
+  <div class="cabI">Canais da agência<span class="pill azul">NimoChat</span></div>
+  <div class="ics"><div class="icm" id="i1"></div><div class="icm" id="i2"></div><div class="icm" id="i3"></div></div>
+</div>
+
+<!-- ═════ TELA CHEIA 3 (31,86 → 39,95): todos os canais numa caixa só, busca encontra a conversa ═════ -->
+<div class="cam" id="cam3">
+<div class="p card app fs" id="inb" style="left:540px;top:810px">
+  <div class="bar"><img src="img/logo.png"><span class="tt">Atendimentos</span><span class="pill vivo"><i></i>Online</span></div>
+  <div class="abas"><div class="aba on">Abertos <span class="bdg num">12</span></div><div class="aba">Pendentes <span class="bdg z">0</span></div><div class="aba">Chatbot <span class="bdg">3</span></div></div>
+  <div class="corpo">
+    <div class="busca">⌕ <b id="bTx"></b><i id="bCar"></i><span id="bPh">Buscando por nome ou número…</span><span class="pill azul" id="pTodos" style="margin-left:auto;height:40px;font-size:19px">Todos os canais</span></div>
+    <div class="conv u"><div class="av">MR</div><div class="nm">Marina Rocha<span>Quero um orçamento de site</span></div><div class="dir"><span class="ch" data-m="whatsapp"></span><span class="pill cinza at">Na fila</span></div></div>
+    <div class="conv u"><div class="av">LA</div><div class="nm">Loja Aurora<span>Vi o anúncio de vocês</span></div><div class="dir"><span class="ch" data-m="instagram"></span><span class="pill cinza at">Na fila</span></div></div>
+    <div class="conv u" id="cRaf"><div class="av">RC</div><div class="nm">Rafael Costa<span>Sobre a campanha de outubro</span></div><div class="dir"><span class="ch" data-m="facebook"></span><span class="pill cinza at">Na fila</span></div></div>
+    <div class="conv u"><div class="av">HS</div><div class="nm">Dr. Henrique<span>Preciso de um site novo</span></div><div class="dir"><span class="ch" data-m="whatsapp"></span><span class="pill cinza at">Na fila</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═════ CTA (40,06 → fim) ═════ -->
+<div class="p card" id="cta" style="left:540px;top:300px">
+  <img class="lgc" src="img/logo.png">
+  <div class="t"><span>Chatbot de triagem</span>Veja o chatbot ao vivo</div>
+  <div class="btn" id="btnCta"><div id="brilho"></div>Conhecer o NimoChat <span class="bo" id="btnCtaI"></span></div>
+</div>
+
+<svg class="cursor" id="cur1" viewBox="0 0 24 30"></svg>
+<svg class="cursor" id="cur2" viewBox="0 0 24 30"></svg>
+<canvas id="confT" width="1080" height="1920"></canvas>
+<div id="legenda"></div>
+
+<script src="../../motion.js"></script>
+<script src="../fm.js"></script>
+<script src="copy3/palavras.js"></script>
+<script>
+window.DURACAO = 43.77;
+const DT = 0.68;   // começo recortado (falso início "Não…"): a animação segue no tempo antigo, a legenda no novo
+const ROSTO = [640, 800];
+const FS = [[1.45, 6.95, true], [20.1, 25.25, true], [31.86, 39.95, false]];
+const OCULTA = [];
+const ESTOUROS = [{ t0: 3.8, ps: FM.criaConfete(5, 50, 540, 540, 760, 60, 0.7), rgb: [36, 98, 242] }];
+</script>
+<script src="base.js"></script>
+<script src="comum.js"></script>
+<script>
+$('#btnCtaI').innerHTML = S('chev', '#fff', 3);
+[['whatsapp', 'WhatsApp'], ['instagram', 'Instagram'], ['facebook', 'Facebook']].forEach(([m, n], k) => $('#i' + (k + 1)).innerHTML = mk(m, 96) + n);
+Q('.ch').forEach(e => e.innerHTML = mk(e.dataset.m, 44));
+const ra = Q('#win .conv'), cx = Q('#cx .li'), bt = Q('#bot .li'), dv = Q('#dev .row'), iu = Q('#inb .conv');
+const IN = (t, a, b) => t >= a && t < b;
+
+window.quadro = function (T) {
+  const t = T + DT;
+  FM.antes(t);
+  window.PAPEL_TOPO = FS.some(([a, b]) => IN(t, a + 0.35, b + 0.3)) ? 0 : 9999;
+  marcaExpande(t, 'facebook', 30.86);
+  tela(t);
+  camera(t, '#cam1', [[1.5, [540, 800], 0.92, 3, -3], [2.4, '#win .row', 1.04, 2, 1], [3.4, ['#win .sub', ra[1]], 1.1, 1, -2], [5.0, [ra[0], ra[3]], 1.04, 1, 2], [6.95, ['#win .sub', ra[3]], 1.08, 0, 0]]);
+  camera(t, '#cam2', [[20.15, [540, 800], 0.92, 3, 3], [21.2, '#dev .bar', 1.06, 2, -1], [22.4, [dv[0], dv[3]], 1.04, 1, 2], [23.6, [dv[3], dv[4]], 1.04, 1, -2], [25.25, [dv[3], dv[4]], 1.08, 0, 0]]);
+  camera(t, '#cam3', [[31.9, [540, 810], 0.92, 3, -3], [33.2, [iu[0], iu[1]], 1.04, 2, 1], [35.0, Q('#inb .dir'), 1.08, 1, -2], [36.8, '.busca', 1.1, 1, 2], [38.4, ['.busca', iu[2]], 1.08, 0, -1], [39.95, ['.busca', iu[2]], 1.12, 0, 0]]);
+
+  /* ── FS1 · 0,8 → 6,95: atendentes entrando no mesmo número, sem limite de aparelhos ── */
+  A($('#win'), t, 1.5, 6.85, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata([$('#win .row'), $('#win .sub'), ...ra], t, 1.7, 0.08);
+  ra.slice(1).forEach((e, k) => { vira(e.querySelector('.pill'), t, 3.74 + 0.25 * k, 'Online', 'vivo'); acende(e, t, t >= 3.74 + 0.25 * k ? 3.74 + 0.25 * k : null, '21,128,61', 0.05); });
+  if (t >= 3.74) { conta($('#pN'), t, 3.74, 0.9, 7, x => (1 + Math.round(x)) + ' atendentes'); $('#pN').className = 'pill vivo num'; } else { $('#pN').textContent = '1 atendente'; $('#pN').className = 'pill azul num'; }
+  if (t >= 5.44) { $('#pN').textContent = '8 atendentes · sem limite'; pulsa($('#pN'), t, 5.84, 0.1); }
+
+  /* ── logo · 7,12 → 8,0 ── */
+  A($('#logoCard'), t, 7.12, 7.95, { de: 0.82, dy: -60, dout: 0.2 });
+
+  /* ── inserção · 8,05 → 13,4: caixa única, distribui entre atendentes ── */
+  A($('#cx'), t, 8.05, 13.4, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(cx, t, 8.15, 0.1, 12);
+  pulsa($('#pCx'), t, 10.1, 0.14);
+  Q('#cx .x').forEach((e, k) => vira(e, t, 11.28 + 0.4 * k, ['Ana', 'Carla', 'Bruno'][k], 'vivo x'));
+
+  /* ── inserção · 13,5 → 17,8: resposta rápida + chatbot faz a triagem ── */
+  A($('#bot'), t, 13.5, 17.8, { de: 0.86, dy: -60, dout: 0.25 });
+  cascata(bt, t, 13.6, 0.1, 12);
+  vira($('#pRr'), t, 14.76, '✓ Enviada', 'azul'); acende(bt[0], t, t >= 14.76 ? 14.76 : null);
+  vira($('#pCb'), t, 16.58, 'Cliente: 3 · Comercial', 'vivo'); acende(bt[1], t, t >= 16.58 ? 16.58 : null, '21,128,61', 0.06);
+  vira($('#pTri'), t, 17.38, 'Triado ✓', 'vivo');
+
+  /* ── FS2 · 20,1 → 25,25: limite de aparelhos, novo atendente bloqueado ── */
+  A($('#dev'), t, 20.15, 25.15, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(dv, t, 20.35, 0.08);
+  vira($('#pLim'), t, 21.6, 'Limite atingido · 4/4', 'ruim');
+  { const c2 = cursor($('#cur2'), t, 23.2, [980, 1500], t > 23.2 ? centro('#pNovo') : [0, 0], 24.0, 24.9); $('#pNovo').style.transform = `scale(${1 - 0.06 * c2})`; }
+  vira($('#pNovo'), t, 24.48, 'Bloqueado pelo limite', 'ruim'); acende(dv[4], t, t >= 24.48 ? 24.48 : null, '229,55,43', 0.06);
+  if (t >= 24.48) dv[4].style.transform = `translateX(${12 * Math.exp(-6 * (t - 24.48)) * Math.sin((t - 24.48) * 40)}px)`;
+
+  /* ── inserção · 25,35 → 29,1: conversa se perde na troca; cliente repete tudo ── */
+  A($('#ilu'), t, 25.35, 29.1, { de: 0.86, dy: -60, dout: 0.25 });
+  tinta(t, 'la', 25.45, 0.45); tinta(t, 'lb1', 25.85, 0.2); tinta(t, 'lb2', 26.0, 0.2);
+  { const q = M.prog(t, 26.2, 0.6, E.spring), cor = t >= 26.2 ? '#E5372B' : '#2462F2';
+    $('#gb1').setAttribute('transform', `translate(${-8 * q} ${6 * q}) rotate(${-5 * q} 472 60)`); $('#gb2').setAttribute('transform', `translate(${8 * q} ${-6 * q}) rotate(${5 * q} 776 60)`);
+    $('#lb1').setAttribute('stroke', cor); $('#lb2').setAttribute('stroke', cor); }
+  tinta(t, 'volS', 27.82, 0.8); $('#volS').style.opacity = t >= 27.82 ? 1 : 0;
+  $('#m1').setAttribute('stroke', t >= 28.6 ? '#E5372B' : '#2462F2');
+  if (t >= 27.82) vira($('#pRaf'), t, 27.82, 'Cliente repete tudo', 'ruim'); else vira($('#pRaf'), t, 26.2, 'Perdida na troca', 'ruim');
+
+  /* ── inserção · 29,3 → 30,8: WhatsApp e Instagram ── */
+  A($('#can'), t, 29.3, 30.8, { de: 0.86, dy: -60, dout: 0.2 });
+  [29.48, 30.18].forEach((t0, k) => pop($('#i' + (k + 1)), t, t0));
+  $('#i3').style.display = 'none';
+
+  /* ── FS3 · 31,86 → 39,95: caixa unificada, atendentes, busca ── */
+  A($('#inb'), t, 31.91, 39.85, { de: 0.88, dy: 120, dout: 0.2 });
+  cascata(iu, t, 32.1, 0.08);
+  Q('#inb .at').forEach((e, k) => vira(e, t, 33.4 + 0.25 * k, ['Ana', 'Carla', 'Bruno', 'Diego'][k], 'vivo at'));
+  pulsa($('#inb .bdg'), t, 34.44, 0.2);
+  pulsa($('#pTodos'), t, 36.32, 0.14);
+  Q('#inb .ch').forEach((e, k) => pulsa(e, t, 37.46 + 0.18 * k, 0.18));
+  digita($('#bTx'), t, 38.6, 0.6, 'Rafael'); $('#bPh').style.display = t >= 38.6 ? 'none' : '';
+  $('#bCar').style.opacity = t >= 38.4 && t < 39.95 && Math.floor(t * 3) % 2 === 0 ? 1 : 0;
+  iu.forEach((e, k) => { if (k !== 2) e.style.opacity = t >= 39.25 ? L(1, 0.25, pr(t, 39.25, 0.3)) : e.style.opacity; });
+  acende(iu[2], t, t >= 39.25 ? 39.25 : null);
+
+  /* ── CTA · 40,06 → fim ── */
+  A($('#cta'), t, 40.06, null, { de: 0.86, dy: -60 });
+  { const c = cursor($('#cur1'), t, 40.4, [1020, 760], t > 40.4 ? centro('#btnCtaI') : [0, 0], 41.08, 44.2); $('#btnCta').style.transform = `scale(${1 - 0.06 * c})`;
+    const ciclo = ((t - 41.25) % 1.6 + 1.6) % 1.6; $('#brilho').style.left = (t < 41.25 ? -200 : L(-200, 900, E.cubicInOut(C(ciclo / 0.8)))) + 'px'; }
+
+  confete(t);
+  legenda(T);
+};
+fim();
+</script>
+</body>
+</html>
